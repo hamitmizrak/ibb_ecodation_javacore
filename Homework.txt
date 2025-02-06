@@ -22,3 +22,8 @@ System.out.println(number1);
 int number2=10;
 ++number2;
 System.out.println(number2);
+
+Stack Memory - Heap Memory
+
+Escape Character
+Scanner Class bakmanızı
