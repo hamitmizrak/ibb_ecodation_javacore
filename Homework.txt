@@ -14,3 +14,11 @@
 camelCase yazım nedir ?
 PascalCase yazım nedir ?
 kebab-case yazım nedir ?
+
+int number1=10;
+number1++;
+System.out.println(number1);
+
+int number2=10;
+++number2;
+System.out.println(number2);
