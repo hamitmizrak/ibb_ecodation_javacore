@@ -126,6 +126,7 @@ Cumartesi (15 Mart) - 4 Saat
 
 
 #####################################################################
+Eğer yetişirse; JavaFX kullanılacak
 ATM projesi için yukarıdaki Java SE konu başlıklarını kullanarak iki haftalık bir plan hazırladım.
 Bu plan, proje geliştirme sürecinde temel kavramları uygulamalı olarak içerecek şekilde yapılandırılmıştır.
 
