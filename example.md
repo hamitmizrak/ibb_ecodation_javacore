@@ -1,11 +1,11 @@
-1. 1. Dereceden 1 Bilinmeyenli Denklemi Çözme
+1. 1. Dereceden 1 Bilinmeyenli Denklemi Çözme (Scanner kullanlalım)
       Soru:
       Kullanıcıdan ax + b = 0 denklemindeki a ve b değerlerini alıp x'i hesaplayan programı yazınız.
       Çözüm:
 
 
 
-2. Santigrat (Celsius) - Fahrenheit Dönüştürücü
+2. Santigrat (Celsius) - Fahrenheit Dönüştürücü (Scanner kullanlalım)
    Soru:
    Kullanıcıdan Santigrat (Celsius) cinsinden sıcaklık alıp Fahrenheit'e çeviren programı yazınız.
    Formül: F = (C * 9/5) + 32

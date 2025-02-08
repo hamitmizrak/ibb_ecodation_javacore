@@ -16,9 +16,8 @@ public class _04_1_JavaWrapperTypes {
 
         boolean primitiveTypeBoolean=true;
         char primitiveTypeChar='a';
-
-        /// ////////////////////////////////////////////////////////////////
-        // WRAPPER TYPE
+        ///////////////////////////////////////////////////////////////////
+        // WRAPPER TYPE (new yoksa)
         Byte wrapperTypeByte = 127;
         wrapperTypeByte=null; // wrapper class null veebiliriz.
         System.out.println(wrapperTypeByte);
@@ -31,6 +30,5 @@ public class _04_1_JavaWrapperTypes {
 
         Boolean wrapperTypeBoolean=true;
         Character wrapperTypeChar='a';
-
     }
 }
