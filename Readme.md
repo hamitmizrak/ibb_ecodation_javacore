@@ -1994,3 +1994,26 @@ public class ScannerLoopExample {
 
 🚀 **Scanner, Java'da veri almak için en yaygın kullanılan sınıflardan biridir!**
 
+
+
+## WORA
+```sh 
+
+```
+---
+Java'nın ünlü sloganı **"Write Once, Run Anywhere"** şeklindedir. **"Everywhere" değil, "Anywhere" kullanılır.**
+
+### **Doğru Kullanım:**
+✅ **"Write Once, Run Anywhere" (WORA)**
+
+Bu slogan, Java programlarının **bir kez yazıldığında farklı platformlarda çalışabileceğini** ifade eder. **Anywhere** kelimesi, "herhangi bir yerde" anlamına gelir, yani **farklı işletim sistemleri ve donanımlarda çalışabilir** demektir.
+
+### **Yanlış Kullanım:**
+❌ **"Write Once, Run Everywhere"**
+
+**"Everywhere" kelimesi** "her yerde" anlamına gelir, ancak Java'nın çalışma prensibi tam olarak bu değildir. **JVM'nin yüklü olmadığı bir ortamda Java çalışmaz**, bu yüzden **"everywhere" yerine "anywhere" daha doğru bir ifadedir.**
+
+### **Özetle:**
+💡 **Mülakatta doğru cevap:**  
+✅ **"Write Once, Run Anywhere"** söylemelisiniz.  
+❌ **"Everywhere" derseniz teknik olarak yanlış olur.**

@@ -29,7 +29,6 @@ Cumartesi (8 Şubat) - 4 Saat
   . for, while, do-while döngüleri
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading
-
 ---
 
 ### 2. Hafta
