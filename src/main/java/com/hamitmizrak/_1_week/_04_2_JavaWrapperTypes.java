@@ -1,6 +1,6 @@
 package com.hamitmizrak._1_week;
 
-public class _04_JavaWrapperTypes {
+public class _04_2_JavaWrapperTypes {
 
     public static void main(String[] args) {
         // PRIMITIVE TYPE

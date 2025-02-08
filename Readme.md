@@ -39,7 +39,7 @@ Java case sensitive bir dildir. (Küçük büyük harfe duyarlı yüksek seviyed
 ```
 ---
 
-## Java Core (Common Rules)
+## Maven Nedir ?
 ```sh 
 
 ```
@@ -57,6 +57,10 @@ Maven, Java projelerini oluşturmak, yönetmek ve otomatikleştirmek için kulla
 
 ---
 
+## pom.xml Nedir ?
+```sh 
+
+```
 ### **2. `pom.xml` Nedir?**
 `pom.xml` (**Project Object Model**) dosyası, Maven projelerinin merkezi yapılandırma dosyasıdır. Projenin bağımlılıklarını, sürüm bilgilerini, eklentilerini ve yapılandırmalarını içerir.
 
@@ -86,6 +90,11 @@ Bu dosya:
 
 ---
 
+
+## JDK Nedir ?
+```sh 
+
+```
 ### **3. JDK (Java Development Kit) Nedir?**
 **JDK (Java Development Kit)**, Java ile uygulama geliştirmek için kullanılan geliştirme ortamıdır. İçerisinde:
 - **JRE (Java Runtime Environment)** (Çalışma zamanı ortamı)
@@ -97,6 +106,10 @@ Bu dosya:
 JDK olmadan Java kodu yazılamaz ve çalıştırılamaz.
 ---
 
+## JRE Nedir ?
+```sh 
+
+```
 ### **4. JRE (Java Runtime Environment) Nedir?**
 **JRE (Java Runtime Environment)**, Java uygulamalarını çalıştırmak için gereken ortamdır. İçerisinde:
 - **JVM (Java Virtual Machine)** bulunur.
@@ -106,6 +119,20 @@ JDK olmadan Java kodu yazılamaz ve çalıştırılamaz.
 Eğer sadece Java programlarını çalıştırmak istiyorsanız, JDK yerine sadece JRE yükleyebilirsiniz. Ancak, JRE **Java kodu yazmak veya derlemek için yeterli değildir**.
 ---
 
+### **5. JVM (Java Virtual Machine) Nedir?**
+**JVM (Java Virtual Machine)**, Java programlarını çalıştıran sanal bir makinedir. JVM sayesinde Java platform bağımsızdır çünkü Java kodu her işletim sisteminde çalışabilecek **bayt koduna** (`.class` dosyalarına) çevrilir.
+
+JVM’in Görevleri:
+- **Bayt kodunu çalıştırır.**
+- **Bellek yönetimini yapar (Garbage Collection).**
+- **Çoklu iş parçacığını (multithreading) destekler.**
+- **Platform bağımsızlığı sağlar.**
+---
+
+## Compiler Nedir ?
+```sh 
+
+```
 ### **5. Compiler (Derleyici) Nedir?**
 **Compiler (Derleyici)**, insan tarafından yazılan yüksek seviyeli programlama dillerini makine koduna veya bayt koduna dönüştüren bir programdır. Java’da derleyici `javac` olarak adlandırılır.
 
@@ -116,16 +143,11 @@ Eğer sadece Java programlarını çalıştırmak istiyorsanız, JDK yerine sade
 4. **JVM bayt kodunu çalıştırır.**
 ---
 
-### **6. JVM (Java Virtual Machine) Nedir?**
-**JVM (Java Virtual Machine)**, Java programlarını çalıştıran sanal bir makinedir. JVM sayesinde Java platform bağımsızdır çünkü Java kodu her işletim sisteminde çalışabilecek **bayt koduna** (`.class` dosyalarına) çevrilir.
 
-JVM’in Görevleri:
-- **Bayt kodunu çalıştırır.**
-- **Bellek yönetimini yapar (Garbage Collection).**
-- **Çoklu iş parçacığını (multithreading) destekler.**
-- **Platform bağımsızlığı sağlar.**
----
+## Intepreter Nedir ?
+```sh 
 
+```
 ### **7. Interpreter (Yorumlayıcı) Nedir?**
 **Interpreter (Yorumlayıcı),** programın satır satır çalıştırılmasını sağlayan bir programdır. 
 Java’da **JVM içerisinde yer alan yorumlayıcı (interpreter)**, bayt kodlarını satır satır çalıştırır.
@@ -292,16 +314,14 @@ public class ComplexClass {
 **Özet:** Daha fazla kod satırı, büyük sınıflar, fazladan kütüphane kullanımı ve karmaşık yapıların kullanımı hem derleme süresini uzatır hem de `.class` dosyalarının boyutunu artırır.
 
 
-## Java Core (Data Types)
+## Java Common Rules 
 ```sh 
 
 ```
 ---
 
 ### **Java Değişken İsimlendirme Kuralları ve En İyi Uygulamalar**
-
 Java'da değişken isimlendirme kuralları **sözdizimsel (syntax)** kurallar ve **en iyi uygulamalar (best practices)** olarak ikiye ayrılır. Sözdizim kurallarına uyulmazsa derleme hatası alınır, en iyi uygulamalara uyulmaması ise okunabilirliği ve bakımı zorlaştırır.
-
 ---
 
 ## **1. Java'da Değişken İsimlendirme Kuralları (Syntax Kuralları)**

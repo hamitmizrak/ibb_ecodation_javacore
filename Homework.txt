@@ -10,6 +10,7 @@
 - Data types  nedir ?
 - primitive types  nedir ?
 - Wrapper types nedir ?
+- jar ile war arasındaki farklar nelerdir ?
 
 camelCase yazım nedir ?
 PascalCase yazım nedir ?
