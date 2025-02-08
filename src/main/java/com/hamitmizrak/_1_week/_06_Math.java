@@ -1,4 +1,4 @@
-package com.hamitmizrak._1_part_javatypes;
+package com.hamitmizrak._1_week;
 
 public class _06_Math {
 

@@ -3,7 +3,7 @@ https://kommunity.com/techistanbul/events/java-ile-yazilim-gelistirme-bootcamp-p
 
 ### Ders Programı
 4 Şubat Salı – 29 Mart Cumartesi
-Haftada 3 Gün | Salı, Perşembe 18:00-21:00 | Cumartesi 18:00-22:00
+Haftada 3 Gün | Salı, Perşembe 18:00-21:00 | Cumartesi 15:00-19:00
 Toplam: 8 Hafta – 80 Saat
 İlk 6 hafta konu + örnek-soru çözümleri + best practice
 son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, collection etc
