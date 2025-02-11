@@ -51,3 +51,6 @@ null değeri ne zaman kullanabilirim ?
 ## 4.Ders Ödevi (11 Şubat)
 > switch-case ile if-elseif-else arasındaki farklar nelerdir ?
 > for ile while arasındaki fark ?
+> String Birleştirme (Concatenation) türleri, Concat,StrinBuilder, StringBuffer
+> return, continue, break nedir ? aralarındaki farklar nelerdir ?
+> static yapı nedir ?

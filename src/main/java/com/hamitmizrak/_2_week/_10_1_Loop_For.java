@@ -6,11 +6,19 @@ public class _10_1_Loop_For {
         // i++
         // i=i+1
         // i+=1
-        for (int i = 1; i <=10 ; i++) {
-            System.out.print(i+" - ");
+        int i = 1;
+        for (; i <= 10; i++) {
+            System.out.print(i + " - ");
         }
-
+        System.out.println("\n################################\n");
         // for döngüsü sonsuzluk
         // for(;;){}
+        int number = 1;
+        for (; ; ) {
+            System.out.print(number + " ");
+            number++;
+            if (number >= 50)
+                break;
+        }
     }
 }

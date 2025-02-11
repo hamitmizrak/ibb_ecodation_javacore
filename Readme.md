@@ -2017,3 +2017,955 @@ Bu slogan, Java programlarının **bir kez yazıldığında farklı platformlard
 💡 **Mülakatta doğru cevap:**  
 ✅ **"Write Once, Run Anywhere"** söylemelisiniz.  
 ❌ **"Everywhere" derseniz teknik olarak yanlış olur.**
+
+
+## Conditional
+```sh 
+
+```
+---
+# **Java'da Conditional (Koşullu) İfadeler Nedir?**
+
+**Conditional (Koşullu) ifadeler**, bir programın belirli koşullara bağlı olarak farklı yollar izlemesini sağlar. **Mantıksal karşılaştırmalar ve şartlar** kullanarak belirli blokların çalıştırılmasını kontrol ederiz.
+
+Java'da kullanılan başlıca koşullu ifadeler şunlardır:
+
+1. `if` ve `if-else` ifadeleri
+2. `else if` (çoklu koşullar)
+3. `switch-case` yapısı
+4. **Ternary (`?:`) operatörü**
+5. **Short-Circuit (`&&` ve `||`) operatörleri**
+
+---
+
+## **1. `if` ve `if-else` Yapısı**
+### **1.1 `if` İfadesi**
+- **Koşul doğru (`true`) olduğunda kod çalıştırılır.**
+- **Yanlış (`false`) olursa hiçbir şey yapılmaz.**
+
+**Örnek 1: Basit `if` kullanımı**
+```java
+public class IfExample {
+    public static void main(String[] args) {
+        int sayi = 10;
+        
+        if (sayi > 5) { // Koşul doğru mu? Evet!
+            System.out.println("Sayı 5'ten büyüktür.");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Sayı 5'ten büyüktür.
+```
+- `sayi > 5` olduğu için `if` bloğu çalıştı.
+
+---
+
+### **1.2 `if-else` Yapısı**
+- **Koşul `true` ise `if` bloğu çalışır.**
+- **Koşul `false` olursa `else` bloğu çalışır.**
+
+**Örnek 2: `if-else` kullanımı**
+```java
+public class IfElseExample {
+    public static void main(String[] args) {
+        int sayi = 3;
+        
+        if (sayi > 5) {
+            System.out.println("Sayı 5'ten büyüktür.");
+        } else {
+            System.out.println("Sayı 5'ten küçük veya eşittir.");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Sayı 5'ten küçük veya eşittir.
+```
+- `sayi = 3` olduğu için `if` bloğu çalışmadı, `else` bloğu çalıştı.
+
+---
+
+## **2. `else if` (Çoklu Koşullar)**
+- **Birden fazla koşulu test etmek için `else if` kullanılır.**
+- **İlk doğru (`true`) koşul çalıştırılır, diğerleri atlanır.**
+
+**Örnek 3: `else if` kullanımı**
+```java
+public class ElseIfExample {
+    public static void main(String[] args) {
+        int not = 75;
+
+        if (not >= 90) {
+            System.out.println("Harf Notu: A");
+        } else if (not >= 80) {
+            System.out.println("Harf Notu: B");
+        } else if (not >= 70) {
+            System.out.println("Harf Notu: C");
+        } else {
+            System.out.println("Harf Notu: F");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Harf Notu: C
+```
+- `not = 75`, yani `not >= 70` olduğu için **sadece "Harf Notu: C"** yazdırıldı.
+
+---
+
+## **3. `switch-case` Yapısı**
+- **Bir değişkenin belirli değerlere eşit olup olmadığını kontrol eder.**
+- **Koşula bağlı olarak ilgili `case` çalıştırılır.**
+- **Eğer hiçbir `case` eşleşmezse `default` bloğu çalışır.**
+- **Her case’den sonra `break` kullanılmazsa, aşağıdaki tüm case’ler çalışır.**
+
+### **Örnek 4: `switch-case` ile Gün İsmi**
+```java
+public class SwitchExample {
+    public static void main(String[] args) {
+        int gun = 3;
+
+        switch (gun) {
+            case 1:
+                System.out.println("Pazartesi");
+                break;
+            case 2:
+                System.out.println("Salı");
+                break;
+            case 3:
+                System.out.println("Çarşamba");
+                break;
+            case 4:
+                System.out.println("Perşembe");
+                break;
+            default:
+                System.out.println("Geçersiz gün numarası");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Çarşamba
+```
+- `gun = 3` olduğunda, `case 3` çalıştı.
+
+---
+
+## **4. Ternary (`?:`) Operatörü**
+- **Koşullu ifadeleri kısaltmak için kullanılır.**
+- **Tek satırda `if-else` mantığı sağlar.**
+- **Kullanım:**
+  ```java
+  (koşul) ? "true ise çalışır" : "false ise çalışır"
+  ```
+
+### **Örnek 5: Ternary Operatörü Kullanımı**
+```java
+public class TernaryExample {
+    public static void main(String[] args) {
+        int sayi = 10;
+        String sonuc = (sayi > 5) ? "Büyük" : "Küçük veya eşit";
+        System.out.println(sonuc);
+    }
+}
+```
+**Çıktı:**
+```
+Büyük
+```
+- `sayi > 5` olduğu için `"Büyük"` değeri atanır.
+
+---
+
+## **5. Short-Circuit (`&&` ve `||`) Operatörleri**
+**Kısa devre (Short-Circuiting)**, **gereksiz hesaplamaları önlemek için** kullanılan bir optimizasyondur.
+
+| Operatör | Açıklama |
+|----------|----------|
+| `&&` (AND) | Eğer ilk koşul `false` ise, ikinci koşula **bakmaz**. |
+| `||` (OR) | Eğer ilk koşul `true` ise, ikinci koşula **bakmaz**. |
+
+### **Örnek 6: `&&` ile Short-Circuit Kullanımı**
+```java
+public class ShortCircuitExample {
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 10;
+
+        if (a > 10 && ++b > 15) { // `a > 10` zaten false, ikinci koşula bakmaz
+            System.out.println("Koşul sağlandı.");
+        }
+        System.out.println("b: " + b); // b artırılmadı!
+    }
+}
+```
+**Çıktı:**
+```
+b: 10
+```
+- `a > 10` **false olduğu için** `++b` çalışmaz, `b` aynı kalır.
+
+---
+
+### **Örnek 7: `||` ile Short-Circuit Kullanımı**
+```java
+public class ShortCircuitExample2 {
+    public static void main(String[] args) {
+        int x = 5;
+        int y = 10;
+
+        if (x < 10 || ++y > 15) { // `x < 10` true, ikinci koşula bakılmaz!
+            System.out.println("Koşul sağlandı.");
+        }
+        System.out.println("y: " + y); // y artırılmadı!
+    }
+}
+```
+**Çıktı:**
+```
+Koşul sağlandı.
+y: 10
+```
+- `x < 10` **true olduğu için** `++y` çalışmaz.
+
+---
+
+## **Sonuç**
+| Yapı | Kullanım Amacı |
+|------|---------------|
+| `if` | Belirli bir koşulu test etmek |
+| `if-else` | Koşul yanlışsa alternatif blok çalıştırmak |
+| `else if` | Birden fazla koşulu kontrol etmek |
+| `switch-case` | Belirli değerleri eşleştirerek çalıştırmak |
+| `?:` (Ternary) | Kısa `if-else` ifadeleri için |
+| `&&`, `||` | Kısa devre mantığı ile gereksiz işlemleri önlemek |
+
+Bu koşullu yapılar, Java programlarında **karar mekanizmaları** oluşturmak için temel taşlardır. 🚀
+
+
+## Loop
+```sh 
+
+```
+---
+
+# **Java'da Loop (Döngü) Nedir?**
+Döngüler (Loops), bir işlemi **tekrar tekrar belirli bir koşul sağlanana kadar çalıştırmak** için kullanılır. Java'da en yaygın kullanılan döngüler şunlardır:
+
+1. **for** döngüsü
+2. **while** döngüsü
+3. **do-while** döngüsü
+4. **for-each (enhanced for loop)**
+
+Bu döngülerle birlikte **`break` ve `continue`** gibi kontrol ifadeleri kullanılarak döngü akışı yönetilebilir.
+
+---
+
+## **1. `for` Döngüsü**
+`for` döngüsü, **tekrar sayısı bilinen işlemleri** yapmak için kullanılır. **Döngü çalıştırılmadan önce, koşul ve artış/azalış değerleri belirlenir.**
+
+**Yapısı:**
+```java
+for (başlangıç_değeri; koşul; artırma/azaltma) {
+    // Döngü bloğu
+}
+```
+
+### **Örnek 1: 1'den 5'e kadar yazdırma**
+```java
+public class ForLoopExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+i: 5
+```
+- `i = 1` olarak başlar.
+- `i <= 5` olduğu sürece çalışır.
+- Her iterasyonda `i++` ile `i` artırılır.
+
+---
+
+### **Örnek 2: Çift Sayıları Yazdırma**
+```java
+public class EvenNumbers {
+    public static void main(String[] args) {
+        for (int i = 2; i <= 10; i += 2) {
+            System.out.println("Çift sayı: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Çift sayı: 2
+Çift sayı: 4
+Çift sayı: 6
+Çift sayı: 8
+Çift sayı: 10
+```
+- `i = 2` olarak başlar.
+- `i <= 10` olduğu sürece çalışır.
+- `i += 2` ile her turda `i` **2 artırılır**.
+
+---
+
+## **2. `while` Döngüsü**
+`while`, **koşul sağlandığı sürece** çalışan bir döngüdür. Kaç kere çalışacağı **önceden bilinmeyen** durumlar için kullanılır.
+
+**Yapısı:**
+```java
+while (koşul) {
+    // Döngü bloğu
+}
+```
+
+### **Örnek 3: `while` ile Sayı Yazdırma**
+```java
+public class WhileLoopExample {
+    public static void main(String[] args) {
+        int i = 1;
+        
+        while (i <= 5) {
+            System.out.println("i: " + i);
+            i++; // i artırılıyor, yoksa sonsuz döngü olur.
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+i: 5
+```
+- **İlk olarak `i = 1`**.
+- **Koşul `i <= 5` sağlandıkça çalışır**.
+- **Her iterasyonda `i++` artırılır**.
+
+---
+
+### **Örnek 4: `while` ile Kullanıcıdan Veri Alma**
+```java
+import java.util.Scanner;
+
+public class WhileUserInput {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int sayi;
+
+        System.out.println("5 girene kadar sayı girin:");
+
+        while (true) {  // Sonsuz döngü
+            sayi = scanner.nextInt();
+            if (sayi == 5) {
+                System.out.println("Döngü sonlandı.");
+                break; // 5 girildiğinde döngü kırılır.
+            }
+        }
+    }
+}
+```
+**Örnek Giriş/Çıkış:**
+```
+5 girene kadar sayı girin:
+1
+2
+3
+5
+Döngü sonlandı.
+```
+- **Kullanıcı 5 girene kadar veri girer**.
+- **5 girildiğinde `break;` ile döngü sona erer**.
+
+---
+
+## **3. `do-while` Döngüsü**
+`do-while`, **önce döngü çalıştırılır, sonra koşul kontrol edilir**. **Koşul yanlış olsa bile en az bir kere çalışır.**
+
+**Yapısı:**
+```java
+do {
+    // Döngü bloğu
+} while (koşul);
+```
+
+### **Örnek 5: `do-while` ile Kullanıcıdan Şifre Alma**
+```java
+import java.util.Scanner;
+
+public class DoWhileExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int sifre;
+
+        do {
+            System.out.print("Şifreyi girin (1234): ");
+            sifre = scanner.nextInt();
+        } while (sifre != 1234);
+
+        System.out.println("Giriş başarılı!");
+    }
+}
+```
+**Örnek Giriş/Çıkış:**
+```
+Şifreyi girin (1234): 1111
+Şifreyi girin (1234): 2222
+Şifreyi girin (1234): 1234
+Giriş başarılı!
+```
+- **Şifre doğru girilene kadar tekrar eder**.
+- **En az bir kez çalışır, çünkü `do` bloğu önce çalışır**.
+
+---
+
+## **4. `for-each` Döngüsü**
+`for-each`, **dizi ve koleksiyonları (Array, List, Set, vs.)** daha kolay gezmek için kullanılır.
+
+**Yapısı:**
+```java
+for (VeriTipi eleman : Dizi/Koleksiyon) {
+    // Döngü bloğu
+}
+```
+
+### **Örnek 6: `for-each` ile Dizi Elemanlarını Yazdırma**
+```java
+public class ForEachExample {
+    public static void main(String[] args) {
+        int[] sayilar = {10, 20, 30, 40, 50};
+
+        for (int sayi : sayilar) {
+            System.out.println("Sayı: " + sayi);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Sayı: 10
+Sayı: 20
+Sayı: 30
+Sayı: 40
+Sayı: 50
+```
+- **`for-each`, `for` döngüsüne göre daha okunaklıdır**.
+- **Diziler, List'ler ve Set'ler üzerinde gezinmek için idealdir**.
+
+---
+
+## **5. Döngülerde `break` ve `continue` Kullanımı**
+### **`break`: Döngüyü tamamen sonlandırır.**
+### **`continue`: Mevcut iterasyonu atlar, sonraki tura geçer.**
+
+### **Örnek 7: `break` ile Döngüyü Sonlandırma**
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                break; // 5 olduğunda döngü sona erer.
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+```
+
+### **Örnek 8: `continue` ile Atlatma**
+```java
+public class ContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i == 3) {
+                continue; // 3'ü atla
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+i: 4
+i: 5
+```
+
+---
+
+## **Özet**
+| Döngü Türü | Kullanım Amacı |
+|------------|---------------|
+| `for` | Sabit sayıda tekrar eder. |
+| `while` | Koşul sağlandığı sürece tekrar eder. |
+| `do-while` | En az bir kez çalışır, sonra koşulu kontrol eder. |
+| `for-each` | Dizileri ve koleksiyonları gezmek için kullanılır. |
+
+
+## break, return, continue
+```sh 
+
+```
+---
+### **Java'da `break`, `return` ve `continue` Nedir?**
+Bu üç anahtar kelime, akış kontrolüyle ilgilidir ve döngüler, metotlar ve koşullu ifadeler gibi yapılarda kullanılır. Her birinin nasıl çalıştığını detaylı örneklerle açıklayalım.
+
+---
+
+## **1. `break` Anahtar Kelimesi**
+`break`, genellikle **döngülerin kırılması (sonlandırılması)** için kullanılır. **`switch-case`** yapılarında da kullanılır.
+
+**Çalışma Mantığı:**
+- `break` çağrıldığı anda **ilgili döngüyü tamamen durdurur**.
+- İç içe döngülerde kullanıldığında, yalnızca **bulunduğu döngüyü kırar**.
+
+### **Örnek 1: Döngüyü Kırma**
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                System.out.println("Döngü 5'e ulaştı ve durduruldu.");
+                break; // Döngü burada sona erer.
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+Döngü 5'e ulaştı ve durduruldu.
+```
+- `i == 5` olduğunda `break` çalışır ve döngü tamamen sona erer.
+
+### **Örnek 2: İç İçe Döngülerde `break` Kullanımı**
+```java
+public class NestedBreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                if (j == 2) {
+                    break; // Sadece iç döngüyü kırar
+                }
+                System.out.println("i: " + i + ", j: " + j);
+            }
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1, j: 1
+i: 2, j: 1
+i: 3, j: 1
+```
+- `j == 2` olduğunda iç döngü sona erer, ancak dış döngü devam eder.
+
+---
+
+## **2. `return` Anahtar Kelimesi**
+`return` ifadesi, bir metottan değer döndürmek veya metodu tamamen sonlandırmak için kullanılır.
+
+**Çalışma Mantığı:**
+- Eğer bir metodun dönüş tipi **`void`** ise, `return;` metodu **erken sonlandırır**.
+- Eğer metodun dönüş tipi bir değer içeriyorsa (**int, String, boolean, vs.**), `return` ile bir değer döndürmek zorunludur.
+
+### **Örnek 1: `return` ile Metodu Sonlandırma**
+```java
+public class ReturnExample {
+    public static void main(String[] args) {
+        System.out.println("Metot çağrılıyor...");
+        testMetot();
+        System.out.println("Bu satır çalışmaz çünkü metot return ile durduruldu.");
+    }
+
+    public static void testMetot() {
+        System.out.println("Metot başladı.");
+        return;  // Metot burada sona erer.
+        // System.out.println("Bu satır asla çalışmaz."); // Hata verir
+    }
+}
+```
+**Çıktı:**
+```
+Metot çağrılıyor...
+Metot başladı.
+```
+- `return;` çağrıldığı anda metot sona erer.
+
+### **Örnek 2: `return` ile Değer Döndürme**
+```java
+public class SumExample {
+    public static void main(String[] args) {
+        int result = toplama(5, 10);
+        System.out.println("Toplam: " + result);
+    }
+
+    public static int toplama(int a, int b) {
+        return a + b; // a + b değerini döndürür.
+    }
+}
+```
+**Çıktı:**
+```
+Toplam: 15
+```
+- `return a + b;` ile metot, toplama işleminin sonucunu döndürür.
+
+---
+
+## **3. `continue` Anahtar Kelimesi**
+`continue`, döngü içindeki mevcut yinelemeyi atlayarak bir sonraki tura geçmek için kullanılır. **Döngüyü kırmaz**, yalnızca **belirtilen koşulda o adımı atlar**.
+
+**Çalışma Mantığı:**
+- `continue` çağrıldığında, döngünün geri kalan kodları çalıştırılmaz ve **bir sonraki iterasyona geçilir**.
+- Genellikle **belirli bir durumu atlamak** için kullanılır.
+
+### **Örnek 1: Tek Sayıları Atlamak**
+```java
+public class ContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) { // Tek sayılar için
+                continue; // Döngüde kalan işlemleri atla ve bir sonraki adıma geç.
+            }
+            System.out.println("Çift sayı: " + i);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Çift sayı: 2
+Çift sayı: 4
+Çift sayı: 6
+Çift sayı: 8
+Çift sayı: 10
+```
+- `i` tek sayı olduğunda `continue` çalışır ve o iterasyonun geri kalan kısmı atlanır.
+
+### **Örnek 2: İç İçe Döngülerde `continue` Kullanımı**
+```java
+public class NestedContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                if (j == 2) {
+                    continue; // `j == 2` olduğunda iç döngünün bu iterasyonu atlanır.
+                }
+                System.out.println("i: " + i + ", j: " + j);
+            }
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1, j: 1
+i: 1, j: 3
+i: 2, j: 1
+i: 2, j: 3
+i: 3, j: 1
+i: 3, j: 3
+```
+- `j == 2` olduğunda `continue` çalışır ve o adımdaki işlemleri atlar.
+
+---
+
+## **Sonuç Karşılaştırması**
+| Anahtar Kelime | Kullanım Alanı | Etkisi |
+|---------------|---------------|--------|
+| `break` | Döngüleri ve `switch` bloklarını kırmak için | Döngü tamamen sona erer. |
+| `return` | Metotlardan çıkış yapmak için | Metodu bitirir ve değer döndürür. |
+| `continue` | Döngü içinde belirli bir iterasyonu atlamak için | O iterasyonu atlar, döngü devam eder. |
+
+
+## String
+```sh 
+
+```
+---
+# **Java'da String Nedir? (Detaylı Açıklama)**
+
+### **📌 String Nedir?**
+Java'da **`String`** bir **karakter dizisi** (text verisi) saklamak için kullanılan **sınıf (class)** türüdür. **Java’da `String`, ilkel (primitive) bir veri tipi değildir**, aksine **`java.lang.String` sınıfına** ait bir **nesnedir**.
+
+- **Immutable (değiştirilemez)** bir yapıya sahiptir.
+- **Heap** üzerinde oluşturulur ve **String Pool (Havuz)** kullanılarak yönetilir.
+- `+` operatörü ile birleştirme (concatenation) yapılabilir.
+- **`equals()` ve `==` farkı** gibi önemli detayları vardır.
+
+---
+
+## **📌 1. String Tanımlama Yöntemleri**
+Java’da `String` oluşturmanın **iki farklı yolu** vardır:
+
+### **1️⃣ String Havuzu (`String Pool`) ile Tanımlama**
+```java
+String str1 = "Merhaba"; // String literal ile oluşturuldu
+String str2 = "Merhaba";
+```
+- `"Merhaba"` **String Pool’a eklenir**.
+- **Aynı String değerini tekrar oluşturduğumuzda, hafızada yeni bir nesne oluşturulmaz**, aynı referansa atanır.
+- **Bellek kullanımını optimize eder**.
+
+---
+
+### **2️⃣ `new` Operatörü ile Tanımlama**
+```java
+String str3 = new String("Merhaba");
+String str4 = new String("Merhaba");
+```
+- **Her seferinde yeni bir nesne oluşturur** (Heap içinde).
+- **Fazladan bellek harcar**, çünkü `new` ile oluşturulan `String` nesneleri `String Pool` kullanmaz.
+
+📌 **Karşılaştırma:**
+```java
+System.out.println(str1 == str2); // true (Aynı referans)
+System.out.println(str3 == str4); // false (Farklı nesneler)
+System.out.println(str1.equals(str3)); // true (İçerik karşılaştırması)
+```
+
+---
+
+## **📌 2. String Metotları**
+Java'nın `String` sınıfı **zengin bir metot koleksiyonuna sahiptir**. Bunları detaylıca inceleyelim.
+
+### **✅ 2.1 Uzunluk Öğrenme - `length()`**
+```java
+String text = "Java Programlama";
+System.out.println(text.length()); // 17
+```
+
+---
+
+### **✅ 2.2 Karakter Erişimi - `charAt(index)`**
+```java
+String text = "Java";
+System.out.println(text.charAt(0)); // J
+System.out.println(text.charAt(2)); // v
+```
+
+---
+
+### **✅ 2.3 Parça Alma (Substring) - `substring()`**
+```java
+String text = "Merhaba Dünya";
+System.out.println(text.substring(8)); // "Dünya"
+System.out.println(text.substring(0, 7)); // "Merhaba"
+```
+
+---
+
+### **✅ 2.4 Küçük ve Büyük Harfe Çevirme - `toUpperCase()` & `toLowerCase()`**
+```java
+String text = "Java";
+System.out.println(text.toUpperCase()); // "JAVA"
+System.out.println(text.toLowerCase()); // "java"
+```
+
+---
+
+### **✅ 2.5 String Karşılaştırma - `equals()` ve `equalsIgnoreCase()`**
+```java
+String a = "Java";
+String b = "java";
+
+System.out.println(a.equals(b)); // false
+System.out.println(a.equalsIgnoreCase(b)); // true
+```
+📌 **Neden `==` kullanılmamalı?**
+- `==`, **referansları** karşılaştırır.
+- `equals()` ise **içeriği** karşılaştırır.
+
+---
+
+### **✅ 2.6 String İçerik Kontrolleri**
+#### **`contains()` → İçinde geçiyor mu?**
+```java
+String text = "Java öğrenmek çok eğlenceli!";
+System.out.println(text.contains("Java")); // true
+System.out.println(text.contains("Python")); // false
+```
+
+#### **`startsWith()` & `endsWith()` → Başlangıç ve Bitiş Kontrolü**
+```java
+String text = "Merhaba Dünya";
+System.out.println(text.startsWith("Merhaba")); // true
+System.out.println(text.endsWith("Dünya")); // true
+```
+
+---
+
+### **✅ 2.7 String Parçalama - `split()`**
+```java
+String metin = "Java,Python,C++";
+String[] diller = metin.split(",");
+
+for (String dil : diller) {
+    System.out.println(dil);
+}
+```
+**Çıktı:**
+```
+Java
+Python
+C++
+```
+
+---
+
+### **✅ 2.8 `trim()` - Boşlukları Kaldırma**
+```java
+String text = "   Java   ";
+System.out.println(text.trim()); // "Java"
+```
+
+---
+
+### **✅ 2.9 Değiştirme - `replace()` ve `replaceAll()`**
+```java
+String text = "Java kolaydır";
+System.out.println(text.replace("kolay", "harika")); // "Java harikadır"
+```
+
+---
+
+## **📌 3. String Birleştirme (Concatenation)**
+### **1️⃣ `+` Operatörü ile**
+```java
+String s1 = "Merhaba";
+String s2 = " Dünya";
+String sonuc = s1 + s2;
+System.out.println(sonuc); // "Merhaba Dünya"
+```
+
+### **2️⃣ `concat()` Metodu ile**
+```java
+String s1 = "Java";
+String s2 = " Programlama";
+System.out.println(s1.concat(s2)); // "Java Programlama"
+```
+
+---
+
+## **📌 4. `StringBuilder` ve `StringBuffer`**
+📌 **`String` nesneleri değiştirilemez (immutable) olduğu için, çok fazla işlem yapıldığında `StringBuilder` veya `StringBuffer` kullanmak daha verimlidir.**
+
+### **1️⃣ `StringBuilder` (Daha Hızlı)**
+```java
+StringBuilder sb = new StringBuilder("Java");
+sb.append(" Programlama");
+System.out.println(sb); // "Java Programlama"
+```
+
+### **2️⃣ `StringBuffer` (Thread-Safe)**
+```java
+StringBuffer sb = new StringBuffer("Java");
+sb.append(" Öğreniyorum");
+System.out.println(sb); // "Java Öğreniyorum"
+```
+
+| **Özellik**  | **String** | **StringBuilder** | **StringBuffer** |
+|-------------|------------|----------------|----------------|
+| **Değiştirilebilir mi?** | ❌ Hayır | ✅ Evet | ✅ Evet |
+| **Hızlı mı?** | 🚀 Yavaş | ⚡ Hızlı | 🔒 Daha yavaş (Thread-safe) |
+| **Thread-Safe mi?** | ❌ Hayır | ❌ Hayır | ✅ Evet |
+
+---
+
+## **📌 5. String ile `==` ve `equals()` Farkı**
+```java
+String str1 = "Java";
+String str2 = new String("Java");
+
+System.out.println(str1 == str2); // false (Farklı referanslar)
+System.out.println(str1.equals(str2)); // true (Aynı içerik)
+```
+📌 **Özetle:**
+- **`==`**, hafızadaki referansları karşılaştırır.
+- **`equals()`**, içeriği karşılaştırır.
+
+---
+
+## **📌 6. String Pool ve Bellek Yönetimi**
+**String Pool**, `String` nesnelerinin tekrar kullanılmasını sağlayarak **bellek optimizasyonu** yapar.
+
+```java
+String str1 = "Hello";
+String str2 = "Hello";
+System.out.println(str1 == str2); // true (Aynı referans)
+```
+Ama:
+```java
+String str3 = new String("Hello");
+System.out.println(str1 == str3); // false (Yeni nesne)
+```
+
+---
+
+## **📌 Sonuç**
+- **`String` immutable’dır, değiştirilemez.**
+- **Karşılaştırma için `equals()` kullanılır.**
+- **Çok fazla işlem yapılacaksa `StringBuilder` tercih edilmelidir.**
+- **Bellek yönetimi için `String Pool` mekanizması vardır.**
+
+🚀 **String’leri etkili kullanmak, Java programlarının performansını artırabilir!** 🚀
+
+
+
+## Method
+```sh 
+
+```
+---
+
+
+## Dizi(Array)
+```sh 
+
+```
+---
+
+
+## Devam
+```sh 
+
+```
+---
+
+
+

@@ -1,4 +1,16 @@
-1. 1. Dereceden 1 Bilinmeyenli Denklemi Çözme (Scanner kullanlalım)
+##  
+2. Kullanıcının Verdiği bir sayının pozitif mi? Negatif mi ? olduğunu hesaplayan Algoritma ?
+      Soru:
+      Çözüm:
+
+
+1.  Kullanıcının Verdiği pozitif bir sayının Çift sayı mi? Yoksa Tek Sayı mi ? olduğunu hesaplayan Algoritma ?
+      Soru:
+      Çözüm:
+
+
+
+4. Dereceden 1 Bilinmeyenli Denklemi Çözme (Scanner kullanalım.)
       Soru:
       Kullanıcıdan ax + b = 0 denklemindeki a ve b değerlerini alıp x'i hesaplayan programı yazınız.
       Çözüm:
