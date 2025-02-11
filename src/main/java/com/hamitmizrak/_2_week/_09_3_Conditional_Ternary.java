@@ -1,6 +1,6 @@
 package com.hamitmizrak._2_week;
 
-public class _09_3_Conditional_ternary {
+public class _09_3_Conditional_Ternary {
 
     public static void main(String[] args) {
         int number = 5;
