@@ -10,9 +10,15 @@ public class Week2_Examples_1 {
         int number=klavye.nextInt();
 
         // Validation
-        // 1-) Kullanıcı pozitif bir sayı girmezse?
+        // 1-) Kullanıcı pozitif bir sayı girmezse? (Math.abs(), Negatif sayı çarp)
         // 2-) Kullanıcı harf girerse
         // 3-) Sıfır(Çift)
+        if(number<0){
+            System.out.println("Negatif bir sayı girdiniz");
+            //number=Math.abs(number);
+            number=number*(-1);
+        }
+
         if(number%2==0){
             System.out.println(number+" sayı Çift sayıdır");
         }else {

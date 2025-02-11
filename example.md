@@ -3,10 +3,19 @@
       Soru:
       Çözüm:
 
+1.  Kullanıcının Verdiği pozitif bir sayıya kadar toplamını yapan hesaplayan Algoritma ?
+Şartlar - 1 : Kullanıcı eğer sayı olarak  100  fazla sayı girerse 100 kadar toplasın.
+Şartlar - 2 : Kullanıcı verdiği sayılar içinde eğer 47 varsa bunu toplamaya dahil etmesin.
+    Soru:
+    Çözüm:
 
 1.  Kullanıcının Verdiği pozitif bir sayının Çift sayı mi? Yoksa Tek Sayı mi ? olduğunu hesaplayan Algoritma ?
       Soru:
       Çözüm:
+
+1.  Kullanıcının Verdiği pozitif bir sayının Çift sayı mi? Yoksa Tek Sayı mi ? olduğunu hesaplayan Algoritma ?
+    Soru:
+    Çözüm:
 
 
 
