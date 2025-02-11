@@ -46,3 +46,8 @@ System.out.println("Bildiğiniz Diller & Teknolojiler");
 language=klavye.nextInt();
 
 null değeri ne zaman kullanabilirim ?
+---
+
+## 4.Ders Ödevi (11 Şubat)
+> switch-case ile if-elseif-else arasındaki farklar nelerdir ?
+> for ile while arasındaki fark ?
