@@ -26,13 +26,16 @@ Perşembe (6 Şubat) - 3 Saat
 Cumartesi (8 Şubat) - 4 Saat
 - Kontrol Yapıları
   . if-else, switch-case
-  . for, while, do-while döngüleri
-- Metotlar (Yöntemler)
-  . Parametre kullanımı, dönüş değerleri, overloading
+  . Debug nasıl atılır ?
+  . for, while, do-while döngüleri, sonsuz döngüler
+  . String & String metotları
+
 ---
 
 ### 2. Hafta
 Salı (11 Şubat) - 3 Saat
+- Metotlar (Yöntemler)
+  . Parametre kullanımı, dönüş değerleri, overloading
 - Nesne Yönelimli Programlama (OOP) Temelleri
   . Sınıflar ve Nesneler (Constructor dahil)
   . Kapsülleme (Encapsulation)
