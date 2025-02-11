@@ -2952,6 +2952,253 @@ System.out.println(str1 == str3); // false (Yeni nesne)
 
 ```
 ---
+# **Java'da Metot (Method) Nedir? (Detaylı Açıklama)**
+
+## **📌 1. Metot (Method) Nedir?**
+Java'da **metot (method)**, belirli bir işi gerçekleştiren **kod bloklarıdır**.  
+Metotlar, **kod tekrarını önler, programı daha düzenli hale getirir ve yeniden kullanılabilirlik sağlar**.  
+Bir metot, **parametre alabilir, bir değer döndürebilir veya sadece bir işlemi gerçekleştirebilir.**
+
+---
+
+## **📌 2. Java’da Metot Tanımlama**
+Java'da bir metot **4 ana bileşenden oluşur**:
+
+1. **Erişim Belirleyici (Access Modifier)** → `public`, `private`, `protected`
+2. **Geri Dönüş Tipi (Return Type)** → `void`, `int`, `double`, `String`, vb.
+3. **Metot Adı (Method Name)** → `camelCase` kuralına uygun olmalıdır.
+4. **Parametre Listesi (Parameters)** → **Metodun giriş değerleri**.
+
+📌 **Genel Metot Tanımı:**
+```java
+erişimBelirteci geriDönüşTipi metotAdı(parametreler) {
+    // Metot gövdesi (method body)
+}
+```
+
+---
+
+## **📌 3. Parametresiz ve Parametreli Metotlar**
+### **✅ 3.1 Parametresiz Metot**
+Parametresiz metot, **hiçbir giriş almadan** belirli bir işlemi gerçekleştirir.
+
+```java
+public class MetotOrnek {
+    public static void selamVer() {
+        System.out.println("Merhaba, hoş geldiniz!");
+    }
+
+    public static void main(String[] args) {
+        selamVer(); // Metot çağrıldı
+    }
+}
+```
+**Çıktı:**
+```
+Merhaba, hoş geldiniz!
+```
+- **Metot parametre almaz**.
+- **Çağrıldığında her zaman aynı çıktıyı üretir**.
+
+---
+
+### **✅ 3.2 Parametreli Metot**
+Bir metot, **giriş değerleri (parametreler) alarak farklı sonuçlar üretebilir**.
+
+```java
+public class MetotOrnek {
+    public static void selamVer(String isim) {
+        System.out.println("Merhaba, " + isim + "!");
+    }
+
+    public static void main(String[] args) {
+        selamVer("Ahmet"); // Parametre olarak "Ahmet" gönderildi
+        selamVer("Ayşe");  // Parametre olarak "Ayşe" gönderildi
+    }
+}
+```
+**Çıktı:**
+```
+Merhaba, Ahmet!
+Merhaba, Ayşe!
+```
+📌 **Metot farklı girişlerle farklı sonuçlar üretebilir.**
+
+---
+
+## **📌 4. Geri Dönüş Tipi (Return Type)**
+Metotlar, işlem sonucunda bir değer döndürebilir. Bunun için **geri dönüş tipi belirtilmelidir**.
+
+### **✅ 4.1 `void` Metotlar**
+Eğer metot **bir değer döndürmeyecekse**, **`void`** olarak tanımlanır.
+
+```java
+public class VoidExample {
+    public static void yazdir(String mesaj) {
+        System.out.println(mesaj);
+    }
+
+    public static void main(String[] args) {
+        yazdir("Java metotları öğreniyoruz!");
+    }
+}
+```
+**Çıktı:**
+```
+Java metotları öğreniyoruz!
+```
+📌 **`void` metotlar, bir işlem yapar ama geri dönüş değeri yoktur.**
+
+---
+
+### **✅ 4.2 Değer Döndüren Metotlar**
+Metot bir işlem sonucunda bir değer döndürebilir.
+
+```java
+public class MetotOrnek {
+    public static int kareAl(int sayi) {
+        return sayi * sayi;
+    }
+
+    public static void main(String[] args) {
+        int sonuc = kareAl(5);
+        System.out.println("Sonuç: " + sonuc);
+    }
+}
+```
+**Çıktı:**
+```
+Sonuç: 25
+```
+📌 **Metot `int` türünde bir değer döndürdüğü için `return` ifadesi kullanıldı.**
+
+---
+
+## **📌 5. Metot Aşırı Yükleme (Method Overloading)**
+📌 **Aynı isimli birden fazla metot tanımlamak mümkündür, ancak parametreleri farklı olmalıdır.**
+
+```java
+public class OverloadingExample {
+    public static int toplama(int a, int b) {
+        return a + b;
+    }
+
+    public static double toplama(double a, double b) {
+        return a + b;
+    }
+
+    public static int toplama(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(toplama(5, 10));        // int parametreli
+        System.out.println(toplama(5.5, 2.5));    // double parametreli
+        System.out.println(toplama(1, 2, 3));      // 3 parametreli
+    }
+}
+```
+**Çıktı:**
+```
+15
+8.0
+6
+```
+📌 **Method Overloading ile farklı parametre türlerine göre farklı işlemler yapılabilir.**
+
+---
+
+## **📌 6. `static` ve `non-static` Metotlar**
+### **✅ 6.1 `static` Metotlar**
+- **Sınıfa aittir, nesne oluşturmadan çağrılabilir**.
+- **Doğrudan `ClassName.metotAdi()` şeklinde erişilir**.
+
+```java
+public class MathUtil {
+    public static int kupAl(int x) {
+        return x * x * x;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(kupAl(3)); // 27
+    }
+}
+```
+---
+
+### **✅ 6.2 `non-static` Metotlar**
+- **Nesne oluşturularak çağrılır**.
+- **Her nesne için farklı değerler tutabilir**.
+
+```java
+public class HesapMakinesi {
+    public int topla(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        HesapMakinesi hm = new HesapMakinesi();
+        System.out.println(hm.topla(3, 7)); // 10
+    }
+}
+```
+
+---
+
+## **📌 7. Rekürsif (Recursive) Metotlar**
+📌 **Metot, kendi kendini çağırır**. Özellikle **faktöriyel, Fibonacci gibi hesaplamalarda** kullanılır.
+
+```java
+public class RecursionExample {
+    public static int faktoriyel(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        return n * faktoriyel(n - 1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(faktoriyel(5)); // 120
+    }
+}
+```
+**Çıktı:**
+```
+120
+```
+📌 **Özyinelemeli metotlar, dikkatli kullanılmazsa sonsuz döngüye neden olabilir!**
+
+---
+
+## **📌 8. `final` Metotlar (Override Engelleme)**
+- **Bir metot `final` olarak tanımlanırsa, alt sınıflar tarafından değiştirilemez.**
+
+```java
+class Hayvan {
+    public final void sesCikar() {
+        System.out.println("Ses çıkarıyorum!");
+    }
+}
+
+class Kedi extends Hayvan {
+    // public void sesCikar() {} // HATA! Çünkü final metot değiştirilemez.
+}
+```
+
+---
+
+## **📌 9. Özet**
+| Özellik | Açıklama |
+|---------|---------|
+| **Parametresiz Metot** | Hiçbir giriş almadan çalışır. |
+| **Parametreli Metot** | Dışarıdan veri alır ve ona göre işlem yapar. |
+| **Geri Dönüşlü Metot** | İşlem sonucunu döndürür. |
+| **Overloading (Aşırı Yükleme)** | Aynı isimli farklı parametrelerle metot tanımlanır. |
+| **Static Metot** | Nesne oluşturmadan çağrılabilir. |
+| **Non-Static Metot** | Nesne oluşturarak kullanılır. |
+| **Rekürsif (Recursive) Metot** | Kendi kendini çağıran metottur. |
+
+📌 **Java'da metotlar, kod tekrarını önler ve programın yönetilebilirliğini artırır! 🚀**
 
 
 ## Dizi(Array)
@@ -2959,9 +3206,973 @@ System.out.println(str1 == str3); // false (Yeni nesne)
 
 ```
 ---
+# **Java'da Dizi (Array) Nedir? (Detaylı Açıklama)**
+
+## **📌 1. Dizi (Array) Nedir?**
+Java'da **dizi (array)**, **aynı veri tipindeki** birden fazla elemanı **tek bir değişken içinde saklamak** için kullanılır.  
+Diziler:
+- **Sabit bir boyuta sahiptirler** (Oluşturulduktan sonra boyutu değiştirilemez).
+- **Aynı türden elemanları saklarlar** (`int`, `double`, `String`, vb.).
+- **Dizi indisleri (index) 0'dan başlar**.
+- **Diziler bellek üzerinde bitişik (contiguous) olarak saklanır**.
+
+---
+
+## **📌 2. Java’da Dizi Tanımlama ve Kullanımı**
+### **✅ 2.1 Dizi Tanımlama**
+Dizi tanımlamanın iki temel yolu vardır:
+
+**1️⃣ İlk Yöntem: Dizi Tanımlama ve Bellekte Yer Ayırma**
+```java
+int[] sayilar = new int[5]; // 5 elemanlı bir int dizisi
+```
+- **Dizinin boyutu `5` olarak belirlendi ve varsayılan değerlerle (0) dolduruldu.**
+
+---
+
+**2️⃣ İkinci Yöntem: Tanımlama ve Değer Atama**
+```java
+int[] sayilar = {10, 20, 30, 40, 50};
+```
+- **Dizi doğrudan tanımlandı ve elemanları atandı**.
+
+📌 **Önemli:**
+- Java’da dizinin boyutu **sonradan değiştirilemez**.
+- Bir dizi `null` olabilir ama **başlangıçta boyutu belirtilmeden oluşturulamaz**.
+
+🚫 **Hatalı Tanımlama**
+```java
+int[] dizi; 
+dizi = {1, 2, 3, 4}; // HATA! Doğrudan böyle atama yapılamaz.
+```
+
+✅ **Doğru Kullanım**
+```java
+int[] dizi;
+dizi = new int[]{1, 2, 3, 4};
+```
+
+---
+
+## **📌 3. Dizi Elemanlarına Erişim ve Değiştirme**
+Dizi elemanlarına **indeks (index) numarası** kullanılarak erişilir.
+
+```java
+public class DiziErisim {
+    public static void main(String[] args) {
+        int[] sayilar = {10, 20, 30, 40, 50};
+
+        // Dizinin 0. elemanını yazdırma
+        System.out.println("İlk eleman: " + sayilar[0]); // 10
+        
+        // Dizinin 2. elemanını değiştirme
+        sayilar[2] = 100;
+        
+        System.out.println("Yeni 2. eleman: " + sayilar[2]); // 100
+    }
+}
+```
+📌 **Dizi indisleri 0'dan başlar ve `dizi.length - 1` kadar gider.**
+
+---
+
+## **📌 4. Dizinin Boyutunu Öğrenme**
+Java'da **bir dizinin boyutu**, **`.length`** özelliği ile öğrenilir.
+
+```java
+public class DiziBoyutu {
+    public static void main(String[] args) {
+        int[] dizi = {10, 20, 30, 40};
+        System.out.println("Dizi uzunluğu: " + dizi.length); // 4
+    }
+}
+```
+📌 **Dikkat:**
+- `dizi.length` bir metot değil, **bir özelliktir** (`()` parantezleri kullanılmaz).
+
+---
+
+## **📌 5. Dizi Üzerinde Döngüler Kullanımı**
+### **✅ 5.1 `for` Döngüsü ile Dizi Kullanımı**
+```java
+public class DiziDongu {
+    public static void main(String[] args) {
+        int[] sayilar = {5, 10, 15, 20, 25};
+
+        for (int i = 0; i < sayilar.length; i++) {
+            System.out.println("Eleman " + i + ": " + sayilar[i]);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Eleman 0: 5
+Eleman 1: 10
+Eleman 2: 15
+Eleman 3: 20
+Eleman 4: 25
+```
+
+---
+
+### **✅ 5.2 `for-each` Döngüsü ile Dizi Kullanımı**
+```java
+public class ForEachOrnek {
+    public static void main(String[] args) {
+        String[] diller = {"Java", "Python", "C++", "JavaScript"};
+
+        for (String dil : diller) {
+            System.out.println("Programlama Dili: " + dil);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Programlama Dili: Java
+Programlama Dili: Python
+Programlama Dili: C++
+Programlama Dili: JavaScript
+```
+📌 **`for-each` dizileri gezmek için kullanışlıdır ama dizinin indeksine erişemez.**
+
+---
+
+## **📌 6. Çok Boyutlu Diziler (Multidimensional Arrays)**
+### **✅ 6.1 İki Boyutlu (2D) Dizi Tanımlama**
+```java
+int[][] matris = new int[3][3]; // 3x3'lük bir matris
+```
+
+📌 **Başlangıç değerleri `0` olur.**
+
+---
+
+### **✅ 6.2 Değer Atama ve Erişim**
+```java
+public class IkiBoyutluDizi {
+    public static void main(String[] args) {
+        int[][] matris = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        System.out.println("Orta Eleman: " + matris[1][1]); // 5
+    }
+}
+```
+📌 **İlk indeks satır, ikinci indeks sütunu temsil eder**.
+
+---
+
+### **✅ 6.3 `for` Döngüsü ile Çok Boyutlu Diziyi Yazdırma**
+```java
+public class MatrisYazdirma {
+    public static void main(String[] args) {
+        int[][] matris = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        for (int i = 0; i < matris.length; i++) {
+            for (int j = 0; j < matris[i].length; j++) {
+                System.out.print(matris[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+**Çıktı:**
+```
+1 2 3
+4 5 6
+7 8 9
+```
+📌 **`matris.length` satır sayısını, `matris[i].length` sütun sayısını verir.**
+
+---
+
+## **📌 7. Java’da Dizi Kopyalama**
+### **✅ 7.1 `System.arraycopy()` Kullanımı**
+```java
+public class DiziKopyalama {
+    public static void main(String[] args) {
+        int[] orijinal = {1, 2, 3, 4, 5};
+        int[] kopya = new int[5];
+
+        System.arraycopy(orijinal, 0, kopya, 0, 5);
+
+        for (int eleman : kopya) {
+            System.out.print(eleman + " ");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+1 2 3 4 5
+```
+📌 **Diziyi manuel kopyalamaya göre daha verimlidir.**
+
+---
+
+## **📌 8. `Arrays` Sınıfı ile Dizi İşlemleri**
+Java’nın **`java.util.Arrays`** sınıfı, diziler için **yardımcı metotlar** içerir.
+
+### **✅ 8.1 `Arrays.toString()` - Diziyi String'e Çevirme**
+```java
+import java.util.Arrays;
+
+public class ArraysExample {
+    public static void main(String[] args) {
+        int[] sayilar = {3, 1, 4, 1, 5};
+        System.out.println(Arrays.toString(sayilar));
+    }
+}
+```
+**Çıktı:**
+```
+[3, 1, 4, 1, 5]
+```
+
+---
+
+## **📌 9. Özet**
+| **Özellik** | **Açıklama** |
+|-------------|-------------|
+| **Dizi Tanımlama** | `int[] dizi = new int[5];` |
+| **Diziye Değer Atama** | `dizi[0] = 10;` |
+| **Dizi Boyutu** | `dizi.length` |
+| **Tek Boyutlu Dizi** | `{10, 20, 30}` |
+| **Çok Boyutlu Dizi** | `int[][] matris = new int[3][3];` |
+| **Dizi Kopyalama** | `System.arraycopy()` |
+| **Dizi Sıralama** | `Arrays.sort(dizi);` |
+
+📌 **Java’da diziler, veri saklama ve yönetme açısından oldukça önemli yapılardır! 🚀**
 
 
-## Devam
+## Erişim Belirleyiciler
+```sh 
+
+```
+---
+# **📌 Java'da Paketler (Packages) ve Erişim Belirleyiciler (Access Modifiers) Nedir? (Detaylı Açıklama)**
+
+Java'da **paketler (packages)** ve **erişim belirleyiciler (access modifiers)**, programların düzenlenmesi, modüler hale getirilmesi ve **erişim kontrolü** sağlanması için kullanılan iki temel yapıdır.
+
+---
+
+# **🔹 1. Java'da Paketler (Packages) Nedir?**
+**📌 Paket (Package)**, **benzer sınıfları (class), arayüzleri (interface) ve diğer bileşenleri bir arada tutan** bir dizin yapısıdır.  
+Paketler sayesinde:
+- **Kod daha düzenli hale gelir.**
+- **Ad çakışmaları (name conflict) önlenir.**
+- **Erişim belirleyicilerle güvenlik sağlanır.**
+- **Yeniden kullanılabilir bileşenler oluşturulabilir.**
+
+---
+
+## **🔸 1.1 Paket Tanımlama ve Kullanımı**
+Bir Java dosyasında paketi belirlemek için **`package`** anahtar kelimesi kullanılır. **Dosyanın en üstüne yazılmalıdır.**
+
+```java
+package com.ornek.paket; // Paketin tanımlanması
+
+public class Selam {
+    public void mesaj() {
+        System.out.println("Merhaba, paket kullanımı!");
+    }
+}
+```
+📌 **Paket ismi, genellikle ters domain adı şeklinde belirlenir.**  
+Örneğin:
+- **`package com.google.search;`**
+- **`package org.apache.commons;`**
+
+---
+
+## **🔸 1.2 Paket İçindeki Sınıfı Kullanma (`import`)**
+Başka bir paketten bir sınıf kullanmak için **`import`** ifadesi kullanılır.
+
+```java
+import com.ornek.paket.Selam; // Paket içindeki sınıfı dahil ettik
+
+public class Main {
+    public static void main(String[] args) {
+        Selam nesne = new Selam();
+        nesne.mesaj();
+    }
+}
+```
+📌 **Eğer aynı paketteysek, `import` kullanmadan doğrudan sınıfı çağırabiliriz.**
+
+---
+
+## **🔸 1.3 Tüm Paket İçeriğini Dahil Etme**
+Eğer bir paketin **tüm sınıflarını** kullanmak istiyorsak, `*` karakterini kullanabiliriz.
+
+```java
+import com.ornek.paket.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Selam nesne = new Selam();
+        nesne.mesaj();
+    }
+}
+```
+📌 **Ancak, `import` ile sadece kullanılacak sınıfları dahil etmek daha performanslıdır.**
+
+---
+
+## **🔸 1.4 `static import` ile Metotları ve Değişkenleri Dahil Etme**
+Bazı durumlarda, **sınıf adını yazmadan doğrudan bir metot veya değişkene erişmek için `static import` kullanılabilir**.
+
+```java
+import static java.lang.Math.*;
+
+public class MathExample {
+    public static void main(String[] args) {
+        System.out.println(sqrt(25)); // 5.0
+        System.out.println(pow(2, 3)); // 8.0
+    }
+}
+```
+📌 **Normalde `Math.sqrt(25)` şeklinde çağırılır. Ancak `static import` sayesinde `sqrt(25)` olarak doğrudan çağrılabilir.**
+
+---
+
+## **🔸 1.5 Varsayılan Paket (Default Package)**
+Eğer **`package` ifadesi kullanılmazsa**, sınıf **varsayılan pakette (default package)** olur.  
+Ancak **varsayılan paket kullanımı büyük projelerde önerilmez**.
+
+```java
+public class Varsayilan {
+    public void mesaj() {
+        System.out.println("Varsayılan paket içindeyim.");
+    }
+}
+```
+
+Bu sınıf, **herhangi bir pakete ait olmadığı için diğer paketler tarafından doğrudan kullanılamaz**.
+
+---
+
+# **🔹 2. Java’da Erişim Belirleyiciler (Access Modifiers)**
+Erişim belirleyiciler, **sınıf, metot ve değişkenlerin erişim seviyelerini belirler**.
+
+## **🔸 2.1 Java'daki Erişim Belirleyiciler**
+| **Erişim Belirleyici** | **Açıklama** | **Aynı Sınıf** | **Aynı Paket** | **Alt Sınıflar (Inheritance)** | **Diğer Paketler** |
+|----------------|----------------------------------------|:------------:|:------------:|:------------------:|:--------------:|
+| **`public`**  | **Her yerden erişilebilir.** | ✅ | ✅ | ✅ | ✅ |
+| **`private`** | **Sadece tanımlandığı sınıfta erişilebilir.** | ✅ | ❌ | ❌ | ❌ |
+| **`protected`** | **Aynı paket ve alt sınıflardan erişilebilir.** | ✅ | ✅ | ✅ | ❌ |
+| **Varsayılan (default)** | **Sadece aynı paket içindeki sınıflar erişebilir.** | ✅ | ✅ | ❌ | ❌ |
+
+---
+
+## **🔸 2.2 `public` Erişim Belirleyici**
+- **Tüm sınıflardan erişilebilir**.
+- **Global kullanılacak metotlar ve sınıflar genellikle `public` olarak tanımlanır.**
+
+```java
+package com.ornek;
+
+public class PublicOrnek {
+    public String mesaj = "Bu bir public değişkendir.";
+
+    public void goster() {
+        System.out.println(mesaj);
+    }
+}
+```
+Başka bir sınıfta:
+```java
+import com.ornek.PublicOrnek;
+
+public class Main {
+    public static void main(String[] args) {
+        PublicOrnek nesne = new PublicOrnek();
+        nesne.goster();
+    }
+}
+```
+📌 **Başka paketlerden bile erişilebilir.**
+
+---
+
+## **🔸 2.3 `private` Erişim Belirleyici**
+- **Sadece tanımlandığı sınıf içinde erişilebilir**.
+- **Dışarıdan çağrılamaz**.
+
+```java
+class PrivateOrnek {
+    private String gizliMesaj = "Bu bir private değişkendir.";
+
+    private void goster() {
+        System.out.println(gizliMesaj);
+    }
+}
+```
+📌 **Başka sınıflardan `gizliMesaj` veya `goster()` metoduna erişilemez.**
+
+🚫 **Yanlış Kullanım:**
+```java
+PrivateOrnek nesne = new PrivateOrnek();
+nesne.goster(); // HATA! Erişim engellendi.
+```
+
+📌 **Ancak `getter` ve `setter` metotları ile erişim sağlanabilir.**
+```java
+class PrivateOrnek {
+    private String gizliMesaj = "Bu bir private değişkendir.";
+
+    public String getMesaj() {
+        return gizliMesaj;
+    }
+}
+```
+
+---
+
+## **🔸 2.4 `protected` Erişim Belirleyici**
+- **Aynı paketteki sınıflar ve alt sınıflar (subclass) erişebilir**.
+- **Farklı paketlerden sadece `extends` ile türetilen sınıflar erişebilir.**
+
+```java
+package com.ornek;
+
+public class ProtectedOrnek {
+    protected String mesaj = "Bu bir protected değişkendir.";
+}
+```
+Başka bir paket içindeki **alt sınıfta (subclass) kullanılabilir**:
+```java
+import com.ornek.ProtectedOrnek;
+
+public class AltSinif extends ProtectedOrnek {
+    public void yazdir() {
+        System.out.println(mesaj);
+    }
+}
+```
+
+📌 **Ancak `new` ile nesne oluşturulursa erişilemez!**
+```java
+ProtectedOrnek nesne = new ProtectedOrnek();
+System.out.println(nesne.mesaj); // HATA! Çünkü başka paketteyiz.
+```
+
+---
+
+## **🔸 2.5 Varsayılan (Default) Erişim**
+- **Eğer erişim belirleyici yazılmazsa, sadece aynı paketteki sınıflar erişebilir.**
+
+```java
+class DefaultOrnek {
+    String mesaj = "Bu bir varsayılan (default) değişkendir.";
+}
+```
+Başka bir pakette:
+```java
+DefaultOrnek nesne = new DefaultOrnek(); // HATA! Çünkü başka paketteyiz.
+```
+
+---
+
+# **📌 Sonuç ve Karşılaştırma**
+| **Erişim Belirleyici** | **Sınıf İçinden** | **Aynı Paketten** | **Alt Sınıflardan (Inheritance)** | **Diğer Paketlerden** |
+|----------------|--------------|------------|----------------------|--------------|
+| **`public`** | ✅ | ✅ | ✅ | ✅ |
+| **`private`** | ✅ | ❌ | ❌ | ❌ |
+| **`protected`** | ✅ | ✅ | ✅ | ❌ |
+| **Varsayılan (default)** | ✅ | ✅ | ❌ | ❌ |
+
+**📌 Paketler ve erişim belirleyiciler, Java’da kodun organize edilmesi ve güvenliği açısından büyük önem taşır! 🚀**
+
+
+## Tarih
+```sh 
+
+```
+---
+# **📌 Java'da Tarihler ve Zaman İşlemleri (Detaylı Açıklama)**
+
+Java'da tarih ve zaman işlemleri için birçok **sınıf ve API** bulunmaktadır. **Java 8**'den önce ve sonra farklı yöntemler kullanılmıştır.
+- **Java 8 öncesi:** `java.util.Date`, `java.util.Calendar`, `java.text.SimpleDateFormat`
+- **Java 8 sonrası:** `java.time` paketi (`LocalDate`, `LocalTime`, `LocalDateTime`, `ZonedDateTime`, vb.)
+
+---
+
+# **🔹 1. Java'da Tarih ve Zaman Kullanımı**
+## **✅ 1.1 `java.util.Date` Sınıfı (Eski Yöntem)**
+`Date` sınıfı, **tarih ve zaman bilgilerini saklayan eski bir sınıftır.**  
+**Ancak modifiye edilemez (immutable) olduğu için yetersizdir.**
+
+```java
+import java.util.Date;
+
+public class DateExample {
+    public static void main(String[] args) {
+        Date simdikiZaman = new Date(); // Şu anki tarih ve saat
+        System.out.println("Bugünün Tarihi: " + simdikiZaman);
+    }
+}
+```
+**Çıktı (Anlık Değişir):**
+```
+Bugünün Tarihi: Mon Feb 12 14:30:21 TRT 2025
+```
+
+📌 **Sorunlar:**
+- **Zaman dilimi (TimeZone) destekleri yetersizdir.**
+- **Daha iyi biçimlendirme ve zaman işlemleri için `SimpleDateFormat` ve `Calendar` kullanmak gerekir.**
+
+---
+
+## **✅ 1.2 `SimpleDateFormat` ile Tarih Biçimlendirme**
+`SimpleDateFormat` kullanarak, tarihleri **istenilen formatta gösterebiliriz.**
+
+```java
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateFormatExample {
+    public static void main(String[] args) {
+        Date tarih = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        
+        String formatliTarih = sdf.format(tarih);
+        System.out.println("Formatlı Tarih: " + formatliTarih);
+    }
+}
+```
+**Çıktı:**
+```
+Formatlı Tarih: 12/02/2025 14:30:21
+```
+📌 **Format Açıklamaları:**
+- `dd` → Gün (`12`)
+- `MM` → Ay (`02`)
+- `yyyy` → Yıl (`2025`)
+- `HH:mm:ss` → Saat, dakika, saniye (`14:30:21`)
+
+---
+
+## **✅ 1.3 `java.util.Calendar` ile Tarih Manipülasyonu**
+`Calendar`, `Date` sınıfının eksikliklerini gidermek için geliştirilmiş bir sınıftır.
+
+```java
+import java.util.Calendar;
+
+public class CalendarExample {
+    public static void main(String[] args) {
+        Calendar cal = Calendar.getInstance();
+
+        System.out.println("Yıl: " + cal.get(Calendar.YEAR));
+        System.out.println("Ay: " + (cal.get(Calendar.MONTH) + 1)); // Aylar 0'dan başlar!
+        System.out.println("Gün: " + cal.get(Calendar.DAY_OF_MONTH));
+    }
+}
+```
+📌 **Eksikleri:**
+- **Karmaşık bir yapıdadır.**
+- **Java 8 ile daha modern API'ler gelmiştir.**
+
+---
+
+# **🔹 2. Java 8 ve Sonrası (`java.time` Paketi)**
+📌 **Java 8 ile gelen `java.time` paketi**, modern ve güçlü tarih/zaman işlemleri sağlar.
+- **Immutable (değiştirilemez)** nesneler oluşturur.
+- **Daha okunaklı ve kolay manipülasyon sağlar.**
+- **Zaman dilimleri ve biçimlendirme desteği daha iyidir.**
+
+---
+
+## **✅ 2.1 `LocalDate` (Sadece Tarih İçin)**
+`LocalDate`, **sadece tarih (gün, ay, yıl) bilgisi tutar, saat tutmaz.**
+
+```java
+import java.time.LocalDate;
+
+public class LocalDateExample {
+    public static void main(String[] args) {
+        LocalDate bugun = LocalDate.now(); // Bugünün tarihi
+        System.out.println("Bugünün Tarihi: " + bugun);
+        
+        LocalDate ozelTarih = LocalDate.of(2025, 2, 12); // Özel bir tarih
+        System.out.println("Özel Tarih: " + ozelTarih);
+    }
+}
+```
+📌 **LocalDate, tarih hesaplamaları için idealdir.**
+
+---
+
+## **✅ 2.2 `LocalTime` (Sadece Saat İçin)**
+`LocalTime`, **sadece saat, dakika, saniye tutar, tarih bilgisi içermez.**
+
+```java
+import java.time.LocalTime;
+
+public class LocalTimeExample {
+    public static void main(String[] args) {
+        LocalTime simdikiSaat = LocalTime.now();
+        System.out.println("Şu anki saat: " + simdikiSaat);
+    }
+}
+```
+**Çıktı (Anlık Değişir):**
+```
+Şu anki saat: 14:30:21.345
+```
+📌 **Mikrosaniye ve nanosaniye bile içerebilir.**
+
+---
+
+## **✅ 2.3 `LocalDateTime` (Tarih ve Saat Birlikte)**
+`LocalDateTime`, hem **tarih hem de saat** bilgisini içerir.
+
+```java
+import java.time.LocalDateTime;
+
+public class LocalDateTimeExample {
+    public static void main(String[] args) {
+        LocalDateTime simdi = LocalDateTime.now();
+        System.out.println("Şu an: " + simdi);
+    }
+}
+```
+📌 **`LocalDateTime`, `LocalDate` ve `LocalTime` birleşimidir.**
+
+---
+
+## **✅ 2.4 `ZonedDateTime` (Zaman Dilimi ile Tarih ve Saat)**
+📌 **Farklı zaman dilimlerine göre tarih/saat almak için `ZonedDateTime` kullanılır.**
+
+```java
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+
+public class ZonedDateTimeExample {
+    public static void main(String[] args) {
+        ZonedDateTime istanbulSaati = ZonedDateTime.now(ZoneId.of("Europe/Istanbul"));
+        System.out.println("İstanbul Saati: " + istanbulSaati);
+    }
+}
+```
+📌 **Dünya çapında geçerli zaman dilimlerini kullanarak çalışabilirsiniz.**
+
+---
+
+# **🔹 3. Java'da Tarih İşlemleri**
+## **✅ 3.1 Tarih ve Saat Manipülasyonu**
+`plusDays()`, `minusMonths()`, `plusHours()` gibi metotlarla tarih/saat hesaplamaları yapılabilir.
+
+```java
+import java.time.LocalDate;
+
+public class DateManipulation {
+    public static void main(String[] args) {
+        LocalDate bugun = LocalDate.now();
+        LocalDate birHaftaSonra = bugun.plusDays(7);
+        LocalDate birAyÖnce = bugun.minusMonths(1);
+
+        System.out.println("Bugün: " + bugun);
+        System.out.println("Bir Hafta Sonra: " + birHaftaSonra);
+        System.out.println("Bir Ay Önce: " + birAyÖnce);
+    }
+}
+```
+📌 **Immutable olduğu için, tarih değişmez, yeni bir tarih nesnesi oluşturulur.**
+
+---
+
+# **🔹 4. Tarih Karşılaştırma**
+📌 **Tarihler `isBefore()`, `isAfter()`, `isEqual()` metotlarıyla karşılaştırılabilir.**
+
+```java
+import java.time.LocalDate;
+
+public class DateComparison {
+    public static void main(String[] args) {
+        LocalDate tarih1 = LocalDate.of(2025, 2, 12);
+        LocalDate tarih2 = LocalDate.of(2025, 5, 15);
+
+        System.out.println("tarih1, tarih2'den önce mi? " + tarih1.isBefore(tarih2));
+        System.out.println("tarih1, tarih2 ile aynı mı? " + tarih1.isEqual(tarih2));
+    }
+}
+```
+📌 **Tarihler sıralama veya geçerlilik kontrollerinde kullanışlıdır.**
+
+---
+
+# **📌 5. Özet**
+| **Sınıf** | **Ne İçin Kullanılır?** |
+|-----------|--------------------------|
+| `Date` | Eski tarih/saat sınıfı, önerilmez. |
+| `Calendar` | Eski tarih manipülasyonu, önerilmez. |
+| `SimpleDateFormat` | Tarih biçimlendirme, eski yöntem. |
+| `LocalDate` | **Sadece tarih** (yıl, ay, gün). |
+| `LocalTime` | **Sadece saat** (saat, dakika, saniye). |
+| `LocalDateTime` | **Tarih + Saat** birlikte. |
+| `ZonedDateTime` | **Zaman dilimi ile tarih/saat işlemleri.** |
+
+📌 **Java 8+ ile `java.time` kullanarak daha güçlü ve güvenilir tarih işlemleri yapabilirsiniz! 🚀**
+
+
+## Exception
+```sh 
+
+```
+---
+# **📌 Java'da Exception (İstisna) Nedir? (Detaylı Açıklama)**
+
+---
+
+## **🔹 1. Exception (İstisna) Nedir?**
+**Exception (İstisna)**, program çalışırken meydana gelen **beklenmedik hatalar** ve **öngörülemeyen durumları** ifade eder.  
+Java'da **Exception Handling (İstisna Yönetimi)** sayesinde programın çökmesi engellenir ve hatalar yönetilebilir hale gelir.
+
+📌 **Java'da hatalar iki ana kategoriye ayrılır:**
+1. **Checked Exceptions (Denetlenen İstisnalar)**
+2. **Unchecked Exceptions (Denetlenmeyen İstisnalar)**
+
+---
+
+## **🔹 2. Java'da Exception Hiyerarşisi**
+Java'daki tüm hata türleri **`Throwable`** sınıfından türetilir.
+
+```
+Throwable
+ ├── Exception  (Checked Exceptions)
+ │   ├── IOException
+ │   ├── SQLException
+ │   ├── FileNotFoundException
+ │   ├── ClassNotFoundException
+ │   ├── InterruptedException
+ │
+ ├── RuntimeException (Unchecked Exceptions)
+ │   ├── ArithmeticException
+ │   ├── NullPointerException
+ │   ├── ArrayIndexOutOfBoundsException
+ │   ├── IllegalArgumentException
+ │   ├── NumberFormatException
+ │
+ └── Error
+     ├── StackOverflowError
+     ├── OutOfMemoryError
+     ├── VirtualMachineError
+```
+
+### **📌 2.1 `Exception` (İstisna)**
+- **Programcı tarafından kontrol edilebilir hatalardır.**
+- **`try-catch` blokları ile yakalanabilir.**
+- Örnekler: `IOException`, `SQLException`, `FileNotFoundException`.
+
+### **📌 2.2 `RuntimeException` (Çalışma Zamanı İstisnaları)**
+- **Kod çalıştırıldığında ortaya çıkan beklenmedik hatalardır.**
+- **Önceden kontrol edilmek zorunda değildir.**
+- Örnekler: `NullPointerException`, `ArithmeticException`, `ArrayIndexOutOfBoundsException`.
+
+### **📌 2.3 `Error` (Sistemsel Hatalar)**
+- **Programcı tarafından kontrol edilemez.**
+- **Genellikle JVM kaynaklı hatalardır.**
+- Örnekler: `OutOfMemoryError`, `StackOverflowError`.
+
+---
+
+# **🔹 3. Java'da Exception Handling (İstisna Yönetimi)**
+
+## **✅ 3.1 `try-catch` Blokları ile Hata Yönetimi**
+**`try-catch` bloğu**, hata alabilecek kodları yönetmek için kullanılır.
+
+```java
+public class TryCatchExample {
+    public static void main(String[] args) {
+        try {
+            int sayi = 10 / 0; // Hata: Bölme işlemi sıfıra bölünemez!
+        } catch (ArithmeticException e) {
+            System.out.println("Hata: Sıfıra bölme hatası!");
+        }
+        System.out.println("Program devam ediyor...");
+    }
+}
+```
+**Çıktı:**
+```
+Hata: Sıfıra bölme hatası!
+Program devam ediyor...
+```
+📌 **`try` bloğu hata içerirse, `catch` bloğu devreye girer ve program çökmeden devam eder.**
+
+---
+
+## **✅ 3.2 `Multiple Catch` (Birden Fazla `catch` Bloğu Kullanımı)**
+**Farklı hataları yakalamak için birden fazla `catch` bloğu kullanılabilir.**
+
+```java
+public class MultipleCatchExample {
+    public static void main(String[] args) {
+        try {
+            int[] dizi = {1, 2, 3};
+            System.out.println(dizi[5]); // Hata: Dizinin sınırları aşılıyor!
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Hata: Dizi sınırları aşıldı!");
+        } catch (ArithmeticException e) {
+            System.out.println("Hata: Matematiksel hata!");
+        }
+        System.out.println("Program devam ediyor...");
+    }
+}
+```
+**Çıktı:**
+```
+Hata: Dizi sınırları aşıldı!
+Program devam ediyor...
+```
+
+📌 **Her `catch` bloğu, farklı hata türlerini yakalamak için kullanılır.**
+
+---
+
+## **✅ 3.3 `finally` Bloğu (Her Koşulda Çalışan Kod)**
+- **`finally` bloğu, hata olsun ya da olmasın her durumda çalışır.**
+- **Genellikle kaynakları kapatmak için kullanılır (`File`, `Database Connection`, vb.).**
+
+```java
+public class FinallyExample {
+    public static void main(String[] args) {
+        try {
+            int sonuc = 10 / 2;
+            System.out.println("Sonuç: " + sonuc);
+        } catch (ArithmeticException e) {
+            System.out.println("Hata: Matematiksel hata!");
+        } finally {
+            System.out.println("Bu blok her zaman çalışır!");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Sonuç: 5
+Bu blok her zaman çalışır!
+```
+
+📌 **Hata olsun veya olmasın, `finally` bloğu her zaman çalışır.**
+
+---
+
+## **✅ 3.4 `throws` ile Hata Bildirme**
+📌 **Bir metot hata üretebiliyorsa, bunu `throws` ile belirtmelidir.**
+
+```java
+import java.io.*;
+
+public class ThrowsExample {
+    public static void dosyaOku() throws IOException {
+        FileReader file = new FileReader("dosya.txt");
+        BufferedReader br = new BufferedReader(file);
+        System.out.println(br.readLine());
+    }
+
+    public static void main(String[] args) {
+        try {
+            dosyaOku();
+        } catch (IOException e) {
+            System.out.println("Dosya okuma hatası!");
+        }
+    }
+}
+```
+📌 **`throws`, metot içinde oluşabilecek hataları bildirmek için kullanılır.**
+
+---
+
+## **✅ 3.5 `throw` ile Manuel Hata Fırlatma**
+📌 **Kendi özel hatalarınızı fırlatmak için `throw` kullanılır.**
+
+```java
+public class ThrowExample {
+    public static void kontrolEt(int yas) {
+        if (yas < 18) {
+            throw new IllegalArgumentException("Yaş 18'den küçük olamaz!");
+        }
+        System.out.println("Giriş başarılı.");
+    }
+
+    public static void main(String[] args) {
+        kontrolEt(16); // Hata fırlatılır
+    }
+}
+```
+**Çıktı:**
+```
+Exception in thread "main" java.lang.IllegalArgumentException: Yaş 18'den küçük olamaz!
+```
+📌 **`throw`, özel hatalar oluşturmak için kullanılır.**
+
+---
+
+# **🔹 4. Özel Exception (Custom Exception)**
+Java'da **kendimize özel hata sınıfları oluşturabiliriz.**
+
+```java
+class YasHatasi extends Exception {
+    public YasHatasi(String mesaj) {
+        super(mesaj);
+    }
+}
+
+public class CustomExceptionExample {
+    public static void kontrolEt(int yas) throws YasHatasi {
+        if (yas < 18) {
+            throw new YasHatasi("Yaş 18'den küçük olamaz!");
+        }
+        System.out.println("Giriş başarılı.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            kontrolEt(16);
+        } catch (YasHatasi e) {
+            System.out.println("Özel Hata: " + e.getMessage());
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Özel Hata: Yaş 18'den küçük olamaz!
+```
+📌 **Kendi hata türlerimizi oluşturup fırlatabiliriz.**
+
+---
+
+# **📌 5. Özet**
+| **Exception Türü** | **Açıklama** | **Örnek** |
+|------------------|-------------|-------------|
+| **Checked Exception** | **Derleme (compile-time) sırasında kontrol edilir.** | `IOException`, `SQLException` |
+| **Unchecked Exception** | **Çalışma zamanında (runtime) meydana gelir.** | `NullPointerException`, `ArithmeticException` |
+| **Error** | **Sistem kaynaklı büyük hatalar.** | `StackOverflowError`, `OutOfMemoryError` |
+
+📌 **Exception Handling ile programlarımız hata alsa bile çökmemeyi ve düzgün çalışmayı sürdürmeyi başarabilir. 🚀**
+
+
+## Cipher (AES/DES/RSA/HASHING)
+```sh 
+
+```
+---
+
+
+## Diğer
 ```sh 
 
 ```

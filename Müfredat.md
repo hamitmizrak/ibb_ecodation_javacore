@@ -28,50 +28,49 @@ Cumartesi (8 Şubat) - 4 Saat
   . if-else, switch-case
   . Debug nasıl atılır ?
   . for, while, do-while döngüleri, sonsuz döngüler
-  . String & String metotları
 
----
 
+----------------------------------------------------------------------
 ### 2. Hafta
 Salı (11 Şubat) - 3 Saat
+- String & String metotları
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading
-- Arrays
-  . 
 
 Perşembe (13 Şubat) - 3 Saat
+- Arrays
+- Paketler ve Erişim Belirleyiciler
+    . Paketlerin Kullanımı
+    . Erişim Belirleyiciler (public, private, protected)
+
+Cumartesi (15 Şubat) - 4 Saat
+- Date(Tarih)
+- İstisnalar (Exceptions)
+  . Exception Kavramı (Checked ve Unchecked ayrımı)
+  . Try-Catch-Finally
+- Throw, Throws
+  . Özel Exception sınıfları yazma
+
+----------------------------------------------------------------------
+### 3. Hafta
+Salı (18 Şubat) - 3 Saat
 - Nesne Yönelimli Programlama (OOP) Temelleri
   . Sınıflar ve Nesneler (Constructor dahil)
   . Kapsülleme (Encapsulation)
+
+Perşembe (20 Şubat) - 3 Saat
 - Kalıtım (Inheritance)
   . Super ve Subclass kavramları
   . Override ve Overload farkı
 
-Cumartesi (15 Şubat) - 4 Saat
+Cumartesi (22 Şubat) - 4 Saat
 - Polimorfizm (Polymorphism)
   . Dinamik ve Statik Polimorfizm örnekleri
 - Soyutlama (Abstraction)
   . Abstract sınıflar ve arabirimler (interface)
-
 ---
 
-### 3. Hafta
-Salı (18 Şubat) - 3 Saat
-- Paketler ve Erişim Belirleyiciler
-  . Paketlerin Kullanımı
-  . Erişim Belirleyiciler (public, private, protected)
-
-Perşembe (20 Şubat) - 3 Saat
-- İstisnalar (Exceptions)
-  . Exception Kavramı (Checked ve Unchecked ayrımı)
-  . Try-Catch-Finally
-
-Cumartesi (22 Şubat) - 4 Saat
-- Throw, Throws
-  . Özel Exception sınıfları yazma
-
----
-
+----------------------------------------------------------------------
 ### 4. Hafta
 Salı (25 Şubat) - 3 Saat
 - Koleksiyonlar (Collections) ve Generics
@@ -88,8 +87,7 @@ Cumartesi (1 Mart) - 4 Saat
   . Lambda İfadeleri
   . Fonksiyonel Arabirimler
 
----
-
+----------------------------------------------------------------------
 ### 5. Hafta
 Salı (4 Mart) - 3 Saat
 - Stream API
@@ -105,8 +103,7 @@ Cumartesi (8 Mart) - 4 Saat
   . Java I/O Temelleri (Stream, Reader/Writer)
   . File I/O
 
----
-
+----------------------------------------------------------------------
 ### 6. Hafta
 Salı (11 Mart) - 3 Saat
 - Çoklu İş Parçacığı (Multithreading)
