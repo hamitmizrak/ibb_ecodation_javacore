@@ -36,11 +36,13 @@ Cumartesi (8 Şubat) - 4 Saat
 Salı (11 Şubat) - 3 Saat
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading
+- Arrays
+  . 
+
+Perşembe (13 Şubat) - 3 Saat
 - Nesne Yönelimli Programlama (OOP) Temelleri
   . Sınıflar ve Nesneler (Constructor dahil)
   . Kapsülleme (Encapsulation)
-
-Perşembe (13 Şubat) - 3 Saat
 - Kalıtım (Inheritance)
   . Super ve Subclass kavramları
   . Override ve Overload farkı
