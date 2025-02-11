@@ -1,5 +1,4 @@
 package com.hamitmizrak._2_week;
-
 import java.util.Scanner;
 
 /*
@@ -8,8 +7,7 @@ Kullanıcının Verdiği pozitif bir sayıya kadar toplamını yapan hesaplayan 
 Şartlar - 2 : Kullanıcı verdiği sayılar içinde eğer 47 varsa bunu toplamaya dahil etmesin.(continue)
 Çıkan sonuç tek mi ? çift mi ?
  */
-public class _11_1_Return_Continue_Break {
-
+public class Week2_Examples_2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Lütfen Bir pozitif bir sayı giriniz");
