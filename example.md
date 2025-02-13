@@ -13,11 +13,7 @@
       Soru:
       Çözüm:
 
-1.  Kullanıcının Verdiği pozitif bir sayının Çift sayı mi? Yoksa Tek Sayı mi ? olduğunu hesaplayan Algoritma ?
-    Soru:
-    Çözüm:
-
-
+    
 
 4. Dereceden 1 Bilinmeyenli Denklemi Çözme (Scanner kullanalım.)
       Soru:

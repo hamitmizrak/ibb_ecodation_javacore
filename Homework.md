@@ -56,6 +56,6 @@ null değeri ne zaman kullanabilirim ?
 > static yapı nedir ?
 > Overloading nedir ?
 > Override nedir ?
-> String kelime= new String(); , String kelime= ";  iki yapı arasındaki fark ?
+> String kelime= new String(); , String kelime= "";  iki yapı arasındaki fark ?
 > System.out.println(vocabulary1== vocabulary2);
 > System.out.println(vocabulary1.equals(vocabulary2));

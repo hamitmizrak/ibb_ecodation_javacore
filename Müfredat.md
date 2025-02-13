@@ -35,7 +35,7 @@ Cumartesi (8 Şubat) - 4 Saat
 Salı (11 Şubat) - 3 Saat
 - String & String metotları
 - Metotlar (Yöntemler)
-  . Parametre kullanımı, dönüş değerleri, overloading
+  . Parametre kullanımı, dönüş değerleri, overloading, override
 
 Perşembe (13 Şubat) - 3 Saat
 - Arrays

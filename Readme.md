@@ -463,7 +463,6 @@ public class NamingExample {
     }
 }
 ```
-
 ---
 
 ### **Sonuç**
@@ -1514,7 +1513,6 @@ System.out.println(Math.round(4.5)); // 5
 System.out.println(Math.ceil(3.2)); // 4.0
 System.out.println(Math.floor(6.8)); // 6.0
 ```
-
 ---
 
 ### **D. Trigonometri Fonksiyonları**
@@ -1561,7 +1559,6 @@ Math sınıfı **matematiksel sabitleri** de içerir.
 System.out.println(Math.PI); // 3.141592653589793
 System.out.println(Math.E); // 2.718281828459045
 ```
-
 ---
 
 # **3. Java Math Kullanımına Örnek**
@@ -2530,6 +2527,413 @@ i: 5
 | `for-each` | Dizileri ve koleksiyonları gezmek için kullanılır. |
 
 
+## for ile while arasındaki fark ?
+```sh 
+
+```
+
+Java'da `for` ve `while` döngüleri, tekrar eden işlemleri gerçekleştirmek için kullanılır. Ancak kullanım amaçları ve çalışma mantıkları açısından farklılıklar gösterir. İşte temel farklar:
+
+---
+
+## **1. Temel Farklar**
+| **Özellik**         | **for Döngüsü** | **while Döngüsü** |
+|---------------------|----------------|------------------|
+| **Kullanım Amacı**  | Döngü sayısı belli olduğunda kullanılır. | Döngü sayısı belirsizse veya koşula bağlı devam edecekse kullanılır. |
+| **Sözdizimi**       | Daha düzenli ve kompakt bir yapıya sahiptir. | Daha esnek ve koşul odaklıdır. |
+| **Koşulun Yeri**    | Başlangıçta tanımlanır (`for` içinde). | Döngü başında veya döngü içinde değiştirilebilir. |
+| **Sayaç Kullanımı** | Sayaç değişkeni döngünün başında tanımlanır. | Sayaç dışarıda tanımlanıp döngü içinde artırılabilir. |
+| **Okunabilirlik**   | Daha kısa ve düzenlidir. | Daha esnektir ama bazen karışık olabilir. |
+| **Performans**      | Aynıdır, ancak uygun kullanıma bağlı olarak optimize edilebilir. |
+
+---
+
+## **2. Sözdizimi ve Kullanım Örnekleri**
+
+### **2.1. `for` Döngüsü**
+- Sayaç ile çalışan döngüler için uygundur.
+- Başlangıç, koşul ve artış aynı satırda belirtilir.
+
+```java
+for (int i = 0; i < 5; i++) {
+    System.out.println("i değeri: " + i);
+}
+```
+✅ **Avantajı**: Döngü değişkeni (`i`) döngü içinde tanımlandığı için **lokal kalır** ve kod daha okunaklıdır.
+
+---
+
+### **2.2. `while` Döngüsü**
+- Koşul sağlandığı sürece çalışır, **döngü sayısı belirsizse** tercih edilir.
+- Döngü değişkeni genellikle dışarıda tanımlanır.
+
+```java
+int i = 0;
+while (i < 5) {
+    System.out.println("i değeri: " + i);
+    i++;
+}
+```
+✅ **Avantajı**: **Esnektir**, koşul başka bir yerden değiştirilebilir.
+
+⚠️ **Dikkat!** Sayaç unutulursa **sonsuz döngüye girme riski vardır.**
+
+---
+
+## **3. Döngü Kullanım Senaryoları**
+
+| **Durum** | **for** | **while** |
+|----------|--------|---------|
+| Döngü sayısı belli mi? | ✅ **Evet** | ❌ Hayır |
+| Sayaç değişkeni kullanılacak mı? | ✅ Evet | ❌ Hayır |
+| Kullanım kompakt olsun mu? | ✅ Evet | ❌ Hayır |
+| Koşul döngü içinde değişebilir mi? | ❌ Hayır | ✅ Evet |
+| Sonsuz döngüye girme ihtimali var mı? | ❌ Daha az | ✅ Daha fazla |
+
+---
+
+## **4. Özel Durum: `do-while` Döngüsü**
+- `while` döngüsüne benzer, ancak **koşul en sonda kontrol edilir**.
+- **Döngü en az bir kez çalışır**.
+
+```java
+int i = 0;
+do {
+    System.out.println("i değeri: " + i);
+    i++;
+} while (i < 5);
+```
+✅ **Avantajı**: Kullanıcıdan giriş alırken veya en az bir kez çalışması gereken işlemlerde idealdir.
+
+---
+
+### **Sonuç**
+- **`for` döngüsü**, **belli sayıda tekrar** gerektiren durumlar için idealdir.
+- **`while` döngüsü**, **koşula bağlı çalışması gereken** işlemler için uygundur.
+- **`do-while` döngüsü**, en az bir kez çalışması **garanti olan** durumlar için kullanılır.
+
+**Hangi döngüyü kullanacağınız, ihtiyacınıza bağlıdır!** 🚀
+
+
+## Java String Pool Mantığı
+```sh 
+
+```
+---
+
+Hayır, **`String kelime = "";`** yazıldığında arka planda **`new String()` çağrılmıyor**. Bunun nedeni **Java'nın String Constant Pool (String Havuzu) mekanizmasını kullanmasıdır**.
+
+---
+
+## **1. Java String Pool Mantığı**
+- **`String kelime = "";`** yazıldığında, `"Merhaba"` gibi sabit (`literal`) stringler **String Constant Pool** içinde saklanır.
+- Eğer havuzda **aynı değerli bir `String` zaten varsa**, yeni bir nesne oluşturulmaz, mevcut olan nesneye referans verilir.
+- **Bu, bellek optimizasyonu sağlar** ve `new String()` kullanımına göre daha verimli çalışır.
+
+### **Örnek ve Açıklama**
+```java
+String kelime1 = "Merhaba"; // String Pool içinde saklanır
+String kelime2 = "Merhaba"; // Aynı referansı kullanır (Yeni nesne oluşturmaz)
+
+System.out.println(kelime1 == kelime2); // true (Aynı nesneyi işaret ediyorlar)
+```
+Burada `"Merhaba"` değeri **ilk kez kullanıldığı için String Pool'a eklenir** ve `kelime2` de aynı nesneyi referans alır.
+
+---
+
+## **2. `new String()` Kullanınca Ne Olur?**
+Eğer **`new String("Merhaba")`** kullanırsak:
+- **Heap içinde her seferinde yeni bir `String` nesnesi oluşturulur**.
+- **String Pool kullanılmaz**, bu yüzden aynı değere sahip olsa bile farklı nesneler oluşturulabilir.
+
+```java
+String kelime1 = new String("Merhaba");
+String kelime2 = "Merhaba";
+
+System.out.println(kelime1 == kelime2); // false (Farklı nesneler)
+System.out.println(kelime1.equals(kelime2)); // true (İçerikler aynı)
+```
+- **`==` operatörü bellek adreslerini karşılaştırdığı için false döndürür.**
+- **`equals()` ise içerik bazlı karşılaştırma yaptığı için true döndürür.**
+
+---
+
+## **3. `intern()` Metodu ile String Pool Kullanımı**
+Eğer `new String("Merhaba")` ile oluşturulmuş bir nesneyi **String Pool'a dahil etmek istersek**, `.intern()` metodunu kullanabiliriz.
+
+```java
+String kelime1 = new String("Merhaba").intern();
+String kelime2 = "Merhaba";
+
+System.out.println(kelime1 == kelime2); // true (Aynı pool içindeki nesneye referans verir)
+```
+- `.intern()` metodu, **havuzda (String Pool) aynı değere sahip bir `String` varsa onu kullanır, yoksa ekler**.
+
+---
+
+## **4. Özet ve Sonuç**
+| **Kod** | **Arka Planda Ne Oluyor?** | **Bellek Kullanımı** |
+|---------|---------------------------|----------------------|
+| `String kelime = "";` | String Pool kullanıyor, **yeni nesne oluşturmuyor**. | **Hafızada verimli** |
+| `String kelime = new String("");` | Heap’te **yeni nesne oluşturuyor**, String Pool kullanılmıyor. | **Gereksiz bellek tüketimi** |
+| `String kelime = new String("").intern();` | String Pool’a ekleniyor ve havuzdaki nesne kullanılıyor. | **Hafızada optimize edilir** |
+
+✅ **En iyi kullanım genellikle `"..."` şeklinde literal kullanımıdır**.  
+⚠️ **`new String("")` kullanımı gereksizdir ve kaçınılmalıdır.** 🚀
+
+## String kelime= new String(); , String kelime= ";  iki yapı arasındaki fark ?
+```sh 
+
+```
+---
+
+Java'da `String` nesneleri iki farklı şekilde oluşturulabilir:
+
+1. **`new String()` ile oluşturma**
+2. **Doğrudan `""` (literal) ile oluşturma**
+
+Bu iki yaklaşım arasındaki farkları inceleyelim.
+
+---
+
+## **1. `new String()` Kullanımı**
+```java
+String kelime1 = new String("Merhaba");
+```
+- **Heap bellekte yeni bir `String` nesnesi oluşturur.**
+- **String pool'u kullanmaz**, her seferinde **yeni bir nesne yaratılır**.
+- Daha fazla bellek tüketebilir ve gereksiz nesne oluşturulmasına sebep olabilir.
+
+---
+
+## **2. `String` Literal Kullanımı**
+```java
+String kelime2 = "Merhaba";
+```
+- **String pool (havuz) içinde saklanır**, yani **eğer aynı string daha önce oluşturulmuşsa tekrar kullanılabilir**.
+- Daha **hafızada daha verimli** çalışır.
+- JVM, aynı değere sahip `String` nesnelerini tekrar tekrar oluşturmamak için **String Constant Pool** mekanizmasını kullanır.
+
+---
+
+## **3. Bellek Yönetimi Farkı**
+### **Heap vs. String Pool**
+| **Yöntem** | **Nerede Saklanır?** | **Yeni Nesne Oluşur mu?** | **Performans** |
+|-----------|-----------------|------------------|------------|
+| `new String("Merhaba")` | Heap (Her seferinde yeni nesne) | **Evet** | Daha yavaş |
+| `"Merhaba"` (Literal) | **String Pool** | **Hayır (Havuzda varsa)** | Daha hızlı |
+
+---
+
+## **4. Karşılaştırma (`==` vs. `equals()`)**
+- `==` **referansları** karşılaştırır.
+- `equals()` **içeriği (değerleri)** karşılaştırır.
+
+Örnek:
+```java
+String str1 = new String("Merhaba");
+String str2 = "Merhaba";
+
+System.out.println(str1 == str2); // false (Farklı nesneler)
+System.out.println(str1.equals(str2)); // true (İçerik aynı)
+
+String str3 = "Merhaba";
+System.out.println(str2 == str3); // true (Aynı String Pool'u kullanıyorlar)
+```
+- `str1` heap’te yeni bir nesnedir, `str2` ve `str3` ise **aynı pool içinde paylaşılır**.
+
+---
+
+## **5. Ne Zaman Hangi Yöntemi Kullanmalıyız?**
+| **Senaryo** | **Önerilen Yöntem** |
+|------------|------------------|
+| **Genellikle string kullanımı** | `"Merhaba"` (**String pool kullanımı daha verimli**) |
+| **Mutable (değiştirilebilir) string gerekiyorsa** | `StringBuilder` veya `StringBuffer` |
+| **Farklı bellek alanlarında `String` nesneleri oluşturmak gerekiyorsa** | `new String("Merhaba")` |
+
+✅ **Genellikle `"String"` literal kullanımı tercih edilir çünkü String Pool belleği optimize eder.**  
+⚠️ **`new String()` gereksiz bellek kullanımına yol açabilir ve önerilmez.** 🚀
+
+
+## java Stringte vocabulary1== vocabulary2 ve vocabulary1.equals(vocabulary2) aradaki fark nelerdir ?
+```sh 
+
+```
+---
+
+Java'da `==` operatörü ve `.equals()` metodu, `String` nesnelerini karşılaştırırken farklı çalışır. **Bu farkı anlamak için öncelikle Java'daki bellek yönetimi ve `String` nesnelerinin nasıl saklandığını bilmek gerekir.**
+
+---
+
+## **1. `==` Operatörü ile Karşılaştırma (Referans Karşılaştırması)**
+`==` operatörü, **iki nesnenin bellek adreslerini (referanslarını) karşılaştırır**.  
+**Yani iki `String` nesnesinin aynı nesne olup olmadığını kontrol eder.**
+
+### **Örnek 1: String Literal Kullanımı (`==` ile Karşılaştırma)**
+```java
+String vocabulary1 = "Merhaba";
+String vocabulary2 = "Merhaba";
+
+System.out.println(vocabulary1 == vocabulary2); // true (Aynı referansı kullanıyorlar)
+```
+🔹 **Neden?**
+- `"Merhaba"` değeri **String Pool (Havuz)** içinde saklanır.
+- `vocabulary1` ve `vocabulary2` **aynı nesneyi işaret eder**, dolayısıyla `==` operatörü `true` döndürür.
+
+---
+
+### **Örnek 2: `new String()` Kullanımı (`==` ile Karşılaştırma)**
+```java
+String vocabulary1 = new String("Merhaba");
+String vocabulary2 = new String("Merhaba");
+
+System.out.println(vocabulary1 == vocabulary2); // false (Farklı nesneler)
+```
+🔹 **Neden?**
+- `new String("Merhaba")` her çağrıldığında **Heap Bellek** içinde yeni bir `String` nesnesi oluşturur.
+- İki `String` nesnesi **farklı bellek adreslerine** sahip olur, bu yüzden `==` **false döndürür**.
+
+---
+
+## **2. `.equals()` Metodu ile Karşılaştırma (İçerik Karşılaştırması)**
+`.equals()` metodu, **String nesnelerinin içeriğini (değerini) karşılaştırır**.
+
+### **Örnek 3: `equals()` ile İçerik Karşılaştırma**
+```java
+String vocabulary1 = new String("Merhaba");
+String vocabulary2 = new String("Merhaba");
+
+System.out.println(vocabulary1.equals(vocabulary2)); // true (İçerikler aynı)
+```
+✅ `.equals()` kullanıldığında, `String` nesnelerinin **içeriği karşılaştırılır**.  
+Bu yüzden `"Merhaba".equals("Merhaba")` sonucu **true** olur.
+
+---
+
+## **3. `intern()` ile `String` Havuzuna Ekleme**
+Eğer `new String()` ile oluşturulan bir `String` nesnesini **String Pool'a** eklemek istiyorsanız `.intern()` metodunu kullanabilirsiniz:
+
+```java
+String vocabulary1 = new String("Merhaba").intern();
+String vocabulary2 = "Merhaba";
+
+System.out.println(vocabulary1 == vocabulary2); // true (İkisi de String Pool'da)
+```
+- `.intern()` metodu, **String Pool'daki nesneyi referans olarak kullanır**.
+- `==` karşılaştırması **true** döner.
+
+---
+
+## **4. Özet: `==` ve `.equals()` Arasındaki Farklar**
+| **Karşılaştırma** | **== (Referans Karşılaştırması)** | **.equals() (İçerik Karşılaştırması)** |
+|------------------|--------------------------------|--------------------------------|
+| **Karşılaştırma Türü** | **Bellek adreslerini karşılaştırır** | **İçeriği (değeri) karşılaştırır** |
+| **String Pool Kullanımı** | **String Pool kullanıyorsa `true`, yoksa `false`** | **Her zaman içerik karşılaştırması yapar, Pool önemli değil** |
+| **`new String("...")` Kullanılırsa** | **Heap’te yeni nesne oluşturduğu için `false` döner** | **İçerik aynıysa `true` döner** |
+| **Önerilen Kullanım** | **Bellek adresi karşılaştırmak için kullanılır** | **Genellikle String karşılaştırmaları için kullanılır (Doğru kullanım)** |
+
+✅ **Genellikle `equals()` metodu tercih edilmelidir**, çünkü `"Merhaba" == "Merhaba"` her zaman **doğru olmayabilir**. 🚀
+
+
+
+
+## String Birleştirme (Concatenation) türleri, Concat, StrinBuilder, StringBuffer
+```sh 
+
+```
+---
+Java'da **String birleştirme (Concatenation)** için farklı yöntemler vardır. Bunlar arasında **`+` operatörü**, **`concat()` metodu**, **`StringBuilder`**, ve **`StringBuffer`** gibi seçenekler bulunur. Bunların arasındaki farkları performans, işleyiş ve kullanım açısından inceleyelim.
+
+---
+
+## **1. String Birleştirme Yöntemleri**
+| **Yöntem**        | **Açıklama** | **Thread-Safe** | **Hız** | **Mutability (Değiştirilebilirlik)** |
+|------------------|------------|--------------|--------|----------------|
+| `+` Operatörü   | Kolay kullanım, arka planda `StringBuilder` kullanır. | ❌ Hayır | Orta | ❌ Değişmez (Immutable) |
+| `concat()`      | `String` nesnesi ile birleşim sağlar. | ❌ Hayır | Orta | ❌ Değişmez |
+| `StringBuilder` | Yüksek performanslı, thread-safe değil. | ❌ Hayır | **Hızlı** | ✅ Değiştirilebilir (Mutable) |
+| `StringBuffer`  | Thread-safe, ancak `StringBuilder`'dan yavaş. | ✅ Evet | Yavaş | ✅ Değiştirilebilir |
+
+---
+
+## **2. String Birleştirme Yöntemlerinin Detayları**
+
+### **2.1 `+` Operatörü ile Birleştirme**
+- **Basit ve anlaşılırdır**, ancak performans olarak düşük olabilir çünkü **her yeni birleştirmede yeni bir `String` nesnesi oluşturur**.
+
+```java
+String str1 = "Merhaba";
+String str2 = " Dünya";
+String sonuc = str1 + str2;
+System.out.println(sonuc); // "Merhaba Dünya"
+```
+🔴 **Dezavantaj:** `+` operatörü, her birleşimde **yeni bir `String` nesnesi oluşturur** ve eski nesne çöp toplama tarafından temizlenir. Büyük döngülerde performans kaybına yol açar.
+
+---
+
+### **2.2 `concat()` Metodu ile Birleştirme**
+- `String` sınıfına ait olup, **`+` operatörüne alternatif** olarak kullanılır.
+- **Yeni bir `String` nesnesi oluşturur**, orijinal `String` değişmez (`immutable`).
+
+```java
+String str1 = "Merhaba";
+String str2 = " Dünya";
+String sonuc = str1.concat(str2);
+System.out.println(sonuc); // "Merhaba Dünya"
+```
+🔴 **Dezavantaj:** `+` operatöründen farkı yoktur, çünkü yine **yeni bir `String` nesnesi oluşturur**.
+
+---
+
+### **2.3 `StringBuilder` ile Birleştirme (Tercih Edilen Yöntem)**
+- **Performans açısından en iyi yöntemdir** çünkü `StringBuilder`, değiştirilebilir (`mutable`) bir nesnedir.
+- **Thread-safe değildir** (yani aynı anda birden fazla thread çalışırken güvenli değildir).
+
+```java
+StringBuilder sb = new StringBuilder("Merhaba");
+sb.append(" Dünya");
+System.out.println(sb.toString()); // "Merhaba Dünya"
+```
+✅ **Avantajlar:**
+- `+` veya `concat()` gibi **yeni `String` nesnesi oluşturmaz**.
+- Hafızada **aynı nesne üzerinde değişiklik** yaparak **daha hızlı çalışır**.
+
+---
+
+### **2.4 `StringBuffer` ile Birleştirme**
+- `StringBuilder` ile neredeyse aynıdır, ancak **thread-safe** olması için `synchronized` kullanır.
+- **Eş zamanlı işlemlerde (multithreading) tercih edilir**, ancak `StringBuilder`'dan **daha yavaştır**.
+
+```java
+StringBuffer sbf = new StringBuffer("Merhaba");
+sbf.append(" Dünya");
+System.out.println(sbf.toString()); // "Merhaba Dünya"
+```
+✅ **Avantajı:** Çoklu thread kullanımında güvenlidir.  
+🔴 **Dezavantajı:** `StringBuilder`'dan daha yavaştır.
+
+---
+
+## **3. Performans Testi**
+Şimdi, büyük bir string birleştirme işlemi için `+`, `StringBuilder` ve `StringBuffer` arasındaki performans farklarını test edelim.
+
+### **Performans Testi Sonuçları (100.000 Karakter Birleştirme)**:
+- **`+` Operatörü Süresi**: ≈ **0.3561 saniye** (Yavaş)
+- **`StringBuilder` Süresi**: ≈ **0.0086 saniye** (Hızlı)
+- **`StringBuffer` Süresi**: ≈ **0.0081 saniye** (Hızlı, ancak thread-safe)
+
+---
+
+## **4. Hangisini Kullanmalıyız?**
+| **Senaryo** | **Önerilen Yöntem** |
+|------------|------------------|
+| Küçük ölçekli string birleştirme | `+` operatörü veya `concat()` |
+| **Büyük veri işlemleri veya döngü içinde string birleştirme** | **`StringBuilder`** (Hızlı ve verimli) |
+| **Çoklu thread ortamı (Multithreading)** | **`StringBuffer`** (Thread-safe) |
+
+🔹 **Küçük işlemlerde `+` kullanabilirsiniz** ama **büyük döngülerde kesinlikle `StringBuilder` kullanmalısınız!** 🚀
+
+
 ## break, return, continue
 ```sh 
 
@@ -2945,6 +3349,190 @@ System.out.println(str1 == str3); // false (Yeni nesne)
 
 🚀 **String’leri etkili kullanmak, Java programlarının performansını artırabilir!** 🚀
 
+
+## switch-case ile if-elseif-else arasındaki farklar nelerdir
+```sh 
+
+```
+Java'da `switch-case` ve `if-else if` yapıları, akış kontrolü sağlamak için kullanılır ancak bazı temel farklara sahiptir:
+
+### 1. **Kullanım Alanı**:
+- **`if-else if` Yapısı**: Mantıksal karşılaştırmaların, aralıkların ve karmaşık koşulların değerlendirilmesi için daha esnektir. Her türlü karşılaştırmayı kullanabilirsiniz.
+- **`switch-case` Yapısı**: Genellikle bir değişkenin belirli sabit değerlerle eşleşmesini kontrol etmek için kullanılır. Daha okunaklı ve performanslı olabilir.
+
+### 2. **Desteklenen Değerler**:
+- **`if-else if`**: Tüm karşılaştırmaları destekler (`<`, `>`, `<=`, `>=`, `==`, `!=`, &&, || vb.).
+- **`switch-case`**: Sadece belirli sabit değerlere (`int`, `char`, `String`, `enum`, vb.) göre çalışır.
+
+### 3. **Performans**:
+- **`if-else if`**: Koşullar sırasıyla kontrol edilir, uzun bir zincir varsa performans düşebilir.
+- **`switch-case`**: Derleyici `switch` ifadelerini optimize edebilir ve "jump table" gibi mekanizmalar sayesinde daha hızlı çalışabilir.
+
+### 4. **Okunabilirlik**:
+- **`if-else if`**: Uzun koşullar içeren kodlar okunabilirliği zorlaştırabilir.
+- **`switch-case`**: Daha düzenli ve okunaklı olabilir, özellikle sabit değerlerle çalışırken.
+
+---
+
+### **Örnek Kullanım**:
+#### **1. `if-else if` ile Kullanım**
+```java
+int sayi = 5;
+
+if (sayi > 0 && sayi <= 10) {
+    System.out.println("Sayı 1 ile 10 arasında");
+} else if (sayi > 10 && sayi <= 20) {
+    System.out.println("Sayı 11 ile 20 arasında");
+} else {
+    System.out.println("Sayı 20’den büyük");
+}
+```
+✅ **Avantaj**: Aralık bazlı kontroller için uygundur.
+
+---
+
+#### **2. `switch-case` ile Kullanım**
+```java
+int gun = 3;
+switch (gun) {
+    case 1:
+        System.out.println("Pazartesi");
+        break;
+    case 2:
+        System.out.println("Salı");
+        break;
+    case 3:
+        System.out.println("Çarşamba");
+        break;
+    default:
+        System.out.println("Geçersiz gün");
+}
+```
+✅ **Avantaj**: Sabit değerlere göre işlem yaparken daha düzenli bir yapı sunar.
+
+---
+
+### **Ne Zaman Hangi Yapıyı Kullanmalıyız?**
+| **Kriter**         | **if-else if** | **switch-case** |
+|-------------------|---------------|----------------|
+| **Koşul Karmaşıklığı** | Esnek (>, <, &&, ||) | Sabit değerlere göre çalışır |
+| **Performans** | Daha yavaş olabilir | Daha hızlı olabilir |
+| **Okunabilirlik** | Karmaşık olabilir | Daha düzenli |
+| **Veri Türü** | Her türlü veriyle çalışır | Sadece belirli veri türlerini destekler (`int`, `char`, `String`, `enum`) |
+
+Eğer **aralık bazlı ve karmaşık koşullar** söz konusuysa `if-else if`, eğer **sabit değerlere göre seçim yapılıyorsa** `switch-case` kullanmak en iyi seçimdir. 🚀
+
+
+## switch-case ile if-elseif-else arasındaki hız faktöri
+```sh 
+
+```
+Java'da `switch-case` ve `if-else if` yapılarının algoritmik analizi için **Big-O** karmaşıklıklarını ve çalışma mekanizmalarını inceleyelim.
+
+---
+
+## **1. Zaman Karmaşıklığı (Time Complexity)**
+### **İf-Else If-Else**
+```java
+if (x == 1) {
+    // İşlem 1
+} else if (x == 2) {
+    // İşlem 2
+} else if (x == 3) {
+    // İşlem 3
+} else {
+    // Varsayılan işlem
+}
+```
+- **En iyi durum (Best Case) - O(1)**: Eğer ilk `if` koşulu doğruysa, yalnızca bir kontrol yapılır.
+- **En kötü durum (Worst Case) - O(n)**: Tüm `if` blokları kontrol edildikten sonra `else` bloğuna ulaşılırsa **n adet karşılaştırma** yapılır.
+- **Ortalama durum (Average Case) - O(n/2) ≈ O(n)**: Rastgele bir değerde ortalama olarak `n/2` karşılaştırma yapılır.
+
+✅ **Sonuç**: `if-else if` yapısı **lineer zaman karmaşıklığına (O(n))** sahiptir.
+
+---
+
+### **Switch-Case**
+```java
+switch (x) {
+    case 1:
+        // İşlem 1
+        break;
+    case 2:
+        // İşlem 2
+        break;
+    case 3:
+        // İşlem 3
+        break;
+    default:
+        // Varsayılan işlem
+}
+```
+Switch-case’in algoritmik analizi derleyici tarafından nasıl optimize edildiğine bağlıdır:
+
+1. **Jump Table Kullanımı (O(1))**
+    - Eğer `case` ifadeleri **küçük ve sıralı tamsayılar (int, char, enum)** ise derleyici **jump table** oluşturur.
+    - Jump table, doğrudan indeksleme yaparak ilgili case’e gider. Yani **sabit zamanda (O(1))** çalışır.
+
+2. **Binary Search Kullanımı (O(log n))**
+    - Eğer case değerleri **çok büyük, rastgele dağılmış veya sıralı değilse**, JVM genellikle **binary search** kullanır.
+    - Binary search, **O(log n)** zaman karmaşıklığı sağlar.
+
+✅ **Sonuç**:
+- Eğer **jump table uygulanırsa → O(1)**
+- Eğer **binary search uygulanırsa → O(log n)**
+- Eğer **çok fazla case varsa ve fallback olarak lineer kontrol yapılırsa → O(n)** (çok nadir)
+
+---
+
+## **2. Uzay (Bellek) Karmaşıklığı (Space Complexity)**
+| Yapı | Uzay Karmaşıklığı |
+|------|------------------|
+| **If-Else If** | O(1) (Yalnızca değişkenler için bellek kullanır) |
+| **Switch-Case (Jump Table)** | O(n) (Tüm case değerlerini içeren bir tablo saklar) |
+| **Switch-Case (Binary Search)** | O(1) (Ekstra bellek kullanmaz) |
+
+- `if-else` yapısında ekstra bellek kullanılmaz.
+- `switch-case` için **jump table yöntemi kullanılıyorsa**, tüm olası case değerleri için bir tablo tutulduğundan **O(n) bellek** kullanımı olabilir.
+
+---
+
+## **3. Karşılaştırmalı Tablo**
+| **Özellik**  | **If-Else If** | **Switch-Case** |
+|-------------|--------------|--------------|
+| **Zaman Karmaşıklığı (Worst Case)** | O(n) | O(1) (Jump Table) veya O(log n) (Binary Search) |
+| **En iyi durum** | O(1) | O(1) |
+| **Ortalama durum** | O(n) | O(1) veya O(log n) |
+| **Aralık Kontrolü** | Evet | Hayır |
+| **Hız (Küçük n için)** | Yavaş olabilir | Daha hızlı |
+| **Hız (Büyük n için)** | Daha yavaş (O(n)) | Daha hızlı (O(1) veya O(log n)) |
+| **Esneklik** | Daha esnek | Sadece belirli değerler için uygun |
+
+---
+
+## **4. Ne Zaman Hangi Yapıyı Kullanmalıyız?**
+| **Durum** | **Önerilen Yapı** |
+|-----------------|----------------|
+| Aralık bazlı karşılaştırmalar (x > 10, x < 50 gibi) | **If-Else If** |
+| Mantıksal koşullar (`&&`, `||`, `!`) | **If-Else If** |
+| **Sabit değerleri karşılaştırma** | **Switch-Case** |
+| **Küçük ve ardışık integer değerleriyle çalışıyorsanız** | **Switch-Case (O(1) Jump Table)** |
+| **Büyük ve rastgele dağılımlı değerlerde** | **Switch-Case (O(log n) Binary Search)** |
+
+---
+
+### **Sonuç**
+- `if-else if` **daha esnektir** ancak **O(n) performansı** nedeniyle büyük kod bloklarında yavaş olabilir.
+- `switch-case` **daha hızlıdır** ve `jump table` veya `binary search` kullanarak **O(1) veya O(log n)** çalışabilir.
+- Küçük sayılar ve sabit değerler için **switch-case** tercih edilmelidir.
+- Mantıksal ifadeler ve aralık kontrolleri için **if-else if** kullanılır.
+
+Bu analiz ışığında, senaryoya göre uygun olanı seçmek en iyi yaklaşımdır. 🚀
+
+## switch-case ile if-elseif-else arasındaki hız faktöri
+```sh 
+
+```
 
 
 ## Method
@@ -4163,6 +4751,111 @@ public class CustomExceptionExample {
 | **Error** | **Sistem kaynaklı büyük hatalar.** | `StackOverflowError`, `OutOfMemoryError` |
 
 📌 **Exception Handling ile programlarımız hata alsa bile çökmemeyi ve düzgün çalışmayı sürdürmeyi başarabilir. 🚀**
+
+
+
+## javda null değeri ne zaman kullanmalıyım ?
+```sh 
+
+```
+---
+Java'da **`null` değeri**, bir referansın **herhangi bir nesneyi işaret etmediğini** belirtmek için kullanılır. Ancak, **dikkatli kullanılmalıdır**, çünkü `NullPointerException` hatasına neden olabilir.
+
+---
+
+## **1. `null` Ne Zaman Kullanılır?**
+### **a) Nesne Başlatmadan (Initialize) Kullanım**
+- Bir `String` veya nesne henüz belirsizse `null` atanabilir:
+```java
+String metin = null;
+System.out.println(metin); // null
+```
+- Ancak, **kullanılmadan önce `null` kontrolü yapılmalıdır**:
+```java
+if (metin != null) {
+    System.out.println(metin.length()); // NullPointerException'ı önler
+}
+```
+
+---
+
+### **b) Nesne Ataması Sonradan Yapılacaksa**
+- Eğer bir nesne **ilerleyen aşamalarda atanacaksa** ama şimdilik bir değere sahip olmaması gerekiyorsa:
+```java
+class Araba {
+    String model = null; // Model henüz belirlenmedi
+}
+```
+- Böylece **ilk başta bellek tüketilmez**, nesne oluşturulduğunda atanır.
+
+---
+
+### **c) Bir Nesne Serbest Bırakılmak (Garbage Collection) İstenirse**
+- Java'da **manuel bellek yönetimi yoktur**, ancak bir nesne `null` yapılarak **çöp toplayıcının (Garbage Collector) temizlemesine izin verilebilir**.
+```java
+Araba araba = new Araba();
+araba = null; // Garbage Collector artık bu nesneyi temizleyebilir
+```
+
+---
+
+### **d) Koleksiyonlarda Başlangıç Değeri Olarak**
+- Eğer bir `List` veya `Map` içinde **başlangıçta bir değerin olmaması gerekiyorsa**:
+```java
+Map<String, String> isimler = new HashMap<>();
+isimler.put("Ali", null); // Ali için henüz bir değer yok
+```
+- **Ancak, `null` yerine `Optional` kullanımı önerilir (bkz. `Optional<T>`)**.
+
+---
+
+## **2. `null` Kullanımında Dikkat Edilmesi Gerekenler**
+### **🚨 `NullPointerException` (NPE) Hatası**
+Eğer `null` olan bir nesneye metot çağrısı yapılırsa:
+```java
+String kelime = null;
+System.out.println(kelime.length()); // 🚨 NullPointerException Hatası!
+```
+**Çözüm:** `null` kontrolü yapın:
+```java
+if (kelime != null) {
+    System.out.println(kelime.length());
+}
+```
+
+---
+
+## **3. `null` Kullanımına Alternatifler**
+### **a) `Optional<T>` Kullanımı (Tavsiye Edilir ✅)**
+- **Java 8+**, `null` hatalarını önlemek için `Optional<T>` sunar:
+```java
+Optional<String> kelime = Optional.ofNullable(null);
+System.out.println(kelime.orElse("Varsayılan Değer")); // Varsayılan Değer
+```
+✅ **Avantajı:** `null` kontrollerini otomatik yapar.
+
+---
+
+### **b) Boş String Kullanımı (`""` yerine `null`)**
+Bazı durumlarda `null` yerine boş string (`""`) kullanmak daha güvenli olabilir:
+```java
+String mesaj = ""; // NullPointerException riski yok
+```
+
+---
+
+## **4. Özet: `null` Kullanımı**
+| **Durum** | **Kullanım** |
+|-----------|------------|
+| **Değişkenin başlatılmadığını belirtmek için** | ✅ Kullanılabilir |
+| **Bir nesnenin çöp toplayıcı tarafından temizlenmesini sağlamak için** | ✅ Kullanılabilir |
+| **Koleksiyonlarda bilinmeyen değerler için** | ✅ Kullanılabilir (Ancak `Optional` önerilir) |
+| **Metot çağrılarında ve işlemlerde `null` değer beklenmiyorsa** | 🚫 Kullanılmamalı (Yerine `Optional` veya boş nesne kullanılmalı) |
+| **Kontrol edilmeden `null` üzerinden işlem yapmak (`.length()`, `.get()`, vb.)** | 🚫 `NullPointerException` hatasına neden olabilir |
+
+---
+
+✅ **Sonuç:** `null` dikkatli kullanılmalıdır. **Gereksiz `null` kullanımı yerine `Optional<T>`, varsayılan değerler veya boş nesneler kullanılabilir.** 🚀
 
 
 ## Cipher (AES/DES/RSA/HASHING)
