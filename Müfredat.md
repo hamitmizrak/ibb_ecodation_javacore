@@ -49,10 +49,10 @@ Perşembe (13 Şubat) - 3 Saat
 
   
 Cumartesi (15 Şubat) - 4 Saat
-- Arrays
 - Paketler ve Erişim Belirleyiciler
   . Paketlerin Kullanımı
   . Erişim Belirleyiciler (public, private, protected)
+- Arrays
 
 ----------------------------------------------------------------------
 ### 3. Hafta

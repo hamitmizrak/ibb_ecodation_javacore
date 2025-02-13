@@ -3,9 +3,14 @@ package com.hamitmizrak._2_week;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+      Exception in thread "main" java.lang.ArithmeticException: / by zero
+      at com.hamitmizrak._2_week._14_1_Exception.main(_14_1_Exception.java:8)
+       */
 public class _14_1_Exception {
 
-    public static void main(String[] args) throws ArithmeticException, IOException, NullPointerException {
+
+    public static void calcula() throws ArithmeticException, IOException, NullPointerException {
         Scanner scanner = new Scanner(System.in);
         int number1, number2;
         System.out.println("Number 1 giriniz");
@@ -27,11 +32,13 @@ public class _14_1_Exception {
             System.out.println("İstisna olsada olmazsada mutlaka yapılacak iş");
             scanner.close();
         }
-
-        /*
-       Exception in thread "main" java.lang.ArithmeticException: / by zero
-	   at com.hamitmizrak._2_week._14_1_Exception.main(_14_1_Exception.java:8)
-        */
         System.out.println("Son 10.000 satır");
+    }
+
+    public static void main(String[] args) throws IOException {
+        calcula();
+        System.out.println("################################");
+        // Bilerek istisna gönder
+        throw new NullPointerException("Neden boş verdiniz");
     }
 }
