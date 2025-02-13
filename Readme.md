@@ -1434,6 +1434,12 @@ System.out.println(str2); // "456"
 📌 **Cevap:** Java koleksiyonları nesne tutar. `int` bir nesne değildir, bu yüzden **`List<Integer>`** kullanmalıyız. 🚀
 
 
+## Cast
+```sh 
+
+```
+---
+
 ## Java Math
 ```sh 
 
