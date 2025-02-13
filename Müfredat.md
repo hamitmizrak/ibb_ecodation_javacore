@@ -38,19 +38,21 @@ Salı (11 Şubat) - 3 Saat
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading, override
 
-Perşembe (13 Şubat) - 3 Saat
-- Arrays
-- Paketler ve Erişim Belirleyiciler
-    . Paketlerin Kullanımı
-    . Erişim Belirleyiciler (public, private, protected)
 
-Cumartesi (15 Şubat) - 4 Saat
+Perşembe (13 Şubat) - 3 Saat
 - Date(Tarih)
 - İstisnalar (Exceptions)
   . Exception Kavramı (Checked ve Unchecked ayrımı)
   . Try-Catch-Finally
 - Throw, Throws
   . Özel Exception sınıfları yazma
+
+  
+Cumartesi (15 Şubat) - 4 Saat
+- Arrays
+- Paketler ve Erişim Belirleyiciler
+  . Paketlerin Kullanımı
+  . Erişim Belirleyiciler (public, private, protected)
 
 ----------------------------------------------------------------------
 ### 3. Hafta
