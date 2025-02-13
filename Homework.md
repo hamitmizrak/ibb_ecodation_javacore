@@ -57,5 +57,9 @@ null değeri ne zaman kullanabilirim ?
 > Overloading nedir ?
 > Override nedir ?
 > String kelime= new String(); , String kelime= "";  iki yapı arasındaki fark ?
-> System.out.println(vocabulary1== vocabulary2);
-> System.out.println(vocabulary1.equals(vocabulary2));
+> vocabulary1== vocabulary2 ile vocabulary1.equals(vocabulary2));
+> vocabulary1== vocabulary2 (String kelime= new String();) 
+> ile vocabulary1.equals(vocabulary2)) (String kelime= "";)
+
+## 5.Ders Ödevi (13 Şubat)
+> 

@@ -3789,6 +3789,172 @@ class Kedi extends Hayvan {
 📌 **Java'da metotlar, kod tekrarını önler ve programın yönetilebilirliğini artırır! 🚀**
 
 
+## Javada Adresleme Nasıldır ?
+```sh 
+
+```
+---
+
+
+## **Java'da Adresleme Nasıl Çalışır? (Bellek Yönetimi ve Referanslar)**
+Java'da adresleme, **bellek yönetimi, nesne referansları ve değişkenlerin nasıl saklandığıyla** ilgilidir. **Java, bellek yönetimini büyük ölçüde otomatik hale getirir (Garbage Collector sayesinde), ancak bellekte verilerin nasıl tutulduğunu anlamak önemlidir.**
+
+---
+
+## **1. Java'da Bellek Alanları**
+Java'da bellek iki ana bölüme ayrılır:
+
+| **Bellek Alanı** | **Ne İçin Kullanılır?** |
+|----------------|----------------------|
+| **Stack Bellek** | **Yerel değişkenler, primitive türler ve referans değişkenleri burada saklanır.** |
+| **Heap Bellek** | **Tüm nesneler burada saklanır. Heap üzerindeki nesneler referans değişkenleri tarafından işaret edilir.** |
+
+### **📌 Önemli: Java'da Bellek Adresleme Mantığı**
+- **Primitive türler (`int`, `double`, `char`, vb.)** **stack bellekte** doğrudan saklanır.
+- **Referans türler (`String`, `Array`, `Object`, vb.)** **heap bellekte saklanır**, ancak değişkenler stack'te sadece **adresini (referansını)** tutar.
+- **Nesneye erişim, referans üzerinden yapılır** (C++'daki pointer'lara benzemez, ama mantık olarak benzer çalışır).
+
+---
+
+## **2. Örneklerle Java'da Adresleme**
+
+### **🎯 Örnek 1: Primitive Veri Türlerinin Stack Üzerinde Saklanması**
+```java
+public class PrimitiveStackExample {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = a; // b, a'nın değerini alır (Kopyalanır, adres paylaşımı olmaz)
+        b = 20;
+        
+        System.out.println("a: " + a); // 10
+        System.out.println("b: " + b); // 20
+    }
+}
+```
+📌 **Stack Bellek Yapısı:**
+- `a` değişkeni stack bellekte saklanır (`a -> 10`).
+- `b = a;` dediğimizde `b` için yeni bir bellek alanı açılır ve `10` kopyalanır.
+- `b` değiştiğinde `a` etkilenmez, çünkü **primitive değişkenler direkt olarak stack bellekte saklanır ve kopyalanır**.
+
+---
+
+### **🎯 Örnek 2: Referans Türleri ve Heap Bellek**
+```java
+class Araba {
+    String model;
+}
+
+public class ReferenceExample {
+    public static void main(String[] args) {
+        Araba araba1 = new Araba();
+        araba1.model = "BMW";
+
+        Araba araba2 = araba1; // araba1'in referansı kopyalandı
+
+        araba2.model = "Mercedes";
+
+        System.out.println("araba1 Model: " + araba1.model); // Mercedes
+        System.out.println("araba2 Model: " + araba2.model); // Mercedes
+    }
+}
+```
+📌 **Heap Bellek Yapısı:**
+1. `Araba araba1 = new Araba();`
+    - Yeni bir `Araba` nesnesi **Heap bellekte oluşturulur**.
+    - `araba1` değişkeni, stack bellekte nesnenin **heap adresini** tutar.
+2. `Araba araba2 = araba1;`
+    - `araba2`, **araba1 ile aynı heap adresini işaret eder** (Yeni nesne oluşturulmaz!).
+    - Yani `araba1` ve `araba2` aynı nesneyi gösterir.
+3. `araba2.model = "Mercedes";`
+    - `araba2` üzerinden nesne değiştirildiği için, **`araba1` de aynı nesneyi gösterdiğinden değişim her iki değişkende de görünür.**
+
+🚨 **Önemli Not:**  
+Eğer `araba2 = new Araba();` yapsaydık, **heap bellekte yeni bir nesne oluşturulurdu** ve `araba1` ile bağı kopardı.
+
+---
+
+## **3. Adresleme Mantığı: `==` vs `.equals()`**
+### **📌 `==` Operatörü (Bellek Adresi Karşılaştırması)**
+- İki referansın **aynı heap adresine** mi işaret ettiğini kontrol eder.
+
+### **📌 `.equals()` Metodu (İçerik Karşılaştırması)**
+- **Nesnelerin içeriğini karşılaştırır**.
+
+```java
+String s1 = new String("Merhaba");
+String s2 = new String("Merhaba");
+
+System.out.println(s1 == s2); // false (Farklı heap nesneleri)
+System.out.println(s1.equals(s2)); // true (İçerik aynı)
+```
+📌 **Neden?**
+- `s1` ve `s2` ayrı `new String()` ile oluşturulduğundan **farklı heap adreslerinde** saklanır.
+- **Ancak içerikleri aynı olduğundan** `.equals()` true döndürür.
+
+---
+
+## **4. Garbage Collector (Çöp Toplayıcı)**
+- **Java’da manuel `free()` veya `delete` yoktur (C++ gibi).**
+- **Garbage Collector (GC)**, kullanılmayan nesneleri otomatik olarak temizler.
+
+### **GC'nin Çalıştığı Durumlar:**
+1. **Bir nesneye referans kalmazsa temizlenir**:
+```java
+Araba araba1 = new Araba();
+araba1 = null; // Bu nesne artık Garbage Collector tarafından temizlenebilir.
+```
+2. **Eğer referans başka bir nesneye atanırsa, önceki nesne erişilemez olur**:
+```java
+Araba araba1 = new Araba();
+Araba araba2 = new Araba();
+araba1 = araba2; // Önceki araba1 nesnesi artık kullanılmaz ve GC temizleyebilir.
+```
+✅ **Heap bellekten silinme işlemi Garbage Collector tarafından yönetilir.**
+
+---
+
+## **5. Nesneleri Kopyalama ve Adresleme**
+- Eğer **nesnenin farklı bir kopyasını oluşturmak** istiyorsak **deep copy (derin kopya) yapmalıyız**.
+
+### **📌 Shallow Copy (Yüzeysel Kopyalama - Aynı Referansı Kullanır)**
+```java
+Araba araba1 = new Araba();
+araba1.model = "Audi";
+
+Araba araba2 = araba1; // Aynı heap adresini gösterir
+araba2.model = "Tesla";
+
+System.out.println(araba1.model); // Tesla
+```
+
+### **📌 Deep Copy (Derin Kopyalama - Yeni Bir Nesne Oluşturur)**
+```java
+Araba araba1 = new Araba();
+araba1.model = "Audi";
+
+Araba araba2 = new Araba();
+araba2.model = araba1.model; // Yeni nesneye ayrı değer atanıyor.
+
+araba2.model = "Tesla";
+
+System.out.println(araba1.model); // Audi (Değişmez!)
+System.out.println(araba2.model); // Tesla
+```
+✅ **Deep Copy kullanarak heap bellekte farklı nesneler oluşturmuş olduk.**
+
+---
+
+## **6. Özet: Java'da Adresleme**
+| **Tür** | **Saklandığı Bellek** | **Adresleme Mantığı** |
+|---------|----------------|----------------|
+| **Primitive Türler (`int`, `char`, `double`, vb.)** | **Stack Bellekte** | Direkt değer saklanır, referans kullanılmaz |
+| **Referans Türler (`String`, `Array`, `Object`)** | **Stack’te referans, Heap’te nesne** | Heap’te nesne tutulur, stack sadece adresini saklar |
+| **`==` Operatörü** | **Heap adreslerini karşılaştırır** | Aynı heap nesnesine mi işaret ediyor? |
+| **`.equals()` Metodu** | **İçeriği karşılaştırır** | İçerik aynı mı? |
+| **Garbage Collector (GC)** | **Heap’teki kullanılmayan nesneleri temizler** | Kullanılmayan nesneleri siler |
+
+✅ **Java, bellek adresleme işlemlerini otomatik olarak yönetir, ancak referans mantığını anlamak performans açısından önemlidir.** 🚀
+
 ## Dizi(Array)
 ```sh 
 
