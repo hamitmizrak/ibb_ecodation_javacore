@@ -1434,11 +1434,348 @@ System.out.println(str2); // "456"
 📌 **Cevap:** Java koleksiyonları nesne tutar. `int` bir nesne değildir, bu yüzden **`List<Integer>`** kullanmalıyız. 🚀
 
 
-## Cast
+## Cast-1
 ```sh 
 
 ```
 ---
+# **📌 Java'da Cast (Tür Dönüştürme) Nedir? (Detaylı Açıklama)**
+
+## **🔹 1. Cast (Tür Dönüştürme) Nedir?**
+Java'da **Cast (Tür Dönüştürme)**, bir değişkenin veya nesnenin **bir veri tipinden başka bir veri tipine dönüştürülmesi işlemidir**.
+
+Tür dönüştürme (casting) **iki ana kategoriye ayrılır:**
+1. **Primitive (İlkel) Türler Arasında Dönüştürme**
+    - **Genişletilmiş Dönüştürme (Widening Cast - Implicit Cast)**
+    - **Daraltılmış Dönüştürme (Narrowing Cast - Explicit Cast)**
+
+2. **Referans Türleri (Object) Arasında Dönüştürme**
+    - **Upcasting (Yukarı Dönüştürme)**
+    - **Downcasting (Aşağı Dönüştürme)**
+
+---
+
+# **🔹 2. Primitive (İlkel) Türler Arasında Dönüştürme**
+## **✅ 2.1 Genişletilmiş Dönüştürme (Widening Cast - Implicit Cast)**
+- **Küçük bir veri türü, otomatik olarak daha büyük bir veri türüne atanabilir.**
+- **Veri kaybı yaşanmaz.**
+- **Bu dönüşüm otomatik (implicit) olarak yapılır.**
+
+### **📌 Örnek**
+```java
+public class WideningExample {
+    public static void main(String[] args) {
+        int sayi = 100;
+        double genisSayi = sayi; // Otomatik dönüşüm (int → double)
+        
+        System.out.println("int değer: " + sayi);
+        System.out.println("double değere dönüştü: " + genisSayi);
+    }
+}
+```
+**Çıktı:**
+```
+int değer: 100
+double değere dönüştü: 100.0
+```
+📌 **Önemli Notlar:**
+- **`byte → short → int → long → float → double` dönüşümleri otomatiktir.**
+- **Veri kaybı yoktur, çünkü genişleyen tür daha fazla veri saklayabilir.**
+
+---
+
+## **✅ 2.2 Daraltılmış Dönüştürme (Narrowing Cast - Explicit Cast)**
+- **Büyük bir veri türü, daha küçük bir veri türüne dönüştürülür.**
+- **Veri kaybı veya hassasiyet kaybı olabilir.**
+- **Manuel olarak yapılmalıdır (Explicit Cast).**
+
+### **📌 Örnek**
+```java
+public class NarrowingExample {
+    public static void main(String[] args) {
+        double buyukSayi = 9.78;
+        int kucukSayi = (int) buyukSayi; // Açık dönüşüm (double → int)
+
+        System.out.println("double değer: " + buyukSayi);
+        System.out.println("int değere dönüştü: " + kucukSayi);
+    }
+}
+```
+**Çıktı:**
+```
+double değer: 9.78
+int değere dönüştü: 9
+```
+📌 **Önemli Notlar:**
+- **`double → float → long → int → short → byte` dönüşümlerinde veri kaybı olabilir.**
+- **Kesirli sayılar `int` gibi tam sayı türlerine dönüştürülürken küsurat kaybolur.**
+
+---
+
+## **✅ 2.3 `char` ve `int` Dönüştürme**
+📌 **`char` ve `int` türleri ASCII değerlerine göre birbirine dönüştürülebilir.**
+
+```java
+public class CharToIntExample {
+    public static void main(String[] args) {
+        char karakter = 'A';
+        int ascii = karakter; // 'A' karakterinin ASCII kodu
+
+        System.out.println("Karakter: " + karakter);
+        System.out.println("ASCII Kodu: " + ascii);
+    }
+}
+```
+**Çıktı:**
+```
+Karakter: A
+ASCII Kodu: 65
+```
+
+**Tam tersi dönüşüm:**
+```java
+int kod = 97;
+char karakter = (char) kod; // ASCII 97 → 'a'
+
+System.out.println("ASCII Kodu: " + kod);
+System.out.println("Karakter: " + karakter);
+```
+**Çıktı:**
+```
+ASCII Kodu: 97
+Karakter: a
+```
+
+---
+
+# **🔹 3. Referans Türleri (Nesne) Arasında Dönüştürme**
+Java'da **nesne dönüşümleri (Object Casting), `Object` ve `Class` hiyerarşisine dayanır**.
+
+## **✅ 3.1 Upcasting (Yukarı Dönüştürme)**
+- **Alt sınıf nesnesi, üst sınıf türüne çevrilebilir.**
+- **Otomatik olarak (Implicit Cast) yapılır.**
+- **Metotlar sadece üst sınıf türüne ait olanlarla sınırlıdır.**
+
+### **📌 Örnek**
+```java
+class Hayvan {
+    void sesCikar() {
+        System.out.println("Hayvan ses çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    void miyavla() {
+        System.out.println("Kedi miyavlıyor!");
+    }
+}
+
+public class UpcastingExample {
+    public static void main(String[] args) {
+        Hayvan hayvan = new Kedi(); // Upcasting (Otomatik)
+        hayvan.sesCikar(); // Üst sınıf metodu çağrılabilir
+        // hayvan.miyavla(); // HATA! Çünkü hayvan referansı Kedi'nin metodunu göremez.
+    }
+}
+```
+**Çıktı:**
+```
+Hayvan ses çıkarıyor...
+```
+📌 **Alt sınıf nesnesi üst sınıfa dönüştüğünde, sadece üst sınıfa ait metotlar kullanılabilir.**
+
+---
+
+## **✅ 3.2 Downcasting (Aşağı Dönüştürme)**
+- **Üst sınıf nesnesini, alt sınıf türüne dönüştürmek için yapılır.**
+- **Explicit Cast (Manuel) gereklidir.**
+- **Eğer nesne gerçekten alt sınıftan türemediyse, `ClassCastException` hatası oluşur.**
+
+### **📌 Örnek**
+```java
+class Hayvan {
+    void sesCikar() {
+        System.out.println("Hayvan ses çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    void miyavla() {
+        System.out.println("Kedi miyavlıyor!");
+    }
+}
+
+public class DowncastingExample {
+    public static void main(String[] args) {
+        Hayvan hayvan = new Kedi(); // Upcasting
+        Kedi kedi = (Kedi) hayvan; // Downcasting (Manuel)
+        kedi.miyavla(); // Artık Kedi'ye ait metotlara erişebiliriz
+    }
+}
+```
+**Çıktı:**
+```
+Kedi miyavlıyor!
+```
+
+🚨 **Ancak, yanlış tür dönüşümü yaparsak hata alırız!**
+```java
+Hayvan hayvan = new Hayvan();
+Kedi kedi = (Kedi) hayvan; // HATA! hayvan nesnesi aslında bir Kedi değil.
+```
+📌 **Bu hatayı önlemek için `instanceof` operatörü kullanılabilir.**
+
+---
+
+## **✅ 3.3 `instanceof` ile Güvenli Downcasting**
+📌 **`instanceof` operatörü, bir nesnenin belirli bir sınıfa ait olup olmadığını kontrol eder.**
+
+```java
+if (hayvan instanceof Kedi) {
+    Kedi kedi = (Kedi) hayvan;
+    kedi.miyavla();
+} else {
+    System.out.println("Nesne Kedi türüne ait değil.");
+}
+```
+
+---
+
+# **📌 4. Özet**
+| **Dönüştürme Türü** | **Otomatik mi?** | **Veri Kaybı Var mı?** | **Örnek** |
+|---------------------|-----------------|----------------------|----------------------|
+| **Genişletilmiş Dönüşüm (Widening)** | ✅ Evet | ❌ Hayır | `int → double` |
+| **Daraltılmış Dönüşüm (Narrowing)** | ❌ Hayır | ✅ Evet | `double → int` |
+| **Upcasting (Yukarı Dönüştürme)** | ✅ Evet | ❌ Hayır | `Kedi → Hayvan` |
+| **Downcasting (Aşağı Dönüştürme)** | ❌ Hayır | ✅ Hata Oluşabilir | `Hayvan → Kedi` |
+
+📌 **Tür dönüşümleri (Casting) sayesinde Java'da veri türleri arasında geçiş yapabiliriz.**  
+Ancak **veri kaybını ve hataları önlemek için dikkatli olunmalıdır! 🚀**
+
+
+## Cast-2
+```sh 
+
+```
+---
+
+# **📌 Java'da String ⇄ int Dönüştürme (Cast İşlemi)**
+Java'da **`String` ⇄ `int` dönüşümü**, farklı yöntemlerle gerçekleştirilebilir.
+
+---
+
+## **✅ 1. `String` → `int` Çevirme**
+📌 **`Integer.parseInt(String)`** ve **`Integer.valueOf(String)`** kullanılır.
+
+### **📌 Örnek 1: `parseInt()` ile String'i int'e Çevirme**
+```java
+public class StringToIntExample {
+    public static void main(String[] args) {
+        String sayiStr = "123"; // String veri
+        int sayi = Integer.parseInt(sayiStr); // String → int dönüşümü
+        
+        System.out.println("String: " + sayiStr);
+        System.out.println("int: " + sayi);
+    }
+}
+```
+**Çıktı:**
+```
+String: 123
+int: 123
+```
+📌 **Önemli:**
+- `parseInt()` sadece **tam sayı (integer) içeren stringleri** dönüştürebilir.
+- `"123abc"` gibi hatalı stringler `NumberFormatException` hatası verir.
+
+🚨 **Hatalı Kullanım:**
+```java
+String hataliStr = "123abc";
+int sayi = Integer.parseInt(hataliStr); // HATA! NumberFormatException
+```
+
+---
+
+### **📌 Örnek 2: `valueOf()` ile String'i int'e Çevirme**
+📌 **`Integer.valueOf(String)`**, `int` yerine **`Integer` (Wrapper Class)** döndürür.
+```java
+public class ValueOfExample {
+    public static void main(String[] args) {
+        String sayiStr = "456";
+        int sayi = Integer.valueOf(sayiStr); // String → Integer
+        
+        System.out.println("int değeri: " + sayi);
+    }
+}
+```
+📌 **`parseInt()` ve `valueOf()` arasındaki fark:**
+- **`parseInt()`** → `int` döndürür.
+- **`valueOf()`** → `Integer` döndürür.
+
+---
+
+## **✅ 2. `int` → `String` Çevirme**
+📌 **`String.valueOf(int)`** ve **`Integer.toString(int)`** kullanılır.
+
+### **📌 Örnek 3: `String.valueOf(int)` ile int'i String'e Çevirme**
+```java
+public class IntToStringExample {
+    public static void main(String[] args) {
+        int sayi = 789;
+        String sayiStr = String.valueOf(sayi); // int → String
+        
+        System.out.println("int: " + sayi);
+        System.out.println("String: " + sayiStr);
+    }
+}
+```
+📌 **Bu yöntem, `double`, `float`, `boolean` gibi türleri de `String`e çevirebilir.**
+
+---
+
+### **📌 Örnek 4: `Integer.toString(int)` ile int'i String'e Çevirme**
+```java
+public class IntToStringExample2 {
+    public static void main(String[] args) {
+        int sayi = 1234;
+        String sayiStr = Integer.toString(sayi); // int → String
+        
+        System.out.println("String değeri: " + sayiStr);
+    }
+}
+```
+📌 **`String.valueOf()` ve `Integer.toString()` arasındaki fark:**
+- **`String.valueOf(int)`** → Tüm veri tipleri için çalışır (`boolean`, `double`, vb.).
+- **`Integer.toString(int)`** → Sadece `int` türü için kullanılır.
+
+---
+
+## **✅ 3. Alternatif: `+ ""` Kullanımı**
+📌 **`int` türündeki sayıyı `String` yapmak için `+ ""` kullanabiliriz.**
+```java
+public class PlusStringExample {
+    public static void main(String[] args) {
+        int sayi = 500;
+        String sayiStr = sayi + ""; // int → String
+        
+        System.out.println("String değeri: " + sayiStr);
+    }
+}
+```
+📌 **Bu yöntem daha az performanslıdır ve `toString()` veya `valueOf()` kullanılması önerilir.**
+
+---
+
+# **📌 4. Özet**
+| **Dönüşüm** | **Yöntem** | **Örnek Kullanım** |
+|------------|------------|--------------------|
+| **`String` → `int`** | `Integer.parseInt(String)` | `int sayi = Integer.parseInt("123");` |
+| **`String` → `Integer`** | `Integer.valueOf(String)` | `Integer sayi = Integer.valueOf("456");` |
+| **`int` → `String`** | `String.valueOf(int)` | `String str = String.valueOf(789);` |
+| **`int` → `String`** | `Integer.toString(int)` | `String str = Integer.toString(1234);` |
+| **`int` → `String`** | `+ ""` yöntemi | `String str = 500 + "";` |
+
+📌 **Bu yöntemleri kullanarak, Java'da `String` ve `int` arasında güvenli dönüşümler yapabilirsiniz! 🚀**
 
 ## Java Math
 ```sh 
