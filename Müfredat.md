@@ -22,6 +22,7 @@ Perşembe (6 Şubat) - 3 Saat
 - Temel Java Sözdizimi
   . Değişkenler ve Veri Tipleri
   . Operatörler (Aritmetik, Karşılaştırma, Mantıksal vb.)
+  . Cast(Dönüşüm)
 
 Cumartesi (8 Şubat) - 4 Saat
 - Kontrol Yapıları
