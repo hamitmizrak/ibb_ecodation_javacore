@@ -88,6 +88,5 @@ public class _12_1_String1 {
         System.out.println(vocabulary1.hashCode());
         System.out.println(vocabulary2.hashCode());
         System.out.println(vocabulary3.hashCode());
-
     }
 }

@@ -62,4 +62,4 @@ null değeri ne zaman kullanabilirim ?
 > ile vocabulary1.equals(vocabulary2)) (String kelime= "";)
 
 ## 5.Ders Ödevi (13 Şubat)
-> 
+> parametre ile argüman arasında farkalr nelerdir ?
