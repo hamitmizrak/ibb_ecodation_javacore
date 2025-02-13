@@ -38,6 +38,7 @@ public class _14_1_Exception {
     public static void main(String[] args) throws IOException {
         calcula();
         System.out.println("################################");
+
         // Bilerek istisna gönder
         throw new NullPointerException("Neden boş verdiniz");
     }
