@@ -48,6 +48,8 @@ Perşembe (13 Şubat) - 3 Saat
 
 Cumartesi (15 Şubat) - 4 Saat
 - Arrays
+  . Tek boyutlu diziler
+  . Çift boyutlu diziler
 ----------------------------------------------------------------------
 ### 3. Hafta
 Salı (18 Şubat) - 3 Saat

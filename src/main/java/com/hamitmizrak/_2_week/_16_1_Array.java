@@ -101,7 +101,6 @@ public class _16_1_Array {
         }
     }
 
-
     // PSVM
     public static void main(String[] args) {
         // arrayMethod1();
