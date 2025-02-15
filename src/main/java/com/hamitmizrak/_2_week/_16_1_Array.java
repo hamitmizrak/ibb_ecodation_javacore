@@ -76,7 +76,6 @@ public class _16_1_Array {
     }
 
     /// ////////////////////////////////////////////////////////////////////
-
     // Clone, Sort, Binarysearch, forEach
     public static void arrayMethod7() {
         // Original
