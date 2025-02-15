@@ -1,6 +1,8 @@
 package com.hamitmizrak._2_week;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 public class _16_1_Array {
 
@@ -47,7 +49,7 @@ public class _16_1_Array {
         }
     }
 
-    // Foreach
+    // Arrays.sort() Küçükten büyüğe doğru
     public static void arrayMethod5() {
         String[] city = arrayMethod2();
 
@@ -60,6 +62,40 @@ public class _16_1_Array {
         }
     }
 
+    // Arrays.sort() Büyükten küçüğe doğru
+    public static void arrayMethod6() {
+        String[] city = arrayMethod2();
+
+        // Dizilerde Sıralama (Küçükten Büyüğe Doğru sıralama)
+        Arrays.sort(city, Collections.reverseOrder());
+
+        // for each
+        for (String temp : city) {
+            System.out.println(_15_4_SpecialColor.BLUE + temp + _15_4_SpecialColor.RESET);
+        }
+    }
+
+
+    public static int randomNumber(){
+        Random random= new Random();
+        int rndInt= random.nextInt(9)+1;
+        return rndInt;
+    }
+
+    // fill
+    public static void arrayMethod7() {
+        int[] number = new int[7];
+
+        // iterative for
+        Arrays.fill(number,randomNumber()); // 5 sayısı ile doldur
+
+        // for each
+        for (int temp : number) {
+            System.out.println(_15_4_SpecialColor.BLUE + temp + _15_4_SpecialColor.RESET);
+        }
+    }
+
+
 
     // PSVM
     public static void main(String[] args) {
@@ -67,6 +103,8 @@ public class _16_1_Array {
         // arrayMethod2();
         //arrayMethod3();
         //arrayMethod4();
-        arrayMethod5();
+        //arrayMethod5();
+        //arrayMethod6();
+        arrayMethod7();
     }
 } //end class
