@@ -75,26 +75,31 @@ public class _16_1_Array {
         }
     }
 
-
-    public static int randomNumber(){
-        Random random= new Random();
-        int rndInt= random.nextInt(9)+1;
+    // Random Number
+    public static int randomNumber() {
+        Random random = new Random();
+        int rndInt = random.nextInt(9) + 1; // 1<=NUMBER<=9
         return rndInt;
     }
 
-    // fill
+    // fill:
     public static void arrayMethod7() {
         int[] number = new int[7];
 
-        // iterative for
-        Arrays.fill(number,randomNumber()); // 5 sayısı ile doldur
+        //fill: metodu tek bir değeri dizinin tüm elemanlarına atamak için tasarlanmıştır
+        Arrays.fill(number, randomNumber());
+
+        // iterative for ile her defasında farklı bir sayı gelsin
+        for (int i = 0; i <number.length ; i++) {
+            //number[i]=randomNumber(); // (1.YOL)
+            Arrays.setAll(number, data -> randomNumber()); // (2.YOL)
+        }
 
         // for each
         for (int temp : number) {
             System.out.println(_15_4_SpecialColor.BLUE + temp + _15_4_SpecialColor.RESET);
         }
     }
-
 
 
     // PSVM
