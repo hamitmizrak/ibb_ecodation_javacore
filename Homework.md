@@ -66,3 +66,7 @@ null değeri ne zaman kullanabilirim ?
 > Integer.valueOf(cast4String) ile  Integer.parseInt(cast4String) arasındaki fark ?
 > Neden Java 8 bilmek zorundayım ?
 > Java 8 ile gelen özellikler nelerdir ?
+>
+
+## 6.Ders Ödevi (15 Şubat)
+> Array => foreach ile iterative for döngü arasındaki farklar nelerdir ?

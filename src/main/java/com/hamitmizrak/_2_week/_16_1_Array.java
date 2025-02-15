@@ -1,5 +1,7 @@
 package com.hamitmizrak._2_week;
 
+import java.util.Arrays;
+
 public class _16_1_Array {
 
     // Array
@@ -22,22 +24,49 @@ public class _16_1_Array {
     // Array
     public static String[] arrayMethod2() throws ArrayIndexOutOfBoundsException {
         // String dizisi
-        String[] city = {"Malatya","Elazığ","Bingöl",null, "Muş", "Van"}; // Eleman sayısı:10
+        //String[] city = {"Malatya", "Elazığ", "Bingöl", null, "Muş", "Van"}; // Eleman sayısı:10
+        String[] city = {"Malatya", "Elazığ", "Bingöl", "Muş", "Van"}; // Eleman sayısı:10
         return city;
     }
 
+    // iterative for döngüsü
     public static void arrayMethod3() {
         String[] city = arrayMethod2();
         // for each
-        for (String temp : city) {
-            System.out.println(_15_4_SpecialColor.YELLOW+temp+_15_4_SpecialColor.RESET);
+        for (int i = 0; i < city.length; i++) {
+            System.out.println(_15_4_SpecialColor.BLUE + city[i] + _15_4_SpecialColor.RESET);
         }
     }
+
+    // Foreach
+    public static void arrayMethod4() {
+        String[] city = arrayMethod2();
+        // for each
+        for (String temp : city) {
+            System.out.println(_15_4_SpecialColor.YELLOW + temp + _15_4_SpecialColor.RESET);
+        }
+    }
+
+    // Foreach
+    public static void arrayMethod5() {
+        String[] city = arrayMethod2();
+
+        // Dizilerde Sıralama (Küçükten Büyüğe Doğru sıralama)
+        Arrays.sort(city);
+
+        // for each
+        for (String temp : city) {
+            System.out.println(_15_4_SpecialColor.YELLOW + temp + _15_4_SpecialColor.RESET);
+        }
+    }
+
 
     // PSVM
     public static void main(String[] args) {
         // arrayMethod1();
         // arrayMethod2();
-        arrayMethod3();
+        //arrayMethod3();
+        //arrayMethod4();
+        arrayMethod5();
     }
 } //end class
