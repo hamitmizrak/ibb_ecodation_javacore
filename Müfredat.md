@@ -10,7 +10,7 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
 ---
 
 ### 1. Hafta
-Salı (4 Şubat) - 3 Saat
+🚀 Salı (4 Şubat) - 3 Saat
 - Giriş ve Kurulum
   . Java Nedir?
   . Java’nın Tarihçesi ve Sürümleri
@@ -36,7 +36,6 @@ Salı (11 Şubat) - 3 Saat
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading, override
 
-
 Perşembe (13 Şubat) - 3 Saat
 - Date(Tarih)
 - İstisnalar (Exceptions)
@@ -45,7 +44,6 @@ Perşembe (13 Şubat) - 3 Saat
 - Throw, Throws
   . Özel Exception sınıfları yazma
 
- 
 Cumartesi (15 Şubat) - 4 Saat
 - Arrays
 ----------------------------------------------------------------------
@@ -73,7 +71,7 @@ Cumartesi (22 Şubat) - 4 Saat
 ----------------------------------------------------------------------
 ### 4. Hafta
 Salı (25 Şubat) - 3 Saat
-- Optional Sınıfı
+🚀- Optional Sınıfı
   . Yeni Tarih ve Zaman API (java.time)
 
 
