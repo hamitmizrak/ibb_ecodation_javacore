@@ -112,6 +112,8 @@ Cumartesi (8 Mart) - 4 Saat
 ----------------------------------------------------------------------
 ### 6. Hafta
 Salı (11 Mart) - 3 Saat
+- Enum
+- Record
 - Kalıtım (Inheritance)
   . Super ve Subclass kavramları
   . Override ve Overload farkı
