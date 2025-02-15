@@ -21,6 +21,7 @@ Perşembe (6 Şubat) - 3 Saat
 - Temel Java Sözdizimi
   . Değişkenler ve Veri Tipleri
   . Operatörler (Aritmetik, Karşılaştırma, Mantıksal vb.)
+  . Escape Character
   . Cast(Dönüşüm)
 
 Cumartesi (8 Şubat) - 4 Saat
@@ -33,6 +34,7 @@ Cumartesi (8 Şubat) - 4 Saat
 ### 2. Hafta
 Salı (11 Şubat) - 3 Saat
 - String & String metotları
+- Formatter
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading, override
 
