@@ -19,8 +19,15 @@ public class _16_1_Array {
         return city;
     }
 
-    public static void arrayMethod2() {
-        String[] city = arrayMethod1();
+    // Array
+    public static String[] arrayMethod2() throws ArrayIndexOutOfBoundsException {
+        // String dizisi
+        String[] city = {"Malatya","Elazığ","Bingöl",null, "Muş", "Van"}; // Eleman sayısı:10
+        return city;
+    }
+
+    public static void arrayMethod3() {
+        String[] city = arrayMethod2();
         // for each
         for (String temp : city) {
             System.out.println(_15_4_SpecialColor.YELLOW+temp+_15_4_SpecialColor.RESET);
@@ -29,7 +36,8 @@ public class _16_1_Array {
 
     // PSVM
     public static void main(String[] args) {
-        //arrayMethod1();
-        arrayMethod2();
+        // arrayMethod1();
+        // arrayMethod2();
+        arrayMethod3();
     }
 } //end class
