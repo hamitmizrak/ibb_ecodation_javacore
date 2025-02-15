@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class _15_1_Date {
 
-    // Date
-    public static void dateMethod() {
+    // Date (GET)
+    public static void dateGetMethod() {
         //java.util.Date date= new Date();
         Date now = new Date();
         System.out.println("Şu andaki zaman: " + now);
@@ -22,21 +22,53 @@ public class _15_1_Date {
         System.out.println("Seconds:" + now.getSeconds());
     }
 
+    // Date (GET)
+    public static void dateSetMethod() {
 
+    }
+
+
+    // 1.YÖNTEM()
     public static String nowFormat1() throws NullPointerException {
         Date now = new Date();
-        String specialFormat = "Zaman: "
-                .concat(now.getHours())
-                .concat(now.getMinutes())
-                .concat(now.getSeconds())
+        String specialFormat = "Şimdiki Zaman: "
+                .concat(String.valueOf(now.getHours()))
+                .concat(":")
+                .concat(String.valueOf(now.getMinutes()))
+                .concat(":")
+                .concat(String.valueOf(now.getSeconds()))
                 .toString();
         return specialFormat;
+    }
+
+    // 2.YÖNTEM()
+    public static String nowFormat2() throws NullPointerException {
+        Date now = new Date();
+        // %s: String
+        // %d: Decimal
+        // %f: Float
+        return String.format("Şimdiki Zaman: %02d:%02d:%02d", now.getHours(), now.getMinutes(), now.getSeconds());
+    }
+
+    // 3.YÖNTEM()
+    public static String nowFormat3() throws NullPointerException {
+        return new Date(String.format("Şimdiki Zaman: %02d:%02d:%02d", now.getHours(), now.getMinutes(), now.getSeconds())).toString() ;
     }
 
 
     // PSVM
     public static void main(String[] args) {
         //dateMethod();
-        nowFormat1();
+
+       /* String nowDate = nowFormat1();
+        System.out.println(nowDate);*/
+
+        String nowDate2 = nowFormat2();
+        System.out.println(nowDate2);
+
+        String nowDate3 = nowFormat3();
+        System.out.println(nowDate3);
+
+
     }
 }
