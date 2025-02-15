@@ -58,11 +58,8 @@ public class _12_2_StringFormat {
         System.out.println(formatterString);
         System.out.println(YELLOW+formatterString+RESET);
 
-
         String formatterString2 = String.format("Merhabalar:"+ GREEN+"Adınız: %-10s"+RESET+":"+RED +"T.C: %10d"+RESET+":"+YELLOW+ "Fiyat: %.4f "+RESET+":" , "Hamit", 11223344, 44.23);
         System.out.println(formatterString2);
-
-
         System.out.println();
     }
 
