@@ -1,6 +1,8 @@
 package com.hamitmizrak._2_week;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class _15_1_Date {
 
@@ -52,7 +54,17 @@ public class _15_1_Date {
 
     // 3.YÖNTEM()
     public static String nowFormat3() throws NullPointerException {
-        return new Date(String.format("Şimdiki Zaman: %02d:%02d:%02d", now.getHours(), now.getMinutes(), now.getSeconds())).toString() ;
+        Date now = new Date();
+        Locale locale = new Locale("tr", "TR");
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",locale);
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss",locale);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss",locale);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:ss", locale);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss zzzz",locale);
+
+        String formatedDate = String.format("Şimdiki Zaman: %s", sdf.format(now));
+        return new Date().toString() + " - " + formatedDate;
     }
 
 
