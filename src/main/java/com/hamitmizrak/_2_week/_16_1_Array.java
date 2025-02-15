@@ -27,7 +27,7 @@ public class _16_1_Array {
     public static String[] arrayMethod2() throws ArrayIndexOutOfBoundsException {
         // String dizisi
         //String[] city = {"Malatya", "Elazığ", "Bingöl", null, "Muş", "Van"}; // Eleman sayısı:10
-        String[] city = {"Malatya", "Elazığ", "Bingöl", "Muş", "Van"}; // Eleman sayısı:10
+        String[] city = {"Malatya", "Elazığ", "Bingöl", "Muş", "Van","İstanbul","Ankara","Sivas","Konya","Nevşehir"}; // Eleman sayısı:10
         return city;
     }
 
@@ -75,6 +75,35 @@ public class _16_1_Array {
         }
     }
 
+    /// ////////////////////////////////////////////////////////////////////
+
+    // Clone, Sort, Binarysearch, forEach
+    public static void arrayMethod7() {
+        // Original
+        String[] originalCity = arrayMethod2();
+
+        // Clone
+        String[] cloneCity= Arrays.copyOf(originalCity, originalCity.length);
+
+        // Dizilerde Sıralama (Küçükten Büyüğe Doğru sıralama)
+        Arrays.sort(cloneCity);
+        //Arrays.sort(cloneCity, Collections.reverseOrder());
+
+        // for each
+        for (String temp : cloneCity) {
+            System.out.println(_15_4_SpecialColor.BLUE + temp + _15_4_SpecialColor.RESET);
+        }
+
+        // Binary Search
+        String searchCity="Sivas";
+       int index= Arrays.binarySearch(cloneCity,searchCity);
+       if(index>=0){
+           System.out.println(searchCity+_15_4_SpecialColor.BLUE   +" ili bulunmaktadır"+_15_4_SpecialColor.RESET);
+       }else{
+           System.out.println(searchCity+_15_4_SpecialColor.RED +" ili yoktur"+_15_4_SpecialColor.RESET);
+       }
+    }
+    /// //////////////////////////////////////////////////////////////
     // Random Number
     public static int randomNumber() {
         Random random = new Random();
@@ -83,7 +112,7 @@ public class _16_1_Array {
     }
 
     // fill:
-    public static void arrayMethod7() {
+    public static void arrayMethod8() {
         int[] number = new int[7];
 
         //fill: metodu tek bir değeri dizinin tüm elemanlarına atamak için tasarlanmıştır
@@ -101,6 +130,8 @@ public class _16_1_Array {
         }
     }
 
+    // binary Search, copy
+
     // PSVM
     public static void main(String[] args) {
         // arrayMethod1();
@@ -110,5 +141,6 @@ public class _16_1_Array {
         //arrayMethod5();
         //arrayMethod6();
         arrayMethod7();
+        //arrayMethod8();
     }
 } //end class
