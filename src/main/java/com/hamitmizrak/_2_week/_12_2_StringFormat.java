@@ -49,12 +49,25 @@ public class _12_2_StringFormat {
     public static void formatter3() {
         String formatterString = String.format("Merhabalar Adınız: %s, T.C: %d, Fiyat: %f ", "Hamit", 11223344, 44.23);
         System.out.println(formatterString);
+        System.out.println();
+    }
+
+    // formatter (Best Practice) Color
+    public static void formatter4() {
+        String formatterString = String.format("Merhabalar Adınız: %s, T.C: %d, Fiyat: %f ", "Hamit", 11223344, 44.23);
+        System.out.println(formatterString);
         System.out.println(YELLOW+formatterString+RESET);
+
+
+        String formatterString2 = String.format("Merhabalar:"+ GREEN+"Adınız: %-10s"+RESET+":"+RED +"T.C: %10d"+RESET+":"+YELLOW+ "Fiyat: %.4f "+RESET+":" , "Hamit", 11223344, 44.23);
+        System.out.println(formatterString2);
+
+
         System.out.println();
     }
 
     // formatter4 (printf)
-    public static void formatter4() {
+    public static void formatter5() {
         String name = "Hamit";
         int tcNumber = 11223344;
         double price = 44.23;
@@ -69,7 +82,8 @@ public class _12_2_StringFormat {
     public static void main(String[] args) {
         // formatter1();
         //formatter2();
-        formatter3();
-        //formatter4();
+        //formatter3();
+        formatter4();
+        //formatter5();
     }
 }
