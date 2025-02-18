@@ -4874,502 +4874,6 @@ String mesaj = ""; // NullPointerException riski yok
 ✅ **Sonuç:** `null` dikkatli kullanılmalıdır. **Gereksiz `null` kullanımı yerine `Optional<T>`, varsayılan değerler veya boş nesneler kullanılabilir.** 🚀
 
 
-
-
-## Dizi(Array)
-```sh 
-
-```
----
-# **Java'da Dizi (Array) Nedir? **
-
-## **📌 1. Dizi (Array) Nedir?**
-Java'da **dizi (array)**, **aynı veri tipindeki** birden fazla elemanı **tek bir değişken içinde saklamak** için kullanılır.  
-Diziler:
-- **Sabit bir boyuta sahiptirler** (Oluşturulduktan sonra boyutu değiştirilemez).
-- **Aynı türden elemanları saklarlar** (`int`, `double`, `String`, vb.).
-- **Dizi indisleri (index) 0'dan başlar**.
-- **Diziler bellek üzerinde bitişik (contiguous) olarak saklanır**.
-
----
-
-## **📌 2. Java’da Dizi Tanımlama ve Kullanımı**
-### **✅ 2.1 Dizi Tanımlama**
-Dizi tanımlamanın iki temel yolu vardır:
-
-**1️⃣ İlk Yöntem: Dizi Tanımlama ve Bellekte Yer Ayırma**
-```java
-int[] sayilar = new int[5]; // 5 elemanlı bir int dizisi
-```
-- **Dizinin boyutu `5` olarak belirlendi ve varsayılan değerlerle (0) dolduruldu.**
-
----
-
-**2️⃣ İkinci Yöntem: Tanımlama ve Değer Atama**
-```java
-int[] sayilar = {10, 20, 30, 40, 50};
-```
-- **Dizi doğrudan tanımlandı ve elemanları atandı**.
-
-📌 **Önemli:**
-- Java’da dizinin boyutu **sonradan değiştirilemez**.
-- Bir dizi `null` olabilir ama **başlangıçta boyutu belirtilmeden oluşturulamaz**.
-
-🚫 **Hatalı Tanımlama**
-```java
-int[] dizi; 
-dizi = {1, 2, 3, 4}; // HATA! Doğrudan böyle atama yapılamaz.
-```
-
-✅ **Doğru Kullanım**
-```java
-int[] dizi;
-dizi = new int[]{1, 2, 3, 4};
-```
-
----
-
-## **📌 3. Dizi Elemanlarına Erişim ve Değiştirme**
-Dizi elemanlarına **indeks (index) numarası** kullanılarak erişilir.
-
-```java
-public class DiziErisim {
-    public static void main(String[] args) {
-        int[] sayilar = {10, 20, 30, 40, 50};
-
-        // Dizinin 0. elemanını yazdırma
-        System.out.println("İlk eleman: " + sayilar[0]); // 10
-        
-        // Dizinin 2. elemanını değiştirme
-        sayilar[2] = 100;
-        
-        System.out.println("Yeni 2. eleman: " + sayilar[2]); // 100
-    }
-}
-```
-📌 **Dizi indisleri 0'dan başlar ve `dizi.length - 1` kadar gider.**
-
----
-
-## **📌 4. Dizinin Boyutunu Öğrenme**
-Java'da **bir dizinin boyutu**, **`.length`** özelliği ile öğrenilir.
-
-```java
-public class DiziBoyutu {
-    public static void main(String[] args) {
-        int[] dizi = {10, 20, 30, 40};
-        System.out.println("Dizi uzunluğu: " + dizi.length); // 4
-    }
-}
-```
-📌 **Dikkat:**
-- `dizi.length` bir metot değil, **bir özelliktir** (`()` parantezleri kullanılmaz).
-
----
-
-## **📌 5. Dizi Üzerinde Döngüler Kullanımı**
-### **✅ 5.1 `for` Döngüsü ile Dizi Kullanımı**
-```java
-public class DiziDongu {
-    public static void main(String[] args) {
-        int[] sayilar = {5, 10, 15, 20, 25};
-
-        for (int i = 0; i < sayilar.length; i++) {
-            System.out.println("Eleman " + i + ": " + sayilar[i]);
-        }
-    }
-}
-```
-**Çıktı:**
-```
-Eleman 0: 5
-Eleman 1: 10
-Eleman 2: 15
-Eleman 3: 20
-Eleman 4: 25
-```
-
----
-
-### **✅ 5.2 `for-each` Döngüsü ile Dizi Kullanımı**
-```java
-public class ForEachOrnek {
-    public static void main(String[] args) {
-        String[] diller = {"Java", "Python", "C++", "JavaScript"};
-
-        for (String dil : diller) {
-            System.out.println("Programlama Dili: " + dil);
-        }
-    }
-}
-```
-**Çıktı:**
-```
-Programlama Dili: Java
-Programlama Dili: Python
-Programlama Dili: C++
-Programlama Dili: JavaScript
-```
-📌 **`for-each` dizileri gezmek için kullanışlıdır ama dizinin indeksine erişemez.**
-
----
-
-## **📌 6. Çok Boyutlu Diziler (Multidimensional Arrays)**
-### **✅ 6.1 İki Boyutlu (2D) Dizi Tanımlama**
-```java
-int[][] matris = new int[3][3]; // 3x3'lük bir matris
-```
-
-📌 **Başlangıç değerleri `0` olur.**
-
----
-
-### **✅ 6.2 Değer Atama ve Erişim**
-```java
-public class IkiBoyutluDizi {
-    public static void main(String[] args) {
-        int[][] matris = {
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9}
-        };
-
-        System.out.println("Orta Eleman: " + matris[1][1]); // 5
-    }
-}
-```
-📌 **İlk indeks satır, ikinci indeks sütunu temsil eder**.
-
----
-
-### **✅ 6.3 `for` Döngüsü ile Çok Boyutlu Diziyi Yazdırma**
-```java
-public class MatrisYazdirma {
-    public static void main(String[] args) {
-        int[][] matris = {
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9}
-        };
-
-        for (int i = 0; i < matris.length; i++) {
-            for (int j = 0; j < matris[i].length; j++) {
-                System.out.print(matris[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-}
-```
-**Çıktı:**
-```
-1 2 3
-4 5 6
-7 8 9
-```
-📌 **`matris.length` satır sayısını, `matris[i].length` sütun sayısını verir.**
-
----
-
-## **📌 7. Java’da Dizi Kopyalama**
-### **✅ 7.1 `System.arraycopy()` Kullanımı**
-```java
-public class DiziKopyalama {
-    public static void main(String[] args) {
-        int[] orijinal = {1, 2, 3, 4, 5};
-        int[] kopya = new int[5];
-
-        System.arraycopy(orijinal, 0, kopya, 0, 5);
-
-        for (int eleman : kopya) {
-            System.out.print(eleman + " ");
-        }
-    }
-}
-```
-**Çıktı:**
-```
-1 2 3 4 5
-```
-📌 **Diziyi manuel kopyalamaya göre daha verimlidir.**
-
----
-
-## **📌 8. `Arrays` Sınıfı ile Dizi İşlemleri**
-Java’nın **`java.util.Arrays`** sınıfı, diziler için **yardımcı metotlar** içerir.
-
-### **✅ 8.1 `Arrays.toString()` - Diziyi String'e Çevirme**
-```java
-import java.util.Arrays;
-
-public class ArraysExample {
-    public static void main(String[] args) {
-        int[] sayilar = {3, 1, 4, 1, 5};
-        System.out.println(Arrays.toString(sayilar));
-    }
-}
-```
-**Çıktı:**
-```
-[3, 1, 4, 1, 5]
-```
-
----
-
-## **📌 9. Özet**
-| **Özellik** | **Açıklama** |
-|-------------|-------------|
-| **Dizi Tanımlama** | `int[] dizi = new int[5];` |
-| **Diziye Değer Atama** | `dizi[0] = 10;` |
-| **Dizi Boyutu** | `dizi.length` |
-| **Tek Boyutlu Dizi** | `{10, 20, 30}` |
-| **Çok Boyutlu Dizi** | `int[][] matris = new int[3][3];` |
-| **Dizi Kopyalama** | `System.arraycopy()` |
-| **Dizi Sıralama** | `Arrays.sort(dizi);` |
-
-📌 **Java’da diziler, veri saklama ve yönetme açısından oldukça önemli yapılardır! 🚀**
-
-
-## Erişim Belirleyiciler
-```sh 
-
-```
----
-# **📌 Java'da Paketler (Packages) ve Erişim Belirleyiciler (Access Modifiers) Nedir? (Detaylı Açıklama)**
-
-Java'da **paketler (packages)** ve **erişim belirleyiciler (access modifiers)**, programların düzenlenmesi, modüler hale getirilmesi ve **erişim kontrolü** sağlanması için kullanılan iki temel yapıdır.
-
----
-
-# **🔹 1. Java'da Paketler (Packages) Nedir?**
-**📌 Paket (Package)**, **benzer sınıfları (class), arayüzleri (interface) ve diğer bileşenleri bir arada tutan** bir dizin yapısıdır.  
-Paketler sayesinde:
-- **Kod daha düzenli hale gelir.**
-- **Ad çakışmaları (name conflict) önlenir.**
-- **Erişim belirleyicilerle güvenlik sağlanır.**
-- **Yeniden kullanılabilir bileşenler oluşturulabilir.**
-
----
-
-## **🔸 1.1 Paket Tanımlama ve Kullanımı**
-Bir Java dosyasında paketi belirlemek için **`package`** anahtar kelimesi kullanılır. **Dosyanın en üstüne yazılmalıdır.**
-
-```java
-package com.ornek.paket; // Paketin tanımlanması
-
-public class Selam {
-    public void mesaj() {
-        System.out.println("Merhaba, paket kullanımı!");
-    }
-}
-```
-📌 **Paket ismi, genellikle ters domain adı şeklinde belirlenir.**  
-Örneğin:
-- **`package com.google.search;`**
-- **`package org.apache.commons;`**
-
----
-
-## **🔸 1.2 Paket İçindeki Sınıfı Kullanma (`import`)**
-Başka bir paketten bir sınıf kullanmak için **`import`** ifadesi kullanılır.
-
-```java
-import com.ornek.paket.Selam; // Paket içindeki sınıfı dahil ettik
-
-public class Main {
-    public static void main(String[] args) {
-        Selam nesne = new Selam();
-        nesne.mesaj();
-    }
-}
-```
-📌 **Eğer aynı paketteysek, `import` kullanmadan doğrudan sınıfı çağırabiliriz.**
-
----
-
-## **🔸 1.3 Tüm Paket İçeriğini Dahil Etme**
-Eğer bir paketin **tüm sınıflarını** kullanmak istiyorsak, `*` karakterini kullanabiliriz.
-
-```java
-import com.ornek.paket.*;
-
-public class Main {
-    public static void main(String[] args) {
-        Selam nesne = new Selam();
-        nesne.mesaj();
-    }
-}
-```
-📌 **Ancak, `import` ile sadece kullanılacak sınıfları dahil etmek daha performanslıdır.**
-
----
-
-## **🔸 1.4 `static import` ile Metotları ve Değişkenleri Dahil Etme**
-Bazı durumlarda, **sınıf adını yazmadan doğrudan bir metot veya değişkene erişmek için `static import` kullanılabilir**.
-
-```java
-import static java.lang.Math.*;
-
-public class MathExample {
-    public static void main(String[] args) {
-        System.out.println(sqrt(25)); // 5.0
-        System.out.println(pow(2, 3)); // 8.0
-    }
-}
-```
-📌 **Normalde `Math.sqrt(25)` şeklinde çağırılır. Ancak `static import` sayesinde `sqrt(25)` olarak doğrudan çağrılabilir.**
-
----
-
-## **🔸 1.5 Varsayılan Paket (Default Package)**
-Eğer **`package` ifadesi kullanılmazsa**, sınıf **varsayılan pakette (default package)** olur.  
-Ancak **varsayılan paket kullanımı büyük projelerde önerilmez**.
-
-```java
-public class Varsayilan {
-    public void mesaj() {
-        System.out.println("Varsayılan paket içindeyim.");
-    }
-}
-```
-
-Bu sınıf, **herhangi bir pakete ait olmadığı için diğer paketler tarafından doğrudan kullanılamaz**.
-
----
-
-# **🔹 2. Java’da Erişim Belirleyiciler (Access Modifiers)**
-Erişim belirleyiciler, **sınıf, metot ve değişkenlerin erişim seviyelerini belirler**.
-
-## **🔸 2.1 Java'daki Erişim Belirleyiciler**
-| **Erişim Belirleyici** | **Açıklama** | **Aynı Sınıf** | **Aynı Paket** | **Alt Sınıflar (Inheritance)** | **Diğer Paketler** |
-|----------------|----------------------------------------|:------------:|:------------:|:------------------:|:--------------:|
-| **`public`**  | **Her yerden erişilebilir.** | ✅ | ✅ | ✅ | ✅ |
-| **`private`** | **Sadece tanımlandığı sınıfta erişilebilir.** | ✅ | ❌ | ❌ | ❌ |
-| **`protected`** | **Aynı paket ve alt sınıflardan erişilebilir.** | ✅ | ✅ | ✅ | ❌ |
-| **Varsayılan (default)** | **Sadece aynı paket içindeki sınıflar erişebilir.** | ✅ | ✅ | ❌ | ❌ |
-
----
-
-## **🔸 2.2 `public` Erişim Belirleyici**
-- **Tüm sınıflardan erişilebilir**.
-- **Global kullanılacak metotlar ve sınıflar genellikle `public` olarak tanımlanır.**
-
-```java
-package com.ornek;
-
-public class PublicOrnek {
-    public String mesaj = "Bu bir public değişkendir.";
-
-    public void goster() {
-        System.out.println(mesaj);
-    }
-}
-```
-Başka bir sınıfta:
-```java
-import com.ornek.PublicOrnek;
-
-public class Main {
-    public static void main(String[] args) {
-        PublicOrnek nesne = new PublicOrnek();
-        nesne.goster();
-    }
-}
-```
-📌 **Başka paketlerden bile erişilebilir.**
-
----
-
-## **🔸 2.3 `private` Erişim Belirleyici**
-- **Sadece tanımlandığı sınıf içinde erişilebilir**.
-- **Dışarıdan çağrılamaz**.
-
-```java
-class PrivateOrnek {
-    private String gizliMesaj = "Bu bir private değişkendir.";
-
-    private void goster() {
-        System.out.println(gizliMesaj);
-    }
-}
-```
-📌 **Başka sınıflardan `gizliMesaj` veya `goster()` metoduna erişilemez.**
-
-🚫 **Yanlış Kullanım:**
-```java
-PrivateOrnek nesne = new PrivateOrnek();
-nesne.goster(); // HATA! Erişim engellendi.
-```
-
-📌 **Ancak `getter` ve `setter` metotları ile erişim sağlanabilir.**
-```java
-class PrivateOrnek {
-    private String gizliMesaj = "Bu bir private değişkendir.";
-
-    public String getMesaj() {
-        return gizliMesaj;
-    }
-}
-```
-
----
-
-## **🔸 2.4 `protected` Erişim Belirleyici**
-- **Aynı paketteki sınıflar ve alt sınıflar (subclass) erişebilir**.
-- **Farklı paketlerden sadece `extends` ile türetilen sınıflar erişebilir.**
-
-```java
-package com.ornek;
-
-public class ProtectedOrnek {
-    protected String mesaj = "Bu bir protected değişkendir.";
-}
-```
-Başka bir paket içindeki **alt sınıfta (subclass) kullanılabilir**:
-```java
-import com.ornek.ProtectedOrnek;
-
-public class AltSinif extends ProtectedOrnek {
-    public void yazdir() {
-        System.out.println(mesaj);
-    }
-}
-```
-
-📌 **Ancak `new` ile nesne oluşturulursa erişilemez!**
-```java
-ProtectedOrnek nesne = new ProtectedOrnek();
-System.out.println(nesne.mesaj); // HATA! Çünkü başka paketteyiz.
-```
-
----
-
-## **🔸 2.5 Varsayılan (Default) Erişim**
-- **Eğer erişim belirleyici yazılmazsa, sadece aynı paketteki sınıflar erişebilir.**
-
-```java
-class DefaultOrnek {
-    String mesaj = "Bu bir varsayılan (default) değişkendir.";
-}
-```
-Başka bir pakette:
-```java
-DefaultOrnek nesne = new DefaultOrnek(); // HATA! Çünkü başka paketteyiz.
-```
-
----
-
-# **📌 Sonuç ve Karşılaştırma**
-| **Erişim Belirleyici** | **Sınıf İçinden** | **Aynı Paketten** | **Alt Sınıflardan (Inheritance)** | **Diğer Paketlerden** |
-|----------------|--------------|------------|----------------------|--------------|
-| **`public`** | ✅ | ✅ | ✅ | ✅ |
-| **`private`** | ✅ | ❌ | ❌ | ❌ |
-| **`protected`** | ✅ | ✅ | ✅ | ❌ |
-| **Varsayılan (default)** | ✅ | ✅ | ❌ | ❌ |
-
-**📌 Paketler ve erişim belirleyiciler, Java’da kodun organize edilmesi ve güvenliği açısından büyük önem taşır! 🚀**
-
-
 ## Formatter
 ```sh 
 
@@ -5762,7 +5266,262 @@ public class Main {
 Bu yöntemle **Java çıktılarınızı daha okunaklı ve şık hale getirebilirsiniz!** 🚀✨
 
 
-## Array (Diziler)
+
+## Dizi(Array)
+```sh 
+
+```
+---
+# **Java'da Dizi (Array) Nedir? **
+
+## **📌 1. Dizi (Array) Nedir?**
+Java'da **dizi (array)**, **aynı veri tipindeki** birden fazla elemanı **tek bir değişken içinde saklamak** için kullanılır.  
+Diziler:
+- **Sabit bir boyuta sahiptirler** (Oluşturulduktan sonra boyutu değiştirilemez).
+- **Aynı türden elemanları saklarlar** (`int`, `double`, `String`, vb.).
+- **Dizi indisleri (index) 0'dan başlar**.
+- **Diziler bellek üzerinde bitişik (contiguous) olarak saklanır**.
+
+---
+
+## **📌 2. Java’da Dizi Tanımlama ve Kullanımı**
+### **✅ 2.1 Dizi Tanımlama**
+Dizi tanımlamanın iki temel yolu vardır:
+
+**1️⃣ İlk Yöntem: Dizi Tanımlama ve Bellekte Yer Ayırma**
+```java
+int[] sayilar = new int[5]; // 5 elemanlı bir int dizisi
+```
+- **Dizinin boyutu `5` olarak belirlendi ve varsayılan değerlerle (0) dolduruldu.**
+
+---
+
+**2️⃣ İkinci Yöntem: Tanımlama ve Değer Atama**
+```java
+int[] sayilar = {10, 20, 30, 40, 50};
+```
+- **Dizi doğrudan tanımlandı ve elemanları atandı**.
+
+📌 **Önemli:**
+- Java’da dizinin boyutu **sonradan değiştirilemez**.
+- Bir dizi `null` olabilir ama **başlangıçta boyutu belirtilmeden oluşturulamaz**.
+
+🚫 **Hatalı Tanımlama**
+```java
+int[] dizi; 
+dizi = {1, 2, 3, 4}; // HATA! Doğrudan böyle atama yapılamaz.
+```
+
+✅ **Doğru Kullanım**
+```java
+int[] dizi;
+dizi = new int[]{1, 2, 3, 4};
+```
+
+---
+
+## **📌 3. Dizi Elemanlarına Erişim ve Değiştirme**
+Dizi elemanlarına **indeks (index) numarası** kullanılarak erişilir.
+
+```java
+public class DiziErisim {
+    public static void main(String[] args) {
+        int[] sayilar = {10, 20, 30, 40, 50};
+
+        // Dizinin 0. elemanını yazdırma
+        System.out.println("İlk eleman: " + sayilar[0]); // 10
+        
+        // Dizinin 2. elemanını değiştirme
+        sayilar[2] = 100;
+        
+        System.out.println("Yeni 2. eleman: " + sayilar[2]); // 100
+    }
+}
+```
+📌 **Dizi indisleri 0'dan başlar ve `dizi.length - 1` kadar gider.**
+
+---
+
+## **📌 4. Dizinin Boyutunu Öğrenme**
+Java'da **bir dizinin boyutu**, **`.length`** özelliği ile öğrenilir.
+
+```java
+public class DiziBoyutu {
+    public static void main(String[] args) {
+        int[] dizi = {10, 20, 30, 40};
+        System.out.println("Dizi uzunluğu: " + dizi.length); // 4
+    }
+}
+```
+📌 **Dikkat:**
+- `dizi.length` bir metot değil, **bir özelliktir** (`()` parantezleri kullanılmaz).
+
+---
+
+## **📌 5. Dizi Üzerinde Döngüler Kullanımı**
+### **✅ 5.1 `for` Döngüsü ile Dizi Kullanımı**
+```java
+public class DiziDongu {
+    public static void main(String[] args) {
+        int[] sayilar = {5, 10, 15, 20, 25};
+
+        for (int i = 0; i < sayilar.length; i++) {
+            System.out.println("Eleman " + i + ": " + sayilar[i]);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Eleman 0: 5
+Eleman 1: 10
+Eleman 2: 15
+Eleman 3: 20
+Eleman 4: 25
+```
+
+---
+
+### **✅ 5.2 `for-each` Döngüsü ile Dizi Kullanımı**
+```java
+public class ForEachOrnek {
+    public static void main(String[] args) {
+        String[] diller = {"Java", "Python", "C++", "JavaScript"};
+
+        for (String dil : diller) {
+            System.out.println("Programlama Dili: " + dil);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Programlama Dili: Java
+Programlama Dili: Python
+Programlama Dili: C++
+Programlama Dili: JavaScript
+```
+📌 **`for-each` dizileri gezmek için kullanışlıdır ama dizinin indeksine erişemez.**
+
+---
+
+## **📌 6. Çok Boyutlu Diziler (Multidimensional Arrays)**
+### **✅ 6.1 İki Boyutlu (2D) Dizi Tanımlama**
+```java
+int[][] matris = new int[3][3]; // 3x3'lük bir matris
+```
+
+📌 **Başlangıç değerleri `0` olur.**
+
+---
+
+### **✅ 6.2 Değer Atama ve Erişim**
+```java
+public class IkiBoyutluDizi {
+    public static void main(String[] args) {
+        int[][] matris = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        System.out.println("Orta Eleman: " + matris[1][1]); // 5
+    }
+}
+```
+📌 **İlk indeks satır, ikinci indeks sütunu temsil eder**.
+
+---
+
+### **✅ 6.3 `for` Döngüsü ile Çok Boyutlu Diziyi Yazdırma**
+```java
+public class MatrisYazdirma {
+    public static void main(String[] args) {
+        int[][] matris = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        for (int i = 0; i < matris.length; i++) {
+            for (int j = 0; j < matris[i].length; j++) {
+                System.out.print(matris[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+**Çıktı:**
+```
+1 2 3
+4 5 6
+7 8 9
+```
+📌 **`matris.length` satır sayısını, `matris[i].length` sütun sayısını verir.**
+
+---
+
+## **📌 7. Java’da Dizi Kopyalama**
+### **✅ 7.1 `System.arraycopy()` Kullanımı**
+```java
+public class DiziKopyalama {
+    public static void main(String[] args) {
+        int[] orijinal = {1, 2, 3, 4, 5};
+        int[] kopya = new int[5];
+
+        System.arraycopy(orijinal, 0, kopya, 0, 5);
+
+        for (int eleman : kopya) {
+            System.out.print(eleman + " ");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+1 2 3 4 5
+```
+📌 **Diziyi manuel kopyalamaya göre daha verimlidir.**
+
+---
+
+## **📌 8. `Arrays` Sınıfı ile Dizi İşlemleri**
+Java’nın **`java.util.Arrays`** sınıfı, diziler için **yardımcı metotlar** içerir.
+
+### **✅ 8.1 `Arrays.toString()` - Diziyi String'e Çevirme**
+```java
+import java.util.Arrays;
+
+public class ArraysExample {
+    public static void main(String[] args) {
+        int[] sayilar = {3, 1, 4, 1, 5};
+        System.out.println(Arrays.toString(sayilar));
+    }
+}
+```
+**Çıktı:**
+```
+[3, 1, 4, 1, 5]
+```
+
+---
+
+## **📌 9. Özet**
+| **Özellik** | **Açıklama** |
+|-------------|-------------|
+| **Dizi Tanımlama** | `int[] dizi = new int[5];` |
+| **Diziye Değer Atama** | `dizi[0] = 10;` |
+| **Dizi Boyutu** | `dizi.length` |
+| **Tek Boyutlu Dizi** | `{10, 20, 30}` |
+| **Çok Boyutlu Dizi** | `int[][] matris = new int[3][3];` |
+| **Dizi Kopyalama** | `System.arraycopy()` |
+| **Dizi Sıralama** | `Arrays.sort(dizi);` |
+
+📌 **Java’da diziler, veri saklama ve yönetme açısından oldukça önemli yapılardır! 🚀**
+
+
+## Array (Diziler) Devam
 ```sh 
 
 ```
@@ -5879,8 +5638,8 @@ matris[2][2] = 9;
 
 ### **5.3. Matris İçin Döngü Kullanımı**
 ```java
-for (int i = 0; i < matris.length; i++) {
-    for (int j = 0; j < matris[i].length; j++) {
+for (int i = 0; i < matris.length; i++) { //satır
+    for (int j = 0; j < matris[i].length; j++) { //sutun
         System.out.print(matris[i][j] + " ");
     }
     System.out.println();
@@ -6073,18 +5832,862 @@ Eğer `int[]` kullanıyorsanız **2. yöntemi**, `Integer[]` kullanıyorsanız *
 Hangi yöntemi seçerseniz seçin, büyükten küçüğe sıralamayı başarıyla yapabilirsiniz! 🚀
 
 
+## Zaman Karmaşıklığı Uzay Karmaşıklığı
+```sh 
+
+```
+---
+
+### **Zaman Karmaşıklığı (Time Complexity) ve Uzay Karmaşıklığı (Space Complexity) Nedir?**
+
+Bir algoritmanın performansını ölçerken iki temel faktörü dikkate alırız:
+1. **Zaman Karmaşıklığı (Time Complexity)**
+2. **Uzay Karmaşıklığı (Space Complexity)**
+
+Bu kavramlar, bir algoritmanın **verimliliğini** anlamamıza yardımcı olur.
+
+---
+
+## **1. Zaman Karmaşıklığı (Time Complexity)**
+Bir algoritmanın **çalışma süresinin**, **girdi büyüklüğüne (n)** bağlı olarak nasıl değiştiğini ifade eder.
+
+### **Zaman Karmaşıklığı Nasıl Ölçülür?**
+- Bir algoritmadaki temel işlemlerin (toplama, çarpma, döngü işlemleri vb.) **kaç kez çalıştığını** hesaplarız.
+- Büyük veri kümeleriyle çalışırken, sabit zamanlı işlemler yerine **en kötü senaryo analizi (Big-O Notasyonu)** kullanılır.
+- **Big-O Notasyonu**, algoritmanın çalıştığı süreyi büyüme oranı olarak ifade eder.
+
+### **Zaman Karmaşıklığı Türleri**
+| **Big-O** | **Açıklama** | **Örnek Algoritma** |
+|-----------|-------------|---------------------|
+| **O(1) - Sabit Zaman** | Girdi büyüklüğünden bağımsızdır, hep aynı sürede çalışır. | Dizinin ilk elemanına erişim (`arr[0]`) |
+| **O(log n) - Logaritmik Zaman** | Her adımda girdi miktarını yarıya indirir. | Binary Search (İkili Arama) |
+| **O(n) - Doğrusal Zaman** | Girdi büyüklüğü arttıkça işlem süresi aynı oranda artar. | Bir dizinin tüm elemanlarını toplama |
+| **O(n log n) - Lineer Logaritmik Zaman** | Genellikle sıralama algoritmalarında görülür. | Merge Sort, Quick Sort |
+| **O(n²) - Karesel Zaman** | İç içe döngüler varsa oluşur. | Çift döngülü algoritmalar (Bubble Sort) |
+| **O(2ⁿ) - Üstel Zaman** | Her adımda işlemler katlanarak artar. | Fibonacci’nin basit özyinelemeli (recursive) hesaplanması |
+| **O(n!) - Faktöriyel Zaman** | Girdi arttıkça işlem süresi çok hızlı artar. | Gezgin Satıcı Problemi (TSP) gibi bazı kombinatorik algoritmalar |
+
+---
+
+### **Zaman Karmaşıklığı Örnekleri**
+#### **Örnek 1: O(1) - Sabit Zaman**
+```java
+int firstElement(int[] arr) {
+    return arr[0];  // Her zaman sabit sürede çalışır
+}
+```
+Bu fonksiyon **O(1)** karmaşıklığına sahiptir, çünkü girdi ne kadar büyük olursa olsun **tek işlemde** çalışır.
+
+#### **Örnek 2: O(n) - Doğrusal Zaman**
+```java
+int sumArray(int[] arr) {
+    int sum = 0;
+    for (int num : arr) {
+        sum += num;
+    }
+    return sum;
+}
+```
+Bu fonksiyon **O(n)** karmaşıklığına sahiptir, çünkü dizide **n** eleman varsa, **n** kez toplama işlemi yapılır.
+
+#### **Örnek 3: O(n²) - Karesel Zaman**
+```java
+void printPairs(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr.length; j++) {
+            System.out.println(arr[i] + ", " + arr[j]);
+        }
+    }
+}
+```
+Bu algoritma **iç içe geçmiş döngüler içerdiğinden**, **O(n²)** karmaşıklığa sahiptir. Çünkü her bir eleman için tekrar tüm elemanlar dolaşılır.
+
+---
+
+## **2. Uzay Karmaşıklığı (Space Complexity)**
+Bir algoritmanın **çalışması için ihtiyaç duyduğu bellek miktarının**, girdi büyüklüğüne **(n)** bağlı olarak nasıl değiştiğini ifade eder.
+
+### **Uzay Karmaşıklığı Nasıl Ölçülür?**
+- Algoritmanın kullandığı **değişkenler, diziler, veri yapıları** gibi ek bellek ihtiyacını hesaplarız.
+- **Big-O Notasyonu** burada da kullanılır.
+- Bellek tüketimi **sabit (O(1)), doğrusal (O(n)), karesel (O(n²))** gibi değerlendirilebilir.
+
+### **Uzay Karmaşıklığı Türleri**
+| **Big-O** | **Açıklama** | **Örnek Algoritma** |
+|-----------|-------------|---------------------|
+| **O(1) - Sabit Uzay** | Sabit miktarda bellek kullanır. | Tek değişken kullanımı (`int a = 5;`) |
+| **O(n) - Doğrusal Uzay** | Girdi büyüklüğüne bağlı olarak ek bellek kullanır. | Bir dizinin kopyalanması |
+| **O(n²) - Karesel Uzay** | Bir matris gibi iç içe veri saklanması gerektiğinde ortaya çıkar. | Dinamik programlama tablosu |
+
+---
+
+### **Uzay Karmaşıklığı Örnekleri**
+#### **Örnek 1: O(1) - Sabit Uzay**
+```java
+int add(int a, int b) {
+    return a + b; // Sadece iki değişken kullanılıyor
+}
+```
+Bu algoritma **O(1)** uzay karmaşıklığına sahiptir çünkü sadece **sabit** miktarda bellek kullanır.
+
+#### **Örnek 2: O(n) - Doğrusal Uzay**
+```java
+int[] copyArray(int[] arr) {
+    int[] newArr = new int[arr.length];
+    for (int i = 0; i < arr.length; i++) {
+        newArr[i] = arr[i];
+    }
+    return newArr;
+}
+```
+Bu algoritma **O(n)** uzay karmaşıklığına sahiptir çünkü **n** elemanlık yeni bir dizi oluşturuyor.
+
+#### **Örnek 3: O(n²) - Karesel Uzay**
+```java
+int[][] createMatrix(int n) {
+    int[][] matrix = new int[n][n];  // n*n boyutunda matris
+    return matrix;
+}
+```
+Bu algoritma **O(n²)** uzay karmaşıklığına sahiptir, çünkü **n × n** boyutunda bir matris bellekte tutulur.
+
+---
+
+## **Özet**
+| **Kavram** | **Tanım** | **Ölçüm Kriteri** | **Örnek Algoritmalar** |
+|-----------|----------|----------------|----------------|
+| **Zaman Karmaşıklığı** | Algoritmanın çalışma süresi | İşlem sayısı (**n**'e bağlı) | Sıralama algoritmaları, arama algoritmaları |
+| **Uzay Karmaşıklığı** | Algoritmanın bellek tüketimi | Ek bellek miktarı | Matris işlemleri, dinamik programlama |
+
+### **Genel Pratikler**
+1. **Zaman karmaşıklığını** optimize etmek için döngüleri azaltın, daha hızlı algoritmalar kullanın.
+2. **Uzay karmaşıklığını** azaltmak için gereksiz dizi kopyalamalardan kaçının, mümkünse sabit miktarda bellek kullanın.
+3. Büyük veri kümeleriyle çalışıyorsanız **O(log n) veya O(n log n) zaman karmaşıklığı** olan algoritmaları tercih edin.
+
+Bu bilgilerle, bir algoritmanın **verimli olup olmadığını** anlayabilir ve hangi durumlarda hangi yöntemlerin daha uygun olduğunu belirleyebilirsiniz! 🚀
+
+
+
+## Erişim Belirleyiciler Devam-1
+```sh 
+
+```
+---
+# **Java'da Access Modifier (Erişim Belirleyiciler) Detaylı Anlatım**
+
+Java'da **access modifier (erişim belirleyiciler)**, bir sınıfın, değişkenin, metodun veya yapıcı (constructor) metodun **nerelerden erişilebileceğini** belirler. Erişim belirleyiciler, **nesne yönelimli programlama (OOP) prensipleri** gereği **bilgi gizleme (encapsulation)** sağlamak için kullanılır.
+
+Java'da **dört** temel erişim belirleyici vardır:
+
+| **Modifier** | **Açıklama** | **Aynı Sınıf** | **Aynı Paket** | **Farklı Paket - Alt Sınıf** | **Farklı Paket - Alt Sınıf Olmayan** |
+|-------------|-------------|--------------|-------------|----------------------|----------------------|
+| `public`    | Her yerden erişilebilir | ✅ | ✅ | ✅ | ✅ |
+| `protected` | Aynı paket ve alt sınıflardan erişilebilir | ✅ | ✅ | ✅ | ❌ |
+| `default` (Hiçbir şey yazılmaz) | Sadece aynı paket içinden erişilebilir | ✅ | ✅ | ❌ | ❌ |
+| `private`   | Sadece tanımlandığı sınıf içinden erişilebilir | ✅ | ❌ | ❌ | ❌ |
+
+---
+
+## **1. `public` Access Modifier**
+**`public` anahtar kelimesi, bir sınıf, metod veya değişkenin her yerden erişilebilir olmasını sağlar.**
+
+📌 **Kullanım Alanları:**
+- Genel (public) API'ler oluştururken
+- Sınıfların dışarıdan erişilebilir olmasını istersek
+- Ana metod (`main`) için zorunludur.
+
+### **Örnek: `public` Kullanımı**
+```java
+// Public Class: Her yerden erişilebilir
+public class PublicExample {
+    // Public Method: Her yerden erişilebilir
+    public void showMessage() {
+        System.out.println("Bu bir public metod!");
+    }
+}
+```
+Başka bir sınıftan erişim:
+```java
+public class Test {
+    public static void main(String[] args) {
+        PublicExample example = new PublicExample();
+        example.showMessage();  // ✅ Başarıyla çalışır
+    }
+}
+```
+
+✅ **`public` ile tanımlanan değişken, metod veya sınıf herhangi bir paket veya sınıftan erişilebilir.**
+
+---
+
+## **2. `protected` Access Modifier**
+**`protected` erişim belirleyicisi, aynı paketteki tüm sınıflardan ve farklı paketlerdeki alt sınıflardan erişime izin verir.**
+
+📌 **Kullanım Alanları:**
+- Kalıtım (Inheritance) kullanılarak oluşturulan alt sınıflar arasında veri paylaşımı yapmak için idealdir.
+- Pakete özgü erişim sağlamak ve yalnızca alt sınıfların erişimini açmak için kullanılır.
+
+### **Örnek: `protected` Kullanımı**
+```java
+package package1;
+
+public class Parent {
+    protected String protectedMessage = "Bu bir protected mesajdır!";
+}
+```
+Başka bir sınıfta (aynı pakette):
+```java
+package package1;
+
+public class SamePackageTest {
+    public static void main(String[] args) {
+        Parent parent = new Parent();
+        System.out.println(parent.protectedMessage);  // ✅ Erişebilir
+    }
+}
+```
+Farklı bir pakette bir alt sınıf:
+```java
+package package2;
+import package1.Parent;
+
+public class Child extends Parent {
+    public void display() {
+        System.out.println(protectedMessage);  // ✅ Erişebilir (Kalıtım olduğu için)
+    }
+}
+```
+Farklı pakette ve **kalıtım (extends) olmadan** erişmeye çalışırsak:
+```java
+package package2;
+import package1.Parent;
+
+public class Test {
+    public static void main(String[] args) {
+        Parent parent = new Parent();
+        System.out.println(parent.protectedMessage);  // ❌ Hata! (Protected erişim yok)
+    }
+}
+```
+✅ **Özet:**
+- Aynı pakette **herkes erişebilir.**
+- Farklı pakette yalnızca **alt sınıflar erişebilir.**
+
+---
+
+## **3. `default` (Paket-Özel) Access Modifier**
+**Eğer bir erişim belirleyici belirtilmezse (`public`, `protected`, `private` yazılmazsa), Java bunu `default` olarak kabul eder.**  
+Bu durumda **yalnızca aynı paketteki sınıflar erişebilir, farklı paketlerdeki sınıflar erişemez.**
+
+📌 **Kullanım Alanları:**
+- Yalnızca bir paketin içinde çalışacak bileşenler oluştururken
+- Modüler bir yapı içinde, dış paketlerden erişimi kısıtlamak için
+
+### **Örnek: `default` Kullanımı**
+```java
+package package1;
+
+class DefaultExample {
+    void showMessage() {
+        System.out.println("Bu bir default metod!");
+    }
+}
+```
+Aynı pakette başka bir sınıftan erişim:
+```java
+package package1;
+
+public class SamePackageTest {
+    public static void main(String[] args) {
+        DefaultExample example = new DefaultExample();
+        example.showMessage();  // ✅ Erişebilir
+    }
+}
+```
+Farklı paketten erişmeye çalışırsak:
+```java
+package package2;
+import package1.DefaultExample;
+
+public class Test {
+    public static void main(String[] args) {
+        DefaultExample example = new DefaultExample();  // ❌ Hata! (default erişim yok)
+    }
+}
+```
+✅ **Özet:**
+- **Aynı paketten erişilebilir.**
+- **Farklı paketlerden erişilemez.**
+
+---
+
+## **4. `private` Access Modifier**
+**`private` ile tanımlanan değişkenler, metotlar ve constructor’lar yalnızca tanımlandıkları sınıf içinde erişilebilir.**  
+Dış sınıflar veya alt sınıflar **kesinlikle erişemez**.
+
+📌 **Kullanım Alanları:**
+- **Encapsulation (Kapsülleme)** sağlamak için
+- Dışarıdan erişilmesini istemediğimiz verileri saklamak için
+
+### **Örnek: `private` Kullanımı**
+```java
+public class PrivateExample {
+    private String secretMessage = "Bu bir private mesajdır!";
+
+    private void showMessage() {
+        System.out.println(secretMessage);
+    }
+
+    public void accessPrivateMethod() {
+        showMessage();  // Sınıf içinden erişim var
+    }
+}
+```
+Başka bir sınıftan erişmeye çalışırsak:
+```java
+public class Test {
+    public static void main(String[] args) {
+        PrivateExample example = new PrivateExample();
+        System.out.println(example.secretMessage);  // ❌ Hata! (Private değişkene erişim yok)
+        example.showMessage();  // ❌ Hata! (Private metoda erişim yok)
+    }
+}
+```
+✅ **Çözüm:** `getter` ve `setter` metodları kullanarak erişim sağlamak:
+```java
+public class PrivateExample {
+    private String secretMessage = "Bu bir private mesajdır!";
+
+    public String getSecretMessage() {
+        return secretMessage;  // Getter metodu
+    }
+}
+```
+Başka bir sınıfta:
+```java
+public class Test {
+    public static void main(String[] args) {
+        PrivateExample example = new PrivateExample();
+        System.out.println(example.getSecretMessage());  // ✅ Getter ile erişim var
+    }
+}
+```
+✅ **Özet:**
+- `private` olan bir değişken veya metoda **yalnızca aynı sınıf içerisinden** erişilebilir.
+
+---
+
+## **Sonuç ve Karşılaştırma**
+| Modifier | Aynı Sınıf | Aynı Paket | Farklı Paket (Alt Sınıf) | Farklı Paket (Alt Sınıf Olmayan) |
+|----------|-----------|------------|-----------------|------------------|
+| `public` | ✅ | ✅ | ✅ | ✅ |
+| `protected` | ✅ | ✅ | ✅ | ❌ |
+| `default` | ✅ | ✅ | ❌ | ❌ |
+| `private` | ✅ | ❌ | ❌ | ❌ |
+
+Bu detaylı anlatım, **Java'daki erişim belirleyicilerin kullanımını** tam anlamıyla kavramanızı sağlayacaktır. 🚀
+
+## Erişim Belirleyiciler Devam-2
+```sh 
+
+```
+---
+# **📌 Java'da Paketler (Packages) ve Erişim Belirleyiciler (Access Modifiers) Nedir? (Detaylı Açıklama)**
+
+Java'da **paketler (packages)** ve **erişim belirleyiciler (access modifiers)**, programların düzenlenmesi, modüler hale getirilmesi ve **erişim kontrolü** sağlanması için kullanılan iki temel yapıdır.
+
+---
+
+# **🔹 1. Java'da Paketler (Packages) Nedir?**
+**📌 Paket (Package)**, **benzer sınıfları (class), arayüzleri (interface) ve diğer bileşenleri bir arada tutan** bir dizin yapısıdır.  
+Paketler sayesinde:
+- **Kod daha düzenli hale gelir.**
+- **Ad çakışmaları (name conflict) önlenir.**
+- **Erişim belirleyicilerle güvenlik sağlanır.**
+- **Yeniden kullanılabilir bileşenler oluşturulabilir.**
+
+---
+
+## **🔸 1.1 Paket Tanımlama ve Kullanımı**
+Bir Java dosyasında paketi belirlemek için **`package`** anahtar kelimesi kullanılır. **Dosyanın en üstüne yazılmalıdır.**
+
+```java
+package com.ornek.paket; // Paketin tanımlanması
+
+public class Selam {
+    public void mesaj() {
+        System.out.println("Merhaba, paket kullanımı!");
+    }
+}
+```
+📌 **Paket ismi, genellikle ters domain adı şeklinde belirlenir.**  
+Örneğin:
+- **`package com.google.search;`**
+- **`package org.apache.commons;`**
+
+---
+
+## **🔸 1.2 Paket İçindeki Sınıfı Kullanma (`import`)**
+Başka bir paketten bir sınıf kullanmak için **`import`** ifadesi kullanılır.
+
+```java
+import com.ornek.paket.Selam; // Paket içindeki sınıfı dahil ettik
+
+public class Main {
+    public static void main(String[] args) {
+        Selam nesne = new Selam();
+        nesne.mesaj();
+    }
+}
+```
+📌 **Eğer aynı paketteysek, `import` kullanmadan doğrudan sınıfı çağırabiliriz.**
+
+---
+
+## **🔸 1.3 Tüm Paket İçeriğini Dahil Etme**
+Eğer bir paketin **tüm sınıflarını** kullanmak istiyorsak, `*` karakterini kullanabiliriz.
+
+```java
+import com.ornek.paket.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Selam nesne = new Selam();
+        nesne.mesaj();
+    }
+}
+```
+📌 **Ancak, `import` ile sadece kullanılacak sınıfları dahil etmek daha performanslıdır.**
+
+---
+
+## **🔸 1.4 `static import` ile Metotları ve Değişkenleri Dahil Etme**
+Bazı durumlarda, **sınıf adını yazmadan doğrudan bir metot veya değişkene erişmek için `static import` kullanılabilir**.
+
+```java
+import static java.lang.Math.*;
+
+public class MathExample {
+    public static void main(String[] args) {
+        System.out.println(sqrt(25)); // 5.0
+        System.out.println(pow(2, 3)); // 8.0
+    }
+}
+```
+📌 **Normalde `Math.sqrt(25)` şeklinde çağırılır. Ancak `static import` sayesinde `sqrt(25)` olarak doğrudan çağrılabilir.**
+
+---
+
+## **🔸 1.5 Varsayılan Paket (Default Package)**
+Eğer **`package` ifadesi kullanılmazsa**, sınıf **varsayılan pakette (default package)** olur.  
+Ancak **varsayılan paket kullanımı büyük projelerde önerilmez**.
+
+```java
+public class Varsayilan {
+    public void mesaj() {
+        System.out.println("Varsayılan paket içindeyim.");
+    }
+}
+```
+
+Bu sınıf, **herhangi bir pakete ait olmadığı için diğer paketler tarafından doğrudan kullanılamaz**.
+
+---
+
+# **🔹 2. Java’da Erişim Belirleyiciler (Access Modifiers)**
+Erişim belirleyiciler, **sınıf, metot ve değişkenlerin erişim seviyelerini belirler**.
+
+## **🔸 2.1 Java'daki Erişim Belirleyiciler**
+| **Erişim Belirleyici** | **Açıklama** | **Aynı Sınıf** | **Aynı Paket** | **Alt Sınıflar (Inheritance)** | **Diğer Paketler** |
+|----------------|----------------------------------------|:------------:|:------------:|:------------------:|:--------------:|
+| **`public`**  | **Her yerden erişilebilir.** | ✅ | ✅ | ✅ | ✅ |
+| **`private`** | **Sadece tanımlandığı sınıfta erişilebilir.** | ✅ | ❌ | ❌ | ❌ |
+| **`protected`** | **Aynı paket ve alt sınıflardan erişilebilir.** | ✅ | ✅ | ✅ | ❌ |
+| **Varsayılan (default)** | **Sadece aynı paket içindeki sınıflar erişebilir.** | ✅ | ✅ | ❌ | ❌ |
+
+---
+
+## **🔸 2.2 `public` Erişim Belirleyici**
+- **Tüm sınıflardan erişilebilir**.
+- **Global kullanılacak metotlar ve sınıflar genellikle `public` olarak tanımlanır.**
+
+```java
+package com.ornek;
+
+public class PublicOrnek {
+    public String mesaj = "Bu bir public değişkendir.";
+
+    public void goster() {
+        System.out.println(mesaj);
+    }
+}
+```
+Başka bir sınıfta:
+```java
+import com.ornek.PublicOrnek;
+
+public class Main {
+    public static void main(String[] args) {
+        PublicOrnek nesne = new PublicOrnek();
+        nesne.goster();
+    }
+}
+```
+📌 **Başka paketlerden bile erişilebilir.**
+
+---
+
+## **🔸 2.3 `private` Erişim Belirleyici**
+- **Sadece tanımlandığı sınıf içinde erişilebilir**.
+- **Dışarıdan çağrılamaz**.
+
+```java
+class PrivateOrnek {
+    private String gizliMesaj = "Bu bir private değişkendir.";
+
+    private void goster() {
+        System.out.println(gizliMesaj);
+    }
+}
+```
+📌 **Başka sınıflardan `gizliMesaj` veya `goster()` metoduna erişilemez.**
+
+🚫 **Yanlış Kullanım:**
+```java
+PrivateOrnek nesne = new PrivateOrnek();
+nesne.goster(); // HATA! Erişim engellendi.
+```
+
+📌 **Ancak `getter` ve `setter` metotları ile erişim sağlanabilir.**
+```java
+class PrivateOrnek {
+    private String gizliMesaj = "Bu bir private değişkendir.";
+
+    public String getMesaj() {
+        return gizliMesaj;
+    }
+}
+```
+
+---
+
+## **🔸 2.4 `protected` Erişim Belirleyici**
+- **Aynı paketteki sınıflar ve alt sınıflar (subclass) erişebilir**.
+- **Farklı paketlerden sadece `extends` ile türetilen sınıflar erişebilir.**
+
+```java
+package com.ornek;
+
+public class ProtectedOrnek {
+    protected String mesaj = "Bu bir protected değişkendir.";
+}
+```
+Başka bir paket içindeki **alt sınıfta (subclass) kullanılabilir**:
+```java
+import com.ornek.ProtectedOrnek;
+
+public class AltSinif extends ProtectedOrnek {
+    public void yazdir() {
+        System.out.println(mesaj);
+    }
+}
+```
+
+📌 **Ancak `new` ile nesne oluşturulursa erişilemez!**
+```java
+ProtectedOrnek nesne = new ProtectedOrnek();
+System.out.println(nesne.mesaj); // HATA! Çünkü başka paketteyiz.
+```
+
+---
+
+## **🔸 2.5 Varsayılan (Default) Erişim**
+- **Eğer erişim belirleyici yazılmazsa, sadece aynı paketteki sınıflar erişebilir.**
+
+```java
+class DefaultOrnek {
+    String mesaj = "Bu bir varsayılan (default) değişkendir.";
+}
+```
+Başka bir pakette:
+```java
+DefaultOrnek nesne = new DefaultOrnek(); // HATA! Çünkü başka paketteyiz.
+```
+
+---
+
+# **📌 Sonuç ve Karşılaştırma**
+| **Erişim Belirleyici** | **Sınıf İçinden** | **Aynı Paketten** | **Alt Sınıflardan (Inheritance)** | **Diğer Paketlerden** |
+|----------------|--------------|------------|----------------------|--------------|
+| **`public`** | ✅ | ✅ | ✅ | ✅ |
+| **`private`** | ✅ | ❌ | ❌ | ❌ |
+| **`protected`** | ✅ | ✅ | ✅ | ❌ |
+| **Varsayılan (default)** | ✅ | ✅ | ❌ | ❌ |
+
+**📌 Paketler ve erişim belirleyiciler, Java’da kodun organize edilmesi ve güvenliği açısından büyük önem taşır! 🚀**
+
+
+
+## Javada Class Tanımı
+```sh 
+
+```
+---
+
+# **Java'da Class (Sınıf) Tanımı - Detaylı Açıklama**
+
+## **1. Class (Sınıf) Nedir?**
+Java'da **class (sınıf)**, **nesne yönelimli programlama (OOP)** yaklaşımında **nesnelerin şablonu** veya **kalıbı** olarak kullanılır.  
+Bir sınıf; **verileri (değişkenler)** ve **bu verilere uygulanan işlemleri (metodlar)** içinde barındıran bir yapıdır.
+
+Sınıflar sayesinde **kod tekrarını önleyerek** daha **düzenli, modüler ve ölçeklenebilir yazılım** geliştirilir.
+
+### **Özetle bir sınıf:**
+- **Özellikler (attributes/fields)**
+- **Davranışlar (methods/behaviors)**
+- **Kapsülleme (Encapsulation)**
+- **Soyutlama (Abstraction)**
+
+İçerir ve **nesne** (object) oluşturmak için bir **şablon** görevi görür.
+
+---
+
+## **2. Java'da Sınıf Tanımlama**
+Java'da bir sınıf tanımlamak için `class` anahtar kelimesi kullanılır:
+
+### **Temel Sınıf Tanımı**
+```java
+class Araba {
+    // Özellikler (Fields)
+    String marka;
+    String model;
+    int yil;
+
+    // Metotlar (Davranışlar)
+    void bilgileriGoster() {
+        System.out.println("Marka: " + marka);
+        System.out.println("Model: " + model);
+        System.out.println("Yıl: " + yil);
+    }
+}
+```
+Bu sınıf, **Araba (Car)** isimli bir nesne oluşturmak için kullanılabilir.
+
+---
+
+## **3. Nesne (Object) Oluşturma**
+Bir sınıftan nesne türetmek için `new` anahtar kelimesi kullanılır.
+
+### **Örnek: `Araba` Sınıfından Nesne Oluşturma**
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Araba sınıfından bir nesne oluşturma
+        Araba araba1 = new Araba();
+        
+        // Nesne özelliklerine değer atama
+        araba1.marka = "Toyota";
+        araba1.model = "Corolla";
+        araba1.yil = 2022;
+        
+        // Metodu çağırma
+        araba1.bilgileriGoster();
+    }
+}
+```
+📌 **Çıktı:**
+```
+Marka: Toyota
+Model: Corolla
+Yıl: 2022
+```
+Bu kodda, `Araba` sınıfından `araba1` isimli bir nesne oluşturulmuş ve bu nesnenin **özellikleri atanarak** ekrana yazdırılmıştır.
+
+---
+
+## **4. Constructor (Yapıcı Metot) Kullanımı**
+Java'da bir sınıfın nesnesi oluşturulurken **otomatik olarak çalışan özel bir metod** vardır, buna **constructor (yapıcı metot)** denir.
+
+### **Constructor Tanımı**
+- **Nesne oluşturulduğunda çağrılır.**
+- **Sınıf ismi ile aynı olmalıdır.**
+- **Geri dönüş tipi (return type) içermez.**
+- **Parametre alarak nesneye ilk değerleri atayabilir.**
+
+### **Örnek: Constructor Kullanımı**
+```java
+class Araba {
+    String marka;
+    String model;
+    int yil;
+
+    // Yapıcı Metot (Constructor)
+    Araba(String marka, String model, int yil) {
+        this.marka = marka;
+        this.model = model;
+        this.yil = yil;
+    }
+
+    void bilgileriGoster() {
+        System.out.println("Marka: " + marka);
+        System.out.println("Model: " + model);
+        System.out.println("Yıl: " + yil);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Constructor ile nesne oluşturma
+        Araba araba1 = new Araba("BMW", "X5", 2023);
+        araba1.bilgileriGoster();
+    }
+}
+```
+📌 **Çıktı:**
+```
+Marka: BMW
+Model: X5
+Yıl: 2023
+```
+Bu kodda **constructor** sayesinde `araba1` nesnesi oluşturulurken **ilk değerler atanmış** oldu.
+
+---
+
+## **5. Access Modifiers (Erişim Belirleyiciler) ile Sınıf Kullanımı**
+Erişim belirleyiciler (`public`, `private`, `protected`, `default`) sınıfın bileşenlerine **erişimi kontrol eder**.
+
+### **Özel Değişkenler ve Getter-Setter Kullanımı**
+Genellikle **kapsülleme (encapsulation)** için **değişkenler `private` yapılır** ve dışarıdan erişim `getter` ve `setter` metotları ile sağlanır.
+
+```java
+class Araba {
+    private String marka;
+    private String model;
+    private int yil;
+
+    // Constructor
+    Araba(String marka, String model, int yil) {
+        this.marka = marka;
+        this.model = model;
+        this.yil = yil;
+    }
+
+    // Getter metodu (Bilgi almak için)
+    public String getMarka() {
+        return marka;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYil() {
+        return yil;
+    }
+
+    // Setter metodu (Değer değiştirmek için)
+    public void setYil(int yil) {
+        if (yil > 1885) { // İlk otomobil 1886'da üretildi, mantıklı bir kontrol ekleyelim.
+            this.yil = yil;
+        } else {
+            System.out.println("Geçersiz yıl!");
+        }
+    }
+
+    void bilgileriGoster() {
+        System.out.println("Marka: " + marka);
+        System.out.println("Model: " + model);
+        System.out.println("Yıl: " + yil);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Araba araba1 = new Araba("Mercedes", "E-Class", 2022);
+        
+        // Getter kullanarak değerleri al
+        System.out.println("Marka: " + araba1.getMarka());
+        System.out.println("Model: " + araba1.getModel());
+        System.out.println("Yıl: " + araba1.getYil());
+
+        // Setter ile yıl değerini değiştirelim
+        araba1.setYil(2025);
+        System.out.println("Güncellenmiş Yıl: " + araba1.getYil());
+    }
+}
+```
+📌 **Çıktı:**
+```
+Marka: Mercedes
+Model: E-Class
+Yıl: 2022
+Güncellenmiş Yıl: 2025
+```
+Burada **getter ve setter metotları** kullanarak `private` olan değişkenlere güvenli bir şekilde erişim sağladık.
+
+---
+
+## **6. Kalıtım (Inheritance) ile Sınıf Kullanımı**
+Java’da **bir sınıf başka bir sınıfın özelliklerini ve metotlarını miras alabilir.**  
+Bu işleme **kalıtım (inheritance)** denir ve `extends` anahtar kelimesi kullanılır.
+
+### **Örnek: Kalıtım Kullanımı**
+```java
+// Üst Sınıf (Parent Class)
+class Arac {
+    String yakitTuru = "Benzin";
+    
+    void hareketEt() {
+        System.out.println("Araç hareket ediyor...");
+    }
+}
+
+// Alt Sınıf (Child Class) - Arac sınıfından miras alır
+class Araba extends Arac {
+    int kapiSayisi = 4;
+
+    void bilgileriGoster() {
+        System.out.println("Yakıt Türü: " + yakitTuru);
+        System.out.println("Kapı Sayısı: " + kapiSayisi);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Araba araba = new Araba();
+        araba.hareketEt();  // Üst sınıf metodunu çağırdı
+        araba.bilgileriGoster();
+    }
+}
+```
+📌 **Çıktı:**
+```
+Araç hareket ediyor...
+Yakıt Türü: Benzin
+Kapı Sayısı: 4
+```
+✅ **Özet:** Kalıtım sayesinde **`Arac` sınıfının özelliklerini `Araba` sınıfına miras aldık** ve kod tekrarını önledik.
+
+---
+
+## **Sonuç**
+- **Sınıflar**, Java'da nesne yönelimli programlamanın temel taşlarıdır.
+- **Nesneler**, sınıflardan türetilir.
+- **Encapsulation (kapsülleme)** ile veri güvenliği sağlanır.
+- **Inheritance (kalıtım)** ile kod tekrarını azaltabiliriz.
+- **Constructor** kullanarak nesneleri başlatabiliriz.
+
+Java'da sınıflar, büyük ölçekli projelerde **düzeni ve okunabilirliği artırarak** programlamayı daha etkili hale getirir. 🚀
+
+
+
+
 ## Cipher (AES/DES/RSA/HASHING)
 ```sh 
 
 ```
 ---
 
-
-## Cipher (AES/DES/RSA/HASHING)
-```sh 
-
-```
----
 
 
 ## Diğer

@@ -17,14 +17,14 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
   . JDK ve IDE kurulumu (IntelliJ, Eclipse tanıtımı)
   . Temel komut satırı araçları (javac, java vb.)
 
-Perşembe (6 Şubat) - 3 Saat
+🚀 Perşembe (6 Şubat) - 3 Saat
 - Temel Java Sözdizimi
   . Değişkenler ve Veri Tipleri
   . Operatörler (Aritmetik, Karşılaştırma, Mantıksal vb.)
   . Escape Character
   . Cast(Dönüşüm)
 
-Cumartesi (8 Şubat) - 4 Saat
+🚀 Cumartesi (8 Şubat) - 4 Saat
 - Kontrol Yapıları
   . if-else, switch-case
   . Debug nasıl atılır ?
@@ -32,13 +32,13 @@ Cumartesi (8 Şubat) - 4 Saat
 
 ----------------------------------------------------------------------
 ### 2. Hafta
-Salı (11 Şubat) - 3 Saat
+🚀 Salı (11 Şubat) - 3 Saat
 - String & String metotları
 - Formatter
 - Metotlar (Yöntemler)
   . Parametre kullanımı, dönüş değerleri, overloading, override
 
-Perşembe (13 Şubat) - 3 Saat
+🚀 Perşembe (13 Şubat) - 3 Saat
 - Date(Tarih)
 - İstisnalar (Exceptions)
   . Exception Kavramı (Checked ve Unchecked ayrımı)
@@ -46,87 +46,103 @@ Perşembe (13 Şubat) - 3 Saat
 - Throw, Throws
   . Özel Exception sınıfları yazma
 
-Cumartesi (15 Şubat) - 4 Saat
+🚀 Cumartesi (15 Şubat) - 4 Saat
 - Arrays
   . Tek boyutlu diziler
   . Çift boyutlu diziler
 ----------------------------------------------------------------------
 ### 3. Hafta
-Salı (18 Şubat) - 3 Saat
+🚀 Salı (18 Şubat) - 3 Saat
+- Paketler ve Erişim Belirleyiciler
+  . Paketlerin Kullanımı
+  . Erişim Belirleyiciler (public, private, protected)
+
+- - Nesne Yönelimli Programlama (OOP) Temelleri
+    . Sınıflar ve Nesneler (Constructor dahil)
+    . Kapsülleme (Encapsulation)
+
+
+
+🚀 Perşembe (20 Şubat) - 3 Saat
+- Genel Örnek: Öğrenci Bilgi Sistem
+
+
+
+🚀 Cumartesi (22 Şubat) - 4 Saat
+- Giriş/Çıkış (I/O) İşlemleri
+  . Java I/O Temelleri (Stream, Reader/Writer)
+  . File I/O
+- Genel Örnek: Öğrenci Bilgi Sistem Devam 
+
+---
+----------------------------------------------------------------------
+### 4. Hafta
+🚀 Salı (25 Şubat) - 3 Saat
 - Generics (Tür Belirleyici)
   . Tip güvenliği
   . Iterator ve ListIterator
 
-
-Perşembe (20 Şubat) - 3 Saat
-- Koleksiyonlar (Collections) ve Generics
+🚀 - Koleksiyonlar (Collections) ve Generics
   . Collection Framework Genel Bakış (List, Set, Map)
   . Temel implementasyonlar (ArrayList, LinkedList vb.)
 
 
-Cumartesi (22 Şubat) - 4 Saat
+🚀 Perşembe (27 Şubat) - 3 Saat
+- Koleksiyonlar (Collections) ve Generics
+  . Collection Framework Genel Bakış (List, Set, Map)
+  . Temel implementasyonlar (ArrayList, LinkedList vb.)
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
+
+
+🚀 Cumartesi (1 Mart) - 4 Saat
 - Java 8+ Yenilikleri
   . Lambda İfadeleri
   . Fonksiyonel Arabirimler
 - Stream API
-    . filter, map, reduce gibi fonksiyonlar
+  . filter, map, reduce gibi fonksiyonlar
 - Method ve Constructor Reference
----
-----------------------------------------------------------------------
-### 4. Hafta
-Salı (25 Şubat) - 3 Saat
-🚀- Optional Sınıfı
+  - Optional Sınıfı
   . Yeni Tarih ve Zaman API (java.time)
 
 
-Perşembe (27 Şubat) - 3 Saat
-- Giriş/Çıkış (I/O) İşlemleri
-  . Java I/O Temelleri (Stream, Reader/Writer)
-  . File I/O
-
-  
-Cumartesi (1 Mart) - 4 Saat
-- Çoklu İş Parçacığı (Multithreading)
-  . Thread Oluşturma ve Yönetimi
-  . Senkronizasyon
 
 ----------------------------------------------------------------------
 ### 5. Hafta
-Salı (4 Mart) - 3 Saat
+🚀 Salı (4 Mart) - 3 Saat
+- Çoklu İş Parçacığı (Multithreading)
+  . Thread Oluşturma ve Yönetimi
+  . Senkronizasyon
+- 
+
+🚀 Perşembe (6 Mart) - 3 Saat
 - Eşzamanlılık (Concurrency)
   . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
   . Concurrency API
 
 
-Perşembe (6 Mart) - 3 Saat
-- Paketler ve Erişim Belirleyiciler
-  . Paketlerin Kullanımı
-  . Erişim Belirleyiciler (public, private, protected)
+
+🚀 Cumartesi (8 Mart) - 4 Saat
+- Enum
+- Record
 
 
-Cumartesi (8 Mart) - 4 Saat
-- Nesne Yönelimli Programlama (OOP) Temelleri
-  . Sınıflar ve Nesneler (Constructor dahil)
-  . Kapsülleme (Encapsulation)
 
 ----------------------------------------------------------------------
 ### 6. Hafta
-Salı (11 Mart) - 3 Saat
-- Enum
-- Record
+🚀 Salı (11 Mart) - 3 Saat
 - Kalıtım (Inheritance)
   . Super ve Subclass kavramları
   . Override ve Overload farkı
 
 
-Perşembe (13 Mart) - 3 Saat
+🚀 Perşembe (13 Mart) - 3 Saat
 - Polimorfizm (Polymorphism)
   . Dinamik ve Statik Polimorfizm örnekleri
 - Soyutlama (Abstraction)
   . Abstract sınıflar ve arabirimler (interface)
 
 
-Cumartesi (15 Mart) - 4 Saat
+🚀 Cumartesi (15 Mart) - 4 Saat
 - (AES/DES/RSA/HASHING)
 ---
 
