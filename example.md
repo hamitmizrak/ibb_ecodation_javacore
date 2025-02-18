@@ -31,7 +31,7 @@
 
 3. Kullanıcıdan Girilen Sayının Faktoriyelini Bulma
    Soru:
-   Kullanıcıdan bir tam sayı alarak faktöriyelini hesaplayan programı yazınız.
+   Kullanıcıdan bir tam sayı alarak faktöriyelini hesaplayan iterative ve recursive metota göre  programı yazınız.
    Çözüm:
 
 
