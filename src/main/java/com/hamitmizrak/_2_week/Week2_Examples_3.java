@@ -46,9 +46,10 @@ public class Week2_Examples_3 {
         }
     }
 
+    // Faktöriyel Programını Çalıştırma
     private static void runFactorialProgram() {
         while (true) {
-            System.out.println("\n"+SpecialColor.YELLOW+"Lütfen bir seçim yapınız:\n1) İteratif Faktöriyel\n2) Özyinelemeli Faktöriyel\n3) Sistem Özellikler\n4) Çıkış\n"+SpecialColor.RESET);
+            System.out.println("\n" + SpecialColor.YELLOW + "Lütfen bir seçim yapınız:\n1) İteratif Faktöriyel\n2) Özyinelemeli Faktöriyel\n3) Sistem Özellikler\n4) Çıkış\n" + SpecialColor.RESET);
             int choice = getUserChoice();
 
             switch (choice) {
@@ -78,6 +79,7 @@ public class Week2_Examples_3 {
         }
     }
 
+    // Kullanıcı Seçimini Alma
     private static int getUserChoice() {
         while (true) {
             if (scanner.hasNextInt()) {
@@ -90,6 +92,7 @@ public class Week2_Examples_3 {
         }
     }
 
+    // Kullanıcıdan Geçerli Pozitif Sayı Alma
     private static long getValidPositiveNumber() {
         int decimalAttemptCount = 0;
 
@@ -127,6 +130,7 @@ public class Week2_Examples_3 {
         }
     }
 
+    // İteratif Faktöriyel Hesaplama ve Süre Ölçme
     private static void measureIterativeFactorial(long number) {
         long startTime = System.nanoTime();
         long result = calculateFactorialIterative(number);
@@ -138,6 +142,7 @@ public class Week2_Examples_3 {
         logger.info("İteratif faktöriyel hesaplandı: " + number + "! = " + result);
     }
 
+    // Recursive Faktöriyel Hesaplama ve Süre Ölçme
     private static void measureRecursiveFactorial(long number) {
         long startTime = System.nanoTime();
         long result = calculateFactorialRecursive(number);
@@ -149,6 +154,7 @@ public class Week2_Examples_3 {
         logger.info("Recursive faktöriyel hesaplandı: " + number + "! = " + result);
     }
 
+    // İteratif Faktöriyel Hesaplama
     private static long calculateFactorialIterative(long number) {
         long result = 1;
         for (int i = 1; i <= number; i++) {
@@ -157,6 +163,7 @@ public class Week2_Examples_3 {
         return result;
     }
 
+    // Recursive Faktöriyel Hesaplama
     private static long calculateFactorialRecursive(long number) {
         if (number == 0 || number == 1) {
             return 1;
@@ -164,6 +171,7 @@ public class Week2_Examples_3 {
         return number * calculateFactorialRecursive(number - 1);
     }
 
+    // Sistem Bilgilerini Gösterme
     private static void systemInfo() {
         System.out.println("===== Sistem Bilgileri =====");
 
