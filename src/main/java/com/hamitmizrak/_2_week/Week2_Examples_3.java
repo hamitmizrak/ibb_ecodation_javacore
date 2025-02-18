@@ -14,16 +14,19 @@ import java.util.Scanner;
    Çözüm:
 */
 
+// System
+
+// Access Modifier
 public class Week2_Examples_3 {
 
-    public static void main(String[] args) {
-
+    // Iterative Method
+    public static void iterativeFactoriyel() {
         // Iterative
         // Variables
         // result:1 vermeliyiz ki, 1 sayısı çarpmada etkisizdir ve başlangıç değerimizdir.
         long number, result = 1;
         byte doubleRemainingRight = 3; // Ondalıklı sayı giriş hakkı
-        boolean isActive=true;
+        boolean isActive = true;
 
         // Scanner
         Scanner scanner = new Scanner(System.in);
@@ -55,11 +58,11 @@ public class Week2_Examples_3 {
                 } else if (scanner.hasNextDouble()) {
                     //doubleRemainingRight= (byte) (doubleRemainingRight-1);
                     doubleRemainingRight--; // Best practice
-                    System.out.println(SpecialColor.RED + "Ondalıklı bir sayı girdiniz kalan hakkınız: "+doubleRemainingRight + SpecialColor.RESET);
+                    System.out.println(SpecialColor.RED + "Ondalıklı bir sayı girdiniz kalan hakkınız: " + doubleRemainingRight + SpecialColor.RESET);
 
-                    if(doubleRemainingRight ==0){
+                    if (doubleRemainingRight == 0) {
                         System.out.println("üç defa ondalıklı sayı girdiğinizde dolayı Program sonlandı");
-                        isActive=false;
+                        isActive = false;
                         System.exit(0);
                     }
                     scanner.next(); // Geçersiz girdileri temizlemek içindir
@@ -77,4 +80,30 @@ public class Week2_Examples_3 {
         scanner.close();
     }
 
-} // end class
+
+    // Recursive Method
+    public static void recursiveFactoriyel() {
+
+    }
+
+
+    // PSVM
+    public static void main(String[] args) {
+        System.out.println("\nLütfen Seçim yapınız\n1-)Iterative Factoriyel\n2-)Recursive Factoriyel\n3-)Çıkış");
+        Scanner scanner = new Scanner(System.in);
+        int chooise = scanner.nextInt();
+        switch (chooise) {
+            case 1:
+                iterativeFactoriyel();
+                break;
+            case 2:
+                recursiveFactoriyel();
+                break;
+            default:
+                System.out.println("Doğru seçim yapınız");
+                break;
+        }
+
+    } // end class
+
+}
