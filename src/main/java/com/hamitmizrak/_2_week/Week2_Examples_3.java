@@ -7,13 +7,37 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.*;
 /*
-   Kullanıcıdan Girilen Sayının Faktoriyelini Bulma
-   Soru:
-   Kullanıcıdan bir tam sayı alarak faktöriyelini hesaplayan iterative ve recursive metota göre  programı yazınız.
-   Validation-1:Kullanıcı Sıfırdan küçük bir sayı verene kadar hesaplama yapsın ?
-   Validation-2: Kullanıcı Sıfırdan küçük sayı verirse döngü dursun(break)
-   Validation-3: Kullanıcı eğer virgüllü sayı verirse, kullanıcıya tekrardan sayı girilmesi beklensin, Eğer kullanıcı 3 kere virgülü sayı girerse kullanıcın hakkı kalmadığından sistemden atsın(System.exit(0)).
-   Çözüm:
+İşte kodunuz için bazı sorular:  
+
+ Genel Sorular
+1. Programın temel amacı nedir ve hangi yöntemleri kullanarak bu amacı gerçekleştiriyor?  
+2. Kodda kullanılan `SpecialColor` sınıfının amacı nedir? Bu sınıf olmadan program nasıl çalışır?  
+3. Kodda kullanılan `Logger` nesnesinin amacı nedir ve hangi seviyelerde loglama yapıyor?  
+4. Programın çalışmasını durduran (terminate eden) durumlar nelerdir?  
+5. Kodda hangi erişim belirleyicileri (access modifiers) kullanılmıştır ve neden bu şekilde seçilmiştir?  
+
+ Faktöriyel Hesaplama İle İlgili Sorular
+6. Program hangi iki farklı yöntemi kullanarak faktöriyel hesaplamaktadır? Bu yöntemlerin farkları nelerdir?  
+7. İteratif faktöriyel hesaplama yöntemi nasıl çalışır ve zaman karmaşıklığı nedir?  
+8. Recursive faktöriyel hesaplama yöntemi neden daha fazla bellek kullanır?  
+9. Recursive faktöriyel hesaplama için bir sınır belirlenmiş. Bunun sebebi nedir?  
+10. Eğer recursive fonksiyon sınırı kaldırılırsa ne gibi bir problem yaşanabilir?  
+
+ Giriş ve Doğrulama Mekanizması İle İlgili Sorular
+11. Kullanıcının negatif sayı girmesi durumunda program nasıl bir tepki veriyor?  
+12. Program, ondalıklı (decimal) sayı girilmesini nasıl engelliyor ve kaç hata sonrası program kapanıyor?  
+13. Kullanıcıdan alınan girişleri loglamak neden önemlidir?  
+14. Kodun `getValidPositiveNumber()` metodunda hangi doğrulama kontrolleri yer alıyor?  
+15. Programın giriş alma metodunda hatalı girişlerin önlenmesi için nasıl bir mantık kullanılmıştır?  
+
+ Kod İyileştirme ve Geliştirme İle İlgili Sorular
+16. Programın geliştirilmesi için hangi ek özellikler eklenebilir?  
+17. Kodda exception handling (istisna yönetimi) yeterince sağlanmış mı? Hangi durumlarda iyileştirme yapılabilir?  
+18. Kodun test edilebilirliğini artırmak için hangi değişiklikler yapılabilir?  
+19. Programın daha kullanıcı dostu hale getirilmesi için ne gibi geliştirmeler önerirsiniz?  
+20. Log mekanizması ile ilgili iyileştirme önerileriniz nelerdir?  
+
+Bu sorular programın mantığını daha iyi anlamanıza ve geliştirilmesi gereken noktaları fark etmenize yardımcı olabilir. Eğer daha teknik sorular isterseniz, ona göre eklemeler yapabilirim! 🚀
 */
 
 /*
@@ -158,7 +182,7 @@ public class Week2_Examples_3 {
     private static long calculateFactorialIterative(long number) {
         long result = 1;
         for (int i = 1; i <= number; i++) {
-            result *= i;
+            result = i;
         }
         return result;
     }
@@ -195,9 +219,9 @@ public class Week2_Examples_3 {
 
         System.out.println("\n===== Bellek Kullanımı =====");
         Runtime runtime = Runtime.getRuntime();
-        System.out.println("Toplam Bellek          : " + runtime.totalMemory() / (1024 * 1024) + " MB");
-        System.out.println("Kullanılabilir Bellek  : " + runtime.freeMemory() / (1024 * 1024) + " MB");
-        System.out.println("Maksimum Bellek        : " + runtime.maxMemory() / (1024 * 1024) + " MB");
+        System.out.println("Toplam Bellek          : " + runtime.totalMemory() / (1024*  1024) + " MB");
+        System.out.println("Kullanılabilir Bellek  : " + runtime.freeMemory() / (1024*  1024) + " MB");
+        System.out.println("Maksimum Bellek        : " + runtime.maxMemory() / (1024*  1024) + " MB");
 
         System.out.println("\n===== Ortam Değişkenleri =====");
         System.out.println("PATH                  : " + System.getenv("PATH"));
