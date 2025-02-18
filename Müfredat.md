@@ -53,6 +53,7 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
 ----------------------------------------------------------------------
 ### 3. Hafta
 🚀 Salı (18 Şubat) - 3 Saat
+- Metotlar (Iterative ve Recursive Method)
 - Paketler ve Erişim Belirleyiciler
   . Paketlerin Kullanımı
   . Erişim Belirleyiciler (public, private, protected)
@@ -61,11 +62,8 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
     . Sınıflar ve Nesneler (Constructor dahil)
     . Kapsülleme (Encapsulation)
 
-
-
 🚀 Perşembe (20 Şubat) - 3 Saat
 - Genel Örnek: Öğrenci Bilgi Sistem
-
 
 
 🚀 Cumartesi (22 Şubat) - 4 Saat
@@ -81,10 +79,12 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
 - Generics (Tür Belirleyici)
   . Tip güvenliği
   . Iterator ve ListIterator
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
 
-🚀 - Koleksiyonlar (Collections) ve Generics
-  . Collection Framework Genel Bakış (List, Set, Map)
-  . Temel implementasyonlar (ArrayList, LinkedList vb.)
+- Koleksiyonlar (Collections) ve Generics
+ . Collection Framework Genel Bakış (List, Set, Map)
+ . Temel implementasyonlar (ArrayList, LinkedList vb.)
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 
 🚀 Perşembe (27 Şubat) - 3 Saat
@@ -104,8 +104,7 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
   - Optional Sınıfı
   . Yeni Tarih ve Zaman API (java.time)
 
-
-
+    
 ----------------------------------------------------------------------
 ### 5. Hafta
 🚀 Salı (4 Mart) - 3 Saat
