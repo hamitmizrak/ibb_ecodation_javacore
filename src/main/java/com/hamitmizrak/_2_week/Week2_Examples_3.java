@@ -19,12 +19,11 @@ import java.util.Scanner;
 // Access Modifier
 public class Week2_Examples_3 {
 
-    // Iterative Method
-    public static void iterativeFactoriyel() {
-        // Iterative
+    // Kullanıcıdan sayısal değerler al
+    public static long isNumber(){
         // Variables
         // result:1 vermeliyiz ki, 1 sayısı çarpmada etkisizdir ve başlangıç değerimizdir.
-        long number, result = 1;
+        long number;
         byte doubleRemainingRight = 3; // Ondalıklı sayı giriş hakkı
         boolean isActive = true;
 
@@ -46,14 +45,9 @@ public class Week2_Examples_3 {
                         //System.exit(0); // 2.YOL (JVM'yi kapatarak programı tamamem sonlandırıyor.)
                     } else if (number == 0) {
                         System.out.println(number + SpecialColor.BLUE + " sayısının faktöriyeli= 1");
-                        result = 1;
+                        return 1;
                     } else {
-                        result = 1;
-                        for (int i = 1; i <= number; i++) {
-                            //result=result*i;
-                            result *= i;
-                        }
-                        System.out.println(number + SpecialColor.YELLOW + " sayısının " + number + "!=" + result + SpecialColor.RESET);
+                        iterativeFactoriyel(number);
                     }
                 } else if (scanner.hasNextDouble()) {
                     //doubleRemainingRight= (byte) (doubleRemainingRight-1);
@@ -78,32 +72,48 @@ public class Week2_Examples_3 {
         } //end while
         // Scanner Close
         scanner.close();
+        return 0L;
+    }
+
+    // Iterative Method
+    public static void iterativeFactoriyel(long userData) {
+        long result = 1;
+        for (int i = 1; i <= userData; i++) {
+            //result=result*i;
+            result *= i;
+        }
+        System.out.println(userData + SpecialColor.YELLOW + "İterative sayısının " + userData + "!=" + result + SpecialColor.RESET);
     }
 
 
     // Recursive Method
-    public static void recursiveFactoriyel() {
-
+    public static long recursiveFactoriyel(long userData) {
+        // Sıfır veya 1 faktöriyel 1
+           if(userData==0 || userData==1)
+               return 1;
+           return userData * recursiveFactoriyel(userData-1);
     }
 
-
-    // PSVM
-    public static void main(String[] args) {
+    public static void isResult(){
         System.out.println("\nLütfen Seçim yapınız\n1-)Iterative Factoriyel\n2-)Recursive Factoriyel\n3-)Çıkış");
         Scanner scanner = new Scanner(System.in);
         int chooise = scanner.nextInt();
         switch (chooise) {
             case 1:
-                iterativeFactoriyel();
+                iterativeFactoriyel(isNumber());
                 break;
             case 2:
-                recursiveFactoriyel();
+                recursiveFactoriyel(isNumber());
                 break;
             default:
                 System.out.println("Doğru seçim yapınız");
                 break;
         }
+    }
 
+    // PSVM
+    public static void main(String[] args) {
+        isResult();
     } // end class
 
 }
