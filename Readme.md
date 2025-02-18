@@ -5965,8 +5965,427 @@ Bu algoritma **O(n²)** uzay karmaşıklığına sahiptir, çünkü **n × n** b
 3. Büyük veri kümeleriyle çalışıyorsanız **O(log n) veya O(n log n) zaman karmaşıklığı** olan algoritmaları tercih edin.
 
 Bu bilgilerle, bir algoritmanın **verimli olup olmadığını** anlayabilir ve hangi durumlarda hangi yöntemlerin daha uygun olduğunu belirleyebilirsiniz! 🚀
+---
+
+## Javada System
+```sh 
+
+```
+---
+
+Java'da `System` sınıfı, **java.lang** paketinde bulunan ve Java uygulamalarının temel sistem seviyesinde işlemler gerçekleştirmesini sağlayan bir yardımcı sınıftır. `System` sınıfı, genellikle giriş ve çıkış işlemleri, hata ayıklama, ortam değişkenleri, zaman ölçümleri, çöp toplama (garbage collection) ve sistem özelliklerine erişim gibi işlemler için kullanılır.
+
+---
+
+## 1. **System Sınıfının Genel Yapısı**
+- `System` sınıfı **final** olarak tanımlanmıştır, yani **kalıtım alınamaz**.
+- **Constructor'ı `private` olduğu için** nesne oluşturulamaz.
+- Tüm metodları **static** olduğu için, doğrudan `System.method()` şeklinde çağrılır.
+
+### **System Sınıfının Başlıca Üyeleri**
+`System` sınıfının içinde bulunan **static değişkenler** ve **metodlar** şunlardır:
+
+| Üye (Değişken/Metod) | Açıklama |
+|----------------------|----------|
+| `System.in`  | Konsoldan veri almak için kullanılır (InputStream). |
+| `System.out` | Konsola çıktı vermek için kullanılır (PrintStream). |
+| `System.err` | Hata mesajlarını göstermek için kullanılır (PrintStream). |
+| `System.exit(int status)` | Programı sonlandırır. |
+| `System.gc()` | Garbage Collector'ı çağırır. |
+| `System.nanoTime()` | Yüksek çözünürlüklü zaman ölçümü yapar. |
+| `System.currentTimeMillis()` | Geçerli zamanı alır (Unix Epoch Time). |
+| `System.getProperty(String key)` | Sistem özelliklerini getirir. |
+| `System.setProperty(String key, String value)` | Sistem özelliklerini ayarlar. |
+| `System.getenv(String name)` | Ortam değişkenlerini getirir. |
+| `System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length)` | Diziler arasında hızlı kopyalama yapar. |
+
+---
+
+## 2. **System Sınıfı İçindeki Önemli Değişkenler**
+### 2.1. **`System.in` (Standart Giriş)**
+- `System.in`, standart giriş akışıdır (`InputStream` tipindedir).
+- Kullanıcıdan veri almak için **`Scanner`** veya **`BufferedReader`** ile kullanılabilir.
+
+**Örnek: Kullanıcıdan veri alma**
+```java
+import java.util.Scanner;
+
+public class SystemInExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Bir şey yazın: ");
+        String input = scanner.nextLine();
+        System.out.println("Girdiğiniz: " + input);
+        scanner.close();
+    }
+}
+```
+
+---
+
+### 2.2. **`System.out` (Standart Çıkış)**
+- `System.out`, **standart çıkış** nesnesidir (`PrintStream`).
+- `print()`, `println()` ve `printf()` metodları ile çıktı yazdırılabilir.
+
+**Örnek: Konsola çıktı yazdırma**
+```java
+public class SystemOutExample {
+    public static void main(String[] args) {
+        System.out.println("Merhaba, Dünya!");
+        System.out.print("Yan yana yazılır.");
+        System.out.printf("\nFormatlı yazdırma: %d + %d = %d", 5, 3, 5+3);
+    }
+}
+```
+
+---
+
+### 2.3. **`System.err` (Hata Çıkışı)**
+- `System.err`, hata mesajlarını göstermek için kullanılır (`PrintStream`).
+- `System.out` ile aynı işlevdedir ama genellikle **hataları loglamak** için kullanılır.
+
+**Örnek: Hata mesajı yazdırma**
+```java
+public class SystemErrExample {
+    public static void main(String[] args) {
+        System.err.println("Bu bir hata mesajıdır!");
+    }
+}
+```
+
+---
+
+## 3. **Sistemle İlgili Bilgilere Erişim**
+### 3.1. **System.getProperty() Kullanımı**
+- Java'nın çalıştığı sistem hakkında bilgi almak için kullanılır.
+
+**Örnek: Sistem bilgilerini alma**
+```java
+public class SystemPropertiesExample {
+    public static void main(String[] args) {
+        System.out.println("Java Versiyonu: " + System.getProperty("java.version"));
+        System.out.println("OS Adı: " + System.getProperty("os.name"));
+        System.out.println("Kullanıcı Adı: " + System.getProperty("user.name"));
+        System.out.println("Çalışma Dizini: " + System.getProperty("user.dir"));
+    }
+}
+```
+
+### 3.2. **System.getenv() Kullanımı**
+- Ortam değişkenlerini almak için kullanılır.
+
+**Örnek: Ortam değişkenlerini alma**
+```java
+public class SystemEnvExample {
+    public static void main(String[] args) {
+        System.out.println("PATH: " + System.getenv("PATH"));
+        System.out.println("JAVA_HOME: " + System.getenv("JAVA_HOME"));
+    }
+}
+```
+
+---
+
+## 4. **Garbage Collector'ı Çalıştırma**
+- `System.gc()` metodu **çöp toplayıcının çalışmasını önerebilir**, ancak garanti vermez.
+
+**Örnek: Bellek temizleme çağrısı**
+```java
+public class GarbageCollectorExample {
+    public static void main(String[] args) {
+        System.out.println("Çöp toplama çağrısı yapılıyor...");
+        System.gc();
+    }
+}
+```
+
+---
+
+## 5. **Zaman Ölçme**
+### 5.1. **System.currentTimeMillis()**
+- Milisaniye cinsinden **geçerli zaman damgası** alır.
+
+**Örnek: Zaman hesaplama**
+```java
+public class TimeExample {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+        
+        // 1 milyon döngü çalıştır
+        for (int i = 0; i < 1_000_000; i++) { }
+
+        long end = System.currentTimeMillis();
+        System.out.println("Geçen süre: " + (end - start) + " ms");
+    }
+}
+```
+
+### 5.2. **System.nanoTime()**
+- **Daha hassas** zaman ölçümü yapar.
+
+**Örnek: Nano zaman hesaplama**
+```java
+public class NanoTimeExample {
+    public static void main(String[] args) {
+        long start = System.nanoTime();
+
+        for (int i = 0; i < 1_000_000; i++) { }
+
+        long end = System.nanoTime();
+        System.out.println("Geçen süre: " + (end - start) + " ns");
+    }
+}
+```
+
+---
+
+## 6. **Dizi Kopyalama**
+- `System.arraycopy()` metodu, diziler arasında **hızlı kopyalama** yapar.
+
+**Örnek: Dizi elemanlarını kopyalama**
+```java
+public class ArrayCopyExample {
+    public static void main(String[] args) {
+        int[] kaynak = {1, 2, 3, 4, 5};
+        int[] hedef = new int[5];
+
+        System.arraycopy(kaynak, 0, hedef, 0, 5);
+
+        for (int num : hedef) {
+            System.out.print(num + " ");
+        }
+    }
+}
+```
+
+---
+
+## 7. **Programdan Çıkış Yapma**
+- `System.exit(int status)`, programı **belirtilen durum koduyla sonlandırır**.
+- **0 başarıyla çıkış**, **1 hata nedeniyle çıkış** anlamına gelir.
+
+**Örnek: Programdan çıkma**
+```java
+public class SystemExitExample {
+    public static void main(String[] args) {
+        System.out.println("Program sonlandırılıyor...");
+        System.exit(0);
+    }
+}
+```
+
+---
+
+### **Sonuç**
+`System` sınıfı, **giriş-çıkış işlemleri, hata mesajları, sistem bilgileri, zaman ölçümü, dizi kopyalama ve programdan çıkış** gibi birçok önemli işlevi kapsayan güçlü bir yardımcı sınıftır. Java programlarında sıkça kullanılan bu sınıfın işlevlerini iyi anlamak, yazılım geliştirmede büyük kolaylık sağlar.
 
 
+## Javada break ile System.exit(0) Arasındaki Farklar
+```sh 
+
+```
+---
+Java'da `break` ve `System.exit(0)` ifadeleri, programın akışını kontrol etmek için kullanılır, ancak ikisi arasında önemli farklar vardır. İşte temel farklar:
+
+---
+
+## 1. **Temel Farklar**
+
+| Özellik | `break` | `System.exit(0)` |
+|---------|--------|-----------------|
+| **Kullanım Alanı** | Döngüler (`for`, `while`, `do-while`) ve `switch-case` blokları içinde kullanılır. | Programın tamamını sonlandırır. |
+| **Ne Yapıyor?** | Sadece **içinde bulunduğu döngüyü veya switch-case'i** kırar ve bir sonraki satırdan devam eder. | Programı tamamen kapatır ve çalışmasını durdurur. |
+| **Etki Alanı** | Yalnızca bulunduğu döngü veya switch bloğunu etkiler. | JVM'yi kapatarak programı tamamen sonlandırır. |
+| **Geri Dönüş Değeri (Exit Code)** | Yoktur. | Parametre olarak verilen exit koduna göre sistem çıkış kodu belirlenir. |
+| **Try-Finally Bloklarında Davranış** | `break` çalışsa bile `finally` bloğu her zaman çalışır. | `System.exit(0)` çağrıldığında, `finally` bloğu garanti edilmez, bazen çalıştırılmadan çıkış yapılabilir. |
+
+---
+
+## 2. **`break` Kullanımı**
+
+- `break`, **yalnızca döngüleri ve switch-case bloklarını kırmak** için kullanılır. Döngüden çıkıldığında program çalışmaya devam eder.
+
+**Örnek 1: Döngüde `break` Kullanımı**
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i == 3) {
+                break; // 3 olduğunda döngüyü sonlandırır
+            }
+            System.out.println("i: " + i);
+        }
+        System.out.println("Döngüden çıkıldı."); // Döngü sonrası çalışmaya devam eder
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+Döngüden çıkıldı.
+```
+
+**Örnek 2: `switch-case` ile `break` Kullanımı**
+```java
+public class SwitchBreakExample {
+    public static void main(String[] args) {
+        int sayi = 2;
+        switch (sayi) {
+            case 1:
+                System.out.println("Sayı 1");
+                break;
+            case 2:
+                System.out.println("Sayı 2");
+                break; // Burada kırılır, sonraki case çalışmaz
+            case 3:
+                System.out.println("Sayı 3");
+                break;
+            default:
+                System.out.println("Bilinmeyen sayı");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Sayı 2
+```
+Burada `break` olmasaydı, `case 3` de çalışmaya devam ederdi.
+
+---
+
+## 3. **`System.exit(0)` Kullanımı**
+- `System.exit(0)`, programın **tamamını sonlandırır** ve JVM'yi kapatır.
+- `exit(0)`: **Başarılı çıkışı** ifade eder.
+- `exit(1)`, `exit(-1)`, `exit(2)`, vb.: **Hata kodlarıdır**, genellikle bir hata olduğunda sistem tarafından kullanılır.
+
+**Örnek 1: Programı Sonlandırma**
+```java
+public class ExitExample {
+    public static void main(String[] args) {
+        System.out.println("Program başlıyor...");
+        
+        System.exit(0); // Program burada tamamen sonlanır
+        
+        System.out.println("Bu satır çalışmaz.");
+    }
+}
+```
+**Çıktı:**
+```
+Program başlıyor...
+```
+Görüldüğü gibi, `System.exit(0)` çağrıldığında, ondan sonraki kodlar çalışmaz.
+
+---
+
+## 4. **`break` ve `System.exit(0)` Farklı Davranışları**
+### **4.1. Döngü İçinde Kullanım**
+**`break` sadece döngüden çıkar, ama program çalışmaya devam eder:**
+```java
+public class BreakVsExit {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i == 3) {
+                break; // Sadece döngüden çıkar
+            }
+            System.out.println("i: " + i);
+        }
+        System.out.println("Döngüden sonra çalışmaya devam eder.");
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+Döngüden sonra çalışmaya devam eder.
+```
+
+**`System.exit(0)` programı tamamen kapatır:**
+```java
+public class BreakVsExit {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i == 3) {
+                System.exit(0); // Programı tamamen kapatır
+            }
+            System.out.println("i: " + i);
+        }
+        System.out.println("Bu satır çalışmaz.");
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+```
+Gördüğünüz gibi, `System.exit(0)` çağrıldıktan sonra **program tamamen durduğu için** döngüden sonra kodlar çalışmaz.
+
+---
+
+### **4.2. `finally` Blokları ile Farklılık**
+- `break` kullanıldığında `finally` bloğu **her zaman çalışır**.
+- `System.exit(0)` kullanıldığında `finally` bloğu **çalışmayabilir**.
+
+**`break` ile `finally` her zaman çalışır:**
+```java
+public class BreakFinallyExample {
+    public static void main(String[] args) {
+        try {
+            for (int i = 1; i <= 5; i++) {
+                if (i == 3) {
+                    break;
+                }
+                System.out.println("i: " + i);
+            }
+        } finally {
+            System.out.println("Finally bloğu çalıştı.");
+        }
+    }
+}
+```
+**Çıktı:**
+```
+i: 1
+i: 2
+Finally bloğu çalıştı.
+```
+
+**`System.exit(0)` ile `finally` bloğu çalışmayabilir:**
+```java
+public class ExitFinallyExample {
+    public static void main(String[] args) {
+        try {
+            System.out.println("Program başlıyor...");
+            System.exit(0);
+        } finally {
+            System.out.println("Finally bloğu çalıştı."); // Çalışmayabilir
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Program başlıyor...
+```
+Burada `finally` bloğu büyük olasılıkla çalışmaz çünkü JVM kapatılmıştır.
+
+---
+
+## 5. **Özet ve Karşılaştırma**
+| **Özellik** | **break** | **System.exit(0)** |
+|------------|----------|-------------------|
+| **Ne yapar?** | Döngüyü veya switch-case bloğunu kırar. | Programı tamamen kapatır. |
+| **Etki Alanı** | Sadece ilgili döngüyü etkiler. | JVM'yi kapatır, program tamamen durur. |
+| **Kullanıldığı Yer** | Döngüler (`for`, `while`, `do-while`) ve `switch-case` | Her yerde kullanılabilir. |
+| **Sonraki kod çalışır mı?** | Evet, sadece döngüden sonra devam eder. | Hayır, `exit(0)` sonrası kod çalışmaz. |
+| **finally bloğu çalışır mı?** | Evet. | Çalışmayabilir. |
+| **Çıkış kodu** | Yoktur. | `exit(0)`, `exit(1)`, `exit(-1)` gibi değerler döndürebilir. |
+
+**Sonuç olarak**, `break` yalnızca döngüleri veya switch-case yapısını kırarken, `System.exit(0)` programın tamamını durdurarak JVM'yi kapatır.
 
 ## Erişim Belirleyiciler Devam-1
 ```sh 
