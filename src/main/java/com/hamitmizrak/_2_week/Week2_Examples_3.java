@@ -14,6 +14,14 @@ import java.util.Scanner;
    Çözüm:
 */
 
+/*
+Yöntem   | Zaman karmaşıklığı | Uzay Karmaşıklığı | Avantaj             | Dezavantaj
+---------| ------------------ | ------------------| ------------------- | ----------
+iterative| O(n)               | O(1)              | Hızlı, hafıza dostu | Kodu daha uzundur
+Recursive| O(n)               | O(n)              | Daha okunaklı,      | Yavaştır
+                                                    Matematiksel gösterim
+ */
+
 // System
 
 // Access Modifier
