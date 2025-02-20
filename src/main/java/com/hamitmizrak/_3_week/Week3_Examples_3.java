@@ -1,4 +1,4 @@
-package com.hamitmizrak._2_week;
+package com.hamitmizrak._3_week;
 
 
 import com.hamitmizrak.utils.SpecialColor;
@@ -51,13 +51,18 @@ Recursive| O(n)               | O(n)              | Daha okunaklı,      | Yava�
 // System
 
 // Access Modifier
-public class Week2_Examples_3 {
+public class Week3_Examples_3 {
 
-    private static final int MAX_DECIMAL_ATTEMPTS = 3;
-    private static final int MAX_RECURSIVE_LIMIT = 20;
+    private static final int MAX_DECIMAL_ATTEMPTS = 3; // Virgüllü sayı girme hakkı
+    private static final int MAX_RECURSIVE_LIMIT = 20; // Faktöriyel hesaplanması sınırsız sayı olmadığı için sınırlama
+    // Scanner
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Logger logger = Logger.getLogger(Week2_Examples_3.class.getName());
 
+    /// //////////////////////////////////////////////////////////////////////////////////
+    // Loglama
+    private static final Logger logger = Logger.getLogger(Week3_Examples_3.class.getName());
+
+    // Loglama dosyası için
     static {
         try {
             LogManager.getLogManager().reset(); // Önceki log ayarlarını sıfırla
@@ -97,6 +102,8 @@ public class Week2_Examples_3 {
                     System.out.println("Program sonlandırılıyor...");
                     logger.info("Program sonlandırıldı.");
                     return;
+                    // break;
+                    // System.exit(0);
                 default:
                     System.out.println("Lütfen geçerli bir seçenek girin.");
             }
@@ -134,7 +141,7 @@ public class Week2_Examples_3 {
                     return 1;
                 }
                 return number;
-
+              // Ondalıklı sayı girişini engelleme
             } else if (scanner.hasNextDouble()) {
                 decimalAttemptCount++;
                 System.out.println("Ondalıklı sayı girdiniz! Kalan deneme hakkınız: " + (MAX_DECIMAL_ATTEMPTS - decimalAttemptCount));
@@ -181,8 +188,9 @@ public class Week2_Examples_3 {
     // İteratif Faktöriyel Hesaplama
     private static long calculateFactorialIterative(long number) {
         long result = 1;
+        //for (int i = number; i >=1; i--) {
         for (int i = 1; i <= number; i++) {
-            result = i;
+            result *= i;
         }
         return result;
     }

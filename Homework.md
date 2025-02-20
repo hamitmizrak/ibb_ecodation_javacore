@@ -70,3 +70,7 @@ null değeri ne zaman kullanabilirim ?
 
 ## 6.Ders Ödevi (15 Şubat)
 > Array => foreach ile iterative for döngü arasındaki farklar nelerdir ?
+
+
+> ## 7.Ders Ödevi (20 Şubat)
+> constructor ile static {} arasındaki farklar ?
