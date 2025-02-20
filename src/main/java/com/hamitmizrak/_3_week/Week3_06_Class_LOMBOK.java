@@ -1,6 +1,6 @@
 package com.hamitmizrak._3_week;
 
-public class Week3_05_Class_BEAN {
+public class Week3_06_Class_LOMBOK {
 
     // Field
     private String name;
