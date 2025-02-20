@@ -7099,6 +7099,375 @@ Kapı Sayısı: 4
 Java'da sınıflar, büyük ölçekli projelerde **düzeni ve okunabilirliği artırarak** programlamayı daha etkili hale getirir. 🚀
 
 
+## POJO
+```sh 
+
+```
+---
+### **Java'da POJO (Plain Old Java Object) Nedir?**
+
+POJO, **"Plain Old Java Object"** teriminin kısaltmasıdır ve özellikle Java dünyasında, basit, standart Java sınıflarını tanımlamak için kullanılır. POJO'lar, belirli bir çerçeveye (framework) veya Java'nın özel kütüphanelerine bağlı olmayan, genellikle yalnızca değişkenler (fields), getter ve setter metodları, yapıcı metodlar (constructors) ve bazı temel işlemleri içeren sınıflardır.
+
+---
+
+## **POJO'nun Genel Özellikleri**
+POJO sınıfları, bazı temel özellikleri taşımalıdır:
+
+1. **Java SE Bağımsızdır:** POJO sınıfları, Java SE'nin (Java Standard Edition) temel özelliklerine dayanır ve özel bir kütüphaneye veya API'ye bağımlı olmadan çalışabilir.
+2. **Getter ve Setter Metodları İçerir:** Nesne özelliklerine erişmek ve değiştirmek için getter ve setter metodları kullanılabilir.
+3. **Constructor (Yapıcı Metod) Bulundurur:** Parametreli veya parametresiz yapıcı metodlar olabilir.
+4. **Serileştirilebilir (Opsiyonel):** POJO nesneleri, eğer kalıcı olarak saklanacaksa veya ağ üzerinden taşınacaksa `Serializable` arayüzünü uygulayabilir.
+5. **Annotations (Ek Açıklamalar) Kullanmaya Zorunlu Değildir:** POJO'lar, herhangi bir özel açıklama (annotation) kullanmak zorunda değildir.
+6. **Özel Bir Kütüphaneye veya Framework’e Bağlı Değildir:** Örneğin, EJB (Enterprise Java Beans) gibi ağır yapılar içermez.
+7. **İçinde İş Mantığı (Business Logic) Olmaz:** Genellikle sadece verileri tutar ve işler.
+
+---
+
+## **POJO'nun Kullanım Amaçları**
+POJO sınıfları, genellikle veri taşımak ve depolamak için kullanılır. Bu sınıflar, veri modeli oluştururken temel taşlardır ve aşağıdaki alanlarda yaygın olarak kullanılır:
+
+1. **Veri Transferi (DTO - Data Transfer Object)**
+    - Bir katmandan diğerine veri iletmek için kullanılır.
+    - Örneğin, bir veritabanından çekilen kullanıcı bilgilerini içeren bir `User` POJO nesnesi oluşturulabilir.
+
+2. **Veritabanı İşlemleri (ORM - Object-Relational Mapping)**
+    - Hibernate gibi ORM araçları, veritabanı tablolarını POJO nesneleri ile eşleştirir.
+    - Örneğin, `Employee` sınıfı bir veritabanı tablosuna karşılık gelebilir.
+
+3. **JSON veya XML Serileştirme**
+    - Spring Boot ve REST API’lerde POJO nesneleri JSON veya XML olarak kullanılabilir.
+    - Örneğin, bir REST API çağrısında dönen JSON verisi bir POJO nesnesine dönüştürülebilir.
+
+4. **JavaBeans Yapısına Alternatif Olarak**
+    - JavaBeans, özel kuralları (örneğin, `Serializable` olmak, varsayılan yapıcıya sahip olmak vb.) gerektiren daha ağır bir yapı sunarken, POJO'lar daha hafif ve bağımsızdır.
+
+---
+
+## **POJO'nun Örnek Kullanımı**
+
+Aşağıda temel bir **POJO (Plain Old Java Object)** sınıfı örneği verilmiştir:
+
+```java
+public class Employee {
+    private int id;
+    private String name;
+    private double salary;
+
+    // Parametresiz Yapıcı (No-Args Constructor)
+    public Employee() {}
+
+    // Parametreli Yapıcı (All-Args Constructor)
+    public Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    // Getter ve Setter Metodları
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    // toString Metodu
+    @Override
+    public String toString() {
+        return "Employee{id=" + id + ", name='" + name + "', salary=" + salary + "}";
+    }
+}
+```
+
+Bu `Employee` sınıfı basit bir POJO’dur. İçinde sadece:
+
+- `id`, `name` ve `salary` gibi alanlar (fields)
+- Getter ve setter metodları
+- Parametreli ve parametresiz yapıcı metodlar
+- `toString()` metodu bulunur.
+
+Herhangi bir özel çerçeveye veya kütüphaneye bağımlı değildir.
+
+---
+
+## **POJO ile İlgili Özel Konular**
+
+### **1. POJO ile JavaBeans Farkı**
+POJO, **JavaBeans** ile sıkça karıştırılır. Ancak aralarındaki farklar şunlardır:
+
+| Özellik         | POJO                          | JavaBeans                      |
+|----------------|--------------------------------|--------------------------------|
+| Bağımsızlık    | Herhangi bir kurala bağlı değildir. | JavaBeans spesifik kurallara sahiptir. |
+| Serializable   | Opsiyoneldir. | JavaBeans için zorunludur. |
+| No-Arg Constructor | Opsiyoneldir. | Zorunludur. |
+| Getter/Setter | Genellikle kullanılır ama zorunlu değildir. | Zorunludur. |
+| Framework Kullanımı | ORM, DTO, REST API vb. | Genellikle GUI uygulamalarında kullanılır. |
+
+### **2. POJO ve Lombok Kullanımı**
+Java'da POJO sınıfları genellikle getter, setter ve constructor gibi birçok tekrar eden kod içerdiğinden, **Lombok** kütüphanesi POJO'ları daha az kod ile yazmayı sağlar.
+
+Örneğin, yukarıdaki `Employee` sınıfını **Lombok** ile yazarsak:
+
+```java
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+    private int id;
+    private String name;
+    private double salary;
+}
+```
+
+Burada:
+- `@Data` → Getter, Setter, `toString()`, `equals()` ve `hashCode()` metodlarını otomatik ekler.
+- `@NoArgsConstructor` → Parametresiz yapıcıyı oluşturur.
+- `@AllArgsConstructor` → Parametreli yapıcıyı oluşturur.
+
+Bu sayede, POJO'nun gereksiz kodlarını yazmadan aynı fonksiyonelliği elde ederiz.
+
+---
+
+## **Sonuç**
+POJO (Plain Old Java Object), Java'da temel veri taşıyıcı sınıfları oluşturmanın standart ve bağımsız bir yoludur. Çeşitli alanlarda, özellikle **DTO (Data Transfer Object)**, **ORM (Hibernate gibi)**, **JSON/XML Serileştirme** gibi yerlerde yaygın olarak kullanılır.
+
+- POJO, herhangi bir özel Java kütüphanesine veya çerçeveye bağlı değildir.
+- Getter ve setter metodları ile çalışır.
+- JavaBeans kadar sıkı kurallara sahip değildir.
+- Lombok gibi araçlarla daha az kod yazmamızı sağlar.
+
+POJO'lar, Java uygulamalarında veri modellerini oluşturmanın en yaygın ve basit yoludur.
+
+## BEAN
+```sh 
+
+```
+---
+
+### **Java'da Core Bean Nedir?**
+Java'da **Core Bean**, genellikle Spring Framework bağlamında kullanılan bir kavramdır. **Bean**, temel olarak Spring Container tarafından yönetilen ve uygulamanın bir parçası olarak kullanılan bir nesnedir. Spring uygulamalarında, özellikle **IoC (Inversion of Control)** ve **Dependency Injection (Bağımlılık Enjeksiyonu)** mekanizmaları sayesinde Bean nesneleri merkezi bir yönetim altına alınır.
+
+Spring Framework'ün ana bileşeni olan **ApplicationContext** veya **BeanFactory** gibi bileşenler, Core Bean'leri yönetir. Core Bean’ler, uygulamanın farklı bileşenleri arasında bağımlılıkları yönetmek için kullanılır.
+
+---
+
+## **1. Core Bean Kavramı**
+Core Bean, genellikle aşağıdaki bileşenleri içeren temel Spring nesnelerini ifade eder:
+
+1. **Service Beans** → İş mantığını içeren servis nesneleri.
+2. **Repository Beans** → Veritabanı işlemlerini yöneten bileşenler.
+3. **Controller Beans** → MVC mimarisinde kullanılan kontrol bileşenleri.
+4. **Configuration Beans** → Yapılandırma ve özelleştirme bileşenleri.
+5. **Component Beans** → Genel bileşen olarak kullanılan özel sınıflar.
+
+---
+
+## **2. Bean Tanımlama Yöntemleri**
+Spring içinde bir **Core Bean** tanımlamanın birkaç yolu vardır:
+
+### **2.1. XML Tabanlı Tanımlama**
+Spring’in eski sürümlerinde Bean tanımlamak için XML kullanılıyordu.
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myBean" class="com.example.MyService"/>
+</beans>
+```
+Bu XML dosyasında, `MyService` sınıfı bir Bean olarak tanımlanmıştır ve `id="myBean"` ile erişilebilir.
+
+---
+
+### **2.2. Java Anotasyonları ile Bean Tanımlama**
+Günümüzde XML yerine anotasyon tabanlı tanımlamalar daha yaygın kullanılıyor.
+
+#### **2.2.1. `@Component` ile Bean Tanımlama**
+Spring, `@Component` anotasyonu ile sınıfları otomatik olarak bir Bean olarak yönetir.
+
+```java
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyService {
+    public void serve() {
+        System.out.println("Service is working...");
+    }
+}
+```
+- Bu sınıf bir Bean olarak tanımlanır ve Spring tarafından otomatik olarak yönetilir.
+- **Component Scanning** özelliği ile, Spring `@Component` olan sınıfları tarar ve otomatik olarak bir Bean olarak kaydeder.
+
+---
+
+#### **2.2.2. `@Service`, `@Repository`, `@Controller` ile Bean Tanımlama**
+Spring, **Component Scanning** mekanizmasını daha anlamlı hale getirmek için aşağıdaki özel anotasyonları sağlar:
+
+1. `@Service` → Servis katmanında kullanılan sınıflar.
+2. `@Repository` → Veritabanı erişim katmanında kullanılan sınıflar.
+3. `@Controller` → Web katmanında (Spring MVC) kullanılan kontrolcüler.
+
+```java
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+    public String getUser() {
+        return "John Doe";
+    }
+}
+```
+
+Bu anotasyonlar da `@Component` ile aynı işlevi görür ancak semantik olarak daha anlamlıdır.
+
+---
+
+#### **2.2.3. `@Bean` ile Bean Tanımlama**
+Spring’de Bean tanımlamanın bir başka yöntemi de **`@Bean`** anotasyonudur.
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public MyService myService() {
+        return new MyService();
+    }
+}
+```
+Burada:
+- `@Configuration` sınıfı, Spring için yapılandırma sınıfı olduğunu belirtir.
+- `@Bean` anotasyonu ile bir Bean nesnesi manuel olarak tanımlanmıştır.
+
+---
+
+## **3. Bean Yaşam Döngüsü**
+Spring Bean’leri, belirli bir yaşam döngüsü içerisindedir. Bu süreç **Spring Container** tarafından yönetilir.
+
+1. **Bean Tanımlama:** Spring, konfigürasyon dosyası veya anotasyonlar aracılığıyla Bean'i algılar.
+2. **Bean Oluşturma:** Bean örneği oluşturulur (new operatörü gibi).
+3. **Bağımlılıkların Enjekte Edilmesi:** `@Autowired` gibi anotasyonlarla bağımlılıklar enjekte edilir.
+4. **İlk Aşama İşlemleri (Initializing Bean):** Bean ilk oluşturulduğunda bazı başlangıç işlemleri yapılır.
+5. **Kullanım:** Bean, Spring Container tarafından yönetilir ve kullanılabilir hale gelir.
+6. **Yıkım:** Uygulama kapanırken Bean yok edilir.
+
+---
+
+## **4. Bean Scope (Kapsamı)**
+Spring, Bean nesneleri için farklı **kapsamlar (scope)** sunar.
+
+### **4.1. Singleton Scope (Varsayılan)**
+- **Tüm uygulama içinde yalnızca bir tane nesne oluşturulur.**
+- Aynı Bean tekrar çağrılsa bile aynı nesne döndürülür.
+
+```java
+@Component
+@Scope("singleton")
+public class SingletonBean {
+}
+```
+
+### **4.2. Prototype Scope**
+- **Her çağrıldığında yeni bir nesne oluşturulur.**
+- Singleton’ın aksine, her istekte yeni bir nesne döner.
+
+```java
+@Component
+@Scope("prototype")
+public class PrototypeBean {
+}
+```
+
+### **4.3. Request Scope (Web Uygulamaları için)**
+- **Her HTTP isteğinde yeni bir nesne oluşturulur.**
+- Sadece Web uygulamalarında kullanılabilir.
+
+```java
+@Component
+@Scope("request")
+public class RequestBean {
+}
+```
+
+### **4.4. Session Scope**
+- **Kullanıcının oturumu boyunca tek bir nesne oluşturulur.**
+
+```java
+@Component
+@Scope("session")
+public class SessionBean {
+}
+```
+
+---
+
+## **5. Core Bean’lerin Kullanımı**
+Bir Bean’i kullanmanın en yaygın yolu **Dependency Injection (Bağımlılık Enjeksiyonu)** ile ona erişmektir.
+
+### **5.1. `@Autowired` ile Bean Enjekte Etme**
+Spring, bağımlılıkları otomatik olarak enjekte etmek için `@Autowired` anotasyonunu kullanır.
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyController {
+
+    private final MyService myService;
+
+    @Autowired
+    public MyController(MyService myService) {
+        this.myService = myService;
+    }
+
+    public void process() {
+        myService.serve();
+    }
+}
+```
+
+- `@Autowired`, `MyService` nesnesini otomatik olarak `MyController` içine enjekte eder.
+
+---
+
+## **Sonuç**
+Java'da **Core Bean**, Spring Framework içerisinde merkezi bir bileşen olarak kullanılan nesnelerdir. **Dependency Injection, IoC, Bean Scope ve Yaşam Döngüsü** gibi kavramlarla entegre çalışır.
+
+Core Bean’ler:
+- XML veya Java tabanlı konfigürasyonla oluşturulabilir.
+- `@Component`, `@Service`, `@Repository`, `@Controller`, `@Bean` gibi anotasyonlarla tanımlanabilir.
+- Singleton, Prototype, Request, Session gibi farklı kapsamlarla kullanılabilir.
+- Dependency Injection mekanizması sayesinde nesnelerin yönetimini Spring üstlenir.
+
+Spring Core Bean mekanizması, uygulamaların yönetilebilir, modüler ve ölçeklenebilir olmasını sağlar.
+
 
 
 ## Cipher (AES/DES/RSA/HASHING)

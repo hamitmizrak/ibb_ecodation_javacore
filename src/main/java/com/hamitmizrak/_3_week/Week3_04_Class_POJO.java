@@ -38,8 +38,5 @@ public class Week3_04_Class_POJO {
         String nameAndSurname=pojo.getName().toString()+" "+pojo.getSurname().toString();
         System.out.println(SpecialColor.BLUE+nameAndSurname+SpecialColor.RESET);
 
-        // Kullanıcının Soyisminin ilk üç harfini büyük yazınız ve soyisimi eğer 3 harften fazlaysa geri kalan harflerinin yerine yıldız (*)
-        // Hamit MIZRAK , Hamit MIZ***(Maskeleme)
-        // Tip(loop, conditional)
     }
 }
