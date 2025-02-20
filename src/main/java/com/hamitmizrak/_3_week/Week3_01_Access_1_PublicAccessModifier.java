@@ -1,8 +1,8 @@
-package com.hamitmizrak._3_week_access;
+package com.hamitmizrak._3_week;
 
 import com.hamitmizrak.utils.SpecialColor;
 
-public class _1_PublicAccessModifier {
+public class Week3_01_Access_1_PublicAccessModifier {
 
     public String publicData="public data";
     private String privateData="private data";
@@ -10,7 +10,7 @@ public class _1_PublicAccessModifier {
      String defaultData="default data";
 
     public static void main(String[] args) {
-        _1_PublicAccessModifier accessModifier= new _1_PublicAccessModifier();
+        Week3_01_Access_1_PublicAccessModifier accessModifier= new Week3_01_Access_1_PublicAccessModifier();
         System.out.println(SpecialColor.BLUE+accessModifier.publicData+SpecialColor.RESET);
         System.out.println(SpecialColor.YELLOW+accessModifier.defaultData+SpecialColor.RESET);
         System.out.println(SpecialColor.PURPLE+accessModifier.protectedData+SpecialColor.RESET);
