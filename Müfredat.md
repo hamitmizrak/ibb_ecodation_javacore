@@ -63,15 +63,14 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
     . Kapsülleme (Encapsulation)
 
 🚀 Perşembe (20 Şubat) - 3 Saat
-- Genel Örnek: Öğrenci Bilgi Sistem
+- Class ile ilgili örnekler
 
 
 🚀 Cumartesi (22 Şubat) - 4 Saat
 - Giriş/Çıkış (I/O) İşlemleri
   . Java I/O Temelleri (Stream, Reader/Writer)
   . File I/O
-- Genel Örnek: Öğrenci Bilgi Sistem Devam 
-
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
 ---
 ----------------------------------------------------------------------
 ### 4. Hafta

@@ -74,3 +74,4 @@ null değeri ne zaman kullanabilirim ?
 
 > ## 7.Ders Ödevi (20 Şubat)
 > constructor ile static {} arasındaki farklar ?
+> if(name!=null && !name.isEmpty())  bu kod ne iş yapar ?

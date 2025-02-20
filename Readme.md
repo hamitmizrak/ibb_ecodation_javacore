@@ -992,7 +992,7 @@ public class MemoryTest {
 3. `modify(a, b);` metoduna çağrılırken:
     - `x` → yeni bir stack değişkeni olarak **5 değerini kopyalar** (pass by value).
     - `y` → referans olarak **yeni bir Integer nesnesi alır**.
-4. `x = 10;` → **Stack içinde yeni bir değişken yaratılır ve değer değiştirilir.**
+4. `x = 10;` → **Stack içinde yeni bir değişken oluşturulur ve değer değiştirilir.**
 5. `y = new Integer(10);` → **Heap’te yeni bir Integer nesnesi oluşturulur, ancak bu `modify` metodu içinde kalır ve main metodundaki `b` değişkenini etkilemez.**
 6. `main` metodu bittiğinde, `a` hâlâ `5`, `b` hâlâ `5` olarak kalır.
 
@@ -1065,7 +1065,7 @@ Bu iki yaklaşımın arasındaki temel farklar şunlardır:
 Short wrapperTypeShort1 = new Short((short) 32767);
 ```
 - `new` anahtar kelimesi kullanıldığı için **her çağrıldığında yeni bir nesne oluşturulur**.
-- **Heap bellekte ayrı bir nesne** yaratılır.
+- **Heap bellekte ayrı bir nesne** oluşturılır.
 - **Garbage Collector (GC)** tarafından temizlenmesi gerekir.
 - **Bellek tüketimi ve performans açısından dezavantajlıdır.**
 - **`==` operatörü ile karşılaştırıldığında farklı nesneler olduğu için false dönebilir.**
@@ -1996,14 +1996,14 @@ Bu bir alt satıra geçti.
 ```java
 public class EscapeExample {
     public static void main(String[] args) {
-        System.out.println("İsim:\tAhmet");
+        System.out.println("İsim:\tHamit");
         System.out.println("Soyisim:\tYılmaz");
     }
 }
 ```
 **Çıktı:**
 ```
-İsim:     Ahmet
+İsim:     Hamit
 Soyisim:  Yılmaz
 ```
 
@@ -2260,7 +2260,7 @@ import java.util.Scanner;
 
 public class ScannerDelimiterExample {
     public static void main(String[] args) {
-        String veri = "Ahmet,Mehmet,Ayşe,Fatma";
+        String veri = "Hamit,Mehmet,Ayşe,Fatma";
         Scanner scanner = new Scanner(veri);
         scanner.useDelimiter(",");
 
@@ -2274,7 +2274,7 @@ public class ScannerDelimiterExample {
 ```
 ### **Çıktı:**
 ```
-Ahmet
+Hamit
 Mehmet
 Ayşe
 Fatma
@@ -3044,7 +3044,7 @@ Bu iki yaklaşım arasındaki farkları inceleyelim.
 String kelime1 = new String("Merhaba");
 ```
 - **Heap bellekte yeni bir `String` nesnesi oluşturur.**
-- **String pool'u kullanmaz**, her seferinde **yeni bir nesne yaratılır**.
+- **String pool'u kullanmaz**, her seferinde **yeni bir nesne oluşturılır**.
 - Daha fazla bellek tüketebilir ve gereksiz nesne oluşturulmasına sebep olabilir.
 
 ---
@@ -3943,14 +3943,14 @@ public class MetotOrnek {
     }
 
     public static void main(String[] args) {
-        selamVer("Ahmet"); // Parametre olarak "Ahmet" gönderildi
+        selamVer("Hamit"); // Parametre olarak "Hamit" gönderildi
         selamVer("Ayşe");  // Parametre olarak "Ayşe" gönderildi
     }
 }
 ```
 **Çıktı:**
 ```
-Merhaba, Ahmet!
+Merhaba, Hamit!
 Merhaba, Ayşe!
 ```
 📌 **Metot farklı girişlerle farklı sonuçlar üretebilir.**
@@ -4899,7 +4899,7 @@ import java.util.Formatter;
 public class Main {
     public static void main(String[] args) {
         Formatter formatter = new Formatter();
-        formatter.format("Merhaba %s, yaşınız %d", "Ahmet", 25);
+        formatter.format("Merhaba %s, yaşınız %d", "Hamit", 25);
         System.out.println(formatter);
         formatter.close();
     }
@@ -4907,7 +4907,7 @@ public class Main {
 ```
 **🎯 Çıktı:**
 ```
-Merhaba Ahmet, yaşınız 25
+Merhaba Hamit, yaşınız 25
 ```
 
 ### **📌 Açıklamalar:**
@@ -7098,6 +7098,39 @@ Kapı Sayısı: 4
 
 Java'da sınıflar, büyük ölçekli projelerde **düzeni ve okunabilirliği artırarak** programlamayı daha etkili hale getirir. 🚀
 
+## if(name!=null && !name.isEmpty())
+```sh 
+
+```
+---
+
+Kodunuzdaki şu satır:
+
+```java
+if(name!=null && !name.isEmpty())
+```
+
+### **Ne İşe Yarar?**
+Bu kod, `name` değişkeninin **boş (empty) veya null olup olmadığını kontrol eder**.
+
+1. **`name != null`**
+    - Eğer `name` değişkeni `null` ise, `NullPointerException` hatasını önlemek için işlem yapmadan devam eder.
+
+2. **`!name.isEmpty()`**
+    - `name` değişkeni boş bir string (`""`) içeriyorsa, işlemi yapmadan devam eder. `isEmpty()` metodu, stringin **hiçbir karakter içermediğini** kontrol eder.
+
+### **Örnek Senaryolar**
+| `name` Değeri     | `name != null` | `!name.isEmpty()` | Koşul Sonucu (`true/false`) |
+|-------------------|--------------|-----------------|-----------------|
+| `"Hamit"`        | `true`       | `true`          | ✅ `true` (Çalışır) |
+| `""` (boş string) | `true`       | `false`         | ❌ `false` (Çalışmaz) |
+| `null`           | `false`      | (Kontrol edilmez) | ❌ `false` (Çalışmaz) |
+
+### **Neden Kullanılır?**
+- **NullPointerException hatasından kaçınmak için.**
+- **Boş string üzerinde gereksiz işlemler yapmamak için.**
+
+Bu sayede `setName` metodunda `null` veya boş bir string girişi olduğunda hatasız bir şekilde `" "` olarak atanmasını sağlayabiliriz.
 
 ## POJO
 ```sh 
