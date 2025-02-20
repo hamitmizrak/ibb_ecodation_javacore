@@ -51,7 +51,7 @@ Recursive| O(n)               | O(n)              | Daha okunaklı,      | Yava�
 // System
 
 // Access Modifier
-public class Week3_Examples_1 {
+public class Week3_01_Examples_1 {
 
     private static final int MAX_DECIMAL_ATTEMPTS = 3; // Virgüllü sayı girme hakkı
     private static final int MAX_RECURSIVE_LIMIT = 20; // Faktöriyel hesaplanması sınırsız sayı olmadığı için sınırlama
@@ -60,7 +60,7 @@ public class Week3_Examples_1 {
 
     /// //////////////////////////////////////////////////////////////////////////////////
     // Loglama
-    private static final Logger logger = Logger.getLogger(Week3_Examples_1.class.getName());
+    private static final Logger logger = Logger.getLogger(Week3_01_Examples_1.class.getName());
 
     // Loglama dosyası için
     static {
