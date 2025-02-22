@@ -131,7 +131,7 @@ public class StudentManagementSystem {
             System.out.println("\n4.Öğrenci Güncelle");
             System.out.println("\n5.Öğrenci Sil");
             System.out.println("\n6.Öğrenci toplam öğrenci sayısı");
-            System.out.println("\n7.Öğrenci Rastgele");
+            System.out.println("\n7.Öğrenci rastgele gelsin");
             System.out.println("\n8.Öğrenci Not Hesapla");
             System.out.println("\n9.Öğrenci En Yüksek, En düşük Notları Göster");
             System.out.println("\n10.Öğrenci Öğrenci Sıralaması Doğum gününe göre göster");
