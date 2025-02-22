@@ -7502,6 +7502,627 @@ Core Bean’ler:
 Spring Core Bean mekanizması, uygulamaların yönetilebilir, modüler ve ölçeklenebilir olmasını sağlar.
 
 
+## Javada static ile constructor nedir ?
+```sh 
+
+```
+---
+
+# **Java'da `static` ve `constructor` Nedir? Aralarındaki Farklar Nelerdir?**
+
+Java’da `static` ve `constructor`, nesne yönelimli programlamada oldukça önemli iki kavramdır. **İkisi de sınıfların ve nesnelerin yönetimiyle ilgilidir ama farklı işlevlere sahiptirler.**
+
+Bu yazıda, **hem `static` hem de `constructor` kavramlarını ayrı ayrı detaylandıracak, ardından aralarındaki farkları derinlemesine açıklayacağız.**
+
+---
+
+# **🔹 `static` Nedir?**
+Java’da `static` bir **anahtar kelimedir** ve sınıf seviyesinde tanımlanan üyeleri (değişkenler, metodlar ve bloklar) belirtmek için kullanılır. **Static üyeler, nesneye bağlı değildir, sınıfa bağlıdır.**
+
+## **🔹 `static` Kullanım Alanları**
+1. **Static Değişkenler (`static variables`)**
+2. **Static Metodlar (`static methods`)**
+3. **Static Bloklar (`static blocks`)**
+4. **Static İç Sınıflar (`static nested classes`)**
+
+---
+
+### **📌 1️⃣ `static` Değişkenler (Class Variables)**
+Bir değişken `static` olarak tanımlandığında, **bütün nesneler tarafından paylaşılır ve bellekte yalnızca bir kopyası bulunur.**
+
+```java
+class Car {
+    static int totalCars = 0;  // Static değişken
+    String model;
+
+    public Car(String model) {
+        this.model = model;
+        totalCars++;  // Her nesne oluşturulduğunda artırılır
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car car1 = new Car("Tesla");
+        Car car2 = new Car("BMW");
+
+        System.out.println("Toplam araba sayısı: " + Car.totalCars); // 2
+    }
+}
+```
+**📌 Çıktı:**
+```
+Toplam araba sayısı: 2
+```
+**✔ `static` değişkenler tüm nesneler tarafından paylaşılır, her nesne için ayrı bir kopyası olmaz.**
+
+---
+
+### **📌 2️⃣ `static` Metodlar (Class Methods)**
+`static` metodlar, nesne oluşturmadan çağrılabilir.
+
+```java
+class MathUtils {
+    static int square(int num) {
+        return num * num;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("5'in karesi: " + MathUtils.square(5)); // 25
+    }
+}
+```
+**✔ Static metodlar, sadece `static` değişkenlere erişebilir ve `this` kullanamaz.**
+
+---
+
+### **📌 3️⃣ `static` Bloklar (Static Initialization Blocks)**
+**`static` blok, sınıf belleğe yüklendiğinde bir kez çalıştırılır.**
+
+```java
+class Config {
+    static String appName;
+
+    static {
+        appName = "MyApp";
+        System.out.println("Static blok çalıştı!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(Config.appName);
+    }
+}
+```
+**📌 Çıktı:**
+```
+Static blok çalıştı!
+MyApp
+```
+✔ **Static bloklar, sınıf yüklenirken bir kere çalışır ve genellikle başlangıç ayarları için kullanılır.**
+
+---
+
+# **🔹 Constructor (Yapıcı Metod) Nedir?**
+Bir sınıfın nesnesi oluşturulduğunda **otomatik olarak çağrılan özel bir metottur.**
+
+## **🔹 Constructor’ın Özellikleri:**
+1. **Sınıf adıyla aynı isme sahip olmalıdır.**
+2. **Geri dönüş tipi yoktur.** (void bile yazılmaz!)
+3. **Otomatik olarak çağrılır.**
+4. **Overloading (Aşırı Yükleme) destekler.**
+
+---
+
+### **📌 Constructor Örneği**
+```java
+class Car {
+    String model;
+
+    // Constructor (Yapıcı Metod)
+    public Car(String model) {
+        this.model = model;
+        System.out.println(model + " oluşturuldu.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car car1 = new Car("Tesla"); // Constructor çağrılır
+        Car car2 = new Car("BMW");
+    }
+}
+```
+**📌 Çıktı:**
+```
+Tesla oluşturuldu.
+BMW oluşturuldu.
+```
+✔ **Her nesne oluşturulduğunda constructor çalışır.**
+
+---
+
+## **🔹 Constructor Overloading (Aşırı Yükleme)**
+Bir sınıfta birden fazla constructor tanımlanabilir.
+
+```java
+class Person {
+    String name;
+    int age;
+
+    // Constructor 1 (isim ile)
+    public Person(String name) {
+        this.name = name;
+        this.age = 18;  // Varsayılan yaş
+    }
+
+    // Constructor 2 (isim ve yaş ile)
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Person("Ali");
+        Person p2 = new Person("Veli", 25);
+
+        System.out.println(p1.name + ", " + p1.age); // Ali, 18
+        System.out.println(p2.name + ", " + p2.age); // Veli, 25
+    }
+}
+```
+✔ **Constructor overloading ile farklı parametreler için farklı yapılandırmalar yapabiliriz.**
+
+---
+
+# **🔹 `static` ve `constructor` Arasındaki Farklar**
+| **Özellik** | **`static`** | **`constructor`** |
+|------------|-------------|----------------|
+| **Nesne oluşturma gerekliliği** | Nesne oluşturmadan kullanılabilir. | Nesne oluşturulduğunda çalışır. |
+| **Bellekte Konumu** | **Sınıf belleğe yüklendiğinde çalışır.** | **Nesne oluşturulduğunda çalışır.** |
+| **Metod tipi** | Normal metodlar olabilir (geri dönüş tipi vardır). | Geri dönüş tipi yoktur (void bile yazılmaz). |
+| **Ana kullanım alanı** | Sınıf seviyesinde değişken/metod yönetimi. | Nesne oluşturma sürecini yönetir. |
+| **Çağrılma Şekli** | `ClassName.staticMethod()` ile çağrılır. | `new ClassName()` ile otomatik çağrılır. |
+| **Kaç kez çalışır?** | Static bloklar **bir kez** çalışır. | Her nesne oluşturulduğunda tekrar çalışır. |
+| **Overloading** | Normal metodlar gibi overload edilebilir. | Overloading destekler. |
+| **Özel Anahtar Kelime (`this` veya `super`) Kullanımı** | `this` veya `super` kullanılamaz. | `this` veya `super` kullanılabilir. |
+
+---
+
+# **🔹 Sonuç**
+- **`static`, sınıf seviyesinde elemanlar tanımlamak için kullanılır ve nesne oluşturmadan çalışır.**
+- **`constructor`, nesne oluşturulduğunda çağrılan bir metottur ve nesnenin başlatılmasını sağlar.**
+- **Static bloklar yalnızca bir kez çalışırken, constructor her nesne oluşturulduğunda çağrılır.**
+- **`static` metodlar ve değişkenler, nesneye değil sınıfa bağlıdır, ancak constructor her nesne için çalışır.**
+
+✔ **Java’da sınıflar oluştururken, `static` ve `constructor` kavramlarını doğru kullanarak kodumuzu daha verimli hale getirebiliriz!** 🚀
+
+
+## Javada Serializable
+```sh 
+
+```
+---
+
+# **Java'da `Serializable` Nedir?**
+Java'da `Serializable`, **bir nesnenin byte dizisine dönüştürülmesini (serileştirme) ve daha sonra geri okunmasını (deserileştirme) sağlayan bir arayüzdür.** Nesneleri dosyaya kaydetmek, ağ üzerinden göndermek veya kalıcı hale getirmek için kullanılır.
+
+## **🔹 `Serializable` Ne İşe Yarar?**
+- Bir nesnenin durumu **diskte saklanabilir** veya **veritabanına kaydedilebilir**.
+- Bir nesne **ağ üzerinden iletilebilir**.
+- **RMI (Remote Method Invocation)** gibi sistemlerde nesne transferi için kullanılır.
+- **Cache mekanizmaları ve oturum yönetimi** gibi alanlarda nesne saklamak için kullanılır.
+
+---
+
+## **🔹 `Serializable` Kullanımı**
+Java'da **`Serializable` bir işaretleyici (marker) arayüzdür.** Yani herhangi bir metod içermez. **Bir sınıfı serileştirmek için `implements Serializable` kullanılır.**
+
+📌 **Örnek: `Person` Sınıfını Serileştirme ve Dosyaya Kaydetme**
+```java
+import java.io.*;
+
+// Serializable arayüzünü uygulayan sınıf
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L; // Versiyon kontrolü için
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() { return name; }
+    public int getAge() { return age; }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Age: " + age;
+    }
+}
+
+// Ana program
+public class SerializeDemo {
+    public static void main(String[] args) {
+        Person person = new Person("Ali", 30);
+
+        // Serileştirme işlemi (ObjectOutputStream ile dosyaya yazma)
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("person.dat"))) {
+            out.writeObject(person);
+            System.out.println("Nesne başarıyla serileştirildi.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Deserileştirme işlemi (ObjectInputStream ile dosyadan okuma)
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("person.dat"))) {
+            Person readPerson = (Person) in.readObject();
+            System.out.println("Nesne başarıyla deserileştirildi: " + readPerson);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+**📌 Çıktı:**
+```
+Nesne başarıyla serileştirildi.
+Nesne başarıyla deserileştirildi: Name: Ali, Age: 30
+```
+
+---
+
+## **🔹 Serileştirmenin Çalışma Mantığı**
+📌 **Adım Adım Süreç:**
+1. **Nesne, `writeObject()` metodu ile bir dosyaya kaydedilir.**
+2. **Nesne, `readObject()` metodu ile geri okunur.**
+3. **Serileştirme sırasında nesnenin tüm alanları (field) kaydedilir.**
+4. **Deserileştirme sırasında nesne yeniden oluşturulur ve alanları yüklenir.**
+
+---
+
+## **🔹 `serialVersionUID` Nedir?**
+Serileştirilmiş bir nesnenin sınıfı değişirse **`InvalidClassException`** hatası alınabilir.  
+Bu sorunu önlemek için **`serialVersionUID` tanımlanır.**
+
+```java
+private static final long serialVersionUID = 1L;
+```
+📌 **Eğer `serialVersionUID` eklenmezse:**
+- JVM **otomatik bir UID oluşturur.**
+- Sınıfta bir değişiklik olursa UID değişir ve **önceki serileştirilmiş nesneler kullanılamaz.**
+
+📌 **Eğer `serialVersionUID` eklenirse:**
+- Eski nesneler, yeni sınıfla **hata vermeden yüklenebilir.**
+- Ancak **eklenen yeni alanlar null veya varsayılan değerde kalır.**
+
+📌 **Örnek:**  
+Önce aşağıdaki sınıfı kaydettik ve bir nesne oluşturduk:
+```java
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private int age;
+}
+```
+Sonra sınıfa yeni bir alan ekledik:
+```java
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private int age;
+    private String email; // Yeni alan eklendi
+}
+```
+Eğer eski dosyadan deserileştirme yaparsak **`email` alanı `null` kalır ama hata vermez.** Eğer `serialVersionUID` tanımlanmamış olsaydı, **`InvalidClassException`** hatası alırdık.
+
+---
+
+## **🔹 Serileştirme Kuralları ve İstisnalar**
+
+### **1️⃣ `transient` Anahtar Kelimesi**
+Bazı alanların serileştirilmesini istemiyorsak **`transient` anahtar kelimesini kullanırız.**
+
+```java
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private int age;
+    private transient String password; // Serileştirilmeyecek
+
+    public Person(String name, int age, String password) {
+        this.name = name;
+        this.age = age;
+        this.password = password;
+    }
+}
+```
+**📌 Çıktı:**
+```bash
+Nesne başarıyla serileştirildi.
+Nesne başarıyla deserileştirildi: Name: Ali, Age: 30, Password: null
+```
+- **`transient` alanlar serileştirilmez** ve varsayılan değere (null veya 0) döner.
+
+---
+
+### **2️⃣ `static` Alanlar Serileştirilemez**
+```java
+class Test implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private static int counter = 100;
+}
+```
+- **`static` alanlar serileştirilmez** çünkü sınıfa aittir ve nesneye özel değildir.
+
+---
+
+### **3️⃣ Serileştirme ile Miras (Inheritance)**
+Eğer bir sınıf `Serializable` değilse, onun alt sınıfları da serileştirilemez.
+
+```java
+class Parent {
+    int id;
+}
+
+class Child extends Parent implements Serializable {
+    private static final long serialVersionUID = 1L;
+    String name;
+}
+```
+📌 **Burada `Parent` serileştirilebilir mi?** ❌ **Hayır, çünkü `Serializable` implement edilmedi!**  
+Eğer `Parent`'ı serileştirmek istiyorsak, **ya `Serializable` yapmalıyız ya da `super` alanlarını manuel serileştirmeliyiz.**
+
+```java
+class Parent {
+    int id;
+}
+
+class Child extends Parent implements Serializable {
+    private static final long serialVersionUID = 1L;
+    String name;
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject(); // Normal serileştirme yap
+        out.writeInt(id); // Ekstra: Parent id’yi manuel kaydet
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject(); // Normal deserileştirme yap
+        id = in.readInt(); // Ekstra: Parent id’yi geri yükle
+    }
+}
+```
+---
+
+## **🔹 Sonuç**
+- **`Serializable`**, Java nesnelerini **diskte saklamak veya ağda iletmek için** kullanılır.
+- **`serialVersionUID`**, sınıf versiyonlamasında uyumluluğu sağlar.
+- **`transient`**, hassas verilerin serileştirilmesini engeller.
+- **`static` alanlar serileştirilmez** çünkü sınıfa aittir.
+- **Miras kullanıyorsak, üst sınıfların da serileştirildiğinden emin olmalıyız.**
+
+🚀 **Serileştirme, verileri kalıcı hale getirmek için en önemli Java özelliklerinden biridir!** 🚀
+
+## Javada IO(Giriş / Çıkış)
+```sh 
+
+```
+---
+## **Java'da I/O (Input/Output) Nedir?**
+
+**Java'da I/O (Giriş/Çıkış - Input/Output)**, bir programın dış dünyayla veri alışverişi yapmasını sağlayan mekanizmalardır. Bu mekanizmalar, klavye girişi (kullanıcıdan veri alma), dosya okuma/yazma, ağ üzerinden veri transferi gibi işlemleri kapsar. Java'da I/O işlemleri, **java.io** ve **java.nio** (New I/O) paketleri aracılığıyla gerçekleştirilir.
+
+---
+
+## **1. Java I/O Paketleri**
+Java'da temel I/O işlemleri için iki ana paket vardır:
+
+1. **java.io**:
+    - Geleneksel I/O işlemleri için kullanılır.
+    - **Stream (Akış) tabanlıdır**.
+    - Yavaş çalışır, ancak kullanımı basittir.
+    - **Blocking I/O** mantığıyla çalışır (I/O işlemi tamamlanana kadar program durur).
+
+2. **java.nio (New I/O)**:
+    - Daha hızlı ve modern bir yaklaşımdır.
+    - **Buffer (Tampon) ve Channel (Kanal) tabanlıdır**.
+    - Non-blocking I/O desteği sunar (Asenkron çalışabilir).
+    - Büyük veri işlemleri için daha uygundur.
+
+Bu yazıda, geleneksel **java.io** kütüphanesini detaylıca ele alacağız.
+
+---
+
+## **2. Java’da I/O İşlemlerinin Temel Kavramları**
+Java'daki I/O işlemleri aşağıdaki temel kavramlar üzerine kuruludur:
+
+### **a) Stream (Akış)**
+Java’da **Stream (Akış)**, veri giriş-çıkış işlemlerinin temelidir. Bir akış, **veri kaynağından hedefe veri taşıyan bir soyutlamadır**.
+
+- **InputStream**: Veri giriş işlemlerini yönetir (klavyeden giriş, dosyadan okuma vb.).
+- **OutputStream**: Veri çıkış işlemlerini yönetir (ekrana yazma, dosyaya kaydetme vb.).
+
+#### **Akış Türleri:**
+1. **Byte Streams (Bayt Akışları)**
+    - **Veriyi bayt bazlı işler** (1 byte = 8 bit).
+    - **Genellikle resim, video ve ses dosyaları gibi ikili (binary) verileri işlemek için kullanılır**.
+    - **Örnekler:**
+        - **InputStream** (Giriş Akışı)
+        - **OutputStream** (Çıkış Akışı)
+
+2. **Character Streams (Karakter Akışları)**
+    - **Metin bazlı verileri işlemek için kullanılır**.
+    - **Örnekler:**
+        - **Reader (Giriş)**
+        - **Writer (Çıkış)**
+
+---
+
+## **3. Java'da I/O Sınıfları ve Kullanımı**
+### **a) Byte Streams (Bayt Akışları)**
+Bayt akışları, veriyi **byte düzeyinde işler** ve resim, video gibi ikili (binary) veriler için idealdir.
+
+#### **1. FileInputStream - Dosya Okuma**
+Bu sınıf, bir dosyadan bayt bayt veri okumanızı sağlar.
+
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class FileInputExample {
+    public static void main(String[] args) {
+        try (FileInputStream fis = new FileInputStream("example.txt")) {
+            int data;
+            while ((data = fis.read()) != -1) {
+                System.out.print((char) data); // Baytları karaktere çevirerek ekrana yazdır
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Dosyadan bayt bayt okuma yapar ve içeriği ekrana yazdırır.**
+
+---
+
+#### **2. FileOutputStream - Dosyaya Yazma**
+Bu sınıf, bir dosyaya bayt bazlı veri yazmanızı sağlar.
+
+```java
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileOutputExample {
+    public static void main(String[] args) {
+        String text = "Merhaba, Java I/O!";
+        try (FileOutputStream fos = new FileOutputStream("output.txt")) {
+            fos.write(text.getBytes()); // Metni bayt dizisine çevirerek dosyaya yaz
+            System.out.println("Dosyaya yazma işlemi tamamlandı.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Metni dosyaya bayt bazında yazdırır.**
+
+---
+
+### **b) Character Streams (Karakter Akışları)**
+Karakter akışları, **karakter (char) bazında veri işlemek için kullanılır** ve metin dosyaları için idealdir.
+
+#### **1. FileReader - Dosya Okuma**
+Bu sınıf, bir dosyadan **karakter karakter veri okumanızı** sağlar.
+
+```java
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileReaderExample {
+    public static void main(String[] args) {
+        try (FileReader reader = new FileReader("example.txt")) {
+            int character;
+            while ((character = reader.read()) != -1) {
+                System.out.print((char) character);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Metin dosyasını karakter karakter okur ve ekrana yazdırır.**
+
+---
+
+#### **2. FileWriter - Dosyaya Yazma**
+Bu sınıf, bir dosyaya **karakter bazlı** veri yazmanızı sağlar.
+
+```java
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterExample {
+    public static void main(String[] args) {
+        String text = "Java I/O dersine hoş geldiniz!";
+        try (FileWriter writer = new FileWriter("output.txt")) {
+            writer.write(text);
+            System.out.println("Dosyaya yazma işlemi başarılı!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Metni dosyaya karakter bazında yazdırır.**
+
+---
+
+### **c) Buffered Streams (Tamponlu Akışlar)**
+BufferedReader ve BufferedWriter gibi sınıflar, **veriyi tampon (buffer) kullanarak daha hızlı okuma/yazma işlemi yapar.**
+
+#### **1. BufferedReader - Hızlı Dosya Okuma**
+```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class BufferedReaderExample {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line); // Satır satır okuma yapar
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Dosyayı satır satır okur ve ekrana yazdırır.**
+
+---
+
+#### **2. BufferedWriter - Hızlı Dosya Yazma**
+```java
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class BufferedWriterExample {
+    public static void main(String[] args) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("output.txt"))) {
+            bw.write("Java I/O çok önemli!");
+            bw.newLine();
+            bw.write("Tamponlu yazma işlemi başarıyla tamamlandı.");
+            System.out.println("Dosya yazıldı.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+✅ **Tampon kullanarak veriyi daha hızlı yazdırır.**
+
+---
+
+## **Sonuç ve Özet**
+- Java I/O işlemleri **java.io** paketinde tanımlanmıştır.
+- **InputStream / OutputStream** bayt bazlı çalışır (Resim, video gibi dosyalar için uygundur).
+- **Reader / Writer** karakter bazlı çalışır (Metin dosyaları için uygundur).
+- **BufferedReader / BufferedWriter** daha hızlı işlem yapar.
+- Dosya okuma/yazma işlemleri genellikle **try-with-resources** yapısı ile kullanılır.
+
+👉 **I/O işlemlerini verimli kullanarak büyük ölçekli projelerde performans kazanabilirsiniz! 🚀**
 
 ## Cipher (AES/DES/RSA/HASHING)
 ```sh 

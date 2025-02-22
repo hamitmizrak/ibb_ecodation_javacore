@@ -67,10 +67,11 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
 
 
 🚀 Cumartesi (22 Şubat) - 4 Saat
+- Serializable nedir ?
 - Giriş/Çıkış (I/O) İşlemleri
   . Java I/O Temelleri (Stream, Reader/Writer)
   . File I/O
-- Genel Örnek: Öğrenci Bilgi Sistem Devam
+- Genel Örnek: Öğrenci Bilgi Sistem-1
 ---
 ----------------------------------------------------------------------
 ### 4. Hafta

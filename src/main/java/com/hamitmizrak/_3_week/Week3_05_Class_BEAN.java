@@ -121,7 +121,6 @@ public class Week3_05_Class_BEAN {
     }
 
     public void setSurname(String surname) {
-
         if (!name.matches("[a-zA-ZğüşıöçĞÜŞİÖÇ]+")) {
             throw new IllegalArgumentException("İsim sadece harf içermelidir!");
         } else if (surname != null && surname.length() >= 3) {
