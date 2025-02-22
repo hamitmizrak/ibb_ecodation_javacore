@@ -95,7 +95,7 @@ public class Week3_05_Class_BEAN {
     // 2. İsim birlikte ayarlanırken, isim baş harfi büyük geri kalan küçük olacak şekilde ayarlanabilir mi?
     // 4. İsimde noktalama işaretleri olup olmadığını kontrol eden bir doğrulama ekleyebilir miyiz? varsa eğer noktalı işaretten sonra gelen harfleri sil
     public void setName(String name) throws IllegalAccessException {
-        if (name != null && name.matches(".*[.,!?;:]+.*")) {
+        if (name != null && !name.isEmpty() && name.matches(".*[.,!?;:]+.*")) {
             //throw new IllegalAccessException("isimden noktalı işaretler var");
             //System.err.println("isimden noktalı işaretler var");
             System.out.println(SpecialColor.RED + "İsimde noktalama işaretleri var, noktalama işaretinden sonraki harfler silindi" + SpecialColor.RESET);
@@ -107,7 +107,6 @@ public class Week3_05_Class_BEAN {
         } else {
             this.name = name;
         }
-
     }
 
     // SURNAME
