@@ -113,5 +113,8 @@ public class StudentManagementSystem {
     // Öğrenci Not Ortalaması Hesapla
     // En Yüksek veya En Düşük Not Alan Öğrenci
     // Öğrenci Sıralaması (Doğum günü)
-    // Console Seçim (Öğrenci Ekle)
+
+    ////////////////////////////////////////////////////////////////
+    // Console Seçim (Öğrenci)
+
 }
