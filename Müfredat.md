@@ -76,25 +76,45 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
 ----------------------------------------------------------------------
 ### 4. Hafta
 🚀 Salı (25 Şubat) - 3 Saat
+- Enum
+- Record
+- Inner Class
+- Genel Örnek: Öğrenci Bilgi Sistem-2
+
+🚀 Perşembe (27 Şubat) - 3 Saat
+- Cipher (AES/DES/RSA/HASHING)
+- Çoklu İş Parçacığı (Multithreading)
+  . Thread Oluşturma ve Yönetimi
+  . Senkronizasyon
+- Genel Örnek: Öğrenci Bilgi Sistem-3
+
+🚀 Cumartesi (1 Mart) - 4 Saat
+- Eşzamanlılık (Concurrency)
+  . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
+  . Concurrency API
+- Genel Örnek: Öğrenci Bilgi Sistem-3
+
+----------------------------------------------------------------------
+### 5. Hafta
+🚀 Salı (4 Mart) - 3 Saat
 - Generics (Tür Belirleyici)
   . Tip güvenliği
   . Iterator ve ListIterator
 - Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 - Koleksiyonlar (Collections) ve Generics
- . Collection Framework Genel Bakış (List, Set, Map)
- . Temel implementasyonlar (ArrayList, LinkedList vb.)
+  . Collection Framework Genel Bakış (List, Set, Map)
+  . Temel implementasyonlar (ArrayList, LinkedList vb.)
 - Genel Örnek: Öğrenci Bilgi Sistem Devam
 
-
-🚀 Perşembe (27 Şubat) - 3 Saat
+🚀 Perşembe (6 Mart) - 3 Saat
 - Koleksiyonlar (Collections) ve Generics
   . Collection Framework Genel Bakış (List, Set, Map)
   . Temel implementasyonlar (ArrayList, LinkedList vb.)
 - Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 
-🚀 Cumartesi (1 Mart) - 4 Saat
+🚀 Cumartesi (8 Mart) - 4 Saat
 - Java 8+ Yenilikleri
   . Lambda İfadeleri
   . Fonksiyonel Arabirimler
@@ -102,30 +122,9 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
   . filter, map, reduce gibi fonksiyonlar
 - Method ve Constructor Reference
   - Optional Sınıfı
-  . Yeni Tarih ve Zaman API (java.time)
+    . Yeni Tarih ve Zaman API (java.time)
 
     
-----------------------------------------------------------------------
-### 5. Hafta
-🚀 Salı (4 Mart) - 3 Saat
-- Çoklu İş Parçacığı (Multithreading)
-  . Thread Oluşturma ve Yönetimi
-  . Senkronizasyon
-- 
-
-🚀 Perşembe (6 Mart) - 3 Saat
-- Eşzamanlılık (Concurrency)
-  . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
-  . Concurrency API
-
-
-
-🚀 Cumartesi (8 Mart) - 4 Saat
-- Enum
-- Record
-
-
-
 ----------------------------------------------------------------------
 ### 6. Hafta
 🚀 Salı (11 Mart) - 3 Saat
@@ -133,16 +132,13 @@ son 2 hafta öğrenilen yerlerle ilgili sıfırdan  ATM projesi, oop, database, 
   . Super ve Subclass kavramları
   . Override ve Overload farkı
 
-
 🚀 Perşembe (13 Mart) - 3 Saat
 - Polimorfizm (Polymorphism)
   . Dinamik ve Statik Polimorfizm örnekleri
 - Soyutlama (Abstraction)
   . Abstract sınıflar ve arabirimler (interface)
 
-
 🚀 Cumartesi (15 Mart) - 4 Saat
-- (AES/DES/RSA/HASHING)
 ---
 
 ### Toplam Süre: 60 Saat

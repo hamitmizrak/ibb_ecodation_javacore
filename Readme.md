@@ -8124,6 +8124,688 @@ public class BufferedWriterExample {
 
 👉 **I/O işlemlerini verimli kullanarak büyük ölçekli projelerde performans kazanabilirsiniz! 🚀**
 
+
+## Enum
+```sh 
+
+```
+---
+### **Java Enum (Enumerasyon) Nedir?**
+
+Java'da **Enum (Enumerated Type)**, sabit değerler kümesini temsil etmek için kullanılan özel bir veri tipidir. Enum'lar, belirli bir grup sabitin bir arada tutulmasını sağlar ve okunabilirliği artırır.
+
+Enum'lar genellikle **sabit değerlerin daha anlamlı bir şekilde ifade edilmesi**, **hata payının azaltılması** ve **kodun daha güvenli ve sürdürülebilir hale getirilmesi** için kullanılır.
+
+---
+
+## **Enum Tanımlama ve Kullanımı**
+Enum’lar `enum` anahtar kelimesi ile tanımlanır ve her enum sabiti varsayılan olarak **public, static ve final** olarak kabul edilir. Enum'lar `class` gibi çalışır ama `extends` edilemez.
+
+```java
+// Basit bir Enum tanımlama örneği
+public enum Gunler {
+    PAZARTESI, SALI, CARSAMBA, PERSEMBE, CUMA, CUMARTESI, PAZAR;
+}
+```
+Burada `Gunler` adında bir enum tanımladık ve içerisine haftanın günlerini ekledik.
+
+Enum kullanımı şu şekildedir:
+
+```java
+public class EnumOrnek {
+    public static void main(String[] args) {
+        Gunler bugun = Gunler.PAZARTESI;
+        System.out.println("Bugün: " + bugun);
+    }
+}
+```
+**Çıktı:**
+```
+Bugün: PAZARTESI
+```
+
+---
+
+## **Enum İçinde Alan (Field) ve Metot Tanımlama**
+Enum’lar, tıpkı sınıflar gibi **alan (field) ve metodlar** içerebilir.
+
+Örneğin, aşağıdaki kodda her bir gün için bir çalışma durumu (true/false) tanımlanmıştır.
+
+```java
+public enum Gunler {
+    PAZARTESI(true), SALI(true), CARSAMBA(true), PERSEMBE(true), CUMA(true), CUMARTESI(false), PAZAR(false);
+    
+    private boolean calismaGunu;
+
+    Gunler(boolean calismaGunu) {
+        this.calismaGunu = calismaGunu;
+    }
+
+    public boolean isCalismaGunu() {
+        return calismaGunu;
+    }
+}
+```
+
+Kullanımı:
+```java
+public class EnumTest {
+    public static void main(String[] args) {
+        Gunler bugun = Gunler.PAZARTESI;
+        System.out.println("Bugün çalışma günü mü? " + bugun.isCalismaGunu());
+    }
+}
+```
+**Çıktı:**
+```
+Bugün çalışma günü mü? true
+```
+
+---
+
+## **Enum ile Switch-Case Kullanımı**
+Enum’lar `switch-case` içinde çok yaygın kullanılır:
+
+```java
+public class EnumSwitchOrnek {
+    public static void main(String[] args) {
+        Gunler bugun = Gunler.CUMA;
+
+        switch (bugun) {
+            case PAZARTESI:
+            case SALI:
+            case CARSAMBA:
+            case PERSEMBE:
+            case CUMA:
+                System.out.println("Hafta içi, çalışmaya devam!");
+                break;
+            case CUMARTESI:
+            case PAZAR:
+                System.out.println("Hafta sonu, tatil!");
+                break;
+        }
+    }
+}
+```
+**Çıktı:**
+```
+Hafta içi, çalışmaya devam!
+```
+
+---
+
+## **Enum Sabitlerini Döngü ile Kullanma**
+Enum içindeki tüm sabitleri bir döngü ile dolaşabiliriz.
+
+```java
+public class EnumDonguOrnek {
+    public static void main(String[] args) {
+        for (Gunler gun : Gunler.values()) {
+            System.out.println(gun);
+        }
+    }
+}
+```
+**Çıktı:**
+```
+PAZARTESI
+SALI
+CARSAMBA
+PERSEMBE
+CUMA
+CUMARTESI
+PAZAR
+```
+
+---
+
+## **Enum İçinde Constructor, Metot ve Override Kullanımı**
+Bir enum içinde **constructor (yapıcı metot)** ve **override edilebilen metotlar** tanımlanabilir.
+
+```java
+public enum Mesaj {
+    BASARILI(200, "İşlem başarılı"),
+    HATA(500, "Sunucu hatası"),
+    BULUNAMADI(404, "Sayfa bulunamadı");
+
+    private final int kod;
+    private final String mesaj;
+
+    Mesaj(int kod, String mesaj) {
+        this.kod = kod;
+        this.mesaj = mesaj;
+    }
+
+    public int getKod() {
+        return kod;
+    }
+
+    public String getMesaj() {
+        return mesaj;
+    }
+
+    @Override
+    public String toString() {
+        return kod + " - " + mesaj;
+    }
+}
+```
+Kullanımı:
+
+```java
+public class EnumTest {
+    public static void main(String[] args) {
+        System.out.println(Mesaj.BASARILI);
+        System.out.println(Mesaj.HATA.getMesaj());
+    }
+}
+```
+
+**Çıktı:**
+```
+200 - İşlem başarılı
+Sunucu hatası
+```
+
+---
+
+## **Enum ile Abstract Metot Kullanımı**
+Eğer her enum sabiti için farklı bir davranış tanımlamak istiyorsak, abstract metot kullanabiliriz.
+
+```java
+public enum Islem {
+    TOPLAMA {
+        @Override
+        public int hesapla(int a, int b) {
+            return a + b;
+        }
+    },
+    CIKARMA {
+        @Override
+        public int hesapla(int a, int b) {
+            return a - b;
+        }
+    };
+
+    public abstract int hesapla(int a, int b);
+}
+```
+
+Kullanımı:
+
+```java
+public class EnumHesaplama {
+    public static void main(String[] args) {
+        int sonuc = Islem.TOPLAMA.hesapla(5, 3);
+        System.out.println("Toplama sonucu: " + sonuc);
+    }
+}
+```
+
+**Çıktı:**
+```
+Toplama sonucu: 8
+```
+
+---
+
+## **Enum’un Avantajları**
+1. **Sabit Değerlerin Anlamlı Kullanımı:** Kodun okunurluğunu artırır. (`Gunler.PAZARTESI` yerine `1` gibi sayısal değerler kullanmak hata yapma olasılığını artırır.)
+2. **Tip Güvenliği Sağlar:** Enum kullanımı, yanlış değerlerin atanmasını önler. (`String` yerine `enum` kullanmak daha güvenlidir.)
+3. **Kapsülleme (Encapsulation) Sağlar:** Enum içinde metotlar, alanlar tanımlanabilir.
+4. **Switch-Case Kullanımı ile Kolaylık Sağlar:** Enum’lar `switch-case` bloklarında rahatlıkla kullanılabilir.
+5. **Bellek Verimliliği:** Enum nesneleri JVM tarafından `static` olarak saklandığından, her çağrıldığında tekrar oluşturulmazlar.
+
+---
+
+## **Sonuç**
+Java Enum, sabit değerleri tanımlamak için güçlü bir yapıdır. Sadece sabit listeleri tutmakla kalmaz, aynı zamanda veri ve metotlar içerebilir, dolayısıyla `enum`'lar nesne yönelimli programlamanın avantajlarından yararlanabilir. Enum'ları uygun şekilde kullanarak, hem kodunuzu daha okunabilir hale getirebilir hem de hata riskini minimize edebilirsiniz.
+
+
+## Record
+```sh 
+
+```
+---
+# **Java'da Record (Kayıt) Nedir?**
+Java 14 ile birlikte **Record** yapısı tanıtıldı ve Java 16 itibarıyla **tamamen kararlı (stable)** hale geldi. **Record**, özellikle veri taşıma nesneleri (DTO - Data Transfer Object) için optimize edilmiş, **immutable (değiştirilemez)** ve **daha az kod gerektiren** bir veri yapısıdır.
+
+### **Record Neden Kullanılır?**
+Record’lar, özellikle **veri saklamak** ve **bu verilere erişimi sağlamak** amacıyla kullanılan sınıflardır. Geleneksel Java sınıflarına göre avantajları şunlardır:
+- **Daha az kod yazma gereksinimi**: Getter, constructor, `equals()`, `hashCode()` ve `toString()` gibi metotları otomatik olarak oluşturur.
+- **Immutable (Değiştirilemez) yapı**: Bir Record nesnesinin alanları (`fields`) değiştirilemez.
+- **Daha iyi performans**: JVM tarafından optimize edilmiştir.
+
+---
+
+## **Record Tanımlama ve Kullanımı**
+Bir **Record** tanımlamak için `record` anahtar kelimesi kullanılır. İçerisinde **field’ları (alanları)** tanımladıktan sonra, Java otomatik olarak **constructor, getter metotları, `equals()`, `hashCode()` ve `toString()` metotlarını oluşturur.**
+
+Örnek:
+```java
+public record Kisi(String ad, int yas) { }
+```
+Bu tanımlama, aşağıdaki klasik sınıfın yaptığı işi otomatik olarak gerçekleştirir:
+
+```java
+public class Kisi {
+    private final String ad;
+    private final int yas;
+
+    public Kisi(String ad, int yas) {
+        this.ad = ad;
+        this.yas = yas;
+    }
+
+    public String getAd() { return ad; }
+    public int getYas() { return yas; }
+
+    @Override
+    public boolean equals(Object o) { /* eşitlik kontrolü */ }
+    
+    @Override
+    public int hashCode() { /* hash hesaplama */ }
+
+    @Override
+    public String toString() { return "Kisi[ad=" + ad + ", yas=" + yas + "]"; }
+}
+```
+**Görüldüğü gibi `record`, büyük miktarda kod yazmayı önlüyor!**
+
+---
+
+## **Record Kullanımı**
+Bir `record` nesnesi oluşturma ve kullanma:
+```java
+public class RecordOrnek {
+    public static void main(String[] args) {
+        Kisi kisi = new Kisi("Ahmet", 25);
+        
+        System.out.println(kisi.ad());  // "Ahmet"
+        System.out.println(kisi.yas()); // 25
+        System.out.println(kisi);       // Kisi[ad=Ahmet, yas=25]
+    }
+}
+```
+### **Çıktı:**
+```
+Ahmet
+25
+Kisi[ad=Ahmet, yas=25]
+```
+
+---
+
+## **Record Özellikleri**
+### **1. Getter Metotları**
+Record içindeki değişkenlere erişmek için `getter` metotları kullanılır. Ancak, **getter metotlarının adı, değişken adıyla aynıdır** (Yani `getAd()` yerine doğrudan `ad()` kullanılır):
+
+```java
+public record Kitap(String ad, String yazar) { }
+
+public class Test {
+    public static void main(String[] args) {
+        Kitap kitap = new Kitap("1984", "George Orwell");
+        System.out.println(kitap.ad());   // 1984
+        System.out.println(kitap.yazar()); // George Orwell
+    }
+}
+```
+
+### **2. Immutable (Değiştirilemez) Olması**
+Bir `record` nesnesi **değiştirilemez (immutable)** olduğu için, bir nesne oluşturulduktan sonra **alanları değiştirilemez**:
+
+```java
+Kisi kisi = new Kisi("Mehmet", 30);
+kisi.ad = "Ali"; // HATA! Record'lar immutable’dır.
+```
+Bu özellik sayesinde, Record’lar **veri taşıma nesneleri** (DTO) olarak çok güvenlidir.
+
+### **3. equals(), hashCode() ve toString() Otomatik Oluşturulur**
+Record kullanımı ile Java, `equals()`, `hashCode()` ve `toString()` metotlarını otomatik oluşturur.
+
+Örnek:
+```java
+Kisi kisi1 = new Kisi("Ahmet", 25);
+Kisi kisi2 = new Kisi("Ahmet", 25);
+
+System.out.println(kisi1.equals(kisi2)); // true
+System.out.println(kisi1.hashCode()); // Aynı hashCode üretir
+System.out.println(kisi2.hashCode());
+```
+
+**Çıktı:**
+```
+true
+1034248974
+1034248974
+```
+Bu metotlar **içerik bazlı karşılaştırma** yapar, yani iki nesne içindeki **alanlar aynıysa, nesneler eşit kabul edilir.**
+
+---
+
+## **Record İçinde Metot Tanımlama**
+Record'lar içinde normal Java sınıflarında olduğu gibi metotlar tanımlanabilir:
+
+```java
+public record Daire(double yariCap) {
+    public double alan() {
+        return Math.PI * yariCap * yariCap;
+    }
+}
+```
+Kullanımı:
+```java
+Daire daire = new Daire(10);
+System.out.println(daire.alan()); // 314.159...
+```
+
+---
+
+## **Record İçinde Statik Alan ve Metotlar**
+Record içinde **static alanlar** ve **static metotlar** kullanılabilir:
+
+```java
+public record Araba(String marka, String model) {
+    static String kategori = "Otomobil";
+
+    public static String getKategori() {
+        return kategori;
+    }
+}
+```
+Kullanımı:
+```java
+System.out.println(Araba.getKategori()); // "Otomobil"
+```
+
+---
+
+## **Record İçinde Custom Constructor Kullanımı**
+Record'larda **custom constructor (özelleştirilmiş yapıcı metot)** tanımlanabilir.
+
+Örnek:
+```java
+public record Person(String ad, int yas) {
+    public Person {
+        if (yas < 0) {
+            throw new IllegalArgumentException("Yaş negatif olamaz!");
+        }
+    }
+}
+```
+Eğer negatif bir yaş verilirse, `IllegalArgumentException` fırlatılır:
+
+```java
+Person kisi = new Person("Ali", -5); // HATA!
+```
+**Çıktı:**
+```
+Exception in thread "main" java.lang.IllegalArgumentException: Yaş negatif olamaz!
+```
+
+---
+
+## **Record ve Interface Kullanımı**
+Record'lar **interface** implement edebilir:
+
+```java
+interface Sekil {
+    double alan();
+}
+
+public record Dikdortgen(double genislik, double yukseklik) implements Sekil {
+    public double alan() {
+        return genislik * yukseklik;
+    }
+}
+```
+Kullanımı:
+```java
+Dikdortgen dikdortgen = new Dikdortgen(10, 5);
+System.out.println(dikdortgen.alan()); // 50.0
+```
+
+---
+
+## **Record'ların Kısıtlamaları**
+1. **Değiştirilemez (Immutable) Olması**
+    - Record içindeki değişkenler `final` olduğu için **değiştirilemez**.
+
+2. **Extends Kullanılamaz (Miras Alamaz)**
+    - Record'lar **kalıtım desteklemez** (`extends` kullanamazsınız). Çünkü zaten `final` olarak tanımlıdır.
+
+   ```java
+   public class AltKisi extends Kisi { } // HATA! Record’lar extend edilemez.
+   ```
+
+3. **Lombok'a Alternatif Ama Her Zaman Uygun Değil**
+    - Record, `Lombok` gibi kütüphanelere bir alternatif olsa da **tüm projeler için uygun olmayabilir**. Eğer mutable (değiştirilebilir) veri modelleri gerekiyorsa, klasik `class` kullanımı daha uygun olur.
+
+---
+
+## **Sonuç**
+Java Record'lar, özellikle **veri taşıma nesneleri (DTO)** oluşturmak için harika bir özelliktir. Geleneksel `class`'lara kıyasla **daha az kod** yazarak, **immutable** ve **performanslı** veri yapıları oluşturmanızı sağlar. Eğer **kalıtım gerekmiyorsa** ve **sadece veri saklamak istiyorsanız**, Record kullanımı oldukça mantıklıdır.
+
+
+## Inner Class
+```sh 
+
+```
+---
+
+# **Java'da Inner Class (İç İçe Sınıflar) Nedir?**
+Java'da **Inner Class (İç İçe Sınıflar)**, bir sınıfın içinde başka bir sınıf tanımlanmasını sağlayan yapıdır. Bir **inner class**, dış sınıfın üyesidir ve genellikle **dış sınıfın özel (private) üyelerine erişim sağlamak** amacıyla kullanılır.
+
+---
+
+## **Neden Inner Class Kullanılır?**
+1. **Dış sınıfın özel üyelerine erişimi kolaylaştırır.**
+2. **Kod organizasyonunu ve okunabilirliği artırır.**
+3. **Dış sınıfa sıkı bağlı ve tek başına anlamsız olan sınıfların tanımlanmasını sağlar.**
+4. **Gereksiz sınıf dosyası oluşturmayı engeller.**
+
+---
+
+## **Java'da Inner Class Çeşitleri**
+Java'da dört farklı türde **Inner Class** bulunur:
+1. **Normal Inner Class (Üye İç Sınıf)**
+2. **Static Inner Class (Statik İç Sınıf)**
+3. **Local Inner Class (Yerel İç Sınıf)**
+4. **Anonymous Inner Class (Anonim İç Sınıf)**
+
+---
+
+## **1. Normal Inner Class (Üye İç Sınıf)**
+- Bir sınıfın içinde başka bir sınıf olarak tanımlanır.
+- **Dış sınıfın her türlü üyesine erişebilir (private dahil).**
+- **Dış sınıf olmadan tek başına var olamaz.**
+
+### **Örnek: Normal Inner Class Kullanımı**
+```java
+class DisSinif {
+    private String mesaj = "Merhaba, Inner Class!";
+    
+    class IcSinif { // İç sınıf
+        void yazdir() {
+            System.out.println(mesaj); // Dış sınıfın özel değişkenine erişim
+        }
+    }
+}
+
+public class InnerClassOrnek {
+    public static void main(String[] args) {
+        DisSinif dis = new DisSinif();
+        DisSinif.IcSinif ic = dis.new IcSinif(); // İç sınıf nesnesi oluşturma
+        ic.yazdir();
+    }
+}
+```
+### **Çıktı:**
+```
+Merhaba, Inner Class!
+```
+Bu örnekte, **`IcSinif` dış sınıfın private değişkenine erişebilmektedir.**
+
+### **Dikkat Edilmesi Gerekenler:**
+- **Inner Class nesnesi oluşturulurken önce dış sınıfın nesnesi oluşturulmalıdır.**
+- **Dış sınıfın private değişkenlerine erişebilir.**
+
+---
+
+## **2. Static Inner Class (Statik İç Sınıf)**
+- `static` olarak tanımlandığında, **dış sınıfın nesnesine ihtiyaç duymadan kullanılabilir.**
+- **Sadece dış sınıfın `static` üyelerine erişebilir.**
+
+### **Örnek: Static Inner Class Kullanımı**
+```java
+class DisSinif {
+    static String veri = "Statik Veri";
+
+    static class IcSinif {
+        void yazdir() {
+            System.out.println("İç sınıf: " + veri); // Statik değişkene erişim
+        }
+    }
+}
+
+public class StaticInnerClassOrnek {
+    public static void main(String[] args) {
+        DisSinif.IcSinif ic = new DisSinif.IcSinif(); // Direkt nesne oluşturulabilir
+        ic.yazdir();
+    }
+}
+```
+### **Çıktı:**
+```
+İç sınıf: Statik Veri
+```
+
+### **Özetle:**
+- **Dış sınıfın statik üyelerine doğrudan erişebilir.**
+- **Dış sınıfın nesnesi oluşturulmadan iç sınıfın nesnesi oluşturulabilir.**
+
+---
+
+## **3. Local Inner Class (Yerel İç Sınıf)**
+- **Bir metodun içinde tanımlanır ve sadece o metodun içinde kullanılabilir.**
+- **Metodun içinde tanımlandığı için erişim belirleyicisi (`public`, `private` vs.) kullanılamaz.**
+- **Bulunduğu metodun `final` olmayan yerel değişkenlerine erişemez.**
+
+### **Örnek: Local Inner Class Kullanımı**
+```java
+class DisSinif {
+    void disMetod() {
+        class YerelIcSinif { // Metot içinde inner class
+            void yazdir() {
+                System.out.println("Bu bir Yerel Inner Class");
+            }
+        }
+
+        YerelIcSinif ic = new YerelIcSinif();
+        ic.yazdir();
+    }
+}
+
+public class LocalInnerClassOrnek {
+    public static void main(String[] args) {
+        DisSinif dis = new DisSinif();
+        dis.disMetod(); // Sadece metod çağrıldığında çalışır
+    }
+}
+```
+### **Çıktı:**
+```
+Bu bir Yerel Inner Class
+```
+
+### **Özetle:**
+- **Bir metot içinde tanımlanır ve sadece o metodun içinde erişilebilir.**
+- **Metot çağrılmadan iç sınıfın nesnesi oluşturulamaz.**
+
+---
+
+## **4. Anonymous Inner Class (Anonim İç Sınıf)**
+- **İsimsizdir ve genellikle arayüzleri veya soyut sınıfları implement etmek için kullanılır.**
+- **Nesne oluşturma sırasında tanımlanır ve hemen kullanılır.**
+
+### **Örnek: Arayüz Kullanımı ile Anonim İç Sınıf**
+```java
+interface Mesaj {
+    void goster();
+}
+
+public class AnonymousInnerClassOrnek {
+    public static void main(String[] args) {
+        Mesaj mesaj = new Mesaj() {
+            public void goster() {
+                System.out.println("Bu bir Anonim Inner Class");
+            }
+        };
+
+        mesaj.goster();
+    }
+}
+```
+### **Çıktı:**
+```
+Bu bir Anonim Inner Class
+```
+
+### **Örnek: Soyut Sınıf Kullanımı ile Anonim Inner Class**
+```java
+abstract class Hayvan {
+    abstract void sesCikar();
+}
+
+public class AnonymousInnerClassOrnek {
+    public static void main(String[] args) {
+        Hayvan kedi = new Hayvan() {
+            void sesCikar() {
+                System.out.println("Miyav!");
+            }
+        };
+
+        kedi.sesCikar();
+    }
+}
+```
+### **Çıktı:**
+```
+Miyav!
+```
+
+### **Özetle:**
+- **Bir sınıfın veya arayüzün bir kerelik kullanımı için uygundur.**
+- **Genellikle olay dinleyicileri (Event Listeners) veya callback mekanizmalarında kullanılır.**
+
+---
+
+## **Inner Class Kullanım Senaryoları**
+1. **GUI Programlamada (Swing, JavaFX)**
+    - Anonim iç sınıflar, buton tıklama olaylarını yakalamak için yaygın olarak kullanılır.
+
+2. **Çok büyük sınıfları modüler hale getirmek için**
+    - Normal `Inner Class` ile büyük kod bloklarını daha okunaklı hale getirmek.
+
+3. **Bağımsız çalışamayan sınıfları gruplamak**
+    - Eğer bir sınıf **yalnızca belirli bir sınıfın içinde anlamlıysa**, **Inner Class kullanımı** iyi bir çözümdür.
+
+4. **Güvenlik ve Kapsülleme**
+    - Dış sınıfın private üyelerine erişim sağlamak için.
+
+---
+
+## **Sonuç**
+- **Inner Class'lar**, dış sınıfa ait mantıksal bileşenleri iç içe organize etmek için kullanılır.
+- **Dört temel türü vardır**: **Normal Inner Class, Static Inner Class, Local Inner Class ve Anonymous Inner Class.**
+- **Kod organizasyonunu iyileştirir ve gereksiz dosya oluşturmayı engeller.**
+- **Anonim sınıflar**, olay dinleme (event handling) ve tek seferlik işlemler için idealdir.
+
+### **Ne Zaman Kullanılmalı?**
+- Eğer **bir sınıf, yalnızca belirli bir dış sınıf içinde anlamlıysa**, Inner Class kullanımı mantıklıdır.
+- **Gereksiz Inner Class kullanımından kaçınılmalıdır**, çünkü bazen bağımsız sınıflar daha okunaklı ve sürdürülebilir olur.
+
 ## Cipher (AES/DES/RSA/HASHING)
 ```sh 
 
