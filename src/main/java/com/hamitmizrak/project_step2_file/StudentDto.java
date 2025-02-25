@@ -30,7 +30,7 @@ public class StudentDto implements Serializable {
     private Double finalTerm;    // Final notu
     private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
     private LocalDate birthDate; // Doğum günü
-    private Date createdDate; // Sistem otomatik tarihi
+    private Date createdDate;    // Sistem otomatik tarihi
 
     // static (Nesne boyunca 1 kere oluşturulur)
     static {
