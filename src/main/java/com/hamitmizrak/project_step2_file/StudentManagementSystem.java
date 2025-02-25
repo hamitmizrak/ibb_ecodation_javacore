@@ -68,7 +68,7 @@ public class StudentManagementSystem {
     /// Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
     public void add(StudentDto dto) {
         studentDtoList.add(
-                new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(), dto.getFinalTerm(), dto.getBirthDate())
+                new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(), dto.getFinalTerm(), dto.getBirthDate(), dto.geteStudentType())
         );
         System.out.println(SpecialColor.YELLOW + " Öğrenci Eklendi" + SpecialColor.RESET);
         // File Ekle
@@ -115,6 +115,7 @@ public class StudentManagementSystem {
                 temp.setBirthDate(dto.getBirthDate());
                 temp.setMidTerm(dto.getMidTerm());
                 temp.setFinalTerm(dto.getFinalTerm());
+                temp.seteStudentType(dto.geteStudentType());
                 // Güncellenmiş Öğrenci Bilgileri
                 System.out.println(SpecialColor.BLUE + temp + " Öğrenci Bilgileri Güncellendi" + SpecialColor.RESET);
                 // Dosyaya kaydet
@@ -145,6 +146,20 @@ public class StudentManagementSystem {
     // En Yüksek veya En Düşük Not Alan Öğrenci
     // Öğrenci Sıralaması (Doğum günü)
 
+    /// /////////////////////////////////////////////////////////////
+    // Enum Öğrenci Türü Method
+    private EStudentType studentTypeMethod(){
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Öğrenci türünü seçiniz.\n1-)Lisans\n2-)Yüksek Lisans\n3-)Doktora");
+        int typeChooise= scanner.nextInt();
+        EStudentType swichCaseStudent = switch (typeChooise){
+            case 1 -> EStudentType.UNDERGRADUATE;
+            case 2 -> EStudentType.GRADUATE;
+            case 3 -> EStudentType.PHD;
+            default -> EStudentType.OTHER;
+        };
+        return swichCaseStudent;
+    }
     /// /////////////////////////////////////////////////////////////
     // Console Seçim (Öğrenci)
     public void chooise() {
@@ -189,7 +204,7 @@ public class StudentManagementSystem {
                     double finalTerm = scanner.nextDouble();
 
                     // Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
-                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate));
+                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate,studentTypeMethod()));
                     break;
                 case 2: // Öğrenci Listelemek
                     studentManagementSystem.list();
@@ -230,6 +245,7 @@ public class StudentManagementSystem {
                             .midTerm(midTermUpdate)
                             .finalTerm(finalTermUpdate)
                             .birthDate(birthDateUpdate)
+                            .eStudentType(studentTypeMethod())
                             .build();
                     try {
                         studentManagementSystem.update(id, studentDtoUpdate);
@@ -272,5 +288,4 @@ public class StudentManagementSystem {
             }
         }
     }
-
 }

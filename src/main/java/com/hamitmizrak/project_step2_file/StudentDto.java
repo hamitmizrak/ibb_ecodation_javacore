@@ -26,6 +26,7 @@ public class StudentDto implements Serializable {
     private Integer id;
     private String name;
     private String surname;
+    private EStudentType eStudentType; // Enum Öğrenci Türü
     private Double midTerm;      // Vize notu
     private Double finalTerm;    // Final notu
     private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
@@ -42,7 +43,7 @@ public class StudentDto implements Serializable {
     }
 
     // Parametreli Constructor
-    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate) {
+    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -51,6 +52,7 @@ public class StudentDto implements Serializable {
         this.birthDate = birthDate;
         this.createdDate= new Date(System.currentTimeMillis());
         this.resultTerm= calculateResult();
+        this.eStudentType= eStudentType;
     }
 
     // Metotlar
@@ -127,5 +129,13 @@ public class StudentDto implements Serializable {
 
     public void setResultTerm(Double resultTerm) {
         this.resultTerm = resultTerm;
+    }
+
+    public EStudentType geteStudentType() {
+        return eStudentType;
+    }
+
+    public void seteStudentType(EStudentType eStudentType) {
+        this.eStudentType = eStudentType;
     }
 } //end Student

@@ -79,4 +79,7 @@ null değeri ne zaman kullanabilirim ?
 > 
  
 ## 8.Ders Ödevi (22 Şubat)
-> 
+> Öğrendiklerinizi test ediniz 
+
+## 9.Ders Ödevi (22 Şubat)
+> StudentDto içersinde gerekli validation yazınız ? Örneğin vize,final sadece double girilecek harf veya özel simge girmeyecek
