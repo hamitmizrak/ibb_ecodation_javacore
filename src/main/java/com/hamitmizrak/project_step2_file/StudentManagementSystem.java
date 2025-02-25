@@ -1,4 +1,4 @@
-package com.hamitmizrak.project_step1_file;
+package com.hamitmizrak.project_step2_file;
 
 import com.hamitmizrak.utils.SpecialColor;
 
@@ -48,8 +48,9 @@ public class StudentManagementSystem {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             studentDtoList = (ArrayList<StudentDto>) objectInputStream.readObject();
             studentCounter = studentDtoList.size();
+            System.out.println(SpecialColor.BLUE + " Dosyadan Yüklenen Öğrenci sayısı: " + studentCounter);
         } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println(SpecialColor.RED + " Öğrenci Kayıdı bulunamadı " + SpecialColor.RESET);
+            System.out.println(SpecialColor.RED + " Dosyadan yüklenen Öğren Kayıdı bulunamadı " + SpecialColor.RESET);
             fileNotFoundException.printStackTrace();
         } catch (IOException io) {
             System.out.println(SpecialColor.RED + " Dosya Okuma Hatası" + SpecialColor.RESET);
@@ -61,8 +62,12 @@ public class StudentManagementSystem {
 
     /// /////////////////////////////////////////////////////////////
     // Öğrenci Ekle
+
+    /// Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
     public void add(StudentDto dto) {
-        studentDtoList.add(new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getBirthDate(), dto.getGrade()));
+        studentDtoList.add(
+                new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(), dto.getFinalTerm(), dto.getBirthDate())
+        );
         System.out.println(SpecialColor.YELLOW + " Öğrenci Eklendi" + SpecialColor.RESET);
         // File Ekle
         saveToFile();
@@ -75,15 +80,29 @@ public class StudentManagementSystem {
             System.out.println(SpecialColor.RED + " Öğrenci yoktur" + SpecialColor.RESET);
             return;
         } else {
+            System.out.println(SpecialColor.BLUE + " Öğrenci Listesi" + SpecialColor.RESET);
             studentDtoList.forEach(System.out::println);
         }
     }
 
     // Öğrenci Ara
     public void search(String name) {
-        studentDtoList.stream()
+         /* studentDtoList.stream()
                 .filter(temp -> temp.getName().equalsIgnoreCase(name))
-                .forEach(System.out::println);
+                .forEach(System.out::println); */
+
+        // Eğer Öğrenci varsa true dönder
+        boolean found = studentDtoList
+                .stream()
+                .filter(temp -> temp.getName().equalsIgnoreCase(name))
+                .peek(System.out::println) // Eğer ilgili data varsa yazdır
+                .findAny() // Herhangi bir eşleşen öğrenci var mı yok mu ? kontrol et
+                .isPresent();
+
+        // Öğrenci Yoksa
+        if(!found){
+            throw new StudentNotFoundException(name+" isimli Öğrenci bulunamadı");
+        }
     }
 
     // Öğrenci Güncelle
@@ -116,14 +135,14 @@ public class StudentManagementSystem {
     // En Yüksek veya En Düşük Not Alan Öğrenci
     // Öğrenci Sıralaması (Doğum günü)
 
-    ////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////
     // Console Seçim (Öğrenci)
-    public void chooise(){
+    public void chooise() {
         Scanner scanner = new Scanner(System.in);
         StudentManagementSystem studentManagementSystem = new StudentManagementSystem();
 
         // Sonsuz while
-        while(true){
+        while (true) {
             System.out.println("\n1.Öğrenci Ekle");
             System.out.println("\n2.Öğrenci Listele");
             System.out.println("\n3.Öğrenci Ara");
@@ -137,23 +156,23 @@ public class StudentManagementSystem {
             System.out.println("\n11.Çıkış");
             System.out.println("\nLütfen Seçiminizi Yapınız");
 
-            int chooise= scanner.nextInt();
+            int chooise = scanner.nextInt();
             scanner.nextLine(); // durma yerimiz
-            StudentDto studentDto= new StudentDto();
+            StudentDto studentDto = new StudentDto();
             String name, surname;
             String birthDate;
             Double grade;
 
-            switch (chooise){
+            switch (chooise) {
                 case 1:
                     System.out.println("Öğrenci Adı");
-                    name= scanner.nextLine();
+                    name = scanner.nextLine();
                     System.out.println("Öğrenci Soyadı");
-                    surname= scanner.nextLine();
+                    surname = scanner.nextLine();
                     System.out.println("Öğrenci Doğum tarihi");
-                    birthDate=scanner.nextLine().toString();
+                    birthDate = scanner.nextLine().toString();
                     System.out.println("Öğrenci Puanı");
-                    grade= scanner.nextDouble();
+                    grade = scanner.nextDouble();
                     studentDto.setId(studentCounter);
                     studentDto.setName(name);
                     studentDto.setSurname(surname);

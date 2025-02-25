@@ -1,5 +1,6 @@
-package com.hamitmizrak.project_step1_file;
+package com.hamitmizrak.project_step2_file;
 
+import com.hamitmizrak.utils.SpecialColor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -25,13 +26,15 @@ public class StudentDto implements Serializable {
     private Integer id;
     private String name;
     private String surname;
-    private LocalDate birthDate;
-    private Date createdDate;
-    private Double grade; // başarı puanı
+    private Double midTerm;      // Vize notu
+    private Double finalTerm;    // Final notu
+    private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
+    private LocalDate birthDate; // Doğum günü
+    private Date createdDate; // Sistem otomatik tarihi
 
     // static (Nesne boyunca 1 kere oluşturulur)
     static {
-
+        System.out.println(SpecialColor.BLUE+ "static StudentDto Yüklendi"+SpecialColor.RESET);
     }
 
     // Parametresiz Constructor
@@ -39,15 +42,25 @@ public class StudentDto implements Serializable {
     }
 
     // Parametreli Constructor
-    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, Double grade) {
+    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.midTerm = midTerm;
+        this.finalTerm = finalTerm;
         this.birthDate = birthDate;
-        this.grade = grade;
+        this.createdDate= new Date(System.currentTimeMillis());
+        this.resultTerm= calculateResult();
     }
 
     // Metotlar
+    // Vize ve Final Calculate
+    private Double calculateResult() {
+        if(midTerm==null || finalTerm==null)
+            return 0.0;
+        else
+            return (midTerm*0.4+finalTerm*0.6);
+    }
 
     // Getter And Setter
     public Integer getId() {
@@ -90,11 +103,29 @@ public class StudentDto implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Double getGrade() {
-        return grade;
+    public Double getMidTerm() {
+        return midTerm;
     }
 
-    public void setGrade(Double grade) {
-        this.grade = grade;
+    public void setMidTerm(Double midTerm) {
+        this.midTerm = midTerm;
+        this.resultTerm= calculateResult();
+    }
+
+    public Double getFinalTerm() {
+        return finalTerm;
+    }
+
+    public void setFinalTerm(Double finalTerm) {
+        this.finalTerm = finalTerm;
+        this.resultTerm= calculateResult();
+    }
+
+    public Double getResultTerm() {
+        return resultTerm;
+    }
+
+    public void setResultTerm(Double resultTerm) {
+        this.resultTerm = resultTerm;
     }
 } //end Student
