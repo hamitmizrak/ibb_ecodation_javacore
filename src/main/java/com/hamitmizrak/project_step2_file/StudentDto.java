@@ -65,6 +65,7 @@ public class StudentDto implements Serializable {
     }
 
     // Getter And Setter
+    // null değilse, isEmptty, harf, sayı göre
     public Integer getId() {
         return id;
     }
