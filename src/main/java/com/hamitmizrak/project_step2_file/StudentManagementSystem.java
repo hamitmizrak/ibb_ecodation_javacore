@@ -23,6 +23,9 @@ public class StudentManagementSystem {
 
     // Parametresiz Constructor
     public StudentManagementSystem() {
+        // Eğer students.txt yoksa otomatik oluştur
+        createFileIfNotExists();
+
         // Program başlarken Öğrenci Listesini hemen yüklesin
         loadStudentsListFromFile();
     }
@@ -32,7 +35,23 @@ public class StudentManagementSystem {
     // Register
 
     /// /////////////////////////////////////////////////////////////
-    // FileIO Create
+    // FileIO
+
+    // File If Not Exists (Eğer students.txt yoksa, oluştur)
+    private void createFileIfNotExists() {
+        //students.txt
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println(SpecialColor.YELLOW + FILE_NAME + " adında dosya oluşturuldu " + SpecialColor.RESET);
+            } catch (IOException ioException) {
+                System.out.println(SpecialColor.CYAN + " Dosya oluşturulurken hata oluştu" + SpecialColor.RESET);
+                ioException.printStackTrace();
+            }
+        }
+    }
+
     // File Create
     private void saveToFile() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
@@ -148,11 +167,11 @@ public class StudentManagementSystem {
 
     /// /////////////////////////////////////////////////////////////
     // Enum Öğrenci Türü Method
-    private EStudentType studentTypeMethod(){
-        Scanner scanner= new Scanner(System.in);
+    private EStudentType studentTypeMethod() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Öğrenci türünü seçiniz.\n1-)Lisans\n2-)Yüksek Lisans\n3-)Doktora");
-        int typeChooise= scanner.nextInt();
-        EStudentType swichCaseStudent = switch (typeChooise){
+        int typeChooise = scanner.nextInt();
+        EStudentType swichCaseStudent = switch (typeChooise) {
             case 1 -> EStudentType.UNDERGRADUATE;
             case 2 -> EStudentType.GRADUATE;
             case 3 -> EStudentType.PHD;
@@ -160,6 +179,7 @@ public class StudentManagementSystem {
         };
         return swichCaseStudent;
     }
+
     /// /////////////////////////////////////////////////////////////
     // Console Seçim (Öğrenci)
     public void chooise() {
@@ -168,7 +188,7 @@ public class StudentManagementSystem {
 
         // Sonsuz while
         while (true) {
-            System.out.println(SpecialColor.YELLOW+ "\n1.Öğrenci Ekle");
+            System.out.println(SpecialColor.YELLOW + "\n1.Öğrenci Ekle");
             System.out.println("2.Öğrenci Listele");
             System.out.println("3.Öğrenci Ara");
             System.out.println("4.Öğrenci Güncelle");
@@ -178,8 +198,8 @@ public class StudentManagementSystem {
             System.out.println("8.Öğrenci Not Hesapla");
             System.out.println("9.Öğrenci En Yüksek, En düşük Notları Göster");
             System.out.println("10.Öğrenci Öğrenci Sıralaması Doğum gününe göre göster");
-            System.out.println("11.Çıkış"+SpecialColor.RESET);
-            System.out.println(SpecialColor.CYAN+"Lütfen Seçiminizi Yapınız"+SpecialColor.RESET);
+            System.out.println("11.Çıkış" + SpecialColor.RESET);
+            System.out.println(SpecialColor.CYAN + "Lütfen Seçiminizi Yapınız" + SpecialColor.RESET);
 
             // Seçim yap
             int chooise = scanner.nextInt();
@@ -204,7 +224,7 @@ public class StudentManagementSystem {
                     double finalTerm = scanner.nextDouble();
 
                     // Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
-                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate,studentTypeMethod()));
+                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate, studentTypeMethod()));
                     break;
                 case 2: // Öğrenci Listelemek
                     studentManagementSystem.list();
@@ -212,7 +232,7 @@ public class StudentManagementSystem {
 
                 case 3: // Öğrenci Ara
                     studentManagementSystem.list();
-                    System.out.println(SpecialColor.BLUE + " Aranacak Öğrenci ismi yazınız "+SpecialColor.RESET);
+                    System.out.println(SpecialColor.BLUE + " Aranacak Öğrenci ismi yazınız " + SpecialColor.RESET);
                     String searchName = scanner.nextLine();
                     studentManagementSystem.search(searchName);
                     break;
