@@ -20,6 +20,9 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     private int studentCounter = 0;
     private static final String FILE_NAME = "students.txt";
 
+    // **📌 Scanner Nesnesini En Üste Tanımladık**
+    private final Scanner scanner = new Scanner(System.in);
+
     // static
     static {
 
@@ -77,7 +80,12 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                     studentDtoList.add(student);
                 }
             }
-            studentCounter = studentDtoList.size();
+            //studentCounter = studentDtoList.size();
+            // ✅ Öğrenciler içindeki en büyük ID'yi bul
+            studentCounter = studentDtoList.stream()
+                    .mapToInt(StudentDto::getId)
+                    .max()
+                    .orElse(0); // Eğer öğrenci yoksa sıfır başlat
             System.out.println(SpecialColor.BLUE + "Dosyadan yüklenen öğrenci sayısı: " + studentCounter + SpecialColor.RESET);
         } catch (IOException e) {
             System.out.println(SpecialColor.RED + "Dosya okuma hatası!" + SpecialColor.RESET);
@@ -129,8 +137,9 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // Öğrenci Ekle
     @Override
     public StudentDto create(StudentDto studentDto) {
+        studentDto.setId(++studentCounter);
         studentDtoList.add(
-                new StudentDto(++studentCounter, studentDto.getName(), studentDto.getSurname(), studentDto.getMidTerm(), studentDto.getFinalTerm(), studentDto.getBirthDate(), studentDto.geteStudentType())
+                new StudentDto(studentDto.getId()-1, studentDto.getName(), studentDto.getSurname(), studentDto.getMidTerm(), studentDto.getFinalTerm(), studentDto.getBirthDate(), studentDto.geteStudentType())
         );
         System.out.println(SpecialColor.YELLOW + " Öğrenci Eklendi" + SpecialColor.RESET);
         // File Ekle
@@ -237,7 +246,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     /// //////////////////////////////////////////////////////////////////////
     // Enum Öğrenci Türü Method
     public EStudentType studentTypeMethod() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Öğrenci türünü seçiniz.\n1-)Lisans\n2-)Yüksek Lisans\n3-)Doktora");
         int typeChooise = scanner.nextInt();
         EStudentType swichCaseStudent = switch (typeChooise) {
@@ -254,8 +262,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // Console Seçim (Öğrenci)
     @Override
     public void chooise() {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("\n===== ÖĞRENCİ YÖNETİM SİSTEMİ =====");
             System.out.println("1. Öğrenci Ekle");
@@ -316,7 +322,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     /// Student Add
     public void chooiseStudentAdd() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Öğrenci Adı: ");
         String name = scanner.nextLine();
 
@@ -350,7 +355,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     /// Student Search
     public void chooiseStudenSearch() {
-        Scanner scanner = new Scanner(System.in);
         list();
         System.out.print("Aranacak Öğrenci Adı: ");
         String searchName = scanner.nextLine();
@@ -363,7 +367,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     /// Student Update
     public void chooiseStudenUpdate() {
-        Scanner scanner = new Scanner(System.in);
         list();
         System.out.print("Güncellenecek Öğrenci ID: ");
         int id = scanner.nextInt();
@@ -395,7 +398,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     /// Student Delete
     public void chooiseStudenDelete() {
-        Scanner scanner = new Scanner(System.in);
         list();
         System.out.print("Silinecek Öğrenci ID: ");
         int deleteID = scanner.nextInt();
@@ -461,7 +463,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     public void chooiseExit() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Sistemden çıkılıyor...");
         scanner.close();
         return;
