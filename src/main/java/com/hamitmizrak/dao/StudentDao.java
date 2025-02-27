@@ -250,6 +250,70 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     /// ///////////////////////////////////////////////////////////////////////
+
+    // Console Seçim (Öğrenci)
+    @Override
+    public void chooise() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n===== ÖĞRENCİ YÖNETİM SİSTEMİ =====");
+            System.out.println("1. Öğrenci Ekle");
+            System.out.println("2. Öğrenci Listele");
+            System.out.println("3. Öğrenci Ara");
+            System.out.println("4. Öğrenci Güncelle");
+            System.out.println("5. Öğrenci Sil");
+            System.out.println("6. Toplam Öğrenci Sayısı");
+            System.out.println("7. Rastgele Öğrenci Seç");
+            System.out.println("8. Öğrenci Not Ortalaması Hesapla");
+            System.out.println("9. En Yüksek & En Düşük Not Alan Öğrenci");
+            System.out.println("10. Öğrencileri Doğum Tarihine Göre Sırala");
+            System.out.println("11. Çıkış");
+            System.out.print("Seçiminizi yapınız: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Boşluğu temizleme
+
+            switch (choice) {
+                case 1 -> { // Öğrenci Ekleme
+                    chooiseStudentAdd();
+                }
+                case 2 -> { // Öğrenci Listeleme
+                    chooiseStudentList();
+                }
+                case 3 -> { // Öğrenci Arama
+                    chooiseStudenSearch();
+                }
+                case 4 -> { // Öğrenci Güncelleme
+                    chooiseStudenUpdate();
+                }
+                case 5 -> { // Öğrenci Silme
+                    chooiseStudenDelete();
+                }
+                case 6 -> { // Toplam Öğrenci Sayısı
+                    chooiseSumCounter();
+                }
+                case 7 -> { // Rastgele Öğrenci Seçme
+                    chooiseRandomStudent();
+                }
+                case 8 -> { // Öğrenci Not Ortalaması Hesapla
+                    chooiseStudentNoteAverage();
+                }
+                case 9 -> { // En Yüksek & En Düşük Not Alan Öğrenci
+                    chooiseStudentNoteMinAndMax();
+                }
+                case 10 -> { // Öğrencileri Doğum Tarihine Göre Sırala
+                    chooiseStudentBirthdaySortedDate();
+                }
+                case 11 -> { // Çıkış
+                    chooiseExit();
+                }
+                default -> System.out.println("Geçersiz seçim! Lütfen tekrar deneyin.");
+            }
+        }
+    } //end chooise
+
+
     /// Student Add
     public void chooiseStudentAdd() {
         Scanner scanner = new Scanner(System.in);
@@ -402,67 +466,5 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         scanner.close();
         return;
     }
-
-    // Console Seçim (Öğrenci)
-    @Override
-    public void chooise() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n===== ÖĞRENCİ YÖNETİM SİSTEMİ =====");
-            System.out.println("1. Öğrenci Ekle");
-            System.out.println("2. Öğrenci Listele");
-            System.out.println("3. Öğrenci Ara");
-            System.out.println("4. Öğrenci Güncelle");
-            System.out.println("5. Öğrenci Sil");
-            System.out.println("6. Toplam Öğrenci Sayısı");
-            System.out.println("7. Rastgele Öğrenci Seç");
-            System.out.println("8. Öğrenci Not Ortalaması Hesapla");
-            System.out.println("9. En Yüksek & En Düşük Not Alan Öğrenci");
-            System.out.println("10. Öğrencileri Doğum Tarihine Göre Sırala");
-            System.out.println("11. Çıkış");
-            System.out.print("Seçiminizi yapınız: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Boşluğu temizleme
-
-            switch (choice) {
-                case 1 -> { // Öğrenci Ekleme
-                    chooiseStudentAdd();
-                }
-                case 2 -> { // Öğrenci Listeleme
-                    chooiseStudentList();
-                }
-                case 3 -> { // Öğrenci Arama
-                    chooiseStudenSearch();
-                }
-                case 4 -> { // Öğrenci Güncelleme
-                    chooiseStudenUpdate();
-                }
-                case 5 -> { // Öğrenci Silme
-                    chooiseStudenDelete();
-                }
-                case 6 -> { // Toplam Öğrenci Sayısı
-                    chooiseSumCounter();
-                }
-                case 7 -> { // Rastgele Öğrenci Seçme
-                    chooiseRandomStudent();
-                }
-                case 8 -> { // Öğrenci Not Ortalaması Hesapla
-                    chooiseStudentNoteAverage();
-                }
-                case 9 -> { // En Yüksek & En Düşük Not Alan Öğrenci
-                    chooiseStudentNoteMinAndMax();
-                }
-                case 10 -> { // Öğrencileri Doğum Tarihine Göre Sırala
-                    chooiseStudentBirthdaySortedDate();
-                }
-                case 11 -> { // Çıkış
-                    chooiseExit();
-                }
-                default -> System.out.println("Geçersiz seçim! Lütfen tekrar deneyin.");
-            }
-        }
-    } //end chooise
 
 } // end class
