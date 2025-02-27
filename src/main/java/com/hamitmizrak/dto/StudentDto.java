@@ -1,5 +1,6 @@
-package com.hamitmizrak.project.step3;
+package com.hamitmizrak.dto;
 
+import com.hamitmizrak.project.step3.EStudentType;
 import com.hamitmizrak.utils.SpecialColor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

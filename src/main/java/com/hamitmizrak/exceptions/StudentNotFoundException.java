@@ -1,4 +1,4 @@
-package com.hamitmizrak.project.step3;
+package com.hamitmizrak.exceptions;
 
 // Öğrenci bulunamazsa Fırlatılacak Özel Excepiton
 public class StudentNotFoundException extends RuntimeException {

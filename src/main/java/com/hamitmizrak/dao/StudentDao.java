@@ -1,5 +1,8 @@
-package com.hamitmizrak.project.step3;
+package com.hamitmizrak.dao;
 
+import com.hamitmizrak.project.step3.EStudentType;
+import com.hamitmizrak.project.step3.StudentDto;
+import com.hamitmizrak.project.step3.StudentNotFoundException;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.io.*;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // Öğrenci Yönetim Sistemi
-public class StudentManagementSystem {
+public class StudentDao {
 
     // Field
     private ArrayList<StudentDto> studentDtoList = new ArrayList<>();
@@ -21,7 +24,7 @@ public class StudentManagementSystem {
     }
 
     // Parametresiz Constructor
-    public StudentManagementSystem() {
+    public StudentDao() {
         // Eğer students.txt yoksa otomatik oluştur
         createFileIfNotExists();
 
@@ -183,7 +186,7 @@ public class StudentManagementSystem {
     // Console Seçim (Öğrenci)
     public void chooise() {
         Scanner scanner = new Scanner(System.in);
-        StudentManagementSystem studentManagementSystem = new StudentManagementSystem();
+        StudentDao studentManagementSystem = new StudentDao();
 
         // Sonsuz while
         while (true) {

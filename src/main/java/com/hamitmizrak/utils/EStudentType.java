@@ -1,4 +1,4 @@
-package com.hamitmizrak.project.step3;
+package com.hamitmizrak.utils;
 
 // Öğrenci Türleri, Lisans, Yüksek Lisans, Doktora
 public enum EStudentType {
