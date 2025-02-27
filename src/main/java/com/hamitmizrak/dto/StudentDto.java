@@ -20,7 +20,7 @@ import java.util.Date;
 public class StudentDto implements Serializable {
 
     // Serileştirme
-    private static final long serialVersionUID = 5563646556456565465L;
+    private static final long serialVersionUID = 556364655645656546L;
 
     // Field
     private Integer id;

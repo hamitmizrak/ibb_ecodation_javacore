@@ -9491,7 +9491,6 @@ pool-1-thread-2 görevini çalıştırıyor...
 Concurrency API, çok iş parçacıklı uygulamaları daha yönetilebilir hale getirerek performans ve güvenilirlik sağlar. Bu yapılar, büyük ölçekli yazılım projelerinde kritik öneme sahiptir.
 
 
-
 ## MVC Nedir ?
 ```sh 
 
@@ -9909,6 +9908,71 @@ Diğer **Marker Interface’ler**:
 - **Marker Interface’ler, bir sınıfın belirli bir yeteneğe sahip olduğunu göstermek için kullanılır.**
 
 **Java'da Interface kullanımı, esneklik ve modülerlik sağladığı için yaygın olarak tercih edilir. 🚀**
+
+
+## CSV Nedir ?
+```sh 
+
+```
+---
+### **CSV (Comma-Separated Values) Nedir?**
+CSV, **Comma-Separated Values (Virgülle Ayrılmış Değerler)** anlamına gelen bir dosya formatıdır. Verileri **düz metin dosyası** olarak saklar ve her satır, bir veri kaydını temsil eder. **Sütunlar ise genellikle virgül (`,`) ile ayrılır.**
+
+### **CSV Formatının Temel Yapısı**
+- **Her satır bir kaydı temsil eder.**
+- **Veri alanları (sütunlar) virgülle ayrılır.**
+- **Genellikle `.csv` uzantılı bir dosyada saklanır.**
+- **Veri tabanı tablolarına benzer bir yapıdadır.**
+
+---
+
+### **Örnek CSV Formatı**
+Aşağıdaki CSV dosyasında **öğrenci bilgileri** bulunmaktadır:
+
+```
+1,Ali,Kaya,75.5,88.0,82.2,2001-05-20,UNDERGRADUATE
+2,Ayşe,Demir,60.0,75.0,69.0,1999-07-10,GRADUATE
+3,Mehmet,Yıldız,85.0,90.0,88.0,2000-02-15,PHD
+```
+
+Buradaki **sütunlar şunlardır:**
+| ID | Ad | Soyad | Vize | Final | Sonuç Notu | Doğum Tarihi | Eğitim Türü |
+|----|----|-------|------|-------|------------|-------------|-------------|
+| 1  | Ali  | Kaya  | 75.5 | 88.0 | 82.2       | 2001-05-20  | UNDERGRADUATE |
+| 2  | Ayşe | Demir | 60.0 | 75.0 | 69.0       | 1999-07-10  | GRADUATE |
+| 3  | Mehmet | Yıldız | 85.0 | 90.0 | 88.0   | 2000-02-15  | PHD |
+
+---
+
+### **CSV'nin Kullanım Alanları**
+📌 **Veri Depolama:** Küçük ölçekli uygulamalarda verileri saklamak için kullanılır.  
+📌 **Veri Transferi:** Farklı sistemler arasında veri alışverişi için yaygın olarak kullanılır.  
+📌 **Tablolar ve Raporlama:** Excel, Google Sheets gibi programlarda açılıp düzenlenebilir.  
+📌 **Veritabanı Entegrasyonu:** CSV formatındaki veriler, veritabanına kolayca aktarılabilir.
+
+---
+
+### **CSV ile JSON Karşılaştırması**
+| **Özellik**   | **CSV** | **JSON** |
+|--------------|--------|--------|
+| **Veri Yapısı** | Düz metin, satır-sütun bazlı | Hiyerarşik, nesne tabanlı |
+| **İnsan Okunabilirliği** | Kolay okunur | Daha yapılandırılmış, bazen karmaşık olabilir |
+| **Dosya Boyutu** | Daha küçük | Daha büyük |
+| **Destekleyen Programlar** | Excel, Google Sheets, Python, Java, Veritabanları | JavaScript, Python, Web API’leri |
+
+---
+
+### **CSV Kullanımı Java'da Neden Önemlidir?**
+✔ **Hafiftir:** Karmaşık veritabanları gerektirmez.  
+✔ **Kolay Kullanılır:** `BufferedReader` ve `BufferedWriter` ile kolayca okunup yazılabilir.  
+✔ **Esnektir:** Çeşitli programlar arasında veri alışverişi yapmak için uygundur.  
+✔ **Performanslıdır:** JSON veya XML gibi diğer formatlara göre daha hızlı işlenebilir.
+
+---
+
+Bu yüzden sizin kodunuzda **CSV formatı**, öğrencileri dosyaya yazmak ve tekrar yüklemek için kullanılıyor.  
+👉 **Öğrenci bilgilerini bir satır olarak kaydediyor ve tekrar nesneye dönüştürüyor.** 🚀
+
 
 ## Kalıtım Nedir ?
 ```sh 

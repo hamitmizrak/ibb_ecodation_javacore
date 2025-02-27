@@ -1,7 +1,9 @@
 package com.hamitmizrak.dao;
 
+import com.hamitmizrak.dto.StudentDto;
+
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoGenerics<T> {
 
@@ -9,11 +11,12 @@ public interface IDaoGenerics<T> {
     // CREATE
     T create(T t);
 
-    // FIND BY NAME
+    // FIND BY NAME,ID
     T findByName(String name);
+    T  findById(int id);
 
     // LIST
-    ArrayList<T> list();
+    List<T> list();
 
     // UPDATE
     T update(int id, T t);
@@ -22,11 +25,10 @@ public interface IDaoGenerics<T> {
     T delete(int id);
 
     // CHOOISE
-    public void chooise();
+    void chooise();
 
-    // BODY Method
+    // DATABASE CONNECTION
     default Connection getInterfaceConnection() {
         return null;
     }
-
 }
