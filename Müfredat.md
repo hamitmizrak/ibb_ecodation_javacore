@@ -56,6 +56,7 @@ Perşembe (6 Şubat) - 3 Saat
 - Arrays
   . Tek boyutlu diziler
   . Çift boyutlu diziler
+
 ----------------------------------------------------------------------
 ### 3. Hafta
 🚀  3. Hafta 1-Dersi
@@ -81,30 +82,39 @@ Perşembe (6 Şubat) - 3 Saat
   . Java I/O Temelleri (Stream, Reader/Writer)
   . File I/O
 - Genel Örnek: Öğrenci Bilgi Sistem-1
----
+
 ----------------------------------------------------------------------
 ### 4. Hafta
 🚀  4. Hafta 1-Dersi
  Salı (25 Şubat) - 3 Saat
 - Enum
-- Record
-- Inner Class
 - Genel Örnek: Öğrenci Bilgi Sistem-2
 
 🚀  4. Hafta 2-Dersi
  Perşembe (27 Şubat) - 3 Saat
-- Cipher (AES/DES/RSA/HASHING)
-- Çoklu İş Parçacığı (Multithreading)
-  . Thread Oluşturma ve Yönetimi
-  . Senkronizasyon
+- MVC Nedir ?
+- Interface Nedir ?
 - Genel Örnek: Öğrenci Bilgi Sistem-3
+
 
 🚀  4. Hafta 3-Dersi
  Cumartesi (1 Mart) - 4 Saat
-- Eşzamanlılık (Concurrency)
-  . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
-  . Concurrency API
-- Genel Örnek: Öğrenci Bilgi Sistem-3
+- Kalıtım (Inheritance)
+  . Super ve Subclass kavramları
+  . Override ve Overload farkı
+- Polimorfizm (Polymorphism)
+    . Dinamik ve Statik Polimorfizm örnekleri
+- Soyutlama (Abstraction)
+  . Abstract sınıflar ve arabirimler (interface)
+- Record
+- Inner Class
+- Çoklu İş Parçacığı (Multithreading)
+  . Thread Oluşturma ve Yönetimi
+  . Senkronizasyon
+- - Eşzamanlılık (Concurrency)
+    . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
+    . Concurrency API
+- Cipher (AES/DES/RSA/HASHING)
 
 ----------------------------------------------------------------------
 ### 5. Hafta
@@ -144,16 +154,11 @@ Perşembe (6 Şubat) - 3 Saat
 ### 6. Hafta
 🚀  6. Hafta 1-Dersi
  Salı (11 Mart) - 3 Saat
-- Kalıtım (Inheritance)
-  . Super ve Subclass kavramları
-  . Override ve Overload farkı
+
 
 🚀  6. Hafta 2-Dersi
  Perşembe (13 Mart) - 3 Saat
-- Polimorfizm (Polymorphism)
-  . Dinamik ve Statik Polimorfizm örnekleri
-- Soyutlama (Abstraction)
-  . Abstract sınıflar ve arabirimler (interface)
+
 
 🚀  6. Hafta 3-Dersi
  Cumartesi (15 Mart) - 4 Saat

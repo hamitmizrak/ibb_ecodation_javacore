@@ -8587,6 +8587,248 @@ System.out.println(dikdortgen.alan()); // 50.0
 ## **Sonuç**
 Java Record'lar, özellikle **veri taşıma nesneleri (DTO)** oluşturmak için harika bir özelliktir. Geleneksel `class`'lara kıyasla **daha az kod** yazarak, **immutable** ve **performanslı** veri yapıları oluşturmanızı sağlar. Eğer **kalıtım gerekmiyorsa** ve **sadece veri saklamak istiyorsanız**, Record kullanımı oldukça mantıklıdır.
 
+## Record Örneği
+```sh 
+
+```
+---
+
+
+Mevcut kodlarınıza **Java Record** özelliğini eklemek için, `StudentDto` sınıfını bir **Record** olarak yeniden yazabiliriz. Java 14 ile gelen **record** yapısı, sınıfları immutable (değiştirilemez) hale getirir ve **boilerplate kodları** (getter, setter, equals, hashCode, toString) otomatik oluşturur.
+
+### **Güncellenmiş StudentDto.java (Record Kullanımı)**
+Aşağıdaki gibi `StudentDto` sınıfınızı bir **Record** haline getirdim:
+
+```java
+package com.hamitmizrak.project_step2_file;
+
+import com.hamitmizrak.project.step2.EStudentType;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
+
+// Java Record Kullanımı
+public record StudentDto(
+        Integer id,
+        String name,
+        String surname,
+        EStudentType eStudentType, // Enum Öğrenci Türü
+        Double midTerm,      // Vize notu
+        Double finalTerm,    // Final notu
+        Double resultTerm,   // Sonuç Notu: (Vize%40 + Final%60)
+        LocalDate birthDate, // Doğum günü
+        Date createdDate     // Sistem otomatik tarihi
+) implements Serializable {
+
+    // Serileştirme
+    private static final long serialVersionUID = 5563646556456565465L;
+
+    // Constructor (Vize ve Final notuna göre otomatik result hesaplama)
+    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
+        this(id, name, surname, eStudentType, midTerm, finalTerm, calculateResult(midTerm, finalTerm), birthDate, new Date(System.currentTimeMillis()));
+    }
+
+    // Not hesaplama metodu
+    private static Double calculateResult(Double midTerm, Double finalTerm) {
+        if (midTerm == null || finalTerm == null) return 0.0;
+        return (midTerm * 0.4 + finalTerm * 0.6);
+    }
+}
+```
+
+---
+
+### **Neden Record Kullandık? Avantajları Neler?**
+✅ **Immutable (Değiştirilemez) Yapı**: Record nesneleri varsayılan olarak final olduğu için değiştirilemez. Bu da çoklu iş parçacıklı (multithreading) ortamlarda veri bütünlüğünü korur.  
+✅ **Boilerplate Kodları Otomatik Üretiyor**: Getter, toString, equals ve hashCode metodları otomatik olarak tanımlanır, manuel yazmaya gerek yok.  
+✅ **Daha Az Kod**: Geleneksel Java sınıflarında birçok getter/setter tanımlamak yerine, sadece **record** ile ilgili alanları belirterek işlem yapabiliriz.  
+✅ **Veri Taşıma Nesneleri (DTO) için İdeal**: Özellikle veri transferi amacıyla kullanılan nesneler için **record** mükemmel bir seçimdir.  
+✅ **Thread-Safe**: İçeriği değiştirilemez olduğu için **eşzamanlı (concurrent)** çalışmalarda güvenli kullanım sağlar.
+
+---
+
+### **Mevcut Sisteme Nasıl Entegre Edilecek?**
+1. **Güncellenmiş `StudentDto.java` dosyanızı ekleyin.**
+2. **`StudentManagementSystem` içinde `StudentDto` nesnesi oluştururken `new StudentDto(...)` yerine doğrudan `new StudentDto(..., ..., ..., ...)` kullanabilirsiniz.**
+3. **Getter metodlarına ihtiyacınız olmayacak.** Örneğin:
+   ```java
+   System.out.println(studentDto.name()); // Eskiden getName() idi
+   ```
+4. **Setter metodları olmadığı için `StudentDto` nesnesi immutable olacak.** Yeni değerlerle bir `StudentDto` nesnesi oluşturmanız gerekecek.
+
+---
+
+Bu güncelleme ile kodunuz daha temiz, güvenli ve performanslı hale gelecektir. Record'ları kullanarak kodunuzu daha modern hale getirmiş oldunuz! 🚀
+
+
+## Record Dezavantajları
+```sh 
+
+```
+---
+
+### **Java Record Kullanmanın Dezavantajları**
+Java'da **record** kullanımı birçok avantaj sağlasa da, bazı durumlarda **klasik sınıflara göre bazı dezavantajları** olabilir. İşte bu dezavantajlar:
+
+---
+
+## **1. Immutable (Değiştirilemez) Yapı**
+**❌ Dezavantaj:**
+- `record` nesneleri değiştirilemez (immutable) olduğu için, bir alanın güncellenmesi gerektiğinde **yeni bir nesne oluşturmak** zorundayız.
+- Büyük veri nesnelerinde, **her güncelleme için yeni bir nesne yaratılması performans kaybına** yol açabilir.
+
+**Örnek:**
+```java
+StudentDto student = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
+student.name = "Ahmet"; // ❌ Derleme hatası! Record'lar değiştirilemez.
+```
+**Çözüm:**
+- Değişiklik gerektiğinde, eski nesne yerine yeni bir `StudentDto` oluşturmalısınız:
+```java
+StudentDto updatedStudent = new StudentDto(student.id(), "Ahmet", student.surname(), student.midTerm(), student.finalTerm(), student.birthDate(), student.eStudentType());
+```
+Bu, özellikle sık güncellenen nesnelerde **gereksiz bellek kullanımı (memory overhead)** ve **GC (Garbage Collection) yükü** oluşturabilir.
+
+---
+
+## **2. Kalıtımı (Inheritance) Desteklemez**
+**❌ Dezavantaj:**
+- `record` sınıfları **kalıtımı desteklemez** (`extends` kullanamazsınız).
+- Java’da OOP prensiplerine uyan klasik sınıflarda **bir temel sınıfı (base class) genişletebilirken**, `record` kullanarak bunu yapamazsınız.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) extends Person { } // ❌ Hata! Record'lar kalıtım desteklemez.
+```
+**Çözüm:**
+- Eğer miras almanız gereken bir sınıf varsa, klasik bir **sınıf (class)** kullanmalısınız.
+- Ancak `record`, **interface (arayüz) uygulayabilir**:
+```java
+public record StudentDto(Integer id, String name) implements Serializable { }
+```
+
+---
+
+## **3. Getter ve Setter Özelleştirememe**
+**❌ Dezavantaj:**
+- `record` otomatik olarak `getter` metotları oluşturur. Ancak, bu metotların adını değiştiremez veya özelleştiremezsiniz.
+- Setter metodu olmadığı için, özel validasyon (doğrulama) ekleyemezsiniz.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) {
+    public String getFullName() { // ❌ Klasik getter metodu yazamazsınız!
+        return name();
+    }
+}
+```
+**Çözüm:**
+- Özel bir metot tanımlayabilirsiniz ama `getter` adlarını değiştiremezsiniz.
+```java
+public record StudentDto(Integer id, String name) {
+    public String fullName() {  // ✅ Getter değil, normal bir metod!
+        return name.toUpperCase();
+    }
+}
+```
+---
+
+## **4. Büyük Veriler İçin Performans Sorunları**
+**❌ Dezavantaj:**
+- `record` nesneleri immutable olduğu için, **büyük veri yapılarında gereksiz kopyalama (copying overhead)** oluşabilir.
+- Çok fazla alan içeren bir `record`, her değişiklikte **yeni bir nesne oluşturduğu için bellek tüketimi artabilir**.
+
+**Örnek:**
+```java
+StudentDto student1 = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
+StudentDto student2 = new StudentDto(student1.id(), student1.name(), student1.surname(), 55.0, student1.finalTerm(), student1.birthDate(), student1.eStudentType());
+```
+Burada, sadece `midTerm` değiştirilecek ama **tamamen yeni bir nesne oluşturuluyor**. Eğer milyonlarca `StudentDto` nesneniz varsa, bu **bellek (heap) yükü** oluşturabilir.
+
+**Çözüm:**
+- Eğer sık güncelleme gerektiren nesneleriniz varsa, `record` yerine klasik **mutable sınıflar** kullanın.
+
+---
+
+## **5. Varsayılan Constructor Kısıtlamaları**
+**❌ Dezavantaj:**
+- `record`’lar, varsayılan olarak **tüm alanları parametre olarak almak zorundadır**.
+- Varsayılan (default) bir constructor tanımlamak ve bazı değerleri atlamak zordur.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) {
+    public StudentDto() {  // ❌ Hata! Parametresiz constructor desteklenmez.
+        this(0, "Bilinmeyen");
+    }
+}
+```
+**Çözüm:**
+- `record` içinde, özel bir constructor tanımlayabilirsiniz ama **tüm alanları mutlaka vermeniz gerekir**.
+```java
+public record StudentDto(Integer id, String name) {
+    public StudentDto() {
+        this(0, "Bilinmeyen"); // ✅ Geçerli constructor
+    }
+}
+```
+
+---
+
+## **6. Özel İşlevsellik (Business Logic) İçin Kısıtlamalar**
+**❌ Dezavantaj:**
+- `record` nesneleri **veri taşıma (DTO)** amacıyla tasarlandığı için, içinde **fazla iş mantığı (business logic) barındırmak uygun değildir**.
+- Eğer bir sınıfta iş mantığı (örneğin, **not hesaplama, validasyon, iş kuralları**) barındırmak istiyorsanız, **record yerine klasik sınıfları kullanmanız daha uygundur**.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name, Double midTerm, Double finalTerm) {
+    public Double calculateResult() { // ✅ İş mantığı ekleyebiliriz ama önerilmez.
+        return (midTerm * 0.4) + (finalTerm * 0.6);
+    }
+}
+```
+Burada küçük hesaplamalar yapabiliriz, ancak `record`'lar büyük iş mantıklarını içermemelidir.
+
+**Çözüm:**
+- İş mantıklarını başka bir hizmet (service) sınıfına taşıyın:
+```java
+public class StudentService {
+    public static Double calculateResult(StudentDto student) {
+        return (student.midTerm() * 0.4) + (student.finalTerm() * 0.6);
+    }
+}
+```
+
+---
+
+## **Sonuç: Record Kullanmalı mıyım?**
+| **Özellik**               | **Record Kullanımı Uygun** | **Record Kullanımı Uygun Değil** |
+|---------------------------|---------------------------|---------------------------------|
+| **Immutable nesne**       | ✅ Evet                   | ❌ Hayır                        |
+| **DTO veya Veri Modeli**  | ✅ Evet                   | ❌ Hayır                        |
+| **Kapsamlı iş mantığı**   | ❌ Hayır                  | ✅ Evet                         |
+| **Kalıtım (Inheritance)** | ❌ Hayır                  | ✅ Evet                         |
+| **Sık güncellenen nesneler** | ❌ Hayır              | ✅ Evet                         |
+| **Getter/Setter özelleştirme** | ❌ Hayır          | ✅ Evet                         |
+
+### **Kullanmalısınız Eğer:**
+✅ **DTO (Data Transfer Object) gibi basit veri taşıma sınıfları** oluşturuyorsanız.  
+✅ **Immutable nesneler istiyorsanız** ve değişiklik gerekmiyorsa.  
+✅ **Kısa ve temiz kod yazmak istiyorsanız**.
+
+### **Kullanmamalısınız Eğer:**
+❌ **Veri değiştirmeniz (mutable nesneler) gerekiyorsa**.  
+❌ **Kapsamlı iş mantıkları barındıran bir sınıf oluşturuyorsanız**.  
+❌ **Büyük nesneler oluşturup sık güncelliyorsanız**, bellek yönetimi açısından sorun yaratabilir.  
+❌ **Kalıtım (inheritance) kullanmanız gerekiyorsa**.
+
+---
+
+### **Genel Değerlendirme**
+- Küçük ve **basit veri sınıfları** için **Record** harika bir seçimdir. ✅
+- Büyük, sık değiştirilen veya **iş mantığı içeren sınıflar** için **klasik sınıflar daha iyi bir seçenektir**. 🚀
 
 ## Inner Class
 ```sh 
@@ -8805,6 +9047,1366 @@ Miyav!
 ### **Ne Zaman Kullanılmalı?**
 - Eğer **bir sınıf, yalnızca belirli bir dış sınıf içinde anlamlıysa**, Inner Class kullanımı mantıklıdır.
 - **Gereksiz Inner Class kullanımından kaçınılmalıdır**, çünkü bazen bağımsız sınıflar daha okunaklı ve sürdürülebilir olur.
+
+##  Çoklu İş Parçacığı (Multithreading)
+```sh 
+
+```
+---
+
+## Çoklu İş Parçacığı (Multithreading)
+
+Çoklu iş parçacığı (multithreading), bir programın birden fazla iş parçacığını (thread) eş zamanlı olarak çalıştırmasını sağlayan bir programlama modelidir. Modern bilgisayarlar ve işletim sistemleri, aynı anda birden fazla işlemi gerçekleştirebilme yeteneğine sahiptir. Multithreading, bu paralel işlem gücünü en iyi şekilde kullanarak programların daha verimli çalışmasını sağlar.
+
+Birçok uygulama, aynı anda birden fazla görevi yerine getirmek zorundadır. Örneğin:
+- Bir web tarayıcısı, birden fazla sekmeyi aynı anda işleyebilir.
+- Bir oyun motoru, grafik, ses ve fizik hesaplamalarını ayrı iş parçacıklarıyla yönetebilir.
+- Bir veritabanı sunucusu, çok sayıda istemciden gelen talepleri eş zamanlı olarak işleyebilir.
+
+Multithreading’in avantajları:
+- **Performans Artışı:** İşlemci kaynaklarını daha verimli kullanarak programın daha hızlı çalışmasını sağlar.
+- **Daha Hızlı Yanıt Süresi:** Kullanıcı arayüzünü ve arka plan işlemlerini birbirinden ayırarak daha akıcı bir deneyim sunar.
+- **Kaynak Paylaşımı:** Aynı bellek alanını paylaşarak daha düşük bellek tüketimi sağlar.
+- **İyileştirilmiş CPU Kullanımı:** Birden fazla çekirdeğe sahip işlemcilerden tam kapasite faydalanılabilir.
+
+Ancak, çoklu iş parçacığı kullanımı bazı zorlukları da beraberinde getirir:
+- **Senkronizasyon sorunları**
+- **Ölçeklenebilirlik problemleri**
+- **Deadlock (Ölü Kilitlenme)**
+- **Race condition (Yarış Koşulları)**
+
+Şimdi, multithreading ile ilgili temel konulara ayrıntılı şekilde bakalım.
+
+---
+
+## **1. Thread Oluşturma ve Yönetimi**
+
+Bir programda çoklu iş parçacığı kullanımı için işletim sisteminin sağladığı API’ler veya programlama dili seviyesindeki kütüphaneler kullanılır. Java, Python, C++ ve C# gibi diller, thread yönetimi için çeşitli mekanizmalar sağlar.
+
+### **1.1 Thread Nedir?**
+Thread, bir programın içinde çalışan en küçük yürütülebilir birimdir. Bir program, birden fazla thread çalıştırarak aynı anda birden fazla işi gerçekleştirebilir.
+
+### **1.2 Thread Nasıl Oluşturulur?**
+Farklı programlama dillerinde iş parçacığı oluşturma yöntemleri değişiklik gösterebilir. İşte bazı popüler dillerde iş parçacığı oluşturma örnekleri:
+
+### **Java'da Thread Oluşturma**
+Java'da iş parçacığı oluşturmanın iki temel yolu vardır:
+1. **Thread sınıfını genişletmek**
+2. **Runnable arayüzünü uygulamak**
+
+#### **1. Thread Sınıfını Genişletme**
+```java
+class MyThread extends Thread {
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " çalışıyor...");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyThread thread1 = new MyThread();
+        MyThread thread2 = new MyThread();
+        
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+#### **2. Runnable Arayüzünü Kullanma**
+```java
+class MyRunnable implements Runnable {
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " çalışıyor...");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new MyRunnable());
+        Thread thread2 = new Thread(new MyRunnable());
+        
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+---
+
+### **Python’da Thread Oluşturma**
+Python'da threading modülü kullanılarak iş parçacıkları oluşturulabilir.
+
+#### **Threading Kullanarak Thread Oluşturma**
+```python
+import threading
+
+class MyThread(threading.Thread):
+    def run(self):
+        for i in range(5):
+            print(f"{threading.current_thread().name} çalışıyor...")
+
+thread1 = MyThread()
+thread2 = MyThread()
+
+thread1.start()
+thread2.start()
+```
+
+---
+
+### **C++’da Thread Kullanımı**
+C++11 ile birlikte `std::thread` kütüphanesi kullanılarak iş parçacıkları oluşturulabilir.
+
+```cpp
+#include <iostream>
+#include <thread>
+
+void threadFunction() {
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Thread çalışıyor..." << std::endl;
+    }
+}
+
+int main() {
+    std::thread t1(threadFunction);
+    std::thread t2(threadFunction);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+```
+
+---
+
+## **2. Senkronizasyon**
+
+Çoklu iş parçacıklı programlama yaparken, iş parçacıklarının paylaşılan kaynaklara erişimi senkronize edilmezse beklenmedik hatalar oluşabilir. Bu tür sorunları önlemek için senkronizasyon mekanizmaları kullanılır.
+
+### **2.1 Yarış Koşulu (Race Condition)**
+Birden fazla iş parçacığının aynı veri kaynağına erişerek birbirinin işlemini bozmasına "yarış koşulu" (race condition) denir. Örneğin, aynı değişkeni değiştiren iki iş parçacığı beklenmedik sonuçlar üretebilir.
+
+Örnek:
+```python
+import threading
+
+counter = 0
+
+def increment():
+    global counter
+    for _ in range(1000000):
+        counter += 1
+
+t1 = threading.Thread(target=increment)
+t2 = threading.Thread(target=increment)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+print("Final Counter:", counter)  # Beklenen değer 2000000 fakat daha düşük olabilir
+```
+Yukarıdaki kodda, aynı değişkeni iki thread artırıyor ama sonuç beklenenden daha düşük olabilir çünkü işlemler çakışıyor.
+
+### **2.2 Mutex (Mutual Exclusion) ile Senkronizasyon**
+Yarış koşullarını engellemek için "mutex" kullanılabilir. Mutex, bir thread'in bir kaynağı kilitlemesini ve diğerlerinin beklemesini sağlar.
+
+Python'da `threading.Lock()` kullanarak bir mutex oluşturulabilir:
+
+```python
+import threading
+
+counter = 0
+lock = threading.Lock()
+
+def increment():
+    global counter
+    for _ in range(1000000):
+        with lock:
+            counter += 1
+
+t1 = threading.Thread(target=increment)
+t2 = threading.Thread(target=increment)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+print("Final Counter:", counter)  # Beklenen değer 2000000 olur
+```
+
+---
+
+### **2.3 Deadlock (Ölü Kilitlenme)**
+Deadlock, iki veya daha fazla iş parçacığının birbirlerini bekleyerek sonsuza kadar bloke olma durumudur.
+
+Örneğin:
+```python
+import threading
+
+lock1 = threading.Lock()
+lock2 = threading.Lock()
+
+def task1():
+    with lock1:
+        print("Task1: lock1 alındı")
+        with lock2:
+            print("Task1: lock2 alındı")
+
+def task2():
+    with lock2:
+        print("Task2: lock2 alındı")
+        with lock1:
+            print("Task2: lock1 alındı")
+
+t1 = threading.Thread(target=task1)
+t2 = threading.Thread(target=task2)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+```
+Burada `task1` ve `task2` birbirlerinin kilidini beklerse, program sonsuza kadar bekleyebilir.
+
+Deadlock önlemek için:
+- **Kilitleri her zaman aynı sırada almak**
+- **Timeout kullanmak**
+- **Avoiding circular waits (Döngüsel beklemelerden kaçınmak)**
+
+---
+
+Bu makalede çoklu iş parçacığı kavramını detaylıca inceledik. Senkronizasyon hataları, deadlock, yarış koşulları gibi konuların nasıl çözülebileceğini öğrendik. Gelişmiş sistemlerde multithreading, performansı artırabilir fakat dikkatli yönetilmezse ciddi sorunlara yol açabilir.
+
+
+## Eşzamanlılık (Concurrency)
+```sh 
+
+```
+---
+
+# **Eşzamanlılık (Concurrency) ve Concurrency API**
+
+Eşzamanlılık (Concurrency), bir programın aynı anda birden fazla görevi yerine getirebilmesini sağlayan bir kavramdır. Eşzamanlılık, tek bir işlemcide zaman dilimleriyle (time slicing) sağlanabileceği gibi, çok çekirdekli işlemcilerde gerçekten paralel çalışan iş parçacıklarıyla (multithreading) da gerçekleştirilebilir.
+
+Modern yazılım geliştirme süreçlerinde, özellikle yüksek performans gerektiren uygulamalarda eşzamanlılık çok kritik bir rol oynar. Örneğin:
+- **Web sunucuları**, aynı anda yüzlerce hatta binlerce istemciyi yönetir.
+- **Oyun motorları**, fizik hesaplamaları, ses işleme ve grafik render işlemlerini aynı anda gerçekleştirir.
+- **Veritabanı sistemleri**, farklı istemcilerden gelen talepleri paralel olarak işler.
+
+Eşzamanlılık, doğru yönetilmediği takdirde bazı problemlere neden olabilir:
+- **Yarış Koşulları (Race Conditions)**: İki veya daha fazla thread, aynı veri kaynağına eşzamanlı olarak erişirse, yanlış sonuçlar ortaya çıkabilir.
+- **Deadlock (Ölü Kilitlenme)**: Thread’ler birbirlerini beklerse, sistem kilitlenebilir.
+- **Starvation (Aç Kalma)**: Bazı thread’ler sürekli beklerken, diğerleri kaynakları tüketebilir.
+
+Bu tür problemleri çözmek ve çok iş parçacıklı (multithreaded) uygulamalar geliştirmek için Java Concurrency API gibi gelişmiş kütüphaneler ve mekanizmalar geliştirilmiştir.
+
+---
+
+# **1. Java’da Concurrency API ve Yardımcı Sınıflar**
+
+Java **Concurrency API**, çok iş parçacıklı programlamayı kolaylaştıran ve yönetilebilir hale getiren bir dizi sınıf ve arayüzden oluşur. Bu API sayesinde thread yönetimi, senkronizasyon ve eşzamanlı veri yapıları gibi işlemler daha güvenli ve verimli bir şekilde gerçekleştirilebilir.
+
+### **1.1. Concurrency API Temel Bileşenleri**
+Java'nın Concurrency API'si `java.util.concurrent` paketi altında yer alır ve aşağıdaki temel bileşenleri içerir:
+
+1. **Thread Pool (Havuz Yönetimi)**
+2. **Senkronizasyon Mekanizmaları (Lock, Semaphore, Monitor, etc.)**
+3. **Eşzamanlı Koleksiyonlar (Concurrent Collections)**
+4. **Zamanlanmış Görevler (Scheduled Tasks)**
+5. **Paralel İşleme (Fork/Join Framework)**
+6. **Gelişmiş Yardımcı Sınıflar (CountDownLatch, CyclicBarrier, Phaser vb.)**
+
+Şimdi bu bileşenleri detaylı bir şekilde inceleyelim.
+
+---
+
+## **2. Yardımcı Sınıflar (CountDownLatch, CyclicBarrier vb.)**
+Concurrency API, eşzamanlı işlemleri yönetmek için birçok yardımcı sınıf sunar. Bunlardan bazıları:
+
+### **2.1 CountDownLatch**
+`CountDownLatch`, belirli bir sayıya kadar geri sayım yapan ve bu sayım sıfır olduğunda bekleyen thread'leri serbest bırakan bir mekanizmadır.
+
+📌 **Kullanım Senaryosu**:
+- Büyük bir sistem başlatılırken, tüm bileşenlerin hazır olmasını beklemek.
+- Paralel çalışan thread'lerin tamamlanmasını beklemek.
+
+🔹 **Örnek: CountDownLatch Kullanımı**
+```java
+import java.util.concurrent.CountDownLatch;
+
+class Worker extends Thread {
+    private CountDownLatch latch;
+
+    public Worker(CountDownLatch latch) {
+        this.latch = latch;
+    }
+
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " çalışıyor...");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        latch.countDown();  // Sayacı azalt
+    }
+}
+
+public class CountDownLatchExample {
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(3);
+        
+        new Worker(latch).start();
+        new Worker(latch).start();
+        new Worker(latch).start();
+
+        latch.await();  // Tüm thread’ler bitene kadar bekler
+        System.out.println("Tüm iş parçacıkları tamamlandı. Ana işleme devam ediliyor.");
+    }
+}
+```
+**Çıktı:**
+```
+Thread-0 çalışıyor...
+Thread-1 çalışıyor...
+Thread-2 çalışıyor...
+Tüm iş parçacıkları tamamlandı. Ana işleme devam ediliyor.
+```
+---
+
+### **2.2 CyclicBarrier**
+`CyclicBarrier`, belirli sayıda thread'in aynı noktada buluşmasını sağlayan bir bariyer mekanizmasıdır.
+
+📌 **Kullanım Senaryosu**:
+- Paralel hesaplamalarda, belirli adımları tamamlamadan bir sonraki aşamaya geçmeyi önlemek.
+- Oyun motorlarında, tüm oyuncuların bir turu tamamlamasını beklemek.
+
+🔹 **Örnek: CyclicBarrier Kullanımı**
+```java
+import java.util.concurrent.CyclicBarrier;
+
+class Task extends Thread {
+    private CyclicBarrier barrier;
+
+    public Task(CyclicBarrier barrier) {
+        this.barrier = barrier;
+    }
+
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " görevini tamamladı.");
+        try {
+            barrier.await();  // Diğer thread’leri bekler
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + " devam ediyor...");
+    }
+}
+
+public class CyclicBarrierExample {
+    public static void main(String[] args) {
+        CyclicBarrier barrier = new CyclicBarrier(3, () -> System.out.println("Tüm görevler tamamlandı!"));
+
+        new Task(barrier).start();
+        new Task(barrier).start();
+        new Task(barrier).start();
+    }
+}
+```
+**Çıktı:**
+```
+Thread-0 görevini tamamladı.
+Thread-1 görevini tamamladı.
+Thread-2 görevini tamamladı.
+Tüm görevler tamamlandı!
+Thread-0 devam ediyor...
+Thread-1 devam ediyor...
+Thread-2 devam ediyor...
+```
+---
+
+### **2.3 Phaser**
+Phaser, CyclicBarrier ve CountDownLatch’in daha esnek bir alternatifidir. Birden fazla aşamalı işlemi yönetmek için kullanılır.
+
+📌 **Kullanım Senaryosu**:
+- Çok aşamalı iş akışlarını senkronize etmek.
+- Belirli işlemlerin bir grup halinde tamamlanmasını sağlamak.
+
+---
+
+## **3. Concurrency API ile Thread Havuzu Yönetimi**
+`ExecutorService`, birden fazla iş parçacığını verimli bir şekilde yönetmek için kullanılır.
+
+🔹 **Örnek: Thread Havuzu Kullanımı**
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class WorkerTask implements Runnable {
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " görevini çalıştırıyor...");
+    }
+}
+
+public class ExecutorServiceExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        for (int i = 0; i < 5; i++) {
+            executor.execute(new WorkerTask());
+        }
+
+        executor.shutdown();
+    }
+}
+```
+**Çıktı:**
+```
+pool-1-thread-1 görevini çalıştırıyor...
+pool-1-thread-2 görevini çalıştırıyor...
+pool-1-thread-3 görevini çalıştırıyor...
+pool-1-thread-1 görevini çalıştırıyor...
+pool-1-thread-2 görevini çalıştırıyor...
+```
+---
+
+## **Sonuç**
+- **CountDownLatch**: Belli bir sayıya ulaşana kadar bekler.
+- **CyclicBarrier**: Tüm thread’lerin belirli bir noktada buluşmasını sağlar.
+- **Phaser**: Daha esnek bir senkronizasyon aracı.
+- **ExecutorService**: Thread havuzu yönetimi sağlar.
+
+Concurrency API, çok iş parçacıklı uygulamaları daha yönetilebilir hale getirerek performans ve güvenilirlik sağlar. Bu yapılar, büyük ölçekli yazılım projelerinde kritik öneme sahiptir.
+
+
+
+## MVC Nedir ?
+```sh 
+
+```
+---
+### **Java'da MVC (Model-View-Controller) Nedir?**
+MVC (Model-View-Controller), yazılım geliştirme süreçlerinde yaygın olarak kullanılan bir mimari desendir. Java uygulamalarında özellikle **Spring Framework, Java Swing, JavaFX ve JSP/Servlet** gibi teknolojilerde sıkça kullanılır. MVC, uygulama bileşenlerini üç ana katmana ayırarak, kodun modülerliğini ve sürdürülebilirliğini artırır.
+
+---
+
+## **1. MVC Mimarisinin Temel Bileşenleri**
+MVC, üç ana bileşenden oluşur:
+
+1. **Model (Veri Katmanı)**
+2. **View (Görünüm Katmanı)**
+3. **Controller (Kontrol Katmanı)**
+
+---
+
+### **1. Model (M) – Veri Katmanı**
+**Model, uygulamanın veri yönetiminden sorumlu bileşenidir.** Veri kaynağı (veritabanı, API vb.) ile etkileşim kurarak, bilgileri işler ve gerektiğinde günceller.
+
+#### **Model Katmanının Görevleri**
+- Veritabanı işlemlerini gerçekleştirir (CRUD - Create, Read, Update, Delete).
+- İş mantığını (business logic) içerir.
+- Controller tarafından çağrılır ve verileri View’a gönderir.
+
+#### **Model Örneği (Java)**
+```java
+public class User {
+    private int id;
+    private String name;
+    private String email;
+
+    // Constructor
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    // Getter ve Setter metotları
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}
+```
+Bu örnekte `User` sınıfı, bir kullanıcıyı temsil eden Model katmanıdır.
+
+---
+
+### **2. View (V) – Görünüm Katmanı**
+**View, kullanıcıya gösterilen arayüz bileşenlerini içerir.** Java uygulamalarında View genellikle şu teknolojilerle oluşturulur:
+
+- **Swing / JavaFX**: Masaüstü uygulamaları için.
+- **JSP / Thymeleaf / HTML + JavaScript**: Web tabanlı uygulamalar için.
+
+#### **View Katmanının Görevleri**
+- Kullanıcıya verileri sunar.
+- Kullanıcıdan giriş alır ve Controller’a gönderir.
+- Kullanıcı deneyimi ile ilgili tasarım ve arayüzü içerir.
+
+#### **View Örneği (Java Swing)**
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class UserView {
+    public void showUserDetails(String name, String email) {
+        JFrame frame = new JFrame("User Details");
+        frame.setSize(300, 200);
+        frame.setLayout(new GridLayout(2, 1));
+
+        JLabel nameLabel = new JLabel("Name: " + name);
+        JLabel emailLabel = new JLabel("Email: " + email);
+
+        frame.add(nameLabel);
+        frame.add(emailLabel);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+```
+Bu kod, `showUserDetails()` metodu ile kullanıcı bilgilerini bir Swing GUI penceresinde görüntüler.
+
+---
+
+### **3. Controller (C) – Kontrol Katmanı**
+**Controller, Model ve View arasında bağlantı kuran bileşendir.** Kullanıcının girdilerini işler, Model’e gönderir ve güncellenen veriyi View’a yönlendirir.
+
+#### **Controller Katmanının Görevleri**
+- Kullanıcının eylemlerine tepki verir.
+- Model ile View arasında veri alışverişini sağlar.
+- İş mantığını yönetir.
+
+#### **Controller Örneği (Java)**
+```java
+public class UserController {
+    private User model;
+    private UserView view;
+
+    public UserController(User model, UserView view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    public void updateView() {
+        view.showUserDetails(model.getName(), model.getEmail());
+    }
+}
+```
+Bu kod, `User` modelinden aldığı bilgileri `UserView` arayüzüne aktarır.
+
+---
+
+## **2. MVC'nin Çalışma Mekanizması**
+1. Kullanıcı bir işlem gerçekleştirir (örn: butona tıklar, form gönderir).
+2. **Controller**, bu isteği alır ve işler.
+3. **Controller**, gerekli işlemleri yapmak için **Model**’e başvurur.
+4. **Model**, veriyi işler ve günceller.
+5. **Controller**, güncellenen Model bilgisini **View**'a iletir.
+6. **View**, güncellenmiş veriyi kullanıcıya gösterir.
+
+---
+
+## **3. Java'da MVC Kullanım Örnekleri**
+Java'da MVC mimarisi **masaüstü ve web uygulamalarında** geniş çapta kullanılır:
+
+### **1. Swing ile MVC**
+- **Model:** Kullanıcı veya ürün gibi nesneler.
+- **View:** JFrame, JLabel, JTextField gibi bileşenler.
+- **Controller:** Kullanıcı etkileşimlerini yöneten sınıf.
+
+### **2. Web Uygulamaları için MVC**
+Java web uygulamalarında **Spring MVC, JSP/Servlet** teknolojileri ile uygulanır.
+
+#### **Spring Boot ile Basit MVC Örneği**
+**Model Katmanı (User.java)**
+```java
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
+    
+    // Getter - Setter
+}
+```
+
+**Controller Katmanı (UserController.java)**
+```java
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+}
+```
+
+**View Katmanı (user.html - Thymeleaf)**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+</head>
+<body>
+    <h1>User Details</h1>
+    <p>Name: <span th:text="${user.name}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+</body>
+</html>
+```
+
+---
+
+## **4. MVC'nin Avantajları ve Dezavantajları**
+### **Avantajları**
+✅ **Kodun Modülerliği:** Model, View ve Controller ayrı katmanlarda olduğu için kod yönetimi kolaydır.  
+✅ **Bakımı Kolay:** Bir bileşende yapılan değişiklik diğerlerini etkilemez.  
+✅ **Test Edilebilirlik:** Her katman ayrı test edilebilir.  
+✅ **Yeniden Kullanılabilirlik:** Aynı Model veya Controller farklı View’lerle kullanılabilir.
+
+### **Dezavantajları**
+❌ **Başlangıçta Fazla Kod Yazma Gereksinimi:** Küçük projeler için karmaşık olabilir.  
+❌ **Fazladan Katmanlar Performans Maliyeti Getirebilir:** Büyük ölçekli projelerde optimize edilmesi gerekir.
+
+---
+
+## **Sonuç**
+Java'da **MVC mimarisi**, uygulamaların sürdürülebilirliğini ve genişletilebilirliğini artıran güçlü bir mimari desenidir. **Spring Boot, Java Swing, JavaFX ve JSP gibi teknolojilerde** yaygın olarak kullanılır. Model, View ve Controller bileşenleri sayesinde **katmanlı bir yapı sunarak, kodun okunabilirliğini ve test edilebilirliğini iyileştirir**.
+
+Bu mimariyi kullanarak, hem masaüstü hem de web tabanlı uygulamalar geliştirebilirsiniz! 🚀
+
+## Interface Nedir ?
+```sh 
+
+```
+---
+
+# **Java'da Interface (Arayüz) Nedir?**
+Java'da **interface (arayüz)**, bir sınıfın uygulayabileceği bir **sözleşmeyi (contract)** tanımlayan bir yapıdır. Interface, bir sınıfın belirli metodları uygulamasını garanti eder, ancak metodların içeriğini (implementasyonunu) belirlemez. Yani, bir interface sadece metod imzalarını tanımlar ve bu metodları uygulayan sınıflar, bu metodları kendilerine uygun şekilde doldurmalıdır.
+
+Java'daki interface'ler **çoklu kalıtımı (multiple inheritance)** desteklemek ve **bağımsız modüler kod yazılmasını** sağlamak için kullanılır. **Polimorfizm (çok biçimlilik)** ve **bağımsızlık (decoupling)** gibi nesne yönelimli programlama (OOP) prensiplerini destekler.
+
+---
+
+## **1. Interface Tanımı ve Kullanımı**
+### **Temel Interface Tanımı**
+Bir interface, **`interface`** anahtar kelimesiyle tanımlanır. İçinde **soyut (abstract) metodlar** ve **sabit değişkenler (constants)** barındırabilir.
+
+```java
+interface Animal {
+    void eat();  // Soyut metod
+    void sleep();
+}
+```
+- **Metodlar:** Varsayılan olarak **public ve abstract** olur, bu yüzden `public abstract` yazmaya gerek yoktur.
+- **Değişkenler:** Interface içindeki tüm değişkenler varsayılan olarak **public, static ve final** olur.
+
+---
+
+## **2. Interface Kullanımı (Implement Edilmesi)**
+Bir sınıf, **`implements`** anahtar kelimesini kullanarak bir interface'i uygular (implement eder).
+
+### **Örnek: Bir Interface’i Uygulama**
+```java
+interface Animal {
+    void eat();
+    void sleep();
+}
+
+// Dog sınıfı, Animal interface'ini uyguluyor.
+class Dog implements Animal {
+    @Override
+    public void eat() {
+        System.out.println("Köpek yemek yiyor.");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Köpek uyuyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.eat();  // Çıktı: Köpek yemek yiyor.
+        dog.sleep(); // Çıktı: Köpek uyuyor.
+    }
+}
+```
+Burada:
+- **`Dog` sınıfı**, `Animal` interface'ini uygulamak zorunda olduğu için `eat()` ve `sleep()` metodlarını tanımlamak zorundadır.
+- Eğer bir sınıf, bir interface’i uygular ancak tüm metodlarını tanımlamazsa, **abstract** olarak işaretlenmelidir.
+
+---
+
+## **3. Interface İçinde Değişkenler (Sabitler)**
+Bir interface içinde tanımlanan değişkenler, **otomatik olarak public, static ve final olur**. Yani interface içindeki değişkenler **sabit (constant)** değerlerdir.
+
+### **Örnek: Interface İçinde Sabit Kullanımı**
+```java
+interface MathConstants {
+    double PI = 3.141592653589793; // public, static, final olarak kabul edilir.
+}
+
+// PI değerini kullanan bir sınıf
+class Circle {
+    public double getArea(double radius) {
+        return MathConstants.PI * radius * radius;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Circle circle = new Circle();
+        System.out.println("Dairenin Alanı: " + circle.getArea(5));
+    }
+}
+```
+**Önemli Not:** Interface içindeki değişkenler **değiştirilemez**, çünkü **final** olarak kabul edilir.
+
+---
+
+## **4. Çoklu Kalıtım (Multiple Inheritance) ve Interface**
+Java, **class’lar arasında çoklu kalıtımı (multiple inheritance) desteklemez**, ancak birden fazla interface uygulamaya izin verir. Bu, kodun daha esnek ve modüler olmasını sağlar.
+
+### **Örnek: Bir Sınıfın Birden Fazla Interface’i Uygulaması**
+```java
+interface Flyable {
+    void fly();
+}
+
+interface Swimmable {
+    void swim();
+}
+
+class Bird implements Flyable, Swimmable {
+    @Override
+    public void fly() {
+        System.out.println("Kuş uçuyor.");
+    }
+
+    @Override
+    public void swim() {
+        System.out.println("Kuş yüzebiliyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Bird bird = new Bird();
+        bird.fly();  // Çıktı: Kuş uçuyor.
+        bird.swim(); // Çıktı: Kuş yüzebiliyor.
+    }
+}
+```
+**Burada:**
+- `Bird` sınıfı hem `Flyable` hem de `Swimmable` interface’ini uyguluyor.
+- Java, birden fazla interface uygulamayı desteklediği için `Bird` sınıfı birden fazla interface'in metodlarını yazabiliyor.
+
+---
+
+## **5. Java 8 ve Sonrasında Interface Geliştirmeleri**
+Java 8 ile birlikte **interface'ler artık gövdesi olan metotlara sahip olabilir**. Bunlar:
+1. **Default Metodlar** (default methods)
+2. **Static Metodlar** (static methods)
+
+### **5.1 Default Methods (Varsayılan Metodlar)**
+Interface içinde **default** anahtar kelimesiyle metot tanımlanabilir. Bu metotların bir gövdesi olur ve tüm implementasyonlar bu metodu miras alabilir.
+
+```java
+interface Vehicle {
+    default void start() {
+        System.out.println("Araç çalıştırıldı!");
+    }
+}
+
+class Car implements Vehicle {
+    // start() metodunu override etmek zorunda değiliz!
+}
+
+public class DefaultMethodExample {
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.start(); // Çıktı: Araç çalıştırıldı!
+    }
+}
+```
+**Faydası:** Eğer bir interface’e yeni bir metod eklersek, onu implement eden eski kodlar bozulmaz.
+
+---
+
+### **5.2 Static Methods (Statik Metodlar)**
+Java 8 ile interface içinde **static metotlar** tanımlanabilir. Bunlar interface'e özgüdür ve çağırmak için interface adı kullanılır.
+
+```java
+interface Utility {
+    static void printMessage(String message) {
+        System.out.println(message);
+    }
+}
+
+public class StaticMethodExample {
+    public static void main(String[] args) {
+        Utility.printMessage("Merhaba, Java 8!");
+    }
+}
+```
+**Faydası:** Yardımcı metotları (utility methods) interface içinde gruplamak.
+
+---
+
+## **6. Marker Interfaces (İşaretleyici Arayüzler)**
+Bazı interface'ler **hiçbir metod içermez** ama yine de bir sınıfın belirli bir kategoriye ait olduğunu belirtmek için kullanılır. Bu tür interface'lere **Marker Interface** denir.
+
+### **Örnek: Serializable Interface**
+```java
+import java.io.Serializable;
+
+class Person implements Serializable {
+    String name;
+    int age;
+}
+```
+Burada `Person` sınıfı `Serializable` interface’ini implement ediyor, fakat herhangi bir metod yazmak zorunda değil. JVM, `Serializable` interface’ini kullanarak nesneleri **dizi (byte stream) halinde kaydedebilir veya gönderebilir.**
+
+Diğer **Marker Interface’ler**:
+- `Cloneable`
+- `Remote`
+
+---
+
+## **Sonuç**
+- **Interface, bir sınıfın uygulaması gereken metodları belirler.**
+- **Soyut (abstract) metodlar içerir ve bu metodların implement edilmesi gerekir.**
+- **Bir sınıf birden fazla interface implement edebilir.**
+- **Java 8 ile gelen `default` ve `static` metodlar sayesinde, interface'ler daha güçlü hale gelmiştir.**
+- **Marker Interface’ler, bir sınıfın belirli bir yeteneğe sahip olduğunu göstermek için kullanılır.**
+
+**Java'da Interface kullanımı, esneklik ve modülerlik sağladığı için yaygın olarak tercih edilir. 🚀**
+
+## Kalıtım Nedir ?
+```sh 
+
+```
+---
+
+## Abstract Nedir ?
+```sh 
+
+```
+---
+
+## Polymorphism Nedir ?
+```sh 
+
+```
+---
+
+
+## Java 8 gelen özellikler Nedir ?
+```sh 
+
+```
+---
+
+Java 8, Mart 2014'te piyasaya sürüldü ve Java ekosisteminde devrim niteliğinde yenilikler getirdi. Özellikle **Lambda Expressions, Stream API, Functional Interfaces, Default Methods, Optional Class ve Date/Time API** gibi özellikler, Java'yı daha modern, işlevsel ve verimli bir dil haline getirdi. İşte Java 8 ile gelen yeniliklerin detaylı açıklaması:
+
+---
+
+## 1. **Lambda Expressions (Lambda İfadeleri)**
+Java 8 ile birlikte fonksiyonel programlamaya daha yakın bir yapı geldi. Lambda ifadeleri sayesinde daha kısa ve okunabilir kod yazılabiliyor.
+
+### **Öncesi (Java 7)**
+```java
+interface MathOperation {
+    int operation(int a, int b);
+}
+
+public class LambdaExample {
+    public static void main(String[] args) {
+        MathOperation addition = new MathOperation() {
+            @Override
+            public int operation(int a, int b) {
+                return a + b;
+            }
+        };
+        System.out.println(addition.operation(5, 10));
+    }
+}
+```
+
+### **Java 8 ile (Lambda Kullanımı)**
+```java
+@FunctionalInterface
+interface MathOperation {
+    int operation(int a, int b);
+}
+
+public class LambdaExample {
+    public static void main(String[] args) {
+        MathOperation addition = (a, b) -> a + b;
+        System.out.println(addition.operation(5, 10));
+    }
+}
+```
+✅ **Faydaları:** Daha az kod yazılır, okunabilirlik artar, anonim sınıflara gerek kalmaz.
+
+---
+
+## 2. **Functional Interfaces (Fonksiyonel Arayüzler)**
+Java 8 ile birlikte **`@FunctionalInterface`** notasyonu geldi. Fonksiyonel arayüzler, yalnızca **bir adet abstract metot** içeren arayüzlerdir. Lambda ifadeleri ile birlikte kullanılır.
+
+### **Örnek:**
+```java
+@FunctionalInterface
+interface Greeting {
+    void sayMessage(String message);
+}
+
+public class FunctionalInterfaceExample {
+    public static void main(String[] args) {
+        Greeting greet = message -> System.out.println("Hello, " + message);
+        greet.sayMessage("Java 8!");
+    }
+}
+```
+Java 8, bazı **hazır fonksiyonel arayüzler** de sunar:
+- **Predicate<T>** → `boolean test(T t)` → Koşul kontrolleri için.
+- **Function<T, R>** → `R apply(T t)` → Bir değeri dönüştürmek için.
+- **Consumer<T>** → `void accept(T t)` → Parametre alır, bir işlem yapar ama geriye değer döndürmez.
+- **Supplier<T>** → `T get()` → Parametre almaz, bir değer üretir.
+
+---
+
+## 3. **Method References (Metot Referansları)**
+Lambda ifadelerinin daha sade bir alternatifi olan **Method References**, halihazırda var olan metotları çağırmak için kullanılır.
+
+### **Örnek:**
+```java
+class Printer {
+    static void printMessage(String message) {
+        System.out.println(message);
+    }
+}
+
+public class MethodReferenceExample {
+    public static void main(String[] args) {
+        Consumer<String> printer = Printer::printMessage;
+        printer.accept("Hello, Method Reference!");
+    }
+}
+```
+✅ **Faydası:** Lambda'yı daha da sade hale getirir.
+
+---
+
+## 4. **Stream API**
+Java 8 ile gelen **Stream API**, koleksiyonlar (List, Set, Map) üzerinde fonksiyonel programlama yöntemleriyle işlem yapmayı sağlar.
+
+### **Öncesi (Java 7 - Geleneksel Döngü)**
+```java
+List<String> names = Arrays.asList("Ali", "Veli", "Ayşe", "Fatma");
+for (String name : names) {
+    if (name.startsWith("A")) {
+        System.out.println(name);
+    }
+}
+```
+
+### **Java 8 ile (Stream API Kullanımı)**
+```java
+List<String> names = Arrays.asList("Ali", "Veli", "Ayşe", "Fatma");
+names.stream()
+     .filter(name -> name.startsWith("A"))
+     .forEach(System.out::println);
+```
+✅ **Faydaları:** Daha kısa ve okunabilir kod, paralel işlem yapma imkanı (parallelStream()), kodun fonksiyonel hale gelmesi.
+
+---
+
+## 5. **Default Methods (Varsayılan Metotlar)**
+Arayüzlerde metotların **default** olarak uygulanabilmesini sağlar. Böylece eski kodlar bozulmadan yeni özellikler eklenebilir.
+
+### **Örnek:**
+```java
+interface Vehicle {
+    default void start() {
+        System.out.println("Araç çalıştırıldı!");
+    }
+}
+
+class Car implements Vehicle {
+}
+
+public class DefaultMethodExample {
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.start(); // "Araç çalıştırıldı!" çıktısını verir.
+    }
+}
+```
+✅ **Faydaları:** Geriye dönük uyumluluk korunur, bir arayüzü değiştirmek eski kodları bozmaz.
+
+---
+
+## 6. **Optional Class**
+`Optional<T>` sınıfı, **NullPointerException (NPE) hatalarını önlemek** için kullanılır.
+
+### **Öncesi (Java 7 - Null Kontrolü)**
+```java
+public String getName(User user) {
+    if (user != null) {
+        return user.getName();
+    } else {
+        return "Unknown";
+    }
+}
+```
+
+### **Java 8 ile (Optional Kullanımı)**
+```java
+import java.util.Optional;
+
+public class OptionalExample {
+    public static void main(String[] args) {
+        Optional<String> name = Optional.ofNullable(null);
+        System.out.println(name.orElse("Unknown"));
+    }
+}
+```
+✅ **Faydaları:** Null kontrolü gerektirmez, kod daha güvenli hale gelir.
+
+---
+
+## 7. **New Date/Time API (Yeni Tarih/Saat API)**
+Java 8, **`java.time`** paketi ile modern bir tarih/saat API’si sundu. **Eski `java.util.Date` ve `Calendar` sınıflarına göre çok daha güçlüdür.**
+
+### **Örnek:**
+```java
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeExample {
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        System.out.println("Tarih: " + date);
+        System.out.println("Saat: " + time);
+        System.out.println("Formatlı Tarih/Saat: " + dateTime.format(formatter));
+    }
+}
+```
+✅ **Faydaları:** Immutable yapılar, thread-safe, daha esnek ve kolay kullanım.
+
+---
+
+## 8. **Collectors API**
+`Collectors` sınıfı, `Stream` API ile birlikte çalışarak veri kümelerini **gruplama, filtreleme ve toplama** işlemleri yapmaya yardımcı olur.
+
+### **Örnek:**
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class CollectorsExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Ali", "Veli", "Ayşe", "Fatma");
+        List<String> filteredNames = names.stream()
+                                          .filter(name -> name.startsWith("A"))
+                                          .collect(Collectors.toList());
+
+        System.out.println(filteredNames); // ["Ali", "Ayşe"]
+    }
+}
+```
+✅ **Faydaları:** Daha kolay veri manipülasyonu sağlar.
+
+---
+
+## 9. **Nashorn JavaScript Engine**
+Java 8, **Nashorn JavaScript motorunu** ekledi. Java içinde JavaScript çalıştırmayı sağlar.
+
+### **Örnek:**
+```java
+import javax.script.*;
+
+public class NashornExample {
+    public static void main(String[] args) throws ScriptException {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("Nashorn");
+        engine.eval("print('Hello from JavaScript');");
+    }
+}
+```
+
+---
+
+Bu detaylı açıklamalar ile Java 8’in sunduğu tüm önemli yenilikleri kapsadık! 🚀
+
+
+## Java 8 gelen özelliklerden stream nedir ?
+```sh 
+
+```
+---
+
+### **Java 8 Stream API Nedir? (Detaylı Anlatım)**
+
+Java 8 ile gelen **Stream API**, koleksiyonlar (List, Set, Map vb.), diziler veya I/O işlemleri gibi veri kaynakları üzerinde fonksiyonel programlamayı destekleyen bir yapı sunar. Stream API, veri işleme sürecini daha okunaklı, daha basit ve daha performanslı hale getiren bir mekanizmadır.
+
+Stream, bir veri yapısındaki elemanları işlemek için ardışık işlemler zinciri sağlar. Genellikle **map, filter, reduce, collect** gibi işlemleri fonksiyonel programlama paradigması ile gerçekleştirmek için kullanılır.
+
+---
+
+## **1. Stream API'nin Temel Özellikleri**
+1. **İşlevsel Programlamayı Destekler**: Java'nın geleneksel döngü mantığının aksine, Stream API lambda ifadeleri ile işlevsel programlama sunar.
+2. **İçsel (Internal) İterasyon Kullanır**: Döngülerde olduğu gibi harici (external) iterasyon yerine, Stream API veriyi kendisi işler.
+3. **Parallel Processing Desteği**: Paralel işlemeye izin verir ve performansı artırabilir.
+4. **Immutable (Değiştirilemez) ve Stateless (Durumsuz)**: Stream işlemleri, orijinal veri yapısını değiştirmez ve stateless çalışır.
+5. **Lazy (Tembel) Değerlendirme Kullanır**: Yalnızca terminal işlemi çağrıldığında çalışmaya başlar.
+6. **Pipeline (Boru Hattı) Mantığı ile Çalışır**: Bir akış, ardışık operasyonlar şeklinde düzenlenebilir.
+
+---
+
+## **2. Stream API Kullanımı**
+Stream API, **java.util.stream** paketinde bulunur. Koleksiyonlardan bir Stream oluşturmak için farklı yollar mevcuttur:
+
+### **2.1. Stream Nasıl Oluşturulur?**
+Stream nesnesi oluşturmanın çeşitli yolları vardır:
+
+### **A) Koleksiyonlardan Stream Oluşturma**
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class StreamExample {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Java", "Python", "C++", "Go");
+
+        // Listeyi Stream'e dönüştürme
+        Stream<String> stream = list.stream();
+
+        // Stream içeriğini ekrana yazdırma
+        stream.forEach(System.out::println);
+    }
+}
+```
+Bu yöntem, bir **List** veya **Set** gibi koleksiyonlardan stream oluşturmak için kullanılır.
+
+---
+
+### **B) Dizilerden Stream Oluşturma**
+```java
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamFromArray {
+    public static void main(String[] args) {
+        String[] array = {"Apple", "Banana", "Cherry"};
+
+        // Diziden Stream oluşturma
+        Stream<String> stream = Arrays.stream(array);
+        stream.forEach(System.out::println);
+
+        // Primitive int dizisi için
+        int[] numbers = {1, 2, 3, 4, 5};
+        IntStream intStream = Arrays.stream(numbers);
+        intStream.forEach(System.out::println);
+    }
+}
+```
+
+---
+
+### **C) Stream.of() ile Stream Oluşturma**
+```java
+Stream<String> stream = Stream.of("One", "Two", "Three");
+stream.forEach(System.out::println);
+```
+Bu yöntem, doğrudan elemanlardan Stream oluşturmak için kullanılır.
+
+---
+
+### **D) Infinite Stream (Sonsuz Stream)**
+```java
+import java.util.stream.Stream;
+
+public class InfiniteStreamExample {
+    public static void main(String[] args) {
+        Stream<Integer> infiniteStream = Stream.iterate(1, n -> n + 1);
+
+        // İlk 10 elemanı al
+        infiniteStream.limit(10).forEach(System.out::println);
+    }
+}
+```
+Bu örnekte `iterate` metodu ile sonsuz bir Stream oluşturulmuş ve `limit(10)` ile ilk 10 elemanı alınmıştır.
+
+---
+
+## **3. Stream API Metotları**
+Stream API'de iki tür metod bulunur:
+1. **Ara İşlemler (Intermediate Operations)** → Yeni bir Stream üretir, genellikle `filter()`, `map()`, `sorted()` gibi metotlar.
+2. **Terminal İşlemler (Terminal Operations)** → Stream'i işler ve sonlandırır, genellikle `collect()`, `forEach()`, `count()`, `reduce()` gibi metotlar.
+
+---
+
+### **3.1. Ara İşlemler (Intermediate Operations)**
+
+#### **A) filter() - Filtreleme**
+Belirtilen bir şarta göre Stream içindeki elemanları filtreler.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StreamFilterExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Ali", "Ayşe", "Mehmet", "Ahmet");
+
+        // "A" harfi ile başlayan isimleri filtrele
+        List<String> filteredNames = names.stream()
+                .filter(name -> name.startsWith("A"))
+                .collect(Collectors.toList());
+
+        System.out.println(filteredNames);
+    }
+}
+```
+
+---
+
+#### **B) map() - Dönüştürme**
+Her elemanı bir başka formata dönüştürmek için kullanılır.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StreamMapExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("java", "python", "c++");
+
+        // Büyük harfe çevir
+        List<String> upperCaseNames = names.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+
+        System.out.println(upperCaseNames);
+    }
+}
+```
+
+---
+
+#### **C) sorted() - Sıralama**
+Stream içindeki elemanları sıralar.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamSortedExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(5, 2, 9, 1, 7);
+
+        numbers.stream()
+                .sorted()
+                .forEach(System.out::println);
+    }
+}
+```
+
+---
+
+### **3.2. Terminal İşlemler (Terminal Operations)**
+
+#### **A) collect() - Sonuçları Toplama**
+Stream içindeki verileri liste, set veya map gibi yapılara toplar.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StreamCollectExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Ali", "Veli", "Zeynep", "Murat");
+
+        List<String> collectedList = names.stream()
+                .filter(name -> name.length() > 3)
+                .collect(Collectors.toList());
+
+        System.out.println(collectedList);
+    }
+}
+```
+
+---
+
+#### **B) reduce() - Özetleme (Reduction)**
+Stream elemanlarını birleştirmek için kullanılır.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamReduceExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+        int sum = numbers.stream()
+                .reduce(0, Integer::sum);
+
+        System.out.println("Toplam: " + sum);
+    }
+}
+```
+
+---
+
+## **Sonuç**
+- Java 8 Stream API, koleksiyonlar ve diziler gibi veri yapıları üzerinde **daha okunaklı, performanslı ve fonksiyonel işlemler** yapmayı sağlar.
+- `map()`, `filter()`, `sorted()`, `collect()`, `reduce()` gibi işlemlerle güçlü veri manipülasyonu sağlar.
+- `parallelStream()` ile paralel işlemler yapılabilir.
+
+Stream API, Java 8’in getirdiği en güçlü özelliklerden biridir ve modern Java programlamada oldukça yaygın kullanılmaktadır. 🚀
+
 
 ## Cipher (AES/DES/RSA/HASHING)
 ```sh 
