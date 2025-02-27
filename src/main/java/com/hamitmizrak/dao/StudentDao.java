@@ -1,14 +1,16 @@
 package com.hamitmizrak.dao;
 
-import com.hamitmizrak.project.step3.EStudentType;
-import com.hamitmizrak.project.step3.StudentDto;
-import com.hamitmizrak.project.step3.StudentNotFoundException;
+
+import com.hamitmizrak.dto.StudentDto;
+import com.hamitmizrak.exceptions.StudentNotFoundException;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 // Öğrenci Yönetim Sistemi
 public class StudentDao {

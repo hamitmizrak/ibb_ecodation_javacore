@@ -1,4 +1,4 @@
-package com.hamitmizrak.tutorials._4_week;
+package com.hamitmizrak.dao;
 
 // Öğrenci Türleri, Lisans, Yüksek Lisans, Doktora
 public enum EStudentType {
