@@ -1,4 +1,4 @@
-package com.hamitmizrak.dao;
+package com.hamitmizrak.dto;
 
 // Öğrenci Türleri, Lisans, Yüksek Lisans, Doktora
 public enum EStudentType {

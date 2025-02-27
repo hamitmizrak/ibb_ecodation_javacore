@@ -1,6 +1,6 @@
 package com.hamitmizrak.dao;
 
-
+import com.hamitmizrak.dto.EStudentType;
 import com.hamitmizrak.dto.StudentDto;
 import com.hamitmizrak.exceptions.StudentNotFoundException;
 import com.hamitmizrak.utils.SpecialColor;
@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-
 // Öğrenci Yönetim Sistemi
-public class StudentDao {
+public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Field
     private ArrayList<StudentDto> studentDtoList = new ArrayList<>();
@@ -87,32 +86,36 @@ public class StudentDao {
     /// /////////////////////////////////////////////////////////////
     // C-R-U-D
     // Öğrenci Ekle
-
-    /// Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
-    public void add(StudentDto dto) {
+    @Override
+    public StudentDto create(StudentDto studentDto) {
         studentDtoList.add(
-                new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(), dto.getFinalTerm(), dto.getBirthDate(), dto.geteStudentType())
+                new StudentDto(++studentCounter, studentDto.getName(), studentDto.getSurname(), studentDto.getMidTerm(), studentDto.getFinalTerm(), studentDto.getBirthDate(), studentDto.geteStudentType())
         );
         System.out.println(SpecialColor.YELLOW + " Öğrenci Eklendi" + SpecialColor.RESET);
         // File Ekle
         saveToFile();
+        return studentDto;
     }
 
+
     // Öğrenci Listesi
-    public void list() {
+    @Override
+    public ArrayList<StudentDto> list() {
         // Öğrenci Yoksa
         if (studentDtoList.isEmpty()) {
             System.out.println(SpecialColor.RED + " Öğrenci yoktur" + SpecialColor.RESET);
-            return;
+            throw new StudentNotFoundException("Öğrenci Yoktur");
         } else {
             System.out.println(SpecialColor.BLUE + " Öğrenci Listesi" + SpecialColor.RESET);
             studentDtoList.forEach(System.out::println);
         }
+        return studentDtoList;
     }
 
     // Öğrenci Ara
-    public void search(String name) {
-         /* studentDtoList.stream()
+    @Override
+    public StudentDto findByName(String name) {
+        /* studentDtoList.stream()
                 .filter(temp -> temp.getName().equalsIgnoreCase(name))
                 .forEach(System.out::println); */
         // Eğer Öğrenci varsa true dönder
@@ -127,30 +130,33 @@ public class StudentDao {
         if (!found) {
             throw new StudentNotFoundException(name + " isimli Öğrenci bulunamadı");
         }
+        return null;
     }
 
     // Öğrenci Güncelle
-    public void update(int id, StudentDto dto) {
+    @Override
+    public StudentDto update(int id, StudentDto studentDto) {
         for (StudentDto temp : studentDtoList) {
             if (temp.getId() == id) {
-                temp.setName(dto.getName());
-                temp.setSurname(dto.getSurname());
-                temp.setBirthDate(dto.getBirthDate());
-                temp.setMidTerm(dto.getMidTerm());
-                temp.setFinalTerm(dto.getFinalTerm());
-                temp.seteStudentType(dto.geteStudentType());
+                temp.setName(studentDto.getName());
+                temp.setSurname(studentDto.getSurname());
+                temp.setBirthDate(studentDto.getBirthDate());
+                temp.setMidTerm(studentDto.getMidTerm());
+                temp.setFinalTerm(studentDto.getFinalTerm());
+                temp.seteStudentType(studentDto.geteStudentType());
                 // Güncellenmiş Öğrenci Bilgileri
                 System.out.println(SpecialColor.BLUE + temp + " Öğrenci Bilgileri Güncellendi" + SpecialColor.RESET);
                 // Dosyaya kaydet
                 saveToFile();
-                return;
             }
         }
         System.out.println(SpecialColor.RED + " Öğrenci Bulunamadı" + SpecialColor.RESET);
+        return studentDto;
     }
 
     // Öğrenci Sil
-    public void delete(int id) {
+    @Override
+    public StudentDto delete(int id) {
         //studentDtoList.removeIf(temp -> temp.getId() == id);
         boolean removed = studentDtoList.removeIf(temp -> temp.getId() == id);
         if (removed) {
@@ -160,6 +166,7 @@ public class StudentDao {
         } else {
             System.out.println(SpecialColor.RED + "Öğrenci Silinmedi" + SpecialColor.RESET);
         }
+        return null;
     }
 
     ////////////////////////////////////////////////////////////////
@@ -171,7 +178,7 @@ public class StudentDao {
 
     /// /////////////////////////////////////////////////////////////
     // Enum Öğrenci Türü Method
-    private EStudentType studentTypeMethod() {
+    public EStudentType studentTypeMethod() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Öğrenci türünü seçiniz.\n1-)Lisans\n2-)Yüksek Lisans\n3-)Doktora");
         int typeChooise = scanner.nextInt();
@@ -186,6 +193,7 @@ public class StudentDao {
 
     /// /////////////////////////////////////////////////////////////
     // Console Seçim (Öğrenci)
+    @Override
     public void chooise() {
         Scanner scanner = new Scanner(System.in);
         StudentDao studentManagementSystem = new StudentDao();
@@ -228,7 +236,7 @@ public class StudentDao {
                     double finalTerm = scanner.nextDouble();
 
                     // Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate
-                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate, studentTypeMethod()));
+                    studentManagementSystem.create(new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate, studentTypeMethod()));
                     break;
                 case 2: // Öğrenci Listelemek
                     studentManagementSystem.list();
@@ -238,7 +246,7 @@ public class StudentDao {
                     studentManagementSystem.list();
                     System.out.println(SpecialColor.BLUE + " Aranacak Öğrenci ismi yazınız " + SpecialColor.RESET);
                     String searchName = scanner.nextLine();
-                    studentManagementSystem.search(searchName);
+                    studentManagementSystem.findByName(searchName);
                     break;
 
                 case 4: // Öğrenci Güncelle
@@ -312,4 +320,5 @@ public class StudentDao {
             }
         }
     }
+
 }
