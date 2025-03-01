@@ -1,6 +1,7 @@
 package com.hamitmizrak;
 
 import com.hamitmizrak.controller.StudentController;
+import com.hamitmizrak.dto.PersonDto;
 
 //
 public class Main {
