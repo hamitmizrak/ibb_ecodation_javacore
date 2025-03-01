@@ -199,14 +199,18 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             throw new StudentNotFoundException("Öğrenci Yoktur");
         } else {
             System.out.println(SpecialColor.BLUE + " Öğrenci Listesi" + SpecialColor.RESET);
+            // Listeyi Göster (1.YOL)
             studentDtoList.forEach(System.out::println);
-
-
-            for (StudentDto temp : studentDtoList) {
-                if (temp.getResultTerm() != null) {
-                    System.out.println(temp + " -Durum " + (temp.getResultTerm() >= 50 ? "Geçti" : "Kaldı"));
-                }
+            // Listeyi Göster (2.YOL)
+            /*
+            for (StudentDto student : studentDtoList) {
+                Double result = student.getResultTerm()!=null ? student.getResultTerm() :0.0;
+                        System.out.println("ID: " + student.getId() +
+                        " | Ad: " + student.getName() +
+                        " | Sonuç: " + student.getResultTerm() +
+                        " | Durum: " + student.getStatus());
             }
+            */
         }
         return studentDtoList;
     }

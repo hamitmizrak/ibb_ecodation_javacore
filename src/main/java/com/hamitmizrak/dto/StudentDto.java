@@ -29,7 +29,7 @@ public class StudentDto implements Serializable {
     private EStudentType eStudentType; // Enum Öğrenci Türü
     private Double midTerm;      // Vize notu
     private Double finalTerm;    // Final notu
-    private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
+    private Double resultTerm=0.0;   // Sonuç Notu: (Vize%40 + Final%60)
     private String status;       // Geçti mi ? Kaldı mı ?
     private LocalDate birthDate; // Doğum günü
     private Date createdDate;    // Sistem otomatik tarihi
@@ -41,6 +41,7 @@ public class StudentDto implements Serializable {
 
     // Parametresiz Constructor
     public StudentDto() {
+        this.resultTerm=0.0; // varsayılan olarak
         this.createdDate = new Date(System.currentTimeMillis());
     }
 
@@ -51,11 +52,11 @@ public class StudentDto implements Serializable {
         this.surname = surname;
         this.midTerm = midTerm;
         this.finalTerm = finalTerm;
+        this.resultTerm = calculateResult();
         this.status = determineStatus();
+        this.eStudentType = eStudentType;
         this.birthDate = birthDate;
         this.createdDate = new Date(System.currentTimeMillis());
-        this.resultTerm = calculateResult();
-        this.eStudentType = eStudentType;
     }
 
     // Metotlar
@@ -70,7 +71,8 @@ public class StudentDto implements Serializable {
 
     // **📌 Status: Geçme / Kalma**
     private String determineStatus() {
-        return (this.resultTerm >= 50) ? "Geçti" : "Kaldı";
+        if (this.resultTerm == null) return "Bilinmiyor"; // **Null kontrolü ekledik**
+        return (this.resultTerm >= 50.0) ? "Geçti" : "Kaldı";
     }
 
 
@@ -125,7 +127,14 @@ public class StudentDto implements Serializable {
     }
 
     public Double getResultTerm() {
-        return resultTerm;
+        return resultTerm!=null ? resultTerm : 0.0;
+    }
+
+    public void setResultTerm(Double resultTerm) {
+        if(resultTerm ==null){
+            this.resultTerm=0.0;
+        }
+        this.resultTerm = resultTerm;
     }
 
     public String getStatus() {
@@ -136,9 +145,7 @@ public class StudentDto implements Serializable {
         this.status = status;
     }
 
-    public void setResultTerm(Double resultTerm) {
-        this.resultTerm = resultTerm;
-    }
+
 
     public LocalDate getBirthDate() {
         return birthDate;
