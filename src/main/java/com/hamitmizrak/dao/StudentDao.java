@@ -8,6 +8,7 @@ import com.hamitmizrak.utils.SpecialColor;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -97,14 +98,16 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // Bu metod, bir StudentDto nesnesini virgülle ayrılmış bir metin (CSV) formatına çevirir.
     // Böylece öğrenci verileri bir dosyada satır bazlı olarak saklanabilir.
     private String studentToCsv(StudentDto student) {
-        return student.getId() + "," +          // Öğrenci ID'sini ekler
-                student.getName() + "," +        // Öğrenci adını ekler
-                student.getSurname() + "," +     // Öğrenci soyadını ekler
-                student.getMidTerm() + "," +     // Öğrenci vize notunu ekler
-                student.getFinalTerm() + "," +   // Öğrenci final notunu ekler
-                student.getResultTerm() + "," +  // Öğrenci sonuç notunu ekler
-                student.getBirthDate() + "," +   // Öğrenci doğum tarihini ekler
-                student.geteStudentType();       // Öğrencinin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
+        return
+                student.getId() + "," +          // Öğrenci ID'sini ekler
+                        student.getName() + "," +        // Öğrenci adını ekler
+                        student.getSurname() + "," +     // Öğrenci soyadını ekler
+                        student.getMidTerm() + "," +     // Öğrenci vize notunu ekler
+                        student.getFinalTerm() + "," +   // Öğrenci final notunu ekler
+                        student.getResultTerm() + "," +  // Öğrenci sonuç notunu ekler
+                        //student.getStatus() + "," +      // Öğrenci geçti/kaldı notunu ekler
+                        student.getBirthDate() + "," +   // Öğrenci doğum tarihini ekler
+                        student.geteStudentType();       // Öğrencinin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
     }
 
     // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme
@@ -197,6 +200,13 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         } else {
             System.out.println(SpecialColor.BLUE + " Öğrenci Listesi" + SpecialColor.RESET);
             studentDtoList.forEach(System.out::println);
+
+
+            for (StudentDto temp : studentDtoList) {
+                if (temp.getResultTerm() != null) {
+                    System.out.println(temp + " -Durum " + (temp.getResultTerm() >= 50 ? "Geçti" : "Kaldı"));
+                }
+            }
         }
         return studentDtoList;
     }
@@ -248,6 +258,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 temp.setBirthDate(studentDto.getBirthDate());
                 temp.setMidTerm(studentDto.getMidTerm());
                 temp.setFinalTerm(studentDto.getFinalTerm());
+                temp.setResultTerm(temp.getMidTerm() * 0.4 + temp.getFinalTerm() * 0.6);
                 temp.seteStudentType(studentDto.geteStudentType());
                 // Güncellenmiş Öğrenci Bilgileri
                 System.out.println(SpecialColor.BLUE + temp + " Öğrenci Bilgileri Güncellendi" + SpecialColor.RESET);
@@ -306,7 +317,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 System.out.println("8. Öğrenci Not Ortalaması Hesapla");
                 System.out.println("9. En Yüksek & En Düşük Not Alan Öğrenci");
                 System.out.println("10. Öğrencileri Doğum Tarihine Göre Sırala");
-                System.out.println("11. Çıkış");
+                System.out.println("11. Öğrenci Geçti/Kaldı Durumunu göster");
+                System.out.println("12. Çıkış");
                 System.out.print("Seçiminizi yapınız: ");
 
                 int choice = scanner.nextInt();
@@ -333,7 +345,9 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
                     case 10 -> chooiseStudentBirthdaySortedDate();
 
-                    case 11 -> chooiseExit();
+                    case 11 -> listStudentsWithStatus();
+
+                    case 12 -> chooiseExit();
 
                     default -> System.out.println("Geçersiz seçim! Lütfen tekrar deneyin.");
                 }
@@ -343,6 +357,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             }
         }
     }
+
 
     /// ///////////////////////////////////////////////////////////////////////
     /// Student Add
@@ -497,12 +512,14 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     ////////////////////////////////////////////////////////////////
     // Toplam Öğrenci Sayısı
+
     /// Student Sum Counter
     public void chooiseSumCounter() {
         System.out.println("Toplam Öğrenci Sayısı: " + studentDtoList.size());
     }
 
     // Rastgele Öğrenci
+
     /// Student Random
     public void chooiseRandomStudent() {
         if (!studentDtoList.isEmpty()) {
@@ -514,6 +531,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     // Öğrenci Not Ortalaması Hesapla
+
     /// Öğrenci Not Ortalaması Hesapla
     public void chooiseStudentNoteAverage() {
         if (!studentDtoList.isEmpty()) {
@@ -528,6 +546,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     // En Yüksek veya En Düşük Not Alan Öğrenci
+
     /// En Yüksek & En Düşük Not Alan Öğrenci
     public void chooiseStudentNoteMinAndMax() {
         if (!studentDtoList.isEmpty()) {
@@ -547,11 +566,18 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     // Öğrenci Sıralaması (Doğum günü)
+
     /// Öğrencileri Doğum Tarihine Göre Sırala
     public void chooiseStudentBirthdaySortedDate() {
         studentDtoList.stream()
                 .sorted((s1, s2) -> s1.getBirthDate().compareTo(s2.getBirthDate()))
                 .forEach(System.out::println);
+    }
+
+    // Geçen Öğrencilere
+    private List<StudentDto> listStudentsWithStatus() {
+        List<StudentDto> studentDtostatus = list();
+        return studentDtostatus;
     }
 
     // Exit
