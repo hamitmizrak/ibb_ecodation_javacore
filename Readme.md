@@ -10563,11 +10563,419 @@ public class StudentService {
 - Küçük ve **basit veri sınıfları** için **Record** harika bir seçimdir. ✅
 - Büyük, sık değiştirilen veya **iş mantığı içeren sınıflar** için **klasik sınıflar daha iyi bir seçenektir**. 🚀
 
+## Record Dezavantajları
+```sh 
+
+```
+---
+
+## Inner Class Nedir ?
+```sh 
+
+```
+---
+
+# **Java’da Inner Class (İç İçe Sınıflar) Detaylı Anlatım**
+
+Java'da **Inner Class** (İç İçe Sınıf), bir sınıfın içinde tanımlanmış başka bir sınıftır. Java’da inner class kullanımı, kodun organize edilmesini kolaylaştırır, dış sınıfın üyelerine erişimi sağlar ve kapsülleme (encapsulation) avantajları sunar.
+
+---
+
+## **1. Inner Class Nedir?**
+Java'da bir sınıfı başka bir sınıfın içinde tanımlarsak, buna **Inner Class** (İç Sınıf) denir. **Inner Class**, genellikle dış (outer) sınıfa bağlıdır ve bağımsız olarak çalışamaz.
+
+- **Dış sınıf (Outer Class)**: İç sınıfı kapsayan ana sınıftır.
+- **İç sınıf (Inner Class)**: Dış sınıfın içinde tanımlanan sınıftır.
+
+### **Örnek: Basit Inner Class Kullanımı**
+```java
+class OuterClass { // Dış Sınıf
+    private String outerField = "Dış sınıf değişkeni";
+
+    // İç Sınıf
+    class InnerClass {
+        void display() {
+            System.out.println("İç sınıftan erişilen: " + outerField);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        OuterClass outer = new OuterClass();  // Dış sınıf nesnesi oluştur
+        OuterClass.InnerClass inner = outer.new InnerClass();  // İç sınıf nesnesi oluştur
+        inner.display();  // Çıktı: İç sınıftan erişilen: Dış sınıf değişkeni
+    }
+}
+```
+**Açıklamalar:**
+- **InnerClass**, **OuterClass** içinde tanımlanmıştır.
+- **InnerClass**, **OuterClass**'ın özel değişkenlerine (`private outerField`) doğrudan erişebilir.
+- **InnerClass** nesnesi oluşturmak için önce **OuterClass** nesnesi oluşturulmalıdır.
+
+---
+
+## **2. Inner Class Türleri**
+Java'da **4 çeşit inner class** vardır:
+
+1. **Regular Inner Class (Normal İç Sınıf)**
+2. **Static Nested Class (Statik İç Sınıf)**
+3. **Method Local Inner Class (Metod İçinde Tanımlanan İç Sınıf)**
+4. **Anonymous Inner Class (Anonim İç Sınıf)**
+
+---
+
+## **2.1. Regular Inner Class (Normal İç Sınıf)**
+**Dış sınıfın içinde, statik olmayan bir sınıftır.** İç sınıfa erişmek için önce dış sınıfın nesnesi oluşturulmalıdır.
+
+### **Örnek: Normal Inner Class Kullanımı**
+```java
+class Outer {
+    private String message = "Merhaba, ben dış sınıfım!";
+
+    class Inner {
+        void showMessage() {
+            System.out.println(message);  // Dış sınıfın private değişkenine erişim
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Outer outer = new Outer();  // Dış sınıf nesnesi
+        Outer.Inner inner = outer.new Inner();  // İç sınıf nesnesi
+        inner.showMessage();  // Çıktı: Merhaba, ben dış sınıfım!
+    }
+}
+```
+### **Özellikler:**
+✔ Dış sınıfın private değişkenlerine erişebilir.  
+✔ İç sınıfa, dış sınıfın nesnesi üzerinden ulaşılır.  
+✔ Dış sınıf olmadan iç sınıfın bağımsız çalışması mümkün değildir.
+
+---
+
+## **2.2. Static Nested Class (Statik İç Sınıf)**
+**Statik iç sınıflar**, **dış sınıfın bir örneğine (instance) ihtiyaç duymadan doğrudan kullanılabilir.**
+
+### **Örnek: Static Inner Class Kullanımı**
+```java
+class Outer {
+    static String staticMessage = "Statik değişken!";
+
+    // Statik İç Sınıf
+    static class StaticInner {
+        void display() {
+            System.out.println("Statik İç Sınıf: " + staticMessage);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Outer.StaticInner inner = new Outer.StaticInner();  // Dış sınıfın nesnesine gerek yok
+        inner.display();  // Çıktı: Statik İç Sınıf: Statik değişken!
+    }
+}
+```
+### **Özellikler:**
+✔ **Dış sınıfın nesnesine ihtiyaç duymaz.**  
+✔ **Sadece dış sınıfın `static` üyelerine erişebilir.**  
+✔ **Bağımsız bir sınıf gibi çalışabilir.**
+
+---
+
+## **2.3. Method Local Inner Class (Metod İçinde Tanımlanan İç Sınıf)**
+**Bir metodun içinde tanımlanan iç sınıftır.** Yalnızca o metodun içinde kullanılabilir.
+
+### **Örnek: Method Local Inner Class Kullanımı**
+```java
+class Outer {
+    void outerMethod() {
+        class MethodInner {  // Metodun içinde tanımlı iç sınıf
+            void show() {
+                System.out.println("Merhaba, ben metod içindeki iç sınıfım!");
+            }
+        }
+        MethodInner inner = new MethodInner(); // İç sınıf nesnesi oluştur
+        inner.show();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        outer.outerMethod();  // Çıktı: Merhaba, ben metod içindeki iç sınıfım!
+    }
+}
+```
+### **Özellikler:**
+✔ **Sadece tanımlandığı metod içinde kullanılabilir.**  
+✔ **Dış sınıfın üyelerine erişebilir.**  
+✔ **Metod tamamlandığında bellekten silinir.**
+
+---
+
+## **2.4. Anonymous Inner Class (Anonim İç Sınıf)**
+**İsmi olmayan (anonymous) ve genellikle bir arayüzü veya sınıfı genişleten (extend) veya bir arayüzü uygulayan (implement) tek seferlik sınıflardır.**
+
+### **Örnek: Anonim İç Sınıf ile Arayüz Kullanımı**
+```java
+interface Message {
+    void showMessage();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Anonim İç Sınıf
+        Message obj = new Message() {
+            public void showMessage() {
+                System.out.println("Anonim İç Sınıftan Merhaba!");
+            }
+        };
+        obj.showMessage();  // Çıktı: Anonim İç Sınıftan Merhaba!
+    }
+}
+```
+### **Örnek: Anonim İç Sınıf ile Abstract Sınıf Kullanımı**
+```java
+abstract class Animal {
+    abstract void makeSound();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal dog = new Animal() {
+            void makeSound() {
+                System.out.println("Hav hav! (Anonim Sınıf)");
+            }
+        };
+        dog.makeSound();  // Çıktı: Hav hav! (Anonim Sınıf)
+    }
+}
+```
+### **Özellikler:**
+✔ **Tek seferlik kullanım içindir.**  
+✔ **Soyut sınıfları ve arayüzleri doğrudan implemente edebilir.**  
+✔ **Yeni bir sınıf tanımlamadan anında kullanılabilir.**
+
+---
+
+## **Sonuç ve Karşılaştırma**
+| Inner Class Türü | Bağımsız mı? | Dış Sınıfın Nesnesine İhtiyaç Duyar mı? | Kullanım Alanı |
+|------------------|-------------|---------------------------------|-----------------|
+| **Regular Inner Class** | ❌ Hayır | ✅ Evet | Dış sınıfın üyelerine erişim sağlamak için |
+| **Static Nested Class** | ✅ Evet | ❌ Hayır | Dış sınıf nesnesi olmadan bağımsız çalışma |
+| **Method Local Inner Class** | ❌ Hayır | ✅ Evet | Sadece belirli bir metod içinde kullanılmak üzere |
+| **Anonymous Inner Class** | ❌ Hayır | ✅ Evet | Tek seferlik kullanım için (arayüz veya abstract class) |
+
+---
+
+## **Sonuç**
+Java’daki **inner class’lar**, kodu daha organize hale getirmek, dış sınıfın üyelerine erişmek ve encapsulation sağlamak için güçlü bir mekanizmadır. **Hangi tür iç sınıfı kullanacağınızı, ihtiyacınıza göre seçmelisiniz!** 🚀
+
 ## Generics Nedir ?
 ```sh 
 
 ```
 ---
+# **Java'da Generics (Jenerikler) Nedir?**
+Generics, Java'da **tip güvenliğini artırmak, kod tekrarını azaltmak ve runtime hatalarını compile-time'da yakalamak için** kullanılan bir özelliktir. **Jenerik yapılar, sınıflara, arayüzlere ve metotlara farklı veri tiplerini dinamik olarak atayabilmemizi sağlar.**
+
+---
+
+## **📌 Neden Generics Kullanılır?**
+Generics kullanılmadan önce, `Object` sınıfı yaygın olarak kullanılıyordu. Ancak `Object`, farklı türleri saklayabildiği için **tip dönüşümleri (type casting) gerektiğinden** runtime hatalarına sebep olabiliyordu.
+
+### 🔴 **Generics Olmadan (Eski Yöntem – Type Safety Yok)**
+```java
+import java.util.ArrayList;
+
+public class WithoutGenerics {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList(); // Tip belirtilmemiş
+        list.add("Merhaba");
+        list.add(100); // Farklı bir tür eklenebiliyor
+
+        String message = (String) list.get(0); // Type casting gerekiyor
+        System.out.println(message);
+
+        String number = (String) list.get(1); // ClassCastException HATASI!
+        System.out.println(number);
+    }
+}
+```
+### ❌ **Sorunlar:**
+- **Tip güvenliği yok:** Aynı `ArrayList` içine farklı türler eklenebilir.
+- **Type casting zorunlu:** `Object` tipinden spesifik tipe dönüşüm gerekir.
+- **Runtime hataları:** Yanlış casting yapılırsa **`ClassCastException`** oluşur.
+
+---
+
+## **✅ Generics ile Daha Güvenli Kod**
+```java
+import java.util.ArrayList;
+
+public class WithGenerics {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(); // Generics ile tür belirtilmiş
+        list.add("Merhaba");
+        // list.add(100); // ❌ Derleme hatası verir!
+
+        String message = list.get(0); // Type casting gerekmez
+        System.out.println(message);
+    }
+}
+```
+### **🎯 Avantajlar:**
+✔ **Tip güvenliği sağlanır:** Yanlış veri eklenemez.  
+✔ **Type casting ihtiyacı ortadan kalkar:** Direkt doğru tipte veri çekilir.  
+✔ **Daha okunaklı ve güvenli kod yazılır.**
+
+---
+
+# **📌 Generics Nerelerde Kullanılır?**
+- **Sınıflar (`Generic Class`)**
+- **Arayüzler (`Generic Interface`)**
+- **Metotlar (`Generic Method`)**
+- **Wildcard (`?` ile jenerik parametreler)**
+
+---
+
+# **1️⃣ Generics ile Sınıf Tanımlama (`Generic Class`)**
+Bir sınıfı **herhangi bir veri tipiyle çalışabilecek hale getirmek** için generics kullanabiliriz.
+
+### 🎯 **Örnek 1: Generic Bir Kutu (`Box<T>`) Sınıfı**
+```java
+// T => Type (Kullanıcı tarafından belirlenecek)
+public class Box<T> {
+    private T item; // Değişken türü dinamik
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public T getItem() {
+        return item;
+    }
+}
+
+// Kullanımı
+public class Main {
+    public static void main(String[] args) {
+        Box<String> stringBox = new Box<>();
+        stringBox.setItem("Merhaba, Java!");
+        System.out.println(stringBox.getItem()); // Çıktı: Merhaba, Java!
+
+        Box<Integer> intBox = new Box<>();
+        intBox.setItem(42);
+        System.out.println(intBox.getItem()); // Çıktı: 42
+    }
+}
+```
+### **💡 Açıklamalar:**
+✔ `T` (Type Parameter) yerine **String, Integer, Double gibi veri tipleri** atanabilir.  
+✔ **Tek bir sınıf ile** farklı veri tipleri saklanabilir.  
+✔ **Kod tekrarını önler.**
+
+---
+
+# **2️⃣ Generics ile Arayüz Tanımlama (`Generic Interface`)**
+Bir interface’in farklı türler ile çalışmasını sağlamak için generics kullanılabilir.
+
+### 🎯 **Örnek: Generics Kullanarak DAO Arayüzü (`IDaoGenerics<T>`)**
+```java
+// T: Öğrenci, Öğretmen gibi herhangi bir nesne olabilir.
+public interface IDaoGenerics<T> {
+    void save(T t);
+    T findById(int id);
+    void delete(int id);
+}
+```
+
+**Arayüzü Kullanacak Bir Sınıf:**
+```java
+public class StudentDao implements IDaoGenerics<StudentDto> {
+    @Override
+    public void save(StudentDto student) {
+        System.out.println("Öğrenci kaydedildi: " + student.getName());
+    }
+
+    @Override
+    public StudentDto findById(int id) {
+        return new StudentDto(id, "Ahmet", "Yılmaz", 85.0, 90.0, java.time.LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
+    }
+
+    @Override
+    public void delete(int id) {
+        System.out.println("Öğrenci silindi: " + id);
+    }
+}
+```
+✔ **Kod tekrarını önler**  
+✔ **Farklı veri türleriyle çalışabilir** (Öğrenci, Öğretmen, Ders vs.)
+
+---
+
+# **3️⃣ Generics ile Metot Tanımlama (`Generic Method`)**
+Belirli bir sınıfa bağlı olmadan **herhangi bir veri tipiyle çalışan metotlar** yazabiliriz.
+
+### 🎯 **Örnek: Generic Bir Swap (Değiştirme) Metodu**
+```java
+public class GenericMethodExample {
+    public static <T> void swap(T[] array, int i, int j) {
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        Integer[] numbers = {1, 2, 3, 4};
+        swap(numbers, 0, 2);
+        for (int num : numbers) {
+            System.out.print(num + " "); // Çıktı: 3 2 1 4
+        }
+    }
+}
+```
+✔ **Her türde veri ile çalışabilir**  
+✔ **Kod tekrarını azaltır**
+
+---
+
+# **4️⃣ Wildcard (`?` - Joker Karakter) Kullanımı**
+Bazen bir generics sınıfında **herhangi bir tipte veri kullanabileceğimiz bir yapı** isteriz.
+
+### 🎯 **Örnek: Üst Sınıf Kısıtlaması (`? extends Number`)**
+```java
+public class WildcardExample {
+    public static void printList(List<? extends Number> list) {
+        for (Number num : list) {
+            System.out.println(num);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<Integer> intList = List.of(1, 2, 3);
+        List<Double> doubleList = List.of(2.5, 3.6);
+
+        printList(intList);   // Çalışır
+        printList(doubleList); // Çalışır
+    }
+}
+```
+✔ **? extends Number** → Sadece `Integer`, `Double`, `Float` gibi `Number` türevleri kabul edilir.  
+✔ **Joker karakter sayesinde** farklı türleri destekleyen metotlar yazabiliriz.
+
+---
+
+# **🚀 Sonuç: Generics Kullanmanın Avantajları**
+✅ **Tip güvenliği sağlar** (Yanlış veri eklenemez)  
+✅ **Kod tekrarını azaltır** (Aynı kod farklı veri türleriyle çalışır)  
+✅ **Okunabilirliği artırır** (Casting ihtiyacını ortadan kaldırır)  
+✅ **Performansı artırır** (Compile-time hatalarını yakalar)
+
+Java generics sayesinde daha **esnek, güvenli ve performanslı kod** yazabiliriz. 🚀
 
 
 ## Collection Nedir ?
@@ -10576,6 +10984,164 @@ public class StudentService {
 ```
 ---
 
+# **Java'da Collection Nedir? (Detaylı Açıklama)**
+
+Java'da **Collection (Koleksiyonlar)**, birden fazla veriyi belirli bir yapı içerisinde saklamak, yönetmek ve işlemek için kullanılan bir çerçevedir (framework). Java Collection Framework (JCF), çeşitli veri yapıları ve algoritmalar içerir ve bunlar, Java'da veri yönetimini oldukça esnek ve verimli hale getirir.
+
+## **1. Collection Framework Nedir?**
+Java Collection Framework, Java’nın veri yapılarıyla çalışma yeteneğini geliştiren bir yapıdır. Java SE 2 ile birlikte gelmiştir ve veri yapıları ile algoritmaları içeren, **verimli veri depolama, erişim ve manipülasyon mekanizmaları** sağlayan bir çerçevedir.
+
+Collection framework, **Array, LinkedList, Stack, Queue, HashMap, TreeSet gibi çeşitli veri yapıları** içerir. Bu framework, koleksiyonları oluşturma, düzenleme, sıralama ve arama işlemlerini kolaylaştıran birçok yardımcı sınıf ve metod içerir.
+
+## **2. Java Collection Framework İçerisindeki Bileşenler**
+Java Collection Framework, temel olarak şu bileşenlerden oluşur:
+1. **Interfaces (Arayüzler)** → Collection, List, Set, Queue, Map vb.
+2. **Classes (Sınıflar)** → ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap vb.
+3. **Algorithms (Algoritmalar)** → Sıralama, arama, değiştirme vb.
+
+---
+
+# **3. Collection Arayüzleri (Interfaces)**
+Java'daki Collection Framework, çeşitli **arayüzler** kullanarak farklı veri yapılarını temsil eder. Bu arayüzler, koleksiyonların nasıl çalışması gerektiğini belirleyen kuralları tanımlar. En temel arayüz **Collection** arayüzüdür ve diğer arayüzler buradan türetilmiştir.
+
+## **3.1 Collection Arayüzü (Temel Arayüz)**
+Tüm koleksiyon türleri için ortak olan temel bir arayüzdür. List, Set ve Queue gibi arayüzler **Collection** arayüzünden türetilmiştir. **Map arayüzü** ise Collection’dan türetilmemiştir çünkü Map bir anahtar-değer (key-value) tabanlı veri yapısıdır.
+
+```java
+public interface Collection<E> extends Iterable<E> { 
+    boolean add(E e);
+    boolean remove(Object o);
+    boolean contains(Object o);
+    int size();
+    boolean isEmpty();
+    Iterator<E> iterator();
+}
+```
+
+---
+
+## **3.2 List Arayüzü (Ordered - Sıralı Veri)**
+- **List**, öğeleri belirli bir sıralamada saklayan ve aynı elemandan birden fazla içerebilen bir koleksiyon türüdür.
+- Elemanlara **indeks** ile erişilebilir.
+- List'ler veri ekleme, çıkarma ve güncelleme gibi işlemler için kullanılır.
+
+### **List’i Uygulayan Sınıflar:**
+- **ArrayList**
+- **LinkedList**
+- **Vector** (Çok nadiren kullanılır)
+- **Stack** (Vector'dan türetilmiştir)
+
+```java
+List<String> myList = new ArrayList<>();
+myList.add("Java");
+myList.add("Python");
+myList.add("C++");
+System.out.println(myList.get(1)); // Python
+```
+
+### **ArrayList vs LinkedList**
+| Özellik | ArrayList | LinkedList |
+|---------|----------|------------|
+| Erişim Hızı | Hızlı (O(1)) | Yavaş (O(n)) |
+| Ekleme/Silme | Yavaş (O(n)) | Hızlı (O(1) baştan/baştan silme) |
+| Bellek Kullanımı | Daha az bellek kullanır | Daha fazla bellek kullanır (düğümler nedeniyle) |
+
+---
+
+## **3.3 Set Arayüzü (Benzersiz - Unique Elemanlar)**
+- **Set**, **aynı elemandan birden fazla içeremez**.
+- Elemanlar sırasız olabilir.
+- Elemanlar, koleksiyona belirli bir kurala göre eklenir.
+
+### **Set’i Uygulayan Sınıflar:**
+- **HashSet** (Hızlıdır, sıralama yok)
+- **LinkedHashSet** (Ekleme sırasını korur)
+- **TreeSet** (Kendi içinde sıralı)
+
+```java
+Set<String> mySet = new HashSet<>();
+mySet.add("Java");
+mySet.add("Python");
+mySet.add("Java");  // Tekrar eden eleman eklenmez!
+System.out.println(mySet); // [Java, Python]
+```
+
+---
+
+## **3.4 Queue Arayüzü (İlk Giren İlk Çıkar - FIFO)**
+- **Queue**, elemanları bir sıraya koyar ve ekleme/çıkarmayı belirli bir düzene göre yapar.
+- **FIFO (First In, First Out)** mantığıyla çalışır.
+
+### **Queue’yi Uygulayan Sınıflar:**
+- **PriorityQueue** (Öncelik bazlı sıralama)
+- **LinkedList** (Queue olarak kullanılabilir)
+- **ArrayDeque** (Çift yönlü kuyruk)
+
+```java
+Queue<Integer> queue = new LinkedList<>();
+queue.add(10);
+queue.add(20);
+queue.add(30);
+System.out.println(queue.poll()); // 10 (ilk eklenen çıkar)
+```
+
+---
+
+## **3.5 Map Arayüzü (Key-Value - Anahtar-Değer)**
+- **Map**, bir anahtar (key) ve bu anahtara bağlı bir değer (value) saklayan koleksiyon türüdür.
+- **Anahtarlar benzersizdir**, ancak değerler tekrar edebilir.
+- **Collection arayüzünden türememiştir.**
+
+### **Map’i Uygulayan Sınıflar:**
+- **HashMap** (Sırasız, en hızlı performans)
+- **LinkedHashMap** (Eklenme sırasını korur)
+- **TreeMap** (Anahtarları sıralı tutar)
+
+```java
+Map<String, Integer> myMap = new HashMap<>();
+myMap.put("Elma", 3);
+myMap.put("Armut", 5);
+myMap.put("Muz", 7);
+System.out.println(myMap.get("Elma")); // 3
+```
+
+---
+
+# **4. Collection Framework’te Kullanılan Önemli Metotlar**
+Collection sınıflarında en yaygın kullanılan metodlar şunlardır:
+
+| Metot | Açıklama |
+|------------|-------------|
+| `add(E e)` | Eleman ekler |
+| `remove(Object o)` | Elemanı kaldırır |
+| `size()` | Eleman sayısını döndürür |
+| `isEmpty()` | Boş olup olmadığını kontrol eder |
+| `clear()` | Tüm elemanları temizler |
+| `contains(Object o)` | Elemanın var olup olmadığını kontrol eder |
+| `iterator()` | Koleksiyon üzerinde döngü yapmayı sağlar |
+
+---
+
+# **5. Java Collections Algoritmaları (Collections Utility Sınıfı)**
+Java, `Collections` sınıfı altında birçok yardımcı algoritma sunar. Bunlar:
+- **sort()** → Listeyi sıralar
+- **reverse()** → Listeyi ters çevirir
+- **shuffle()** → Liste elemanlarını karıştırır
+- **binarySearch()** → Liste içinde ikili arama yapar
+- **max()** ve **min()** → En büyük ve en küçük elemanı bulur
+
+```java
+List<Integer> numbers = new ArrayList<>(Arrays.asList(10, 5, 8, 3, 2));
+Collections.sort(numbers);
+System.out.println(numbers); // [2, 3, 5, 8, 10]
+```
+
+---
+
+# **Sonuç**
+Java Collection Framework, büyük veri kümelerini yönetmeyi kolaylaştırır ve verimli veri işleme sağlar. **List, Set, Queue ve Map** arayüzleri, farklı ihtiyaçlara göre özelleştirilmiş veri yapıları sunar.
+
+Koleksiyonlarla çalışırken hangi yapının kullanılacağını **veri yapısının gereksinimlerine göre** seçmek önemlidir.
 
 ## Java 8 gelen özellikler Nedir ?
 ```sh 
@@ -11058,8 +11624,3 @@ Stream API, Java 8’in getirdiği en güçlü özelliklerden biridir ve modern 
 
 
 
-## Cipher (AES/DES/RSA/HASHING)
-```sh 
-
-```
----
