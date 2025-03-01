@@ -18,7 +18,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Field
     private ArrayList<StudentDto> studentDtoList = new ArrayList<>();
-    private int studentCounter = 0;
+    // ID artık tüm sınıflar tarafından erişilebilir olacak
+    public  static int studentCounter = 0;
     private static final String FILE_NAME = "students.txt";
 
     // **📌 Scanner Nesnesini En Üste Tanımladık**
@@ -74,19 +75,28 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         studentDtoList.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
+            int maxId = 0; // En büyük ID'yi bulmak için değişken
             while ((line = reader.readLine()) != null) {
                 StudentDto student = csvToStudent(line);
                 if (student != null) {
                     studentDtoList.add(student);
+                    if (student.getId() > maxId) {
+                        maxId = student.getId(); // En büyük ID'yi güncelle
+                    }
                 }
             }
             //studentCounter = studentDtoList.size();
             // ✅ Öğrenciler içindeki en büyük ID'yi bul
+            /*
             studentCounter = studentDtoList.stream()
                     .mapToInt(StudentDto::getId)
                     .max()
                     .orElse(0); // Eğer öğrenci yoksa sıfır başlat
-            System.out.println(SpecialColor.BLUE + "Dosyadan yüklenen öğrenci sayısı: " + studentCounter + SpecialColor.RESET);
+            */
+
+            // 📌 ID'yi en büyük öğrenci ID'sine ayarla
+            studentCounter = maxId;
+            System.out.println(SpecialColor.BLUE + "Dosyadan yüklenen en büyük ID: " + studentCounter + SpecialColor.RESET);
         } catch (IOException e) {
             System.out.println(SpecialColor.RED + "Dosya okuma hatası!" + SpecialColor.RESET);
             e.printStackTrace();
@@ -105,7 +115,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                         student.getMidTerm() + "," +     // Öğrenci vize notunu ekler
                         student.getFinalTerm() + "," +   // Öğrenci final notunu ekler
                         student.getResultTerm() + "," +  // Öğrenci sonuç notunu ekler
-                        //student.getStatus() + "," +      // Öğrenci geçti/kaldı notunu ekler
+                        student.getStatus() + "," +      // Öğrenci geçti/kaldı notunu ekler
                         student.getBirthDate() + "," +   // Öğrenci doğum tarihini ekler
                         student.geteStudentType();       // Öğrencinin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
     }
@@ -113,22 +123,28 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme
     // Bu metod, CSV formatındaki bir satırı parçalayarak bir StudentDto nesnesine dönüştürür.
     // Dosyadan okunan her satır için çağrılır ve veriyi uygun şekilde nesneye aktarır.
+    // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme (Dosyadan okurken)
     private StudentDto csvToStudent(String csvLine) {
         try {
             String[] parts = csvLine.split(",");  // Satırı virgülle bölerek bir dizi oluşturur
-            if (parts.length < 8) return null;    // Eksik veri varsa işlemi durdurur ve null döndürür
+            if (parts.length < 9) return null;    // **Eksik veri varsa işlemi durdurur ve null döndürür**
 
-            return new StudentDto(
+            StudentDto student = new StudentDto(
                     Integer.parseInt(parts[0]),  // ID değerini integer olarak dönüştürür
                     parts[1],                    // Adı alır
                     parts[2],                    // Soyadı alır
                     Double.parseDouble(parts[3]), // Vize notunu double olarak dönüştürür
                     Double.parseDouble(parts[4]), // Final notunu double olarak dönüştürür
-                    LocalDate.parse(parts[6]),    // Doğum tarihini LocalDate formatına çevirir
-                    EStudentType.valueOf(parts[7]) // Öğrencinin eğitim türünü (Enum) çevirir
+                    LocalDate.parse(parts[7]),    // Doğum tarihini LocalDate formatına çevirir
+                    EStudentType.valueOf(parts[8]) // Öğrencinin eğitim türünü (Enum) çevirir
             );
+
+            // **Geçti/Kaldı durumu CSV'den okunduğu gibi öğrenci nesnesine eklenir**
+            student.setResultTerm(Double.parseDouble(parts[5])); // **Sonuç notunu ayarla**
+            student.setStatus(parts[6]); // **Geçti/Kaldı durumunu CSV'den al**
+
+            return student;
         } catch (Exception e) {
-            // Eğer CSV'den okuma sırasında hata olursa, hata mesajını gösterir
             System.out.println(SpecialColor.RED + "CSV'den öğrenci yükleme hatası!" + SpecialColor.RESET);
             return null; // Hata durumunda null döndürerek programın çökmesini engeller
         }
@@ -145,7 +161,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             validateStudent(studentDto);
 
             // ID'yi artırıp nesneye atıyoruz
-            studentDto.setId(++studentCounter);
+            // 📌 **ID artık public static olduğu için her sınıftan erişilebilir!**
+            studentDto.setId(studentCounter++);
             studentDtoList.add(studentDto);
             saveToFile();
 
@@ -432,7 +449,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 EStudentType studentType = studentTypeMethod();
 
                 // 📌 Öğrenci nesnesini oluştur
-                StudentDto newStudent = new StudentDto(++studentCounter, name, surname, midTerm, finalTerm, birthDate, studentType);
+                StudentDto newStudent = new StudentDto(this.studentCounter, name, surname, midTerm, finalTerm, birthDate, studentType);
                 StudentDto createdStudent = create(newStudent);
 
                 if (createdStudent != null) {
