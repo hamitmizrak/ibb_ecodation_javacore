@@ -30,6 +30,7 @@ public class StudentDto implements Serializable {
     private Double midTerm;      // Vize notu
     private Double finalTerm;    // Final notu
     private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
+    private String status;       // Geçti mi ? Kaldı mı ?
     private LocalDate birthDate; // Doğum günü
     private Date createdDate;    // Sistem otomatik tarihi
 
@@ -50,6 +51,7 @@ public class StudentDto implements Serializable {
         this.surname = surname;
         this.midTerm = midTerm;
         this.finalTerm = finalTerm;
+        this.status = determineStatus();
         this.birthDate = birthDate;
         this.createdDate = new Date(System.currentTimeMillis());
         this.resultTerm = calculateResult();
@@ -66,6 +68,13 @@ public class StudentDto implements Serializable {
             return (midTerm * 0.4 + finalTerm * 0.6);
     }
 
+    // **📌 Status: Geçme / Kalma**
+    private String determineStatus() {
+        return (this.resultTerm >= 50) ? "Geçti" : "Kaldı";
+    }
+
+
+    /// ///////////////////////////////////////////////////////////////////////////////
     // Getter And Setter
     public Integer getId() {
         return id;
@@ -117,6 +126,14 @@ public class StudentDto implements Serializable {
 
     public Double getResultTerm() {
         return resultTerm;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setResultTerm(Double resultTerm) {
