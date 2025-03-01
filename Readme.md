@@ -8362,474 +8362,6 @@ Toplama sonucu: 8
 Java Enum, sabit değerleri tanımlamak için güçlü bir yapıdır. Sadece sabit listeleri tutmakla kalmaz, aynı zamanda veri ve metotlar içerebilir, dolayısıyla `enum`'lar nesne yönelimli programlamanın avantajlarından yararlanabilir. Enum'ları uygun şekilde kullanarak, hem kodunuzu daha okunabilir hale getirebilir hem de hata riskini minimize edebilirsiniz.
 
 
-## Record
-```sh 
-
-```
----
-# **Java'da Record (Kayıt) Nedir?**
-Java 14 ile birlikte **Record** yapısı tanıtıldı ve Java 16 itibarıyla **tamamen kararlı (stable)** hale geldi. **Record**, özellikle veri taşıma nesneleri (DTO - Data Transfer Object) için optimize edilmiş, **immutable (değiştirilemez)** ve **daha az kod gerektiren** bir veri yapısıdır.
-
-### **Record Neden Kullanılır?**
-Record’lar, özellikle **veri saklamak** ve **bu verilere erişimi sağlamak** amacıyla kullanılan sınıflardır. Geleneksel Java sınıflarına göre avantajları şunlardır:
-- **Daha az kod yazma gereksinimi**: Getter, constructor, `equals()`, `hashCode()` ve `toString()` gibi metotları otomatik olarak oluşturur.
-- **Immutable (Değiştirilemez) yapı**: Bir Record nesnesinin alanları (`fields`) değiştirilemez.
-- **Daha iyi performans**: JVM tarafından optimize edilmiştir.
-
----
-
-## **Record Tanımlama ve Kullanımı**
-Bir **Record** tanımlamak için `record` anahtar kelimesi kullanılır. İçerisinde **field’ları (alanları)** tanımladıktan sonra, Java otomatik olarak **constructor, getter metotları, `equals()`, `hashCode()` ve `toString()` metotlarını oluşturur.**
-
-Örnek:
-```java
-public record Kisi(String ad, int yas) { }
-```
-Bu tanımlama, aşağıdaki klasik sınıfın yaptığı işi otomatik olarak gerçekleştirir:
-
-```java
-public class Kisi {
-    private final String ad;
-    private final int yas;
-
-    public Kisi(String ad, int yas) {
-        this.ad = ad;
-        this.yas = yas;
-    }
-
-    public String getAd() { return ad; }
-    public int getYas() { return yas; }
-
-    @Override
-    public boolean equals(Object o) { /* eşitlik kontrolü */ }
-    
-    @Override
-    public int hashCode() { /* hash hesaplama */ }
-
-    @Override
-    public String toString() { return "Kisi[ad=" + ad + ", yas=" + yas + "]"; }
-}
-```
-**Görüldüğü gibi `record`, büyük miktarda kod yazmayı önlüyor!**
-
----
-
-## **Record Kullanımı**
-Bir `record` nesnesi oluşturma ve kullanma:
-```java
-public class RecordOrnek {
-    public static void main(String[] args) {
-        Kisi kisi = new Kisi("Ahmet", 25);
-        
-        System.out.println(kisi.ad());  // "Ahmet"
-        System.out.println(kisi.yas()); // 25
-        System.out.println(kisi);       // Kisi[ad=Ahmet, yas=25]
-    }
-}
-```
-### **Çıktı:**
-```
-Ahmet
-25
-Kisi[ad=Ahmet, yas=25]
-```
-
----
-
-## **Record Özellikleri**
-### **1. Getter Metotları**
-Record içindeki değişkenlere erişmek için `getter` metotları kullanılır. Ancak, **getter metotlarının adı, değişken adıyla aynıdır** (Yani `getAd()` yerine doğrudan `ad()` kullanılır):
-
-```java
-public record Kitap(String ad, String yazar) { }
-
-public class Test {
-    public static void main(String[] args) {
-        Kitap kitap = new Kitap("1984", "George Orwell");
-        System.out.println(kitap.ad());   // 1984
-        System.out.println(kitap.yazar()); // George Orwell
-    }
-}
-```
-
-### **2. Immutable (Değiştirilemez) Olması**
-Bir `record` nesnesi **değiştirilemez (immutable)** olduğu için, bir nesne oluşturulduktan sonra **alanları değiştirilemez**:
-
-```java
-Kisi kisi = new Kisi("Mehmet", 30);
-kisi.ad = "Ali"; // HATA! Record'lar immutable’dır.
-```
-Bu özellik sayesinde, Record’lar **veri taşıma nesneleri** (DTO) olarak çok güvenlidir.
-
-### **3. equals(), hashCode() ve toString() Otomatik Oluşturulur**
-Record kullanımı ile Java, `equals()`, `hashCode()` ve `toString()` metotlarını otomatik oluşturur.
-
-Örnek:
-```java
-Kisi kisi1 = new Kisi("Ahmet", 25);
-Kisi kisi2 = new Kisi("Ahmet", 25);
-
-System.out.println(kisi1.equals(kisi2)); // true
-System.out.println(kisi1.hashCode()); // Aynı hashCode üretir
-System.out.println(kisi2.hashCode());
-```
-
-**Çıktı:**
-```
-true
-1034248974
-1034248974
-```
-Bu metotlar **içerik bazlı karşılaştırma** yapar, yani iki nesne içindeki **alanlar aynıysa, nesneler eşit kabul edilir.**
-
----
-
-## **Record İçinde Metot Tanımlama**
-Record'lar içinde normal Java sınıflarında olduğu gibi metotlar tanımlanabilir:
-
-```java
-public record Daire(double yariCap) {
-    public double alan() {
-        return Math.PI * yariCap * yariCap;
-    }
-}
-```
-Kullanımı:
-```java
-Daire daire = new Daire(10);
-System.out.println(daire.alan()); // 314.159...
-```
-
----
-
-## **Record İçinde Statik Alan ve Metotlar**
-Record içinde **static alanlar** ve **static metotlar** kullanılabilir:
-
-```java
-public record Araba(String marka, String model) {
-    static String kategori = "Otomobil";
-
-    public static String getKategori() {
-        return kategori;
-    }
-}
-```
-Kullanımı:
-```java
-System.out.println(Araba.getKategori()); // "Otomobil"
-```
-
----
-
-## **Record İçinde Custom Constructor Kullanımı**
-Record'larda **custom constructor (özelleştirilmiş yapıcı metot)** tanımlanabilir.
-
-Örnek:
-```java
-public record Person(String ad, int yas) {
-    public Person {
-        if (yas < 0) {
-            throw new IllegalArgumentException("Yaş negatif olamaz!");
-        }
-    }
-}
-```
-Eğer negatif bir yaş verilirse, `IllegalArgumentException` fırlatılır:
-
-```java
-Person kisi = new Person("Ali", -5); // HATA!
-```
-**Çıktı:**
-```
-Exception in thread "main" java.lang.IllegalArgumentException: Yaş negatif olamaz!
-```
-
----
-
-## **Record ve Interface Kullanımı**
-Record'lar **interface** implement edebilir:
-
-```java
-interface Sekil {
-    double alan();
-}
-
-public record Dikdortgen(double genislik, double yukseklik) implements Sekil {
-    public double alan() {
-        return genislik * yukseklik;
-    }
-}
-```
-Kullanımı:
-```java
-Dikdortgen dikdortgen = new Dikdortgen(10, 5);
-System.out.println(dikdortgen.alan()); // 50.0
-```
-
----
-
-## **Record'ların Kısıtlamaları**
-1. **Değiştirilemez (Immutable) Olması**
-    - Record içindeki değişkenler `final` olduğu için **değiştirilemez**.
-
-2. **Extends Kullanılamaz (Miras Alamaz)**
-    - Record'lar **kalıtım desteklemez** (`extends` kullanamazsınız). Çünkü zaten `final` olarak tanımlıdır.
-
-   ```java
-   public class AltKisi extends Kisi { } // HATA! Record’lar extend edilemez.
-   ```
-
-3. **Lombok'a Alternatif Ama Her Zaman Uygun Değil**
-    - Record, `Lombok` gibi kütüphanelere bir alternatif olsa da **tüm projeler için uygun olmayabilir**. Eğer mutable (değiştirilebilir) veri modelleri gerekiyorsa, klasik `class` kullanımı daha uygun olur.
-
----
-
-## **Sonuç**
-Java Record'lar, özellikle **veri taşıma nesneleri (DTO)** oluşturmak için harika bir özelliktir. Geleneksel `class`'lara kıyasla **daha az kod** yazarak, **immutable** ve **performanslı** veri yapıları oluşturmanızı sağlar. Eğer **kalıtım gerekmiyorsa** ve **sadece veri saklamak istiyorsanız**, Record kullanımı oldukça mantıklıdır.
-
-## Record Örneği
-```sh 
-
-```
----
-
-
-Mevcut kodlarınıza **Java Record** özelliğini eklemek için, `StudentDto` sınıfını bir **Record** olarak yeniden yazabiliriz. Java 14 ile gelen **record** yapısı, sınıfları immutable (değiştirilemez) hale getirir ve **boilerplate kodları** (getter, setter, equals, hashCode, toString) otomatik oluşturur.
-
-### **Güncellenmiş StudentDto.java (Record Kullanımı)**
-Aşağıdaki gibi `StudentDto` sınıfınızı bir **Record** haline getirdim:
-
-```java
-package com.hamitmizrak.project_step2_file;
-
-import com.hamitmizrak.project.step2.EStudentType;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
-
-// Java Record Kullanımı
-public record StudentDto(
-        Integer id,
-        String name,
-        String surname,
-        EStudentType eStudentType, // Enum Öğrenci Türü
-        Double midTerm,      // Vize notu
-        Double finalTerm,    // Final notu
-        Double resultTerm,   // Sonuç Notu: (Vize%40 + Final%60)
-        LocalDate birthDate, // Doğum günü
-        Date createdDate     // Sistem otomatik tarihi
-) implements Serializable {
-
-    // Serileştirme
-    private static final long serialVersionUID = 5563646556456565465L;
-
-    // Constructor (Vize ve Final notuna göre otomatik result hesaplama)
-    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
-        this(id, name, surname, eStudentType, midTerm, finalTerm, calculateResult(midTerm, finalTerm), birthDate, new Date(System.currentTimeMillis()));
-    }
-
-    // Not hesaplama metodu
-    private static Double calculateResult(Double midTerm, Double finalTerm) {
-        if (midTerm == null || finalTerm == null) return 0.0;
-        return (midTerm * 0.4 + finalTerm * 0.6);
-    }
-}
-```
-
----
-
-### **Neden Record Kullandık? Avantajları Neler?**
-✅ **Immutable (Değiştirilemez) Yapı**: Record nesneleri varsayılan olarak final olduğu için değiştirilemez. Bu da çoklu iş parçacıklı (multithreading) ortamlarda veri bütünlüğünü korur.  
-✅ **Boilerplate Kodları Otomatik Üretiyor**: Getter, toString, equals ve hashCode metodları otomatik olarak tanımlanır, manuel yazmaya gerek yok.  
-✅ **Daha Az Kod**: Geleneksel Java sınıflarında birçok getter/setter tanımlamak yerine, sadece **record** ile ilgili alanları belirterek işlem yapabiliriz.  
-✅ **Veri Taşıma Nesneleri (DTO) için İdeal**: Özellikle veri transferi amacıyla kullanılan nesneler için **record** mükemmel bir seçimdir.  
-✅ **Thread-Safe**: İçeriği değiştirilemez olduğu için **eşzamanlı (concurrent)** çalışmalarda güvenli kullanım sağlar.
-
----
-
-### **Mevcut Sisteme Nasıl Entegre Edilecek?**
-1. **Güncellenmiş `StudentDto.java` dosyanızı ekleyin.**
-2. **`StudentManagementSystem` içinde `StudentDto` nesnesi oluştururken `new StudentDto(...)` yerine doğrudan `new StudentDto(..., ..., ..., ...)` kullanabilirsiniz.**
-3. **Getter metodlarına ihtiyacınız olmayacak.** Örneğin:
-   ```java
-   System.out.println(studentDto.name()); // Eskiden getName() idi
-   ```
-4. **Setter metodları olmadığı için `StudentDto` nesnesi immutable olacak.** Yeni değerlerle bir `StudentDto` nesnesi oluşturmanız gerekecek.
-
----
-
-Bu güncelleme ile kodunuz daha temiz, güvenli ve performanslı hale gelecektir. Record'ları kullanarak kodunuzu daha modern hale getirmiş oldunuz! 🚀
-
-
-## Record Dezavantajları
-```sh 
-
-```
----
-
-### **Java Record Kullanmanın Dezavantajları**
-Java'da **record** kullanımı birçok avantaj sağlasa da, bazı durumlarda **klasik sınıflara göre bazı dezavantajları** olabilir. İşte bu dezavantajlar:
-
----
-
-## **1. Immutable (Değiştirilemez) Yapı**
-**❌ Dezavantaj:**
-- `record` nesneleri değiştirilemez (immutable) olduğu için, bir alanın güncellenmesi gerektiğinde **yeni bir nesne oluşturmak** zorundayız.
-- Büyük veri nesnelerinde, **her güncelleme için yeni bir nesne yaratılması performans kaybına** yol açabilir.
-
-**Örnek:**
-```java
-StudentDto student = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
-student.name = "Ahmet"; // ❌ Derleme hatası! Record'lar değiştirilemez.
-```
-**Çözüm:**
-- Değişiklik gerektiğinde, eski nesne yerine yeni bir `StudentDto` oluşturmalısınız:
-```java
-StudentDto updatedStudent = new StudentDto(student.id(), "Ahmet", student.surname(), student.midTerm(), student.finalTerm(), student.birthDate(), student.eStudentType());
-```
-Bu, özellikle sık güncellenen nesnelerde **gereksiz bellek kullanımı (memory overhead)** ve **GC (Garbage Collection) yükü** oluşturabilir.
-
----
-
-## **2. Kalıtımı (Inheritance) Desteklemez**
-**❌ Dezavantaj:**
-- `record` sınıfları **kalıtımı desteklemez** (`extends` kullanamazsınız).
-- Java’da OOP prensiplerine uyan klasik sınıflarda **bir temel sınıfı (base class) genişletebilirken**, `record` kullanarak bunu yapamazsınız.
-
-**Örnek:**
-```java
-public record StudentDto(Integer id, String name) extends Person { } // ❌ Hata! Record'lar kalıtım desteklemez.
-```
-**Çözüm:**
-- Eğer miras almanız gereken bir sınıf varsa, klasik bir **sınıf (class)** kullanmalısınız.
-- Ancak `record`, **interface (arayüz) uygulayabilir**:
-```java
-public record StudentDto(Integer id, String name) implements Serializable { }
-```
-
----
-
-## **3. Getter ve Setter Özelleştirememe**
-**❌ Dezavantaj:**
-- `record` otomatik olarak `getter` metotları oluşturur. Ancak, bu metotların adını değiştiremez veya özelleştiremezsiniz.
-- Setter metodu olmadığı için, özel validasyon (doğrulama) ekleyemezsiniz.
-
-**Örnek:**
-```java
-public record StudentDto(Integer id, String name) {
-    public String getFullName() { // ❌ Klasik getter metodu yazamazsınız!
-        return name();
-    }
-}
-```
-**Çözüm:**
-- Özel bir metot tanımlayabilirsiniz ama `getter` adlarını değiştiremezsiniz.
-```java
-public record StudentDto(Integer id, String name) {
-    public String fullName() {  // ✅ Getter değil, normal bir metod!
-        return name.toUpperCase();
-    }
-}
-```
----
-
-## **4. Büyük Veriler İçin Performans Sorunları**
-**❌ Dezavantaj:**
-- `record` nesneleri immutable olduğu için, **büyük veri yapılarında gereksiz kopyalama (copying overhead)** oluşabilir.
-- Çok fazla alan içeren bir `record`, her değişiklikte **yeni bir nesne oluşturduğu için bellek tüketimi artabilir**.
-
-**Örnek:**
-```java
-StudentDto student1 = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
-StudentDto student2 = new StudentDto(student1.id(), student1.name(), student1.surname(), 55.0, student1.finalTerm(), student1.birthDate(), student1.eStudentType());
-```
-Burada, sadece `midTerm` değiştirilecek ama **tamamen yeni bir nesne oluşturuluyor**. Eğer milyonlarca `StudentDto` nesneniz varsa, bu **bellek (heap) yükü** oluşturabilir.
-
-**Çözüm:**
-- Eğer sık güncelleme gerektiren nesneleriniz varsa, `record` yerine klasik **mutable sınıflar** kullanın.
-
----
-
-## **5. Varsayılan Constructor Kısıtlamaları**
-**❌ Dezavantaj:**
-- `record`’lar, varsayılan olarak **tüm alanları parametre olarak almak zorundadır**.
-- Varsayılan (default) bir constructor tanımlamak ve bazı değerleri atlamak zordur.
-
-**Örnek:**
-```java
-public record StudentDto(Integer id, String name) {
-    public StudentDto() {  // ❌ Hata! Parametresiz constructor desteklenmez.
-        this(0, "Bilinmeyen");
-    }
-}
-```
-**Çözüm:**
-- `record` içinde, özel bir constructor tanımlayabilirsiniz ama **tüm alanları mutlaka vermeniz gerekir**.
-```java
-public record StudentDto(Integer id, String name) {
-    public StudentDto() {
-        this(0, "Bilinmeyen"); // ✅ Geçerli constructor
-    }
-}
-```
-
----
-
-## **6. Özel İşlevsellik (Business Logic) İçin Kısıtlamalar**
-**❌ Dezavantaj:**
-- `record` nesneleri **veri taşıma (DTO)** amacıyla tasarlandığı için, içinde **fazla iş mantığı (business logic) barındırmak uygun değildir**.
-- Eğer bir sınıfta iş mantığı (örneğin, **not hesaplama, validasyon, iş kuralları**) barındırmak istiyorsanız, **record yerine klasik sınıfları kullanmanız daha uygundur**.
-
-**Örnek:**
-```java
-public record StudentDto(Integer id, String name, Double midTerm, Double finalTerm) {
-    public Double calculateResult() { // ✅ İş mantığı ekleyebiliriz ama önerilmez.
-        return (midTerm * 0.4) + (finalTerm * 0.6);
-    }
-}
-```
-Burada küçük hesaplamalar yapabiliriz, ancak `record`'lar büyük iş mantıklarını içermemelidir.
-
-**Çözüm:**
-- İş mantıklarını başka bir hizmet (service) sınıfına taşıyın:
-```java
-public class StudentService {
-    public static Double calculateResult(StudentDto student) {
-        return (student.midTerm() * 0.4) + (student.finalTerm() * 0.6);
-    }
-}
-```
-
----
-
-## **Sonuç: Record Kullanmalı mıyım?**
-| **Özellik**               | **Record Kullanımı Uygun** | **Record Kullanımı Uygun Değil** |
-|---------------------------|---------------------------|---------------------------------|
-| **Immutable nesne**       | ✅ Evet                   | ❌ Hayır                        |
-| **DTO veya Veri Modeli**  | ✅ Evet                   | ❌ Hayır                        |
-| **Kapsamlı iş mantığı**   | ❌ Hayır                  | ✅ Evet                         |
-| **Kalıtım (Inheritance)** | ❌ Hayır                  | ✅ Evet                         |
-| **Sık güncellenen nesneler** | ❌ Hayır              | ✅ Evet                         |
-| **Getter/Setter özelleştirme** | ❌ Hayır          | ✅ Evet                         |
-
-### **Kullanmalısınız Eğer:**
-✅ **DTO (Data Transfer Object) gibi basit veri taşıma sınıfları** oluşturuyorsanız.  
-✅ **Immutable nesneler istiyorsanız** ve değişiklik gerekmiyorsa.  
-✅ **Kısa ve temiz kod yazmak istiyorsanız**.
-
-### **Kullanmamalısınız Eğer:**
-❌ **Veri değiştirmeniz (mutable nesneler) gerekiyorsa**.  
-❌ **Kapsamlı iş mantıkları barındıran bir sınıf oluşturuyorsanız**.  
-❌ **Büyük nesneler oluşturup sık güncelliyorsanız**, bellek yönetimi açısından sorun yaratabilir.  
-❌ **Kalıtım (inheritance) kullanmanız gerekiyorsa**.
-
----
-
-### **Genel Değerlendirme**
-- Küçük ve **basit veri sınıfları** için **Record** harika bir seçimdir. ✅
-- Büyük, sık değiştirilen veya **iş mantığı içeren sınıflar** için **klasik sınıflar daha iyi bir seçenektir**. 🚀
-
 ## Inner Class
 ```sh 
 
@@ -10562,20 +10094,480 @@ public class Main {
 Java'da **abstract yapılar, kodun daha düzenli ve yönetilebilir olmasını sağlar.**
 
 
-## Cipher (AES/DES/RSA/HASHING)
+
+## Record
+```sh 
+
+```
+---
+# **Java'da Record (Kayıt) Nedir?**
+Java 14 ile birlikte **Record** yapısı tanıtıldı ve Java 16 itibarıyla **tamamen kararlı (stable)** hale geldi. **Record**, özellikle veri taşıma nesneleri (DTO - Data Transfer Object) için optimize edilmiş, **immutable (değiştirilemez)** ve **daha az kod gerektiren** bir veri yapısıdır.
+
+### **Record Neden Kullanılır?**
+Record’lar, özellikle **veri saklamak** ve **bu verilere erişimi sağlamak** amacıyla kullanılan sınıflardır. Geleneksel Java sınıflarına göre avantajları şunlardır:
+- **Daha az kod yazma gereksinimi**: Getter, constructor, `equals()`, `hashCode()` ve `toString()` gibi metotları otomatik olarak oluşturur.
+- **Immutable (Değiştirilemez) yapı**: Bir Record nesnesinin alanları (`fields`) değiştirilemez.
+- **Daha iyi performans**: JVM tarafından optimize edilmiştir.
+
+---
+
+## **Record Tanımlama ve Kullanımı**
+Bir **Record** tanımlamak için `record` anahtar kelimesi kullanılır. İçerisinde **field’ları (alanları)** tanımladıktan sonra, Java otomatik olarak **constructor, getter metotları, `equals()`, `hashCode()` ve `toString()` metotlarını oluşturur.**
+
+Örnek:
+```java
+public record Kisi(String ad, int yas) { }
+```
+Bu tanımlama, aşağıdaki klasik sınıfın yaptığı işi otomatik olarak gerçekleştirir:
+
+```java
+public class Kisi {
+    private final String ad;
+    private final int yas;
+
+    public Kisi(String ad, int yas) {
+        this.ad = ad;
+        this.yas = yas;
+    }
+
+    public String getAd() { return ad; }
+    public int getYas() { return yas; }
+
+    @Override
+    public boolean equals(Object o) { /* eşitlik kontrolü */ }
+    
+    @Override
+    public int hashCode() { /* hash hesaplama */ }
+
+    @Override
+    public String toString() { return "Kisi[ad=" + ad + ", yas=" + yas + "]"; }
+}
+```
+**Görüldüğü gibi `record`, büyük miktarda kod yazmayı önlüyor!**
+
+---
+
+## **Record Kullanımı**
+Bir `record` nesnesi oluşturma ve kullanma:
+```java
+public class RecordOrnek {
+    public static void main(String[] args) {
+        Kisi kisi = new Kisi("Ahmet", 25);
+        
+        System.out.println(kisi.ad());  // "Ahmet"
+        System.out.println(kisi.yas()); // 25
+        System.out.println(kisi);       // Kisi[ad=Ahmet, yas=25]
+    }
+}
+```
+### **Çıktı:**
+```
+Ahmet
+25
+Kisi[ad=Ahmet, yas=25]
+```
+
+---
+
+## **Record Özellikleri**
+### **1. Getter Metotları**
+Record içindeki değişkenlere erişmek için `getter` metotları kullanılır. Ancak, **getter metotlarının adı, değişken adıyla aynıdır** (Yani `getAd()` yerine doğrudan `ad()` kullanılır):
+
+```java
+public record Kitap(String ad, String yazar) { }
+
+public class Test {
+    public static void main(String[] args) {
+        Kitap kitap = new Kitap("1984", "George Orwell");
+        System.out.println(kitap.ad());   // 1984
+        System.out.println(kitap.yazar()); // George Orwell
+    }
+}
+```
+
+### **2. Immutable (Değiştirilemez) Olması**
+Bir `record` nesnesi **değiştirilemez (immutable)** olduğu için, bir nesne oluşturulduktan sonra **alanları değiştirilemez**:
+
+```java
+Kisi kisi = new Kisi("Mehmet", 30);
+kisi.ad = "Ali"; // HATA! Record'lar immutable’dır.
+```
+Bu özellik sayesinde, Record’lar **veri taşıma nesneleri** (DTO) olarak çok güvenlidir.
+
+### **3. equals(), hashCode() ve toString() Otomatik Oluşturulur**
+Record kullanımı ile Java, `equals()`, `hashCode()` ve `toString()` metotlarını otomatik oluşturur.
+
+Örnek:
+```java
+Kisi kisi1 = new Kisi("Ahmet", 25);
+Kisi kisi2 = new Kisi("Ahmet", 25);
+
+System.out.println(kisi1.equals(kisi2)); // true
+System.out.println(kisi1.hashCode()); // Aynı hashCode üretir
+System.out.println(kisi2.hashCode());
+```
+
+**Çıktı:**
+```
+true
+1034248974
+1034248974
+```
+Bu metotlar **içerik bazlı karşılaştırma** yapar, yani iki nesne içindeki **alanlar aynıysa, nesneler eşit kabul edilir.**
+
+---
+
+## **Record İçinde Metot Tanımlama**
+Record'lar içinde normal Java sınıflarında olduğu gibi metotlar tanımlanabilir:
+
+```java
+public record Daire(double yariCap) {
+    public double alan() {
+        return Math.PI * yariCap * yariCap;
+    }
+}
+```
+Kullanımı:
+```java
+Daire daire = new Daire(10);
+System.out.println(daire.alan()); // 314.159...
+```
+
+---
+
+## **Record İçinde Statik Alan ve Metotlar**
+Record içinde **static alanlar** ve **static metotlar** kullanılabilir:
+
+```java
+public record Araba(String marka, String model) {
+    static String kategori = "Otomobil";
+
+    public static String getKategori() {
+        return kategori;
+    }
+}
+```
+Kullanımı:
+```java
+System.out.println(Araba.getKategori()); // "Otomobil"
+```
+
+---
+
+## **Record İçinde Custom Constructor Kullanımı**
+Record'larda **custom constructor (özelleştirilmiş yapıcı metot)** tanımlanabilir.
+
+Örnek:
+```java
+public record Person(String ad, int yas) {
+    public Person {
+        if (yas < 0) {
+            throw new IllegalArgumentException("Yaş negatif olamaz!");
+        }
+    }
+}
+```
+Eğer negatif bir yaş verilirse, `IllegalArgumentException` fırlatılır:
+
+```java
+Person kisi = new Person("Ali", -5); // HATA!
+```
+**Çıktı:**
+```
+Exception in thread "main" java.lang.IllegalArgumentException: Yaş negatif olamaz!
+```
+
+---
+
+## **Record ve Interface Kullanımı**
+Record'lar **interface** implement edebilir:
+
+```java
+interface Sekil {
+    double alan();
+}
+
+public record Dikdortgen(double genislik, double yukseklik) implements Sekil {
+    public double alan() {
+        return genislik * yukseklik;
+    }
+}
+```
+Kullanımı:
+```java
+Dikdortgen dikdortgen = new Dikdortgen(10, 5);
+System.out.println(dikdortgen.alan()); // 50.0
+```
+
+---
+
+## **Record'ların Kısıtlamaları**
+1. **Değiştirilemez (Immutable) Olması**
+    - Record içindeki değişkenler `final` olduğu için **değiştirilemez**.
+
+2. **Extends Kullanılamaz (Miras Alamaz)**
+    - Record'lar **kalıtım desteklemez** (`extends` kullanamazsınız). Çünkü zaten `final` olarak tanımlıdır.
+
+   ```java
+   public class AltKisi extends Kisi { } // HATA! Record’lar extend edilemez.
+   ```
+
+3. **Lombok'a Alternatif Ama Her Zaman Uygun Değil**
+    - Record, `Lombok` gibi kütüphanelere bir alternatif olsa da **tüm projeler için uygun olmayabilir**. Eğer mutable (değiştirilebilir) veri modelleri gerekiyorsa, klasik `class` kullanımı daha uygun olur.
+
+---
+
+## **Sonuç**
+Java Record'lar, özellikle **veri taşıma nesneleri (DTO)** oluşturmak için harika bir özelliktir. Geleneksel `class`'lara kıyasla **daha az kod** yazarak, **immutable** ve **performanslı** veri yapıları oluşturmanızı sağlar. Eğer **kalıtım gerekmiyorsa** ve **sadece veri saklamak istiyorsanız**, Record kullanımı oldukça mantıklıdır.
+
+## Record Örneği
 ```sh 
 
 ```
 ---
 
 
+Mevcut kodlarınıza **Java Record** özelliğini eklemek için, `StudentDto` sınıfını bir **Record** olarak yeniden yazabiliriz. Java 14 ile gelen **record** yapısı, sınıfları immutable (değiştirilemez) hale getirir ve **boilerplate kodları** (getter, setter, equals, hashCode, toString) otomatik oluşturur.
 
-## Diğer
+### **Güncellenmiş StudentDto.java (Record Kullanımı)**
+Aşağıdaki gibi `StudentDto` sınıfınızı bir **Record** haline getirdim:
+
+```java
+package com.hamitmizrak.project_step2_file;
+
+import com.hamitmizrak.project.step2.EStudentType;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
+
+// Java Record Kullanımı
+public record StudentDto(
+        Integer id,
+        String name,
+        String surname,
+        EStudentType eStudentType, // Enum Öğrenci Türü
+        Double midTerm,      // Vize notu
+        Double finalTerm,    // Final notu
+        Double resultTerm,   // Sonuç Notu: (Vize%40 + Final%60)
+        LocalDate birthDate, // Doğum günü
+        Date createdDate     // Sistem otomatik tarihi
+) implements Serializable {
+
+    // Serileştirme
+    private static final long serialVersionUID = 5563646556456565465L;
+
+    // Constructor (Vize ve Final notuna göre otomatik result hesaplama)
+    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
+        this(id, name, surname, eStudentType, midTerm, finalTerm, calculateResult(midTerm, finalTerm), birthDate, new Date(System.currentTimeMillis()));
+    }
+
+    // Not hesaplama metodu
+    private static Double calculateResult(Double midTerm, Double finalTerm) {
+        if (midTerm == null || finalTerm == null) return 0.0;
+        return (midTerm * 0.4 + finalTerm * 0.6);
+    }
+}
+```
+
+---
+
+### **Neden Record Kullandık? Avantajları Neler?**
+✅ **Immutable (Değiştirilemez) Yapı**: Record nesneleri varsayılan olarak final olduğu için değiştirilemez. Bu da çoklu iş parçacıklı (multithreading) ortamlarda veri bütünlüğünü korur.  
+✅ **Boilerplate Kodları Otomatik Üretiyor**: Getter, toString, equals ve hashCode metodları otomatik olarak tanımlanır, manuel yazmaya gerek yok.  
+✅ **Daha Az Kod**: Geleneksel Java sınıflarında birçok getter/setter tanımlamak yerine, sadece **record** ile ilgili alanları belirterek işlem yapabiliriz.  
+✅ **Veri Taşıma Nesneleri (DTO) için İdeal**: Özellikle veri transferi amacıyla kullanılan nesneler için **record** mükemmel bir seçimdir.  
+✅ **Thread-Safe**: İçeriği değiştirilemez olduğu için **eşzamanlı (concurrent)** çalışmalarda güvenli kullanım sağlar.
+
+---
+
+### **Mevcut Sisteme Nasıl Entegre Edilecek?**
+1. **Güncellenmiş `StudentDto.java` dosyanızı ekleyin.**
+2. **`StudentManagementSystem` içinde `StudentDto` nesnesi oluştururken `new StudentDto(...)` yerine doğrudan `new StudentDto(..., ..., ..., ...)` kullanabilirsiniz.**
+3. **Getter metodlarına ihtiyacınız olmayacak.** Örneğin:
+   ```java
+   System.out.println(studentDto.name()); // Eskiden getName() idi
+   ```
+4. **Setter metodları olmadığı için `StudentDto` nesnesi immutable olacak.** Yeni değerlerle bir `StudentDto` nesnesi oluşturmanız gerekecek.
+
+---
+
+Bu güncelleme ile kodunuz daha temiz, güvenli ve performanslı hale gelecektir. Record'ları kullanarak kodunuzu daha modern hale getirmiş oldunuz! 🚀
+
+
+## Record Dezavantajları
 ```sh 
 
 ```
 ---
 
+### **Java Record Kullanmanın Dezavantajları**
+Java'da **record** kullanımı birçok avantaj sağlasa da, bazı durumlarda **klasik sınıflara göre bazı dezavantajları** olabilir. İşte bu dezavantajlar:
+
+---
+
+## **1. Immutable (Değiştirilemez) Yapı**
+**❌ Dezavantaj:**
+- `record` nesneleri değiştirilemez (immutable) olduğu için, bir alanın güncellenmesi gerektiğinde **yeni bir nesne oluşturmak** zorundayız.
+- Büyük veri nesnelerinde, **her güncelleme için yeni bir nesne yaratılması performans kaybına** yol açabilir.
+
+**Örnek:**
+```java
+StudentDto student = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
+student.name = "Ahmet"; // ❌ Derleme hatası! Record'lar değiştirilemez.
+```
+**Çözüm:**
+- Değişiklik gerektiğinde, eski nesne yerine yeni bir `StudentDto` oluşturmalısınız:
+```java
+StudentDto updatedStudent = new StudentDto(student.id(), "Ahmet", student.surname(), student.midTerm(), student.finalTerm(), student.birthDate(), student.eStudentType());
+```
+Bu, özellikle sık güncellenen nesnelerde **gereksiz bellek kullanımı (memory overhead)** ve **GC (Garbage Collection) yükü** oluşturabilir.
+
+---
+
+## **2. Kalıtımı (Inheritance) Desteklemez**
+**❌ Dezavantaj:**
+- `record` sınıfları **kalıtımı desteklemez** (`extends` kullanamazsınız).
+- Java’da OOP prensiplerine uyan klasik sınıflarda **bir temel sınıfı (base class) genişletebilirken**, `record` kullanarak bunu yapamazsınız.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) extends Person { } // ❌ Hata! Record'lar kalıtım desteklemez.
+```
+**Çözüm:**
+- Eğer miras almanız gereken bir sınıf varsa, klasik bir **sınıf (class)** kullanmalısınız.
+- Ancak `record`, **interface (arayüz) uygulayabilir**:
+```java
+public record StudentDto(Integer id, String name) implements Serializable { }
+```
+
+---
+
+## **3. Getter ve Setter Özelleştirememe**
+**❌ Dezavantaj:**
+- `record` otomatik olarak `getter` metotları oluşturur. Ancak, bu metotların adını değiştiremez veya özelleştiremezsiniz.
+- Setter metodu olmadığı için, özel validasyon (doğrulama) ekleyemezsiniz.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) {
+    public String getFullName() { // ❌ Klasik getter metodu yazamazsınız!
+        return name();
+    }
+}
+```
+**Çözüm:**
+- Özel bir metot tanımlayabilirsiniz ama `getter` adlarını değiştiremezsiniz.
+```java
+public record StudentDto(Integer id, String name) {
+    public String fullName() {  // ✅ Getter değil, normal bir metod!
+        return name.toUpperCase();
+    }
+}
+```
+---
+
+## **4. Büyük Veriler İçin Performans Sorunları**
+**❌ Dezavantaj:**
+- `record` nesneleri immutable olduğu için, **büyük veri yapılarında gereksiz kopyalama (copying overhead)** oluşabilir.
+- Çok fazla alan içeren bir `record`, her değişiklikte **yeni bir nesne oluşturduğu için bellek tüketimi artabilir**.
+
+**Örnek:**
+```java
+StudentDto student1 = new StudentDto(1, "Ali", "Veli", 50.0, 80.0, LocalDate.of(2000, 5, 10), EStudentType.UNDERGRADUATE);
+StudentDto student2 = new StudentDto(student1.id(), student1.name(), student1.surname(), 55.0, student1.finalTerm(), student1.birthDate(), student1.eStudentType());
+```
+Burada, sadece `midTerm` değiştirilecek ama **tamamen yeni bir nesne oluşturuluyor**. Eğer milyonlarca `StudentDto` nesneniz varsa, bu **bellek (heap) yükü** oluşturabilir.
+
+**Çözüm:**
+- Eğer sık güncelleme gerektiren nesneleriniz varsa, `record` yerine klasik **mutable sınıflar** kullanın.
+
+---
+
+## **5. Varsayılan Constructor Kısıtlamaları**
+**❌ Dezavantaj:**
+- `record`’lar, varsayılan olarak **tüm alanları parametre olarak almak zorundadır**.
+- Varsayılan (default) bir constructor tanımlamak ve bazı değerleri atlamak zordur.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name) {
+    public StudentDto() {  // ❌ Hata! Parametresiz constructor desteklenmez.
+        this(0, "Bilinmeyen");
+    }
+}
+```
+**Çözüm:**
+- `record` içinde, özel bir constructor tanımlayabilirsiniz ama **tüm alanları mutlaka vermeniz gerekir**.
+```java
+public record StudentDto(Integer id, String name) {
+    public StudentDto() {
+        this(0, "Bilinmeyen"); // ✅ Geçerli constructor
+    }
+}
+```
+
+---
+
+## **6. Özel İşlevsellik (Business Logic) İçin Kısıtlamalar**
+**❌ Dezavantaj:**
+- `record` nesneleri **veri taşıma (DTO)** amacıyla tasarlandığı için, içinde **fazla iş mantığı (business logic) barındırmak uygun değildir**.
+- Eğer bir sınıfta iş mantığı (örneğin, **not hesaplama, validasyon, iş kuralları**) barındırmak istiyorsanız, **record yerine klasik sınıfları kullanmanız daha uygundur**.
+
+**Örnek:**
+```java
+public record StudentDto(Integer id, String name, Double midTerm, Double finalTerm) {
+    public Double calculateResult() { // ✅ İş mantığı ekleyebiliriz ama önerilmez.
+        return (midTerm * 0.4) + (finalTerm * 0.6);
+    }
+}
+```
+Burada küçük hesaplamalar yapabiliriz, ancak `record`'lar büyük iş mantıklarını içermemelidir.
+
+**Çözüm:**
+- İş mantıklarını başka bir hizmet (service) sınıfına taşıyın:
+```java
+public class StudentService {
+    public static Double calculateResult(StudentDto student) {
+        return (student.midTerm() * 0.4) + (student.finalTerm() * 0.6);
+    }
+}
+```
+
+---
+
+## **Sonuç: Record Kullanmalı mıyım?**
+| **Özellik**               | **Record Kullanımı Uygun** | **Record Kullanımı Uygun Değil** |
+|---------------------------|---------------------------|---------------------------------|
+| **Immutable nesne**       | ✅ Evet                   | ❌ Hayır                        |
+| **DTO veya Veri Modeli**  | ✅ Evet                   | ❌ Hayır                        |
+| **Kapsamlı iş mantığı**   | ❌ Hayır                  | ✅ Evet                         |
+| **Kalıtım (Inheritance)** | ❌ Hayır                  | ✅ Evet                         |
+| **Sık güncellenen nesneler** | ❌ Hayır              | ✅ Evet                         |
+| **Getter/Setter özelleştirme** | ❌ Hayır          | ✅ Evet                         |
+
+### **Kullanmalısınız Eğer:**
+✅ **DTO (Data Transfer Object) gibi basit veri taşıma sınıfları** oluşturuyorsanız.  
+✅ **Immutable nesneler istiyorsanız** ve değişiklik gerekmiyorsa.  
+✅ **Kısa ve temiz kod yazmak istiyorsanız**.
+
+### **Kullanmamalısınız Eğer:**
+❌ **Veri değiştirmeniz (mutable nesneler) gerekiyorsa**.  
+❌ **Kapsamlı iş mantıkları barındıran bir sınıf oluşturuyorsanız**.  
+❌ **Büyük nesneler oluşturup sık güncelliyorsanız**, bellek yönetimi açısından sorun yaratabilir.  
+❌ **Kalıtım (inheritance) kullanmanız gerekiyorsa**.
+
+---
+
+### **Genel Değerlendirme**
+- Küçük ve **basit veri sınıfları** için **Record** harika bir seçimdir. ✅
+- Büyük, sık değiştirilen veya **iş mantığı içeren sınıflar** için **klasik sınıflar daha iyi bir seçenektir**. 🚀
+
+## Generics Nedir ?
+```sh 
+
+```
+---
 
 
 ## Collection Nedir ?
@@ -11066,4 +11058,8 @@ Stream API, Java 8’in getirdiği en güçlü özelliklerden biridir ve modern 
 
 
 
+## Cipher (AES/DES/RSA/HASHING)
+```sh 
 
+```
+---
