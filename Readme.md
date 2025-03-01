@@ -9699,137 +9699,6 @@ Java'da **MVC mimarisi**, uygulamaların sürdürülebilirliğini ve genişletil
 
 Bu mimariyi kullanarak, hem masaüstü hem de web tabanlı uygulamalar geliştirebilirsiniz! 🚀
 
-## Interface Nedir ?
-```sh 
-
-```
----
-
-# **Java'da Interface (Arayüz) Nedir?**
-Java'da **interface (arayüz)**, bir sınıfın uygulayabileceği bir **sözleşmeyi (contract)** tanımlayan bir yapıdır. Interface, bir sınıfın belirli metodları uygulamasını garanti eder, ancak metodların içeriğini (implementasyonunu) belirlemez. Yani, bir interface sadece metod imzalarını tanımlar ve bu metodları uygulayan sınıflar, bu metodları kendilerine uygun şekilde doldurmalıdır.
-
-Java'daki interface'ler **çoklu kalıtımı (multiple inheritance)** desteklemek ve **bağımsız modüler kod yazılmasını** sağlamak için kullanılır. **Polimorfizm (çok biçimlilik)** ve **bağımsızlık (decoupling)** gibi nesne yönelimli programlama (OOP) prensiplerini destekler.
-
----
-
-## **1. Interface Tanımı ve Kullanımı**
-### **Temel Interface Tanımı**
-Bir interface, **`interface`** anahtar kelimesiyle tanımlanır. İçinde **soyut (abstract) metodlar** ve **sabit değişkenler (constants)** barındırabilir.
-
-```java
-interface Animal {
-    void eat();  // Soyut metod
-    void sleep();
-}
-```
-- **Metodlar:** Varsayılan olarak **public ve abstract** olur, bu yüzden `public abstract` yazmaya gerek yoktur.
-- **Değişkenler:** Interface içindeki tüm değişkenler varsayılan olarak **public, static ve final** olur.
-
----
-
-## **2. Interface Kullanımı (Implement Edilmesi)**
-Bir sınıf, **`implements`** anahtar kelimesini kullanarak bir interface'i uygular (implement eder).
-
-### **Örnek: Bir Interface’i Uygulama**
-```java
-interface Animal {
-    void eat();
-    void sleep();
-}
-
-// Dog sınıfı, Animal interface'ini uyguluyor.
-class Dog implements Animal {
-    @Override
-    public void eat() {
-        System.out.println("Köpek yemek yiyor.");
-    }
-
-    @Override
-    public void sleep() {
-        System.out.println("Köpek uyuyor.");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Dog dog = new Dog();
-        dog.eat();  // Çıktı: Köpek yemek yiyor.
-        dog.sleep(); // Çıktı: Köpek uyuyor.
-    }
-}
-```
-Burada:
-- **`Dog` sınıfı**, `Animal` interface'ini uygulamak zorunda olduğu için `eat()` ve `sleep()` metodlarını tanımlamak zorundadır.
-- Eğer bir sınıf, bir interface’i uygular ancak tüm metodlarını tanımlamazsa, **abstract** olarak işaretlenmelidir.
-
----
-
-## **3. Interface İçinde Değişkenler (Sabitler)**
-Bir interface içinde tanımlanan değişkenler, **otomatik olarak public, static ve final olur**. Yani interface içindeki değişkenler **sabit (constant)** değerlerdir.
-
-### **Örnek: Interface İçinde Sabit Kullanımı**
-```java
-interface MathConstants {
-    double PI = 3.141592653589793; // public, static, final olarak kabul edilir.
-}
-
-// PI değerini kullanan bir sınıf
-class Circle {
-    public double getArea(double radius) {
-        return MathConstants.PI * radius * radius;
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Circle circle = new Circle();
-        System.out.println("Dairenin Alanı: " + circle.getArea(5));
-    }
-}
-```
-**Önemli Not:** Interface içindeki değişkenler **değiştirilemez**, çünkü **final** olarak kabul edilir.
-
----
-
-## **4. Çoklu Kalıtım (Multiple Inheritance) ve Interface**
-Java, **class’lar arasında çoklu kalıtımı (multiple inheritance) desteklemez**, ancak birden fazla interface uygulamaya izin verir. Bu, kodun daha esnek ve modüler olmasını sağlar.
-
-### **Örnek: Bir Sınıfın Birden Fazla Interface’i Uygulaması**
-```java
-interface Flyable {
-    void fly();
-}
-
-interface Swimmable {
-    void swim();
-}
-
-class Bird implements Flyable, Swimmable {
-    @Override
-    public void fly() {
-        System.out.println("Kuş uçuyor.");
-    }
-
-    @Override
-    public void swim() {
-        System.out.println("Kuş yüzebiliyor.");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Bird bird = new Bird();
-        bird.fly();  // Çıktı: Kuş uçuyor.
-        bird.swim(); // Çıktı: Kuş yüzebiliyor.
-    }
-}
-```
-**Burada:**
-- `Bird` sınıfı hem `Flyable` hem de `Swimmable` interface’ini uyguluyor.
-- Java, birden fazla interface uygulamayı desteklediği için `Bird` sınıfı birden fazla interface'in metodlarını yazabiliyor.
-
----
-
 ## **5. Java 8 ve Sonrasında Interface Geliştirmeleri**
 Java 8 ile birlikte **interface'ler artık gövdesi olan metotlara sahip olabilir**. Bunlar:
 1. **Default Metodlar** (default methods)
@@ -9974,11 +9843,548 @@ Bu yüzden sizin kodunuzda **CSV formatı**, öğrencileri dosyaya yazmak ve tek
 👉 **Öğrenci bilgilerini bir satır olarak kaydediyor ve tekrar nesneye dönüştürüyor.** 🚀
 
 
+## Interface Nedir ?
+```sh 
+
+```
+---
+
+# **Java'da Interface (Arayüz) Nedir?**
+Java'da **interface (arayüz)**, bir sınıfın uygulayabileceği bir **sözleşmeyi (contract)** tanımlayan bir yapıdır. Interface, bir sınıfın belirli metodları uygulamasını garanti eder, ancak metodların içeriğini (implementasyonunu) belirlemez. Yani, bir interface sadece metod imzalarını tanımlar ve bu metodları uygulayan sınıflar, bu metodları kendilerine uygun şekilde doldurmalıdır.
+
+Java'daki interface'ler **çoklu kalıtımı (multiple inheritance)** desteklemek ve **bağımsız modüler kod yazılmasını** sağlamak için kullanılır. **Polimorfizm (çok biçimlilik)** ve **bağımsızlık (decoupling)** gibi nesne yönelimli programlama (OOP) prensiplerini destekler.
+
+---
+
+## **1. Interface Tanımı ve Kullanımı**
+### **Temel Interface Tanımı**
+Bir interface, **`interface`** anahtar kelimesiyle tanımlanır. İçinde **soyut (abstract) metodlar** ve **sabit değişkenler (constants)** barındırabilir.
+
+```java
+interface Animal {
+    void eat();  // Soyut metod
+    void sleep();
+}
+```
+- **Metodlar:** Varsayılan olarak **public ve abstract** olur, bu yüzden `public abstract` yazmaya gerek yoktur.
+- **Değişkenler:** Interface içindeki tüm değişkenler varsayılan olarak **public, static ve final** olur.
+
+---
+
+## **2. Interface Kullanımı (Implement Edilmesi)**
+Bir sınıf, **`implements`** anahtar kelimesini kullanarak bir interface'i uygular (implement eder).
+
+### **Örnek: Bir Interface’i Uygulama**
+```java
+interface Animal {
+    void eat();
+    void sleep();
+}
+
+// Dog sınıfı, Animal interface'ini uyguluyor.
+class Dog implements Animal {
+    @Override
+    public void eat() {
+        System.out.println("Köpek yemek yiyor.");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Köpek uyuyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.eat();  // Çıktı: Köpek yemek yiyor.
+        dog.sleep(); // Çıktı: Köpek uyuyor.
+    }
+}
+```
+Burada:
+- **`Dog` sınıfı**, `Animal` interface'ini uygulamak zorunda olduğu için `eat()` ve `sleep()` metodlarını tanımlamak zorundadır.
+- Eğer bir sınıf, bir interface’i uygular ancak tüm metodlarını tanımlamazsa, **abstract** olarak işaretlenmelidir.
+
+---
+
+## **3. Interface İçinde Değişkenler (Sabitler)**
+Bir interface içinde tanımlanan değişkenler, **otomatik olarak public, static ve final olur**. Yani interface içindeki değişkenler **sabit (constant)** değerlerdir.
+
+### **Örnek: Interface İçinde Sabit Kullanımı**
+```java
+interface MathConstants {
+    double PI = 3.141592653589793; // public, static, final olarak kabul edilir.
+}
+
+// PI değerini kullanan bir sınıf
+class Circle {
+    public double getArea(double radius) {
+        return MathConstants.PI * radius * radius;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Circle circle = new Circle();
+        System.out.println("Dairenin Alanı: " + circle.getArea(5));
+    }
+}
+```
+**Önemli Not:** Interface içindeki değişkenler **değiştirilemez**, çünkü **final** olarak kabul edilir.
+
+---
+
+## **4. Çoklu Kalıtım (Multiple Inheritance) ve Interface**
+Java, **class’lar arasında çoklu kalıtımı (multiple inheritance) desteklemez**, ancak birden fazla interface uygulamaya izin verir. Bu, kodun daha esnek ve modüler olmasını sağlar.
+
+### **Örnek: Bir Sınıfın Birden Fazla Interface’i Uygulaması**
+```java
+interface Flyable {
+    void fly();
+}
+
+interface Swimmable {
+    void swim();
+}
+
+class Bird implements Flyable, Swimmable {
+    @Override
+    public void fly() {
+        System.out.println("Kuş uçuyor.");
+    }
+
+    @Override
+    public void swim() {
+        System.out.println("Kuş yüzebiliyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Bird bird = new Bird();
+        bird.fly();  // Çıktı: Kuş uçuyor.
+        bird.swim(); // Çıktı: Kuş yüzebiliyor.
+    }
+}
+```
+**Burada:**
+- `Bird` sınıfı hem `Flyable` hem de `Swimmable` interface’ini uyguluyor.
+- Java, birden fazla interface uygulamayı desteklediği için `Bird` sınıfı birden fazla interface'in metodlarını yazabiliyor.
+
+---
+
+
 ## Kalıtım Nedir ?
 ```sh 
 
 ```
 ---
+## **Java'da Kalıtım (Inheritance) Nedir?**
+
+**Kalıtım (Inheritance)**, nesne yönelimli programlamada (OOP) en temel kavramlardan biridir. Kalıtım, bir sınıfın (class), başka bir sınıfın özelliklerini (alanlarını/field) ve davranışlarını (metotlarını) miras almasını sağlar. Java'da kalıtım, **code reusability (kod tekrar kullanımı)** ve **hiyerarşik organizasyon** sağlamak için kullanılır.
+
+---
+
+## **1. Kalıtımın Temel Mantığı**
+Bir **alt sınıf (subclass, child class)**, bir **üst sınıftan (superclass, parent class)** miras alır. Alt sınıf, üst sınıfta tanımlanan değişkenleri ve metotları tekrar yazmaya gerek kalmadan kullanabilir ve üzerine yeni özellikler ekleyebilir.
+
+Java'da bir sınıf başka bir sınıfı miras almak için **`extends`** anahtar kelimesini kullanır.
+
+### **Örnek: Basit Kalıtım**
+```java
+// Üst sınıf (Parent / Superclass)
+class Hayvan {
+    String isim;
+
+    void sesCikar() {
+        System.out.println("Hayvan ses çıkarıyor...");
+    }
+}
+
+// Alt sınıf (Child / Subclass)
+class Kedi extends Hayvan {
+    void miyavla() {
+        System.out.println("Kedi miyavlıyor: Miyav Miyav!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Kedi kedi = new Kedi();
+        kedi.isim = "Pamuk"; // Üst sınıftan miras alınan özellik
+        kedi.sesCikar();  // Üst sınıftan miras alınan metot
+        kedi.miyavla();  // Alt sınıfa özgü metot
+
+        System.out.println("Kedinin Adı: " + kedi.isim);
+    }
+}
+```
+### **Çıktı:**
+```
+Hayvan ses çıkarıyor...
+Kedi miyavlıyor: Miyav Miyav!
+Kedinin Adı: Pamuk
+```
+
+---
+
+## **2. Kalıtım Türleri**
+Java'da **çoklu kalıtım (multiple inheritance)** **sınıflar arasında desteklenmez**, ancak farklı türde kalıtımlar vardır:
+
+### **A. Tekli Kalıtım (Single Inheritance)**
+Bir sınıfın yalnızca **bir** sınıftan miras almasıdır.
+```java
+class A { /* ... */ }
+class B extends A { /* ... */ } // B sınıfı, A sınıfından türedi.
+```
+
+### **B. Çok Katmanlı Kalıtım (Multilevel Inheritance)**
+Bir sınıf, başka bir sınıftan türemiş bir sınıfı miras alır. **A → B → C** şeklinde bir zincir oluşur.
+```java
+class A {
+    void mesaj() {
+        System.out.println("Bu A sınıfı.");
+    }
+}
+
+class B extends A { }
+
+class C extends B { }
+
+public class Main {
+    public static void main(String[] args) {
+        C c = new C();
+        c.mesaj(); // A sınıfından miras alındı
+    }
+}
+```
+### **Çıktı:**
+```
+Bu A sınıfı.
+```
+
+### **C. Hiyerarşik Kalıtım (Hierarchical Inheritance)**
+Birden fazla alt sınıfın aynı üst sınıftan türemesi durumudur.
+```java
+class Hayvan {
+    void beslen() {
+        System.out.println("Hayvan besleniyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    void miyavla() {
+        System.out.println("Kedi miyavlıyor.");
+    }
+}
+
+class Köpek extends Hayvan {
+    void havla() {
+        System.out.println("Köpek havlıyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Kedi kedi = new Kedi();
+        kedi.beslen();
+        kedi.miyavla();
+
+        Köpek kopek = new Köpek();
+        kopek.beslen();
+        kopek.havla();
+    }
+}
+```
+### **Çıktı:**
+```
+Hayvan besleniyor...
+Kedi miyavlıyor.
+Hayvan besleniyor...
+Köpek havlıyor.
+```
+
+### **D. Java'da Çoklu Kalıtım (Multiple Inheritance) Desteklenmez**
+Java, **class** düzeyinde **çoklu kalıtımı** desteklemez. Çünkü **birden fazla üst sınıftan aynı isimde metodlar miras alınırsa** bir çakışma (ambiguity) sorunu ortaya çıkar.
+
+---
+
+## **3. `super` Anahtar Kelimesi**
+**`super`**, alt sınıftan üst sınıfa erişmek için kullanılır.
+
+- **Üst sınıfın constructor'ını çağırmak için**: `super(parametreler)`
+- **Üst sınıfın metodunu çağırmak için**: `super.metodAdi()`
+- **Üst sınıfın değişkenine erişmek için**: `super.degiskenAdi`
+
+### **Örnek: `super` Kullanımı**
+```java
+class Hayvan {
+    String isim = "Genel Hayvan";
+
+    void sesCikar() {
+        System.out.println("Hayvan sesi çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    String isim = "Kedi";
+
+    void sesCikar() {
+        super.sesCikar(); // Üst sınıfın metodunu çağırır
+        System.out.println("Miyav Miyav!");
+    }
+
+    void yazdir() {
+        System.out.println("Alt sınıftaki isim: " + isim);
+        System.out.println("Üst sınıftaki isim: " + super.isim);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Kedi kedi = new Kedi();
+        kedi.sesCikar();
+        kedi.yazdir();
+    }
+}
+```
+### **Çıktı:**
+```
+Hayvan sesi çıkarıyor...
+Miyav Miyav!
+Alt sınıftaki isim: Kedi
+Üst sınıftaki isim: Genel Hayvan
+```
+
+---
+
+## **4. `final` Anahtar Kelimesi ile Kalıtım Kısıtlaması**
+**`final`** anahtar kelimesiyle bir sınıfın veya metodun miras alınması engellenebilir:
+
+### **A. `final` ile Sınıfın Miras Alınmasını Engelleme**
+```java
+final class Hayvan { } 
+
+class Kedi extends Hayvan { } // HATA: 'Hayvan' miras alınamaz!
+```
+
+### **B. `final` ile Metodun Override Edilmesini Engelleme**
+```java
+class Hayvan {
+    final void sesCikar() {
+        System.out.println("Hayvan sesi çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    void sesCikar() { // HATA: final metod override edilemez!
+        System.out.println("Miyav Miyav!");
+    }
+}
+```
+
+---
+
+## **Sonuç**
+- **Kalıtım**, **kod tekrarını azaltır** ve **daha düzenli kod yazmayı sağlar**.
+- **`extends` anahtar kelimesi** ile miras alınır.
+- **`super` anahtar kelimesi** üst sınıfın özelliklerine/metotlarına erişmek için kullanılır.
+- **`final` anahtar kelimesi**, miras alınmayı veya metodun override edilmesini engelleyebilir.
+- Java **çoklu kalıtımı desteklemez**, ancak **hiyerarşik ve çok katmanlı kalıtım** mümkündür.
+
+Bu bilgilerle, Java'da kalıtımı verimli bir şekilde kullanabilir ve OOP prensiplerini daha iyi anlayabilirsiniz! 🚀
+
+
+## Polymorphism Nedir ?
+```sh 
+
+```
+---
+
+# **Java'da Polymorphism (Çok Biçimlilik) Nedir?**
+
+**Polymorphism (Çok Biçimlilik)**, nesne yönelimli programlamanın (OOP) en önemli kavramlarından biridir. **"Poly" (çok) ve "Morph" (biçim)"** kelimelerinden türemiştir. **Aynı isimli bir metodun, farklı şekillerde davranabilmesini sağlar**. Bu sayede, **kod tekrarını azaltır**, **esneklik sağlar** ve **bakımı kolaylaştırır**.
+
+Java'da **Polymorphism** iki şekilde gerçekleşir:
+1. **Metot Overloading (Metot Aşırı Yükleme) → Compile-time Polymorphism**
+2. **Metot Overriding (Metot Geçersiz Kılma) → Runtime Polymorphism**
+
+---
+
+## **1. Compile-Time Polymorphism (Derleme Zamanı Polymorphism - Metot Overloading)**
+Bu tür **polymorphism**, **aynı isimde bir metodun farklı parametreler ile tanımlanmasıyla** elde edilir. Derleme zamanında hangi metodun çağrılacağı bellidir.
+
+### **Metot Overloading (Metot Aşırı Yükleme)**
+- Aynı sınıf içinde **aynı isimli metodun farklı parametreler** ile tanımlanmasıdır.
+- **Dönüş tipi değişse bile**, sadece dönüş tipinin değişmesi **overloading için yeterli değildir**.
+- **JVM (Java Virtual Machine) hangi metodun çağrılacağını derleme (compile-time) sırasında belirler.**
+
+### **Örnek 1: Metot Overloading**
+```java
+class HesapMakinesi {
+    // İki sayıyı toplama metodu
+    int topla(int a, int b) {
+        return a + b;
+    }
+
+    // Üç sayıyı toplama metodu (Aynı isim, farklı parametre sayısı)
+    int topla(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Ondalıklı sayıları toplama metodu (Aynı isim, farklı parametre türü)
+    double topla(double a, double b) {
+        return a + b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        HesapMakinesi h = new HesapMakinesi();
+
+        System.out.println(h.topla(5, 10));        // 15
+        System.out.println(h.topla(5, 10, 20));    // 35
+        System.out.println(h.topla(3.5, 2.5));     // 6.0
+    }
+}
+```
+### **Çıktı:**
+```
+15
+35
+6.0
+```
+> **Not:** Java, hangi metodun çalıştırılacağını **parametre türlerine ve sayısına göre** derleme zamanında belirler.
+
+---
+
+## **2. Runtime Polymorphism (Çalışma Zamanı Polymorphism - Metot Overriding)**
+Bu tür **polymorphism**, **alt sınıfın (subclass), üst sınıftan (superclass) aldığı bir metodu kendi içinde tekrar tanımlamasıyla** sağlanır. **Hangi metodun çağrılacağı çalışma zamanında belirlenir.**
+
+### **Metot Overriding (Metot Geçersiz Kılma)**
+- **Üst sınıfta (parent class) tanımlı bir metodun, alt sınıfta (child class) tekrar tanımlanmasıdır.**
+- **Metod ismi, dönüş tipi ve parametre listesi aynı olmalıdır.**
+- **Alt sınıfta metodun davranışı değiştirilebilir.**
+- **Overriding işlemi için `@Override` anotasyonu kullanılır (zorunlu değildir ama önerilir).**
+- **Polymorphism sayesinde, bir üst sınıf referansı ile alt sınıf nesneleri çağrılabilir.**
+
+### **Örnek 2: Metot Overriding**
+```java
+class Hayvan {
+    void sesCikar() {
+        System.out.println("Hayvan ses çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    @Override
+    void sesCikar() {
+        System.out.println("Miyav Miyav!");
+    }
+}
+
+class Köpek extends Hayvan {
+    @Override
+    void sesCikar() {
+        System.out.println("Hav Hav!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Hayvan h1 = new Kedi();  // Üst sınıf referansı ile alt sınıf nesnesi
+        Hayvan h2 = new Köpek(); // Üst sınıf referansı ile alt sınıf nesnesi
+
+        h1.sesCikar(); // Çalışma zamanında "Miyav Miyav!" çalışır
+        h2.sesCikar(); // Çalışma zamanında "Hav Hav!" çalışır
+    }
+}
+```
+### **Çıktı:**
+```
+Miyav Miyav!
+Hav Hav!
+```
+> **Not:** `h1` ve `h2` nesneleri **üst sınıfın (Hayvan) referansı ile tanımlandı**, ancak **alt sınıfların (Kedi, Köpek) metodları çalıştırıldı**. İşte bu çalışma zamanı polymorphism'idir.
+
+---
+
+## **3. Polymorphism'in Faydaları**
+1. **Kod tekrarını azaltır ve yeniden kullanılabilirliği artırır.**
+2. **Esnek ve ölçeklenebilir kod yazmayı sağlar.**
+3. **İlerleyen seviyede "Abstraction" ve "Interface" ile birlikte güçlü tasarımlar oluşturulmasını sağlar.**
+
+---
+
+## **4. `super` Anahtar Kelimesi ile Overriding Kullanımı**
+Bir alt sınıfta, **üst sınıfın metodunu çağırmak için** `super.metodAdi()` kullanılır.
+
+### **Örnek 3: `super` ile Overriding**
+```java
+class Arac {
+    void hizGoster() {
+        System.out.println("Araç hız gösteriyor...");
+    }
+}
+
+class Araba extends Arac {
+    @Override
+    void hizGoster() {
+        super.hizGoster(); // Üst sınıfın metodunu çağırır
+        System.out.println("Araba 120 km/h hız gösteriyor.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Araba araba = new Araba();
+        araba.hizGoster();
+    }
+}
+```
+### **Çıktı:**
+```
+Araç hız gösteriyor...
+Araba 120 km/h hız gösteriyor.
+```
+---
+
+## **5. `final` ile Polymorphism'i Kısıtlama**
+Java'da `final` anahtar kelimesi kullanılarak bir metodun **override edilmesi engellenebilir**.
+
+### **Örnek 4: `final` ile Overriding Engelleme**
+```java
+class Hayvan {
+    final void sesCikar() {
+        System.out.println("Hayvan sesi çıkarıyor...");
+    }
+}
+
+class Kedi extends Hayvan {
+    // @Override
+    // void sesCikar() { // HATA! final metod override edilemez
+    //     System.out.println("Miyav Miyav!");
+    // }
+}
+```
+> `sesCikar` metodu `final` olduğu için **Kedi sınıfında değiştirilemez (override edilemez).**
+
+---
+
+## **Özet**
+| Polymorphism Türü | Açıklama | Kullanılan Teknik |
+|-------------------|----------|------------------|
+| **Compile-time Polymorphism** | Aynı sınıf içinde aynı isimde metodlar, farklı parametrelerle tanımlanır. | **Method Overloading (Metot Aşırı Yükleme)** |
+| **Runtime Polymorphism** | Üst sınıftaki bir metod, alt sınıfta tekrar tanımlanır ve çalışma zamanında çağrılır. | **Method Overriding (Metot Geçersiz Kılma)** |
+
+### **Sonuç**
+- **Overloading**, aynı metodun **farklı parametrelerle** tanımlanmasını sağlar.
+- **Overriding**, alt sınıfların **üst sınıf metodlarını değiştirerek özelleştirmesine** olanak tanır.
+- **Polymorphism**, kodu daha **esnek, yönetilebilir ve genişletilebilir** hale getirir.
+
+Bu kavramlar Java'nın temel prensiplerinden biridir ve yazılım geliştirmede büyük avantajlar sağlar. 🚀
+
 
 ## Abstract Nedir ?
 ```sh 
@@ -9986,7 +10392,193 @@ Bu yüzden sizin kodunuzda **CSV formatı**, öğrencileri dosyaya yazmak ve tek
 ```
 ---
 
-## Polymorphism Nedir ?
+# **Java'da Abstract Nedir? (Detaylı Açıklama)**
+
+Java'da **abstract** kelimesi, "soyut" anlamına gelir ve nesne yönelimli programlamada (OOP - Object Oriented Programming) kullanılan önemli bir kavramdır. Java'da **abstract sınıflar (abstract class)** ve **abstract metotlar (abstract methods)**, kodun daha esnek ve yeniden kullanılabilir olmasını sağlamak için kullanılır.
+
+Bu yazıda, **abstract** kavramını en ince detayına kadar inceleyeceğiz.
+
+---
+
+## **1. Java'da Abstract Sınıf (Abstract Class) Nedir?**
+### **Tanım:**
+- **Abstract sınıf**, doğrudan bir nesnesi oluşturulamayan (instantiate edilemeyen) ve alt sınıflar tarafından miras alınması gereken bir sınıftır.
+- İçinde **abstract (soyut) metotlar** ve **normal metotlar** bulunabilir.
+- **Abstract metotlar**, gövdesi olmayan (sadece tanımı yapılan) metotlardır. Alt sınıflar tarafından **override (ezilerek uygulanması)** zorunludur.
+
+### **Örnek Durum:**
+Gerçek dünyadan bir örnek düşünelim:
+- "Hayvan" genel bir kavramdır. Ancak bir **"Hayvan" nesnesi oluşturamayız** çünkü hayvanın türü belli değildir.
+- Ancak **"Kedi", "Köpek" gibi türetilmiş sınıflar** oluşturabiliriz.
+- İşte bu noktada, **"Hayvan" sınıfını abstract olarak tanımlarız** ve alt sınıfların ("Kedi", "Köpek") bu yapıyı kullanmasını sağlarız.
+
+---
+
+## **2. Java'da Abstract Sınıf Kullanımı (Örnekler ve Açıklamalar)**
+
+### **2.1 Basit Bir Abstract Sınıf Örneği**
+```java
+// Abstract sınıf oluşturuluyor
+abstract class Hayvan {
+    // Abstract metod (gövdesi yok, alt sınıflar implement etmek zorunda)
+    abstract void sesCikar();
+    
+    // Normal metod (gövdesi var, alt sınıflar miras alabilir)
+    void yasamDongusu() {
+        System.out.println("Bütün hayvanlar doğar, büyür ve ölür.");
+    }
+}
+
+// Kedi sınıfı, Hayvan sınıfından miras alıyor
+class Kedi extends Hayvan {
+    // Abstract metodu override ediyor
+    void sesCikar() {
+        System.out.println("Miyav!");
+    }
+}
+
+// Köpek sınıfı, Hayvan sınıfından miras alıyor
+class Kopek extends Hayvan {
+    // Abstract metodu override ediyor
+    void sesCikar() {
+        System.out.println("Hav hav!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Hayvan sınıfının nesnesi oluşturulamaz!
+        // Hayvan h = new Hayvan();  // Hata verir!
+
+        Hayvan kedi = new Kedi();
+        kedi.sesCikar();  // Çıktı: Miyav!
+        kedi.yasamDongusu(); // Çıktı: Bütün hayvanlar doğar, büyür ve ölür.
+
+        Hayvan kopek = new Kopek();
+        kopek.sesCikar();  // Çıktı: Hav hav!
+        kopek.yasamDongusu(); // Çıktı: Bütün hayvanlar doğar, büyür ve ölür.
+    }
+}
+```
+
+### **Kod Açıklamaları:**
+- **`Hayvan` sınıfı abstract olarak tanımlandı.**
+- `sesCikar()` metodu **abstract metod** olarak tanımlandı, bu yüzden **alt sınıflar bunu kesinlikle override (ezerek) etmek zorunda.**
+- `yasamDongusu()` metodu ise **normal bir metod** olduğu için alt sınıflar bunu miras aldı.
+- `Kedi` ve `Köpek` sınıfları `Hayvan` sınıfını **extend (miras alarak)** etti ve `sesCikar()` metodunu kendi ihtiyaçlarına göre doldurdu.
+
+---
+
+## **3. Abstract Sınıfın Kuralları ve Özellikleri**
+### **3.1 Abstract Sınıfın İçinde Neler Olabilir?**
+| **Özellik** | **Abstract Sınıfta Kullanımı** |
+|------------|--------------------------------|
+| **Abstract metod** | Evet (Gövdesiz olarak tanımlanmalı) |
+| **Normal metod (gövdesi olan metodlar)** | Evet |
+| **Değişkenler (fields)** | Evet (Ancak `final` olmamalı) |
+| **Constructors (Yapıcı metodlar)** | Evet |
+| **Static metodlar** | Evet (Ancak abstract olamazlar) |
+
+---
+
+## **4. Abstract Metot Nedir?**
+### **Tanım:**
+- **Abstract metot**, sadece **tanımlanmış** ancak **gövdesi olmayan** bir metottur.
+- **Alt sınıflar (subclasses), bu metodu override etmek zorundadır.**
+
+### **Örnek:**
+```java
+abstract class Sekil {
+    abstract void alanHesapla(); // Gövdesi olmayan abstract metod
+}
+
+class Kare extends Sekil {
+    int kenar;
+
+    Kare(int kenar) {
+        this.kenar = kenar;
+    }
+
+    void alanHesapla() {
+        System.out.println("Karenin Alanı: " + (kenar * kenar));
+    }
+}
+
+class Daire extends Sekil {
+    double yaricap;
+
+    Daire(double yaricap) {
+        this.yaricap = yaricap;
+    }
+
+    void alanHesapla() {
+        System.out.println("Dairenin Alanı: " + (Math.PI * yaricap * yaricap));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Sekil kare = new Kare(4);
+        kare.alanHesapla(); // Çıktı: Karenin Alanı: 16
+
+        Sekil daire = new Daire(3);
+        daire.alanHesapla(); // Çıktı: Dairenin Alanı: 28.27
+    }
+}
+```
+- `Sekil` sınıfı abstract olarak tanımlandı.
+- `alanHesapla()` metodu **abstract metod** olduğu için alt sınıflar bunu kesinlikle implement etmek zorunda.
+- `Kare` ve `Daire` sınıfları bu metodu kendi ihtiyaçlarına göre doldurdu.
+
+---
+
+## **5. Abstract ile Interface Farkı**
+| **Karşılaştırma** | **Abstract Class** | **Interface** |
+|-------------------|-------------------|--------------|
+| **Tanım** | Normal ve abstract metodları içeren bir sınıf | Sadece metod imzaları (Java 8+ ile varsayılan metodlar eklenebilir) |
+| **Metodlar** | Abstract + Normal metodlar olabilir | Tüm metodlar varsayılan olarak abstract’tır (Java 8+ ile default metodlar eklenebilir) |
+| **Değişkenler** | Değişkenler olabilir | Değişkenler **public static final** olmalıdır |
+| **Miras (Inheritance)** | Sadece **bir abstract class** extend edilebilir | Birden fazla interface **implement edilebilir** |
+
+---
+
+## **6. Avantajları ve Dezavantajları**
+### **Avantajlar:**
+✅ **Kod tekrarını önler:** Soyut sınıflar, ortak davranışları miras yoluyla tekrar kullanmayı sağlar.  
+✅ **Geliştirmeyi kolaylaştırır:** Alt sınıflar, abstract metodları kendi ihtiyaçlarına göre doldurabilir.  
+✅ **Daha iyi yapı sağlar:** Programcıları belli metodları kullanmaya zorlar, böylece yapı korunur.
+
+### **Dezavantajlar:**
+❌ **Çok fazla kullanılırsa karmaşıklık yaratabilir.**  
+❌ **Bir sınıf yalnızca bir abstract sınıftan türeyebilir.** (Interface ile birden fazla kalıtım yapılabilir.)
+
+---
+
+## **Sonuç**
+- **Abstract sınıflar**, kalıtım (inheritance) kullanarak ortak özellikleri paylaşan sınıflar için idealdir.
+- **Abstract metotlar**, alt sınıfların override etmesini zorunlu kılar.
+- **Abstract sınıf ile interface arasındaki farkları bilmek**, en iyi uygulamaları seçmek için önemlidir.
+
+Java'da **abstract yapılar, kodun daha düzenli ve yönetilebilir olmasını sağlar.**
+
+
+## Cipher (AES/DES/RSA/HASHING)
+```sh 
+
+```
+---
+
+
+
+## Diğer
+```sh 
+
+```
+---
+
+
+
+## Collection Nedir ?
 ```sh 
 
 ```
@@ -10239,6 +10831,7 @@ public class NashornExample {
 Bu detaylı açıklamalar ile Java 8’in sunduğu tüm önemli yenilikleri kapsadık! 🚀
 
 
+
 ## Java 8 gelen özelliklerden stream nedir ?
 ```sh 
 
@@ -10471,20 +11064,6 @@ public class StreamReduceExample {
 
 Stream API, Java 8’in getirdiği en güçlü özelliklerden biridir ve modern Java programlamada oldukça yaygın kullanılmaktadır. 🚀
 
-
-## Cipher (AES/DES/RSA/HASHING)
-```sh 
-
-```
----
-
-
-
-## Diğer
-```sh 
-
-```
----
 
 
 

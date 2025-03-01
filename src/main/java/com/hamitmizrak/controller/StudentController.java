@@ -3,6 +3,7 @@ package com.hamitmizrak.controller;
 import com.hamitmizrak.dao.IDaoGenerics;
 import com.hamitmizrak.dao.StudentDao;
 import com.hamitmizrak.dto.StudentDto;
+import com.hamitmizrak.utils.SpecialColor;
 
 import java.util.List;
 
@@ -19,8 +20,13 @@ public class StudentController implements IDaoGenerics<StudentDto> {
     // CREATE
     @Override
     public StudentDto create(StudentDto studentDto) {
-        return studentDao.create(studentDto);
+        StudentDto createdStudent = studentDao.create(studentDto);
+        if (createdStudent == null) {
+            System.out.println(SpecialColor.RED + "❌ Öğrenci oluşturulamadı. Geçerli bilgiler giriniz." + SpecialColor.RESET);
+        }
+        return createdStudent;
     }
+
 
     // FIND BY NAME
     @Override
