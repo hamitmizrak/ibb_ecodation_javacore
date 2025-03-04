@@ -3,6 +3,7 @@ package com.hamitmizrak.dto;
 import java.time.LocalDate;
 import java.util.Date;
 
+//Dikkat: Record'ta abstract, inheritance kullanamazsınız.
  abstract public class PersonDto {
 
     protected Integer id;

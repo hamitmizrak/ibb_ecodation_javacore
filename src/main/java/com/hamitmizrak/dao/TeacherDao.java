@@ -1,223 +1,304 @@
 package com.hamitmizrak.dao;
 
-import com.hamitmizrak.dto.EStudentType;
-import com.hamitmizrak.dto.PersonDto;
-import com.hamitmizrak.dto.StudentDto;
 import com.hamitmizrak.dto.TeacherDto;
 import com.hamitmizrak.exceptions.TeacherNotFoundException;
-import com.hamitmizrak.utils.SpecialColor;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
-/**
- * TeacherDao, Generics Yapıda
- * Lambda Expression
- */
-
+// TeacherDto
 public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
-    // Field
-    private ArrayList<TeacherDto> teacherDtoList = new ArrayList<>();
-    // ID artık tüm sınıflar tarafından erişilebilir olacak
-    int maxId = 0;
+    private final List<TeacherDto> teacherList = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
+    private static final Random random = new Random();
     private static final String FILE_NAME = "teachers.txt";
 
-    // Parametresiz Constructor
-    public TeacherDao teacherDao() {
-        // Eğer students.txt yoksa otomatik oluştur
+    public TeacherDao() {
         createFileIfNotExists();
-
-        // Program başlarken Öğretmen Listesini hemen yüklesin
-        loadStudentsListFromFile();
+        loadTeachersFromFile();
     }
 
-    /// /////////////////////////////////////////////////////////////
-    // FileIO
-    // 📌 Eğer dosya yoksa oluşturur
     private void createFileIfNotExists() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
             try {
-                if (file.createNewFile()) {
-                    System.out.println(SpecialColor.YELLOW + FILE_NAME + " oluşturuldu." + SpecialColor.RESET);
-                }
+                file.createNewFile();
             } catch (IOException e) {
-                System.out.println(SpecialColor.RED + "Dosya oluşturulurken hata oluştu!" + SpecialColor.RESET);
-                e.printStackTrace();
+                System.err.println("Dosya oluşturulurken hata oluştu: " + e.getMessage());
             }
         }
     }
 
-    // 📌 Öğretmenleri dosyaya kaydetme (BufferedWriter)
     private void saveToFile() {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (StudentDto student : teacherDtoList) {
-                bufferedWriter.write(teacherToCsv(student) + "\n");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            for (TeacherDto teacher : teacherList) {
+                writer.write(teacherToCsv(teacher) + "\n");
             }
-            System.out.println(SpecialColor.GREEN + "Öğretmenler dosyaya kaydedildi." + SpecialColor.RESET);
         } catch (IOException e) {
-            System.out.println(SpecialColor.RED + "Dosya kaydetme hatası!" + SpecialColor.RESET);
-            e.printStackTrace();
+            System.err.println("Dosyaya yazma hatası: " + e.getMessage());
         }
     }
 
-    // 📌 Öğretmenleri dosyadan yükleme (BufferedReader)
-    private void loadStudentsListFromFile() {
-        // Listedeki verileri temizle
-        teacherDtoList.clear();
+    private void loadTeachersFromFile() {
+        teacherList.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                TeacherDto teacherDto = csvToStudent(line);
-                if (teacherDto != null) {
-                    teacherDtoList.add(teacherDto);
+                TeacherDto teacher = csvToTeacher(line);
+                if (teacher != null) {
+                    teacherList.add(teacher);
                 }
             }
-            //studentCounter = studentDtoList.size();
-            // ✅ Öğretmenler içindeki en büyük ID'yi bul
-            /*
-            studentCounter = studentDtoList.stream()
-                    .mapToInt(StudentDto::getId)
-                    .max()
-                    .orElse(0); // Eğer Öğretmen yoksa sıfır başlat
-            */
-
-
         } catch (IOException e) {
-            System.out.println(SpecialColor.RED + "Dosya okuma hatası!" + SpecialColor.RESET);
-            e.printStackTrace();
+            System.err.println("Dosya okuma hatası: " + e.getMessage());
         }
     }
 
-
-    /// /////////////////////////////////////////////////////////////
-    // 📌 Öğretmen nesnesini CSV formatına çevirme
-    // Bu metod, bir StudentDto nesnesini virgülle ayrılmış bir metin (CSV) formatına çevirir.
-    // Böylece Öğretmen verileri bir dosyada satır bazlı olarak saklanabilir.
-    private String teacherToCsv(TeacherDto teacherDto) {
-        return
-                teacherDto. () + "," +          // Öğretmen ID'sini ekler
-                teacherDto.getName() + "," +        // Öğretmen adını ekler
-                teacherDto.getSurname() + "," +     // Öğretmen soyadını ekler
-                teacherDto.getMidTerm() + "," +     // Öğretmen vize notunu ekler
-                teacherDto.getFinalTerm() + "," +   // Öğretmen final notunu ekler
-                teacherDto.getResultTerm() + "," +  // Öğretmen sonuç notunu ekler
-                teacherDto.getStatus() + "," +      // Öğretmen geçti/kaldı notunu ekler
-                teacherDto.getBirthDate() + "," +   // Öğretmen doğum tarihini ekler
-                teacherDto.geteStudentType();       // Öğretmennin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
+    private String teacherToCsv(TeacherDto teacher) {
+        return teacher.id() + "," + teacher.name() + "," + teacher.surname() + "," +
+                teacher.birthDate() + "," + teacher.subject() + "," +
+                teacher.yearsOfExperience() + "," + teacher.isTenured() + "," + teacher.salary();
     }
 
-    // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme
-    // Bu metod, CSV formatındaki bir satırı parçalayarak bir StudentDto nesnesine dönüştürür.
-    // Dosyadan okunan her satır için çağrılır ve veriyi uygun şekilde nesneye aktarır.
-    // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme (Dosyadan okurken)
-    private StudentDto csvToStudent(String csvLine) {
+    private TeacherDto csvToTeacher(String csvLine) {
         try {
-            String[] parts = csvLine.split(",");  // Satırı virgülle bölerek bir dizi oluşturur
-            if (parts.length < 9) return null;    // **Eksik veri varsa işlemi durdurur ve null döndürür**
+            String[] parts = csvLine.split(",");
+            if (parts.length != 8) {
+                System.err.println("Hatalı CSV formatı: " + csvLine);
+                return null;
+            }
 
-            // PersonDto =>  Integer id, String name, String surname, LocalDate birthDate
-            // StudentDto =>  Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm,EStudentType eStudentType
-            StudentDto student = new StudentDto(
-                    Integer.parseInt(parts[0]),  // ID değerini integer olarak dönüştürür
-                    parts[1],                    // Adı alır
-                    parts[2],                    // Soyadı alır
-                    LocalDate.parse(parts[3]),    // Doğum tarihini LocalDate formatına çevirir
-                    Double.parseDouble(parts[4]), // Vize notunu double olarak dönüştürür
-                    Double.parseDouble(parts[5]), // Final notunu double olarak dönüştürür
-                    EStudentType.valueOf(parts[8]) // Öğretmennin eğitim türünü (Enum) çevirir
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            LocalDate birthDate = null;
+            try {
+                if (!parts[3].isBlank()) {
+                    birthDate = LocalDate.parse(parts[3], formatter);
+                }
+            } catch (DateTimeParseException e) {
+                System.err.println("Geçersiz tarih formatı: " + parts[3] + " (Beklenen format: yyyy-MM-dd)");
+                return null;
+            }
+
+            return new TeacherDto(
+                    Integer.parseInt(parts[0]),
+                    parts[1],
+                    parts[2],
+                    birthDate,
+                    parts[4],
+                    Integer.parseInt(parts[5]),
+                    Boolean.parseBoolean(parts[6]),
+                    Double.parseDouble(parts[7])
             );
 
-            // **Geçti/Kaldı durumu CSV'den okunduğu gibi Öğretmen nesnesine eklenir**
-            student.setResultTerm(Double.parseDouble(parts[6])); // **Sonuç notunu ayarla**
-            student.setStatus(parts[7]); // **Geçti/Kaldı durumunu CSV'den al**
-
-            return student;
         } catch (Exception e) {
-            System.out.println(SpecialColor.RED + "CSV'den Öğretmen yükleme hatası!" + SpecialColor.RESET);
-            return null; // Hata durumunda null döndürerek programın çökmesini engeller
+            System.err.println("CSV ayrıştırma hatası: " + e.getMessage());
+            return null;
         }
     }
 
-    LocalDate birthDate
-
-    /// /////////////////////////////////////////////////////////////
-    // C-R-U-D
-    // Öğretmen Create
     @Override
-    public TeacherDto create(TeacherDto teacherDto) {
-        try {
-            teacherDto = new TeacherDto(
-                    new PersonDto(
-                            maxId++,
-                            teacherDto.personDto().getName(),
-                            teacherDto.personDto().getSurname(),
-                            teacherDto.personDto().getBirthDate()),
-                    teacherDto.subject(), teacherDto.yearsOfExperience(), teacherDto.isTenured(), teacherDto.salary());
-            teacherDtoList.add(teacherDto);
-
-            saveToFile();
-            System.out.println(teacherDto + SpecialColor.GREEN + "✅ teacherDto başarıyla eklendi!" + SpecialColor.RESET);
-            return teacherDto;
-
-        } catch (IllegalArgumentException e) {
-            System.out.println(SpecialColor.RED + "⛔ Hata: " + e.getMessage() + SpecialColor.RESET);
-            return null; // Hata durumunda nesne oluşturulmaz
-        }
+    public TeacherDto create(TeacherDto teacher) {
+        teacherList.add(teacher);
+        saveToFile();
+        return teacher;
     }
 
-    // Öğretmen Find By Name
     @Override
     public TeacherDto findByName(String name) {
-        if(teacherDtoList.isEmpty()) throw  new TeacherNotFoundException("Öğretmen bulunamadı");
-        return teacherDtoList.stream().filter(temp -> temp.personDto().getName().equalsIgnoreCase(name)).findFirst().orElseThrow(() -> TeacherNotFoundException(name+" isimli öğretmen yoktur"));
+        return teacherList.stream()
+                .filter(t -> t.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new TeacherNotFoundException(name + " isimli öğretmen bulunamadı."));
     }
 
     @Override
     public TeacherDto findById(int id) {
-        if(teacherDtoList.isEmpty()) throw  new TeacherNotFoundException("Öğretmen bulunamadı");
-        return teacherDtoList.stream().filter(temp-> temp.getID().eequals(id)).orElseThrow(() -> TeacherNotFoundException(id+" ID öğretmen yoktur"));
+        return teacherList.stream()
+                .filter(t -> t.id() == id)
+                .findFirst()
+                .orElseThrow(() -> new TeacherNotFoundException(id + " ID'li öğretmen bulunamadı."));
     }
 
-    // LIST
     @Override
     public List<TeacherDto> list() {
-        if(teacherDtoList.isEmpty()) throw  new TeacherNotFoundException("Öğretmen bulunamadı");
-        teacherDtoList.forEach(System.out::println); //Lambda ile Method Referance kullandım
-        return teacherDtoList; //List.of();
+        return new ArrayList<>(teacherList); // Liste dışarıdan değiştirilemesin diye kopya veriyoruz.
     }
 
     @Override
-    public TeacherDto update(int id, TeacherDto teacherDto) {
-        TeacherDto updateTeacher= new PersonDto(
-                maxId++,
-                teacherDto.personDto().getName(),
-                teacherDto.personDto().getSurname(),
-                teacherDto.personDto().getBirthDate()),
-        teacherDto.subject(), teacherDto.yearsOfExperience(), teacherDto.isTenured(), teacherDto.salary());
-        return null;
+    public TeacherDto update(int id, TeacherDto updatedTeacher) {
+        for (int i = 0; i < teacherList.size(); i++) {
+            if (teacherList.get(i).id() == id) {
+                teacherList.set(i, updatedTeacher);
+                saveToFile();
+                return updatedTeacher;
+            }
+        }
+        throw new TeacherNotFoundException("Güncellenecek öğretmen bulunamadı.");
     }
 
-    // Öğretmen Silme (Lambda)
     @Override
     public TeacherDto delete(int id) {
-        try {
-        Predicate<TeacherDto> isMatch = temp ->temp.personDto().getId().equals(id);
-        TeacherDto foundUpdate= teacherDtoList.stream().filter(isMatch).findFirst().orElseThrow(() -> new TeacherNotFoundException("ID: "+id+ "Öğretmen bulumadı"));
-        teacherDtoList.removeIf(isMatch);
+        Optional<TeacherDto> teacher = teacherList.stream()
+                .filter(t -> t.id() == id)
+                .findFirst();
+        teacher.ifPresent(teacherList::remove);
         saveToFile();
-        return foundUpdate;
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        return teacher.orElseThrow(() -> new TeacherNotFoundException(id + " ID'li öğretmen bulunamadı."));
     }
 
     @Override
     public void chooise() {
+        while (true) {
+            try {
+                System.out.println("\n===== ÖĞRETMEN YÖNETİM SİSTEMİ =====");
+                System.out.println("1. Öğretmen Ekle");
+                System.out.println("2. Öğretmen Listele");
+                System.out.println("3. Öğretmen Ara");
+                System.out.println("4. Öğretmen Güncelle");
+                System.out.println("5. Öğretmen Sil");
+                System.out.println("6. Rastgele Öğretmen Seç");
+                System.out.println("7. Öğretmenleri Yaşa Göre Sırala");
+                System.out.println("8. Çıkış");
+                System.out.print("\nSeçiminizi yapınız: ");
 
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Boşluğu temizleme
+
+                switch (choice) {
+                    case 1 -> addTeacher();
+                    case 2 -> listTeachers();
+                    case 3 -> searchTeacher();
+                    case 4 -> updateTeacher();
+                    case 5 -> deleteTeacher();
+                    case 6 -> chooseRandomTeacher();
+                    case 7 -> sortTeachersByAge();
+                    case 8 -> {
+                        System.out.println("Çıkış yapılıyor...");
+                        return;
+                    }
+                    default -> System.out.println("Geçersiz seçim! Lütfen tekrar deneyin.");
+                }
+            } catch (Exception e) {
+                System.out.println("⛔ Beklenmeyen bir hata oluştu: " + e.getMessage());
+                scanner.nextLine(); // Scanner'ı temizle
+            }
+        }
     }
+
+    private void addTeacher() {
+        System.out.print("Öğretmen ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Adı: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Soyadı: ");
+        String surname = scanner.nextLine();
+
+        System.out.print("Doğum Tarihi (yyyy-MM-dd): ");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        System.out.print("Uzmanlık Alanı: ");
+        String subject = scanner.nextLine();
+
+        System.out.print("Deneyim Yılı: ");
+        int yearsOfExperience = scanner.nextInt();
+
+        System.out.print("Kadrolu mu? (true/false): ");
+        boolean isTenured = scanner.nextBoolean();
+
+        System.out.print("Maaş: ");
+        double salary = scanner.nextDouble();
+
+        TeacherDto teacher = new TeacherDto(id, name, surname, birthDate, subject, yearsOfExperience, isTenured, salary);
+        teacherList.add(teacher);
+        saveToFile();
+        System.out.println("Öğretmen başarıyla eklendi.");
+    }
+
+    private void listTeachers() {
+        if (teacherList.isEmpty()) {
+            System.out.println("Kayıtlı öğretmen bulunmamaktadır.");
+            return;
+        }
+        System.out.println("\n=== Öğretmen Listesi ===");
+        teacherList.forEach(t -> System.out.println(t.fullName() + " - " + t.subject()));
+    }
+
+    private void searchTeacher() {
+        System.out.print("Aranacak öğretmenin adı: ");
+        String name = scanner.nextLine();
+        try {
+            TeacherDto teacher = findByName(name);
+            System.out.println("Bulunan Öğretmen: " + teacher.fullName() + " - " + teacher.subject());
+        } catch (TeacherNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void updateTeacher() {
+        System.out.print("Güncellenecek öğretmenin ID'si: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        try {
+            TeacherDto existingTeacher = findById(id);
+
+            System.out.print("Yeni Adı (Mevcut: " + existingTeacher.name() + "): ");
+            String name = scanner.nextLine();
+            System.out.print("Yeni Soyadı (Mevcut: " + existingTeacher.surname() + "): ");
+            String surname = scanner.nextLine();
+            System.out.print("Yeni Maaş (Mevcut: " + existingTeacher.salary() + "): ");
+            double salary = scanner.nextDouble();
+
+            TeacherDto updatedTeacher = new TeacherDto(
+                    existingTeacher.id(),
+                    name.isBlank() ? existingTeacher.name() : name,
+                    surname.isBlank() ? existingTeacher.surname() : surname,
+                    existingTeacher.birthDate(),
+                    existingTeacher.subject(),
+                    existingTeacher.yearsOfExperience(),
+                    existingTeacher.isTenured(),
+                    salary > 0 ? salary : existingTeacher.salary()
+            );
+
+            update(id, updatedTeacher);
+            System.out.println("Öğretmen başarıyla güncellendi.");
+        } catch (TeacherNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteTeacher() {
+        System.out.print("Silinecek öğretmenin ID'si: ");
+        int id = scanner.nextInt();
+        try {
+            delete(id);
+            System.out.println("Öğretmen başarıyla silindi.");
+        } catch (TeacherNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void chooseRandomTeacher() {
+        if (teacherList.isEmpty()) {
+            System.out.println("Kayıtlı öğretmen yok.");
+            return;
+        }
+        TeacherDto teacher = teacherList.get(random.nextInt(teacherList.size()));
+        System.out.println("Seçilen Rastgele Öğretmen: " + teacher.fullName());
+    }
+
+    private void sortTeachersByAge() {
+        teacherList.sort(Comparator.comparing(TeacherDto::birthDate));
+        System.out.println("Öğretmenler yaşa göre sıralandı.");
+        listTeachers();
+    }
+
 }
