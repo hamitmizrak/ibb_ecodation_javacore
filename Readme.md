@@ -10569,6 +10569,219 @@ public class StudentService {
 ```
 ---
 
+## Lambda Expresion Nedir ?
+```sh 
+
+```
+---
+### Java'da Lambda Expression Nedir? (Detaylı Anlatım)
+
+Lambda ifadeleri (Lambda Expressions), Java 8 ile birlikte gelen ve **fonksiyonel programlama paradigmalarına** destek sağlayan bir özelliktir. Java, geleneksel olarak **nesne yönelimli** bir dil olduğu için, bir fonksiyonu bağımsız bir varlık olarak tanımlamak mümkün değildi. Ancak **Java 8 ile birlikte, fonksiyonları ilk sınıf vatandaş (first-class citizen) olarak kullanma imkanı** getiren Lambda Expressions ve Functional Interfaces gibi yapılar eklenmiştir.
+
+Lambda ifadeleri, **anonim fonksiyonlar** olarak düşünülebilir. Yani, adı olmayan bir fonksiyon tanımlamak için kullanılırlar ve genellikle **bir arabirimin (interface) tek bir metot içeren haliyle (Functional Interface)** kullanılırlar.
+
+---
+
+## 🔹 Lambda Expression'ın Temel Yapısı
+
+Lambda ifadelerinin genel sözdizimi şu şekildedir:
+
+```java
+(parameters) -> expression
+```
+
+Veya **gövdesi birden fazla satırdan oluşuyorsa:**
+
+```java
+(parameters) -> { statements; }
+```
+
+Burada:
+- **(parameters)** → Metoda geçilecek parametrelerdir.
+- **->** → Lambda operatörüdür, yani "şu işlemi yap" anlamına gelir.
+- **expression veya { statements; }** → Lambda'nın gövdesidir, yani çalıştırılacak kod bloğudur.
+
+---
+
+## 🔹 Lambda Expression ile Gelen Avantajlar
+1. **Daha az kod yazımı:** Geleneksel anonim sınıflara göre daha kısa ve okunaklıdır.
+2. **Kodun okunabilirliğini artırır:** Lambda ifadeleri ile işlevsellik daha belirgin hale gelir.
+3. **Performans iyileştirmesi:** Geleneksel anonim sınıflara göre daha hızlıdır çünkü Lambda ifadeleri **JVM tarafından optimize edilir**.
+4. **Paralel programlamaya uygunluk:** Java 8 ile gelen **Stream API** ile birlikte kullanıldığında, Lambda ifadeleri çok daha etkili hale gelir.
+
+---
+
+## 🔹 Functional Interface ile Kullanımı
+Lambda ifadeleri **sadece tek bir metodu olan (Single Abstract Method - SAM) arabirimlerde kullanılabilir**. Java'da bu tür arabirimlere **Functional Interface** (Fonksiyonel Arayüz) denir.
+
+Java'da **@FunctionalInterface** adında özel bir anotasyon bulunmaktadır. **Bu anotasyon, bir arabirimin yalnızca bir tane soyut metot içermesini garanti eder.**
+
+Örnek bir **Functional Interface**:
+
+```java
+@FunctionalInterface
+interface MyFunctionalInterface {
+    void showMessage(String message);
+}
+```
+
+Yukarıdaki arayüzü **Lambda Expression** ile kullanabiliriz:
+
+```java
+public class LambdaExample {
+    public static void main(String[] args) {
+        MyFunctionalInterface messagePrinter = (message) -> System.out.println("Mesaj: " + message);
+        messagePrinter.showMessage("Merhaba Lambda!");
+    }
+}
+```
+
+### 🔹 Kodu İnceleyelim:
+1. **MyFunctionalInterface** adında bir fonksiyonel arayüz oluşturduk.
+2. **Lambda ifadesi ile `showMessage` metodunu tanımladık.**
+3. `showMessage("Merhaba Lambda!")` çağrıldığında, **Lambda ifadesinin içerisindeki kod bloğu çalışacaktır.**
+
+---
+
+## 🔹 Lambda Expression Örnekleri
+
+### 1️⃣ **Tek Parametreli ve Tek Satırlık Lambda**
+```java
+interface Square {
+    int calculate(int x);
+}
+
+public class LambdaDemo {
+    public static void main(String[] args) {
+        Square square = x -> x * x;
+        System.out.println("Sonuç: " + square.calculate(5)); // Çıktı: Sonuç: 25
+    }
+}
+```
+- `x -> x * x;` ifadesi, `Square` arayüzündeki `calculate` metodunu tanımlar.
+
+---
+
+### 2️⃣ **Çoklu Parametre Kullanımı**
+```java
+interface Addable {
+    int add(int a, int b);
+}
+
+public class LambdaDemo {
+    public static void main(String[] args) {
+        Addable adder = (a, b) -> a + b;
+        System.out.println("Toplam: " + adder.add(10, 20)); // Çıktı: Toplam: 30
+    }
+}
+```
+
+---
+
+### 3️⃣ **Blok Kullanımı ve Return İfadesi**
+```java
+interface Multiply {
+    int product(int a, int b);
+}
+
+public class LambdaDemo {
+    public static void main(String[] args) {
+        Multiply multiplication = (a, b) -> {
+            int result = a * b;
+            return result;
+        };
+        System.out.println("Çarpım: " + multiplication.product(10, 5)); // Çıktı: Çarpım: 50
+    }
+}
+```
+- **Birden fazla satırdan oluşan ifadeler için `{}` blokları kullanılır.**
+- **`return` ifadesi kullanılabilir.**
+
+---
+
+## 🔹 Java'da Lambda Kullanım Alanları
+
+### ✅ **1. Thread (İş Parçacıkları) Kullanımı**
+Lambda ifadeleri **Thread (İş Parçacıkları)** ile kullanılabilir:
+
+```java
+public class LambdaThreadExample {
+    public static void main(String[] args) {
+        // Geleneksel Yöntem
+        Runnable runnable1 = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Thread çalışıyor...");
+            }
+        };
+        new Thread(runnable1).start();
+
+        // Lambda ile
+        Runnable runnable2 = () -> System.out.println("Lambda ile Thread çalışıyor...");
+        new Thread(runnable2).start();
+    }
+}
+```
+
+---
+
+### ✅ **2. Java Collections API ile Kullanım**
+Lambda ifadeleri, **List ve Map gibi koleksiyonların işlenmesini** kolaylaştırır.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class LambdaListExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Ahmet", "Mehmet", "Ayşe", "Fatma");
+        
+        // Geleneksel Döngü
+        for (String name : names) {
+            System.out.println(name);
+        }
+        
+        // Lambda ile
+        names.forEach(name -> System.out.println(name));
+    }
+}
+```
+
+---
+
+### ✅ **3. Java Stream API ile Kullanım**
+Lambda ifadeleri, **Stream API** ile birleştirildiğinde oldukça güçlüdür:
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class LambdaStreamExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(5, 10, 15, 20, 25);
+
+        // Tüm sayıların karesini al ve ekrana yazdır
+        numbers.stream().map(n -> n * n).forEach(System.out::println);
+    }
+}
+```
+Bu kod:
+1. `numbers.stream()` ile bir **akış (stream)** oluşturur.
+2. `.map(n -> n * n)` ile her elemanı **karesiyle değiştirir**.
+3. `.forEach(System.out::println)` ile sonuçları ekrana yazdırır.
+
+---
+
+## 🔹 Sonuç
+- **Lambda Expressions**, Java'da **daha fonksiyonel** bir programlama yaklaşımı sağlar.
+- **Anonim sınıflara** göre **daha kısa** ve **performanslıdır**.
+- **Functional Interface** yapıları ile birlikte **kod okunabilirliğini artırır**.
+- **Stream API, Thread ve Koleksiyonlar** gibi birçok yerde oldukça kullanışlıdır.
+
+Lambda ifadeleri, **Java 8 ve sonrası için en önemli yeniliklerden biridir** ve fonksiyonel programlamanın Java dünyasına entegrasyonunda büyük bir adımdır. 🚀
+
+
+
 ## Inner Class Nedir ?
 ```sh 
 

@@ -111,9 +111,9 @@ Perşembe (6 Şubat) - 3 Saat
 ----------------------------------------------------------------------
 ### 5. Hafta
 🚀  5. Hafta 1-Dersi
- Salı (4 Mart) - 3 Saat
+ Salı (4 Mart) - 3 Saat 
 - Record
-- Inner Class
+- Lamda Expression
 - Generics (Tür Belirleyici)
   . Tip güvenliği
   . Iterator ve ListIterator
@@ -129,6 +129,7 @@ Perşembe (6 Şubat) - 3 Saat
 
 🚀  5. Hafta 3-Dersi
  Cumartesi (8 Mart) - 4 Saat
+- Inner Class
 - Cipher (AES/DES/RSA/HASHING)
 - Java 8+ Yenilikleri
   . Lambda İfadeleri
@@ -136,7 +137,6 @@ Perşembe (6 Şubat) - 3 Saat
 - Stream API
   . filter, map, reduce gibi fonksiyonlar
 
-  
 ----------------------------------------------------------------------
 ### 6. Hafta
 🚀  6. Hafta 1-Dersi
