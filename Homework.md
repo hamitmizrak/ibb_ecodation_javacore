@@ -88,3 +88,4 @@ null değeri ne zaman kullanabilirim ?
 
 ## 13.Ders Ödevi (4 Mart )
 > String name=""      name==null,  name.isEmpety()  name.isBlank() bunlar arasındaki farklar
+> Predicate nedir ?

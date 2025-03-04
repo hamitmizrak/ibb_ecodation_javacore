@@ -276,6 +276,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // Öğrenci Güncelle
     @Override
     public StudentDto update(int id, StudentDto studentDto) {
+        try{
         for (StudentDto temp : studentDtoList) {
             if (temp.getId() == id) {
                 temp.setName(studentDto.getName());
@@ -291,6 +292,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 saveToFile();
                 return temp;
             }
+        }} catch (Exception e){
+            e.printStackTrace();
         }
         throw new StudentNotFoundException("Öğrenci bulunamadı.");
     }
@@ -382,7 +385,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             }
         }
     }
-
 
     /// ///////////////////////////////////////////////////////////////////////
     /// Student Add
