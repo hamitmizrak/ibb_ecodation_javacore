@@ -129,6 +129,7 @@ Perşembe (6 Şubat) - 3 Saat
 
 🚀  5. Hafta 3-Dersi
  Cumartesi (8 Mart) - 4 Saat
+- Annotation
 - Inner Class
 - Cipher (AES/DES/RSA/HASHING)
 - Java 8+ Yenilikleri

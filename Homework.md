@@ -83,3 +83,8 @@ null değeri ne zaman kullanabilirim ?
 
 ## 9.Ders Ödevi (22 Şubat)
 > StudentDto içersinde gerekli validation yazınız ? Örneğin vize,final sadece double girilecek harf veya özel simge girmeyecek
+>
+
+
+## 13.Ders Ödevi (4 Mart )
+> String name=""      name==null,  name.isEmpety()  name.isBlank() bunlar arasındaki farklar

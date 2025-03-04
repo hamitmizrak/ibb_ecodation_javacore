@@ -26,7 +26,6 @@ public class StudentDto extends PersonDto implements Serializable {
     private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
     private String status;       // Geçti mi ? Kaldı mı ?
 
-
     // static (Nesne boyunca 1 kere oluşturulur)
     static {
         System.out.println(SpecialColor.BLUE + "static StudentDto Yüklendi" + SpecialColor.RESET);
