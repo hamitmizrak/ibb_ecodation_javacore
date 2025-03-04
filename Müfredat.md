@@ -114,14 +114,14 @@ Perşembe (6 Şubat) - 3 Saat
  Salı (4 Mart) - 3 Saat 
 - Record
 - Lamda Expression
-- Generics (Tür Belirleyici)
-  . Tip güvenliği
-  . Iterator ve ListIterator
-- Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 
 🚀  5. Hafta 2-Dersi
  Perşembe (6 Mart) - 3 Saat
+- Generics (Tür Belirleyici)
+  . Tip güvenliği
+  . Iterator ve ListIterator
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
 - Koleksiyonlar (Collections) ve Generics
   . Collection Framework Genel Bakış (List, Set, Map)
   . Temel implementasyonlar (ArrayList, LinkedList vb.)
