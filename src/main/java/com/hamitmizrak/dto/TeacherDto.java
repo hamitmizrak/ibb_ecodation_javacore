@@ -3,17 +3,34 @@ package com.hamitmizrak.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * @param personDto
+ * @param subject
+ * @param yearsOfExperience
+ * @param isTenured
+ * @param salary
+ * TeacherDto bir Record olarak tanımlanmıştır.
+ * Record'lar Javada Immutable(değiştirilemez)  veri taşıma nesneleridir.
+ * Inheritance (Desteklemez)  ancak Composition yöntemiyle PersonDto kullanabiliriz
+ */
+
+/*
+Dikkat:
+1-) Record => public record Deneme(PARAMETRELER){}
+2-) Constructor public Deneme {}
+*/
 public record TeacherDto(
         Integer id,
-        String name,
-        String surname,
-        LocalDate birthDate,
-        String subject,
-        int yearsOfExperience,
-        boolean isTenured,
-        double salary
+        String name,// Adı
+        String surname, //Soyadı
+        LocalDate birthDate, //Doğum Tarihi
+        String subject, // Öğretmenin Uzmanlık Alanı Branşı
+        int yearsOfExperience, // Öğretmenin toplam deneyim yılı
+        boolean isTenured,  // Kadrolu mu? (true,false)
+        double salary// Öğretmenin maaşı
 ) implements Serializable {
 
+    // Varsayılan Constructorlar ile Veri doğrulaması
     public TeacherDto {
         if (id == null || id < 0) throw new IllegalArgumentException("ID negatif olamaz");
         if (name == null || name.isBlank()) throw new IllegalArgumentException("İsim boş olamaz");
@@ -24,6 +41,7 @@ public record TeacherDto(
         if (salary < 0) throw new IllegalArgumentException("Maaş negatif olamaz");
     }
 
+    // Method
     public String fullName() {
         return name + " " + surname;
     }

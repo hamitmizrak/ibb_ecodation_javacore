@@ -114,6 +114,7 @@ Perşembe (6 Şubat) - 3 Saat
  Salı (4 Mart) - 3 Saat 
 - Record
 - Lamda Expression
+- Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 
 🚀  5. Hafta 2-Dersi
