@@ -16,56 +16,62 @@ import java.util.*;
 public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // Field
-    private final List<TeacherDto> teacherList;
     private final Scanner scanner = new Scanner(System.in);
+    private final List<TeacherDto> teacherList;
     private static final Random random = new Random();
     private static final String FILE_NAME = "teachers.txt";
+
+    // Inner Class
+    private final FileHandler fileHandler= new FileHandler();
 
     // Parametresiz Constructor
     public TeacherDao() {
         // Default
         teacherList = new ArrayList<>();
-        createFileIfNotExists();
-        loadTeachersFromFile();
+        fileHandler.createFileIfNotExists();
+        fileHandler.loadTeachersFromFile();
     }
 
     /// /////////////////////////////////////////////////////////////
-    // FileIO => Eğer teachers.txt oluşturulmamışsa oluştur
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.err.println("Dosya oluşturulurken hata oluştu: " + e.getMessage());
-            }
-        }
-    }
-
-    // 📌 Öğretmenleri dosyaya kaydetme (BufferedWriter)
-    private void saveToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (TeacherDto teacher : teacherList) {
-                writer.write(teacherToCsv(teacher) + "\n");
-            }
-        } catch (IOException e) {
-            System.err.println("Dosyaya yazma hatası: " + e.getMessage());
-        }
-    }
-
-    // 📌 Öğretmenleri dosyadan yükleme (BufferedReader)
-    private void loadTeachersFromFile() {
-        teacherList.clear();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                TeacherDto teacher = csvToTeacher(line);
-                if (teacher != null) {
-                    teacherList.add(teacher);
+    // INNER CLASS
+    private class FileHandler{
+        // FileIO => Eğer teachers.txt oluşturulmamışsa oluştur
+        private void createFileIfNotExists() {
+            File file = new File(FILE_NAME);
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    System.err.println("Dosya oluşturulurken hata oluştu: " + e.getMessage());
                 }
             }
-        } catch (IOException e) {
-            System.err.println("Dosya okuma hatası: " + e.getMessage());
+        }
+
+        // 📌 Öğretmenleri dosyaya kaydetme (BufferedWriter)
+        private void saveToFile() {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+                for (TeacherDto teacher : teacherList) {
+                    writer.write(teacherToCsv(teacher) + "\n");
+                }
+            } catch (IOException e) {
+                System.err.println("Dosyaya yazma hatası: " + e.getMessage());
+            }
+        }
+
+        // 📌 Öğretmenleri dosyadan yükleme (BufferedReader)
+        private void loadTeachersFromFile() {
+            teacherList.clear();
+            try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    TeacherDto teacher = csvToTeacher(line);
+                    if (teacher != null) {
+                        teacherList.add(teacher);
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Dosya okuma hatası: " + e.getMessage());
+            }
         }
     }
 
@@ -125,7 +131,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
     @Override
     public TeacherDto create(TeacherDto teacher) {
         teacherList.add(teacher);
-        saveToFile();
+        fileHandler.saveToFile();
         return teacher;
     }
     
@@ -159,7 +165,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         for (int i = 0; i < teacherList.size(); i++) {
             if (teacherList.get(i).id() == id) {
                 teacherList.set(i, updatedTeacher);
-                saveToFile();
+                fileHandler.saveToFile();
                 return updatedTeacher;
             }
         }
@@ -173,7 +179,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
                 .filter(t -> t.id() == id)
                 .findFirst();
         teacher.ifPresent(teacherList::remove);
-        saveToFile();
+        fileHandler.saveToFile();
         return teacher.orElseThrow(() -> new TeacherNotFoundException(id + " ID'li öğretmen bulunamadı."));
     }
 
@@ -264,7 +270,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
         TeacherDto teacher = new TeacherDto(id, name, surname, birthDate, subject, yearsOfExperience, isTenured, salary);
         teacherList.add(teacher);
-        saveToFile();
+        fileHandler.saveToFile();
         System.out.println("Öğretmen başarıyla eklendi.");
     }
 

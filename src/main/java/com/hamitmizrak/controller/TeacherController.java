@@ -20,11 +20,11 @@ public class TeacherController implements IDaoGenerics<TeacherDto> {
     // CREATE
     @Override
     public TeacherDto create(TeacherDto teacherDto) {
-        TeacherDto createdStudent = teacherDao.create(teacherDto);
-        if (createdStudent == null) {
+        TeacherDto createdTeacher = teacherDao.create(teacherDto);
+        if (createdTeacher == null) {
             System.out.println(SpecialColor.RED + "❌ Öğretmen oluşturulamadı. Geçerli bilgiler giriniz." + SpecialColor.RESET);
         }
-        return createdStudent;
+        return createdTeacher;
     }
 
 
