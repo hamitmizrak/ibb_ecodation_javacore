@@ -1,1 +1,2 @@
 1,Hamit11,Mızrak11,1111-11-11,BIOLOGY,13,true,1.0
+2,Hamit22,Mızrak22,1111-12-12,COMPUTER_SCIENCE,12,false,2.0
