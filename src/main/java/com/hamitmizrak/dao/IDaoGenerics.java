@@ -11,12 +11,13 @@ public interface IDaoGenerics<T> {
     // CREATE
     T create(T t);
 
-    // FIND BY NAME,ID
-    T findByName(String name);
-    T  findById(int id);
-
     // LIST
     List<T> list();
+
+    // FIND BY NAME,ID
+    T findByName(String name);
+
+    T findById(int id);
 
     // UPDATE
     T update(int id, T t);

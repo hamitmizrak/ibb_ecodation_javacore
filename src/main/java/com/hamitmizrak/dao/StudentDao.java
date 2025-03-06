@@ -40,7 +40,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     /// /////////////////////////////////////////////////////////////
-    // FileIO
+    // FileIO => Eğer students.txt oluşturulmamışsa oluştur
     // 📌 Eğer dosya yoksa oluşturur
     private void createFileIfNotExists() {
         File file = new File(FILE_NAME);
@@ -89,7 +89,6 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                     .max()
                     .orElse(0); // Eğer öğrenci yoksa sıfır başlat
             */
-
 
         } catch (IOException e) {
             System.out.println(SpecialColor.RED + "Dosya okuma hatası!" + SpecialColor.RESET);
