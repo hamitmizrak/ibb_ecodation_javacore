@@ -143,7 +143,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // FindByName
     @Override
-    public TeacherDto findByName(String name) {
+    public  Optional<TeacherDto> findByName(String name) {
         return teacherList.stream()
                 .filter(t -> t.name().equalsIgnoreCase(name))
                 .findFirst()
@@ -152,7 +152,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // FindById
     @Override
-    public TeacherDto findById(int id) {
+    public Optional<TeacherDto> findById(int id) {
         return teacherList.stream()
                 .filter(t -> t.id() == id)
                 .findFirst()
@@ -161,7 +161,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // Öğretmen Güncelle
     @Override
-    public TeacherDto update(int id, TeacherDto updatedTeacher) {
+    public Optional<TeacherDto> update(int id, TeacherDto updatedTeacher) {
         for (int i = 0; i < teacherList.size(); i++) {
             if (teacherList.get(i).id() == id) {
                 teacherList.set(i, updatedTeacher);
@@ -174,7 +174,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // Öğretmen Sil
     @Override
-    public TeacherDto delete(int id) {
+    public Optional<TeacherDto> delete(int id) {
         Optional<TeacherDto> teacher = teacherList.stream()
                 .filter(t -> t.id() == id)
                 .findFirst();
