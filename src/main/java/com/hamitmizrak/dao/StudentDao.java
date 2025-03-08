@@ -275,7 +275,10 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // FIND BY ID
     @Override
     public Optional<StudentDto> findById(int id) {
-        return null;
+        return studentDtoList
+                .stream()
+                .filter(s -> s.getId().equals(id))
+                .findFirst();
     }
 
     // Öğrenci Güncelle
@@ -283,7 +286,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     public Optional<StudentDto> update(int id, StudentDto studentDto) {
         try{
         for (StudentDto temp : studentDtoList) {
-            if (temp.getId() == id) {
+            //if (temp.getId() == id) {
+            if (temp.getId() .equals(id)) {
                 temp.setName(studentDto.getName());
                 temp.setSurname(studentDto.getSurname());
                 temp.setBirthDate(studentDto.getBirthDate());
@@ -307,7 +311,9 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // Öğrenci Sil
     @Override
     public Optional<StudentDto> delete(int id) {
+        // 1.YOL (Eğer Optional veri kullanılmazsa)
         //studentDtoList.removeIf(temp -> temp.getId() == id);
+        /*
         boolean removed = studentDtoList.removeIf(temp -> temp.getId() == id);
         if (removed) {
             System.out.println(SpecialColor.BLUE + "Öğrenci Silindi" + SpecialColor.RESET);
@@ -315,6 +321,20 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             saveToFile();
             return Optional.empty();
         } else {
+            System.out.println(SpecialColor.RED + "Öğrenci Silinmedi" + SpecialColor.RESET);
+            throw new StudentNotFoundException("Öğrenci silinemedi, ID bulunamadı.");
+        }
+        */
+
+        // 2.YOL
+        Optional<StudentDto> studentToDelete= findById(id);
+        if(studentToDelete.isPresent()) {
+            studentDtoList.remove(studentToDelete.get());
+            System.out.println(SpecialColor.BLUE + "Öğrenci Silindi" + SpecialColor.RESET);
+            // Silinen Öğrenciyi dosyaya kaydet
+            saveToFile();
+            return studentToDelete;
+        }else{
             System.out.println(SpecialColor.RED + "Öğrenci Silinmedi" + SpecialColor.RESET);
             throw new StudentNotFoundException("Öğrenci silinemedi, ID bulunamadı.");
         }

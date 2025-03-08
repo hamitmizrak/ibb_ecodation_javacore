@@ -37,7 +37,7 @@ public class StudentController implements IDaoGenerics<StudentDto> {
 
     @Override
     public Optional<StudentDto> findById(int id) {
-        return null;
+        return studentDao.findById(id);
     }
 
     // LIST
@@ -55,7 +55,7 @@ public class StudentController implements IDaoGenerics<StudentDto> {
     // DELETE
     @Override
     public Optional<StudentDto> delete(int id) {
-        return Optional.of(studentDao.delete(id)) ;
+        return studentDao.delete(id) ;
     }
 
     // CHOOISE(Switch-case)

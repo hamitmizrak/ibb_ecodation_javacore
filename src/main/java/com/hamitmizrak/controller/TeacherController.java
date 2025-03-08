@@ -33,7 +33,7 @@ public class TeacherController implements IDaoGenerics<TeacherDto> {
     // FIND BY NAME
     @Override
     public Optional<TeacherDto> findByName(String name) {
-        return Optional.of(teacherDao.findByName(name)) ;
+        return teacherDao.findByName(name) ;
     }
 
     @Override
@@ -50,13 +50,13 @@ public class TeacherController implements IDaoGenerics<TeacherDto> {
     // UPDATE
     @Override
     public Optional<TeacherDto> update(int id, TeacherDto teacherDto) {
-        return Optional.of(teacherDao.update(id, teacherDto));
+        return teacherDao.update(id, teacherDto);
     }
 
     // DELETE
     @Override
     public Optional<TeacherDto> delete(int id) {
-        return Optional.of(teacherDao.delete(id));
+        return teacherDao.delete(id);
     }
 
     // CHOOISE(Switch-case)

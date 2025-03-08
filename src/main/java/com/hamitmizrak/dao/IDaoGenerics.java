@@ -24,7 +24,7 @@ public interface IDaoGenerics<T> {
     // CREATE
     T create(T t);
 
-    // LIST
+    // LIST List için Optional kullanmana gerek yoktur.
     List<T> list();
 
     // FIND BY NAME
