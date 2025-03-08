@@ -1,6 +1,7 @@
 package com.hamitmizrak.tutorials.oop.accessmodifierother;
 
-import com.accessmodifiersame.Student;
+
+import com.hamitmizrak.tutorials.oop.accessmodifiersame.Student;
 
 public class Manager {
     public static void main(String[] args) {

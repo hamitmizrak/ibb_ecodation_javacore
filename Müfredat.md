@@ -130,7 +130,6 @@ Perşembe (6 Şubat) - 3 Saat
 🚀  5. Hafta 3-Dersi
  Cumartesi (8 Mart) - 4 Saat
 - Annotation
-- Cipher (AES/DES/RSA/HASHING)
 - Java 8+ Yenilikleri
   . Lambda İfadeleri
   . @FunctionalInterface
@@ -143,6 +142,7 @@ Perşembe (6 Şubat) - 3 Saat
 ### 6. Hafta
 🚀  6. Hafta 1-Dersi
  Salı (11 Mart) - 3 Saat
+- Cipher (AES/DES/RSA/HASHING)
 - Method ve Constructor Reference
     - Optional Sınıfı
       . Yeni Tarih ve Zaman API (java.time)

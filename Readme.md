@@ -11836,4 +11836,413 @@ public class StreamReduceExample {
 Stream API, Java 8’in getirdiği en güçlü özelliklerden biridir ve modern Java programlamada oldukça yaygın kullanılmaktadır. 🚀
 
 
+## Javada Annotation Nedir ?
+```sh 
 
+```
+---
+Java'da **Annotation (Notasyon)**, kod hakkında ek bilgi sağlayan bir **metadata** (üst bilgi) mekanizmasıdır. Annotation'lar, kodun derlenmesi, çalıştırılması veya analiz edilmesi sırasında derleyici, çalışma zamanı araçları veya IDE tarafından işlenebilir.
+
+---
+
+# **Annotation Nedir?**
+Annotation’lar, bir programın kaynak koduna eklenen özel işaretlerdir ve **sınıflara, metotlara, değişkenlere, parametrelere ve diğer bileşenlere uygulanabilir**. Ancak, programın mantığını doğrudan etkilemezler. Annotation’lar, derleyici direktifleri, hata yakalama bilgileri ve çalışma zamanı işlemleri için kullanılır.
+
+Java'daki **annotation'lar genellikle framework'ler ve kütüphaneler tarafından kullanılır**. Örneğin, Spring, Hibernate ve JUnit gibi framework'lerde annotation’lar, yapılandırma ve otomasyon süreçlerini kolaylaştırır.
+
+---
+
+# **Annotation Kullanım Alanları**
+Annotation’lar üç ana kategoride kullanılır:
+
+1. **Derleyici Direktifleri (Compiler Instructions)**
+    - Derleyiciye hata veya uyarı mesajları hakkında bilgi verir.
+    - Örneğin: `@Override`, `@SuppressWarnings`
+
+2. **Kod Üretme (Code Generation)**
+    - Çeşitli araçlar tarafından kod üretmek için kullanılır.
+    - Örneğin: `@Entity`, `@Getter`, `@Setter` (Lombok)
+
+3. **Çalışma Zamanında (Runtime Processing)**
+    - Çalışma zamanı işlemleri için **Reflection API** ile kullanılabilir.
+    - Örneğin: `@Autowired`, `@Transactional` (Spring Framework)
+
+---
+
+# **Java'da Annotation Türleri**
+Java’da annotation’lar üç farklı şekilde sınıflandırılabilir:
+
+### **1. Java'nın Varsayılan (Built-in) Annotation’ları**
+Java’nın kendi içinde sunduğu bazı annotation’lar şunlardır:
+
+| Annotation | Açıklama |
+|------------|----------|
+| `@Override` | Bir metotun üst sınıftaki metodu ezdiğini belirtir. |
+| `@Deprecated` | Bir metot veya sınıfın kullanım dışı olduğunu belirtir. |
+| `@SuppressWarnings` | Derleyicinin belirli uyarıları göz ardı etmesini sağlar. |
+| `@FunctionalInterface` | Bir arayüzün yalnızca bir metot içermesi gerektiğini belirtir. |
+| `@SafeVarargs` | Değişken uzunlukta parametre listesi (varargs) kullanan metotlarda güvenli kullanım sağlanmasını belirtir. |
+| `@Native` | Sabit (constant) değişkenlerin `native code` içinde kullanılacağını belirtir. |
+
+Örnek:
+```java
+class Base {
+    void show() {
+        System.out.println("Base class");
+    }
+}
+
+class Derived extends Base {
+    @Override
+    void show() {  // `@Override` kullanımı
+        System.out.println("Derived class");
+    }
+}
+```
+
+---
+
+### **2. Meta-Annotation (Annotation’ları Anotasyonlama)**
+Java’da annotation’ların nasıl çalıştığını ve hangi alanlarda geçerli olduğunu belirleyen meta-annotation’lar vardır.
+
+| Meta-Annotation | Açıklama |
+|-----------------|----------|
+| `@Target` | Annotation’ın uygulanabileceği öğeleri belirtir (sınıf, metot, alan, parametre, vb.). |
+| `@Retention` | Annotation’ın ne kadar süreyle saklanacağını belirtir. |
+| `@Inherited` | Annotation’ın alt sınıflar tarafından miras alınmasını sağlar. |
+| `@Documented` | Annotation’ın Javadoc’ta görünmesini sağlar. |
+| `@Repeatable` | Aynı annotation’ın birden fazla kez kullanılmasını sağlar. |
+
+Örnek:
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+// Bu annotation yalnızca metodlara uygulanabilir.
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnnotation {
+    String value() default "Varsayılan Değer";
+}
+```
+
+---
+
+### **3. Kullanıcı Tanımlı (Custom) Annotation’lar**
+Kendi annotation’larımızı oluşturabiliriz.
+
+Örnek olarak bir **loglama** annotation’ı yapalım:
+```java
+import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME) // Çalışma zamanında erişilebilir
+@Target(ElementType.METHOD) // Yalnızca metotlara uygulanabilir
+@interface LogExecutionTime {
+}
+```
+
+Şimdi bu annotation’ı bir metotta kullanalım:
+```java
+class Test {
+    @LogExecutionTime
+    void process() {
+        System.out.println("Bu metot loglanacak.");
+    }
+}
+```
+Bu annotation’ı **Reflection API** ile işleyebiliriz:
+```java
+import java.lang.reflect.Method;
+
+public class AnnotationProcessor {
+    public static void main(String[] args) throws Exception {
+        Method method = Test.class.getMethod("process");
+        
+        if (method.isAnnotationPresent(LogExecutionTime.class)) {
+            System.out.println("process() metodu LogExecutionTime annotation’ı ile işaretlenmiştir.");
+        }
+    }
+}
+```
+Bu kodun çıktısı:
+```
+process() metodu LogExecutionTime annotation’ı ile işaretlenmiştir.
+```
+
+---
+
+# **Annotation’ların Retention Policy (Saklama Politikaları)**
+Bir annotation’ın hangi aşamada saklanacağını belirlemek için `@Retention` kullanılır.
+
+| Retention Policy | Açıklama |
+|------------------|----------|
+| `SOURCE` | Yalnızca kaynak kodda bulunur, derleme sırasında atılır. |
+| `CLASS` | Derleme aşamasında derlenmiş kodda bulunur, ancak çalışma zamanında erişilemez. |
+| `RUNTIME` | Çalışma zamanında Reflection API ile erişilebilir. |
+
+Örnek:
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@interface RuntimeAnnotation {
+}
+```
+
+---
+
+# **İleri Düzey Kullanım: Annotation İşleyici (Processor)**
+Çalışma zamanında annotation'ları okumak için **Reflection API** kullanılır.
+
+Örneğin:
+```java
+import java.lang.reflect.Method;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface MyTest {
+}
+
+class Demo {
+    @MyTest
+    void testMethod() {
+        System.out.println("Test metodu çalıştı.");
+    }
+}
+
+public class AnnotationProcessor {
+    public static void main(String[] args) {
+        for (Method method : Demo.class.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(MyTest.class)) {
+                try {
+                    method.invoke(new Demo()); // Metodu çağır
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+```
+Bu kod `@MyTest` annotation’ına sahip metotları çalıştırır.
+
+Çıktı:
+```
+Test metodu çalıştı.
+```
+
+---
+
+# **Sonuç**
+- **Annotation’lar**, Java’da meta-veri (metadata) eklemek için kullanılan mekanizmalardır.
+- **Framework ve kütüphanelerde yaygın olarak kullanılırlar** (Spring, Hibernate, Lombok, JUnit).
+- **Üç temel türü vardır**: Java’nın kendi annotation’ları, meta-annotation’lar ve kullanıcı tanımlı annotation’lar.
+- **Çalışma zamanında işlenebilir** ve **Reflection API** ile okunabilir.
+- **Modern Java uygulamalarında, özellikle Spring Boot gibi framework’lerde merkezi bir rol oynar.**
+
+
+
+
+## Javada Cipher (AES/DES/HASHING) Nedir ?
+```sh 
+
+```
+---
+
+Java'da **Cipher** sınıfı, Java Cryptography Extension (JCE) API’si tarafından sağlanan bir şifreleme mekanizmasıdır ve şifreleme (encryption) ve şifre çözme (decryption) işlemleri için kullanılır. **Cipher** sınıfı, **AES, DES, RSA, HASHING (MD5, SHA-256 gibi)** gibi birçok algoritmayı destekler.
+
+---
+
+## **Cipher Sınıfı Nedir?**
+`javax.crypto.Cipher` sınıfı, Java'da **kriptografik dönüşümler** (cryptographic transformations) gerçekleştirmek için kullanılır. Bu dönüşümler şunları içerebilir:
+- Veri şifreleme (Encryption)
+- Veri şifre çözme (Decryption)
+- Veri imzalama (Signing)
+- Veri doğrulama (Verification)
+
+Bir **Cipher** nesnesi aşağıdaki **modlardan** biriyle çalışabilir:
+1. **ENCRYPT_MODE** → Şifreleme modu (Veriyi şifreler)
+2. **DECRYPT_MODE** → Şifre çözme modu (Şifrelenmiş veriyi çözer)
+3. **WRAP_MODE** → Anahtar sarmalama (Key Wrapping)
+4. **UNWRAP_MODE** → Anahtar çözme (Key Unwrapping)
+
+Cipher, genellikle bir anahtar (Key) ve bir algoritma belirterek kullanılır.
+
+---
+
+# **1. AES (Advanced Encryption Standard)**
+### **Nedir?**
+- AES, **simetrik şifreleme algoritmasıdır**. (Aynı anahtar hem şifreleme hem de şifre çözme için kullanılır.)
+- **Blok şifreleme algoritmasıdır** ve 128-bit blok boyutuna sahiptir.
+- **Anahtar boyutları**: 128-bit, 192-bit ve 256-bit olabilir.
+- **Güvenli ve yaygın olarak kullanılan bir algoritmadır.** (Bankacılık, VPN, Wi-Fi şifreleme vb.)
+
+### **AES ile Şifreleme ve Çözme Kodu**
+```java
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.util.Base64;
+
+public class AESExample {
+    public static void main(String[] args) throws Exception {
+        // AES Anahtarı oluştur
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(128); // 128-bit anahtar
+        SecretKey secretKey = keyGenerator.generateKey();
+
+        // Cipher nesnesini AES için başlat
+        Cipher cipher = Cipher.getInstance("AES");
+
+        String originalText = "Merhaba, AES Şifreleme!";
+        
+        // Şifreleme (Encryption)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] encryptedBytes = cipher.doFinal(originalText.getBytes());
+        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
+        System.out.println("Şifrelenmiş Metin: " + encryptedText);
+
+        // Şifre Çözme (Decryption)
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
+        String decryptedText = new String(decryptedBytes);
+        System.out.println("Çözülen Metin: " + decryptedText);
+    }
+}
+```
+
+#### **AES ile Şifreleme Modları**
+AES şifreleme **farklı blok şifreleme modları** ile kullanılabilir:
+1. **ECB (Electronic Codebook)** → Zayıf, tekrar eden blokları aynı şekilde şifreler.
+2. **CBC (Cipher Block Chaining)** → Önceki bloğun çıktısını XOR ile karıştırarak daha güvenli hale getirir.
+3. **CFB (Cipher Feedback)** → Akış şifrelemesi gibi çalışır.
+4. **OFB (Output Feedback)** → Blokları bağımsız olarak şifreler.
+5. **GCM (Galois Counter Mode)** → Kimlik doğrulamalı şifreleme sağlar.
+
+AES **CBC Modu** kullanımı:
+```java
+Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+```
+
+---
+
+# **2. DES (Data Encryption Standard)**
+### **Nedir?**
+- **Simetrik bir şifreleme algoritmasıdır.** (AES gibi aynı anahtarı kullanır.)
+- **Blok boyutu**: 64-bit
+- **Anahtar uzunluğu**: 56-bit
+- **Eskimiş bir algoritmadır ve günümüzde pek güvenli değildir.** (AES’e göre zayıf)
+
+### **DES ile Şifreleme ve Çözme**
+```java
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.util.Base64;
+
+public class DESExample {
+    public static void main(String[] args) throws Exception {
+        // DES Anahtarı oluştur
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
+        SecretKey secretKey = keyGenerator.generateKey();
+
+        // Cipher nesnesini DES için başlat
+        Cipher cipher = Cipher.getInstance("DES");
+
+        String originalText = "Merhaba, DES Şifreleme!";
+        
+        // Şifreleme
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] encryptedBytes = cipher.doFinal(originalText.getBytes());
+        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
+        System.out.println("Şifrelenmiş Metin: " + encryptedText);
+
+        // Şifre Çözme
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
+        String decryptedText = new String(decryptedBytes);
+        System.out.println("Çözülen Metin: " + decryptedText);
+    }
+}
+```
+**DES, zayıf olduğu için AES tercih edilmelidir.**
+
+---
+
+# **3. RSA (Rivest-Shamir-Adleman)**
+### **Nedir?**
+- **Asimetrik şifreleme algoritmasıdır.** (Şifreleme ve şifre çözme için farklı anahtarlar kullanılır.)
+- **Genellikle dijital imzalar ve anahtar değişimi için kullanılır.**
+- **Anahtar uzunluğu**: 1024-bit, 2048-bit, 4096-bit olabilir.
+- **Çok güvenlidir ancak yavaştır.**
+
+### **RSA ile Şifreleme ve Çözme**
+```java
+import javax.crypto.Cipher;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.util.Base64;
+
+public class RSAExample {
+    public static void main(String[] args) throws Exception {
+        // RSA Anahtar Çifti Oluştur
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(2048);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+
+        // Cipher nesnesini RSA için başlat
+        Cipher cipher = Cipher.getInstance("RSA");
+
+        String originalText = "Merhaba, RSA Şifreleme!";
+        
+        // Şifreleme (Public Key kullanarak)
+        cipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
+        byte[] encryptedBytes = cipher.doFinal(originalText.getBytes());
+        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
+        System.out.println("Şifrelenmiş Metin: " + encryptedText);
+
+        // Şifre Çözme (Private Key kullanarak)
+        cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
+        String decryptedText = new String(decryptedBytes);
+        System.out.println("Çözülen Metin: " + decryptedText);
+    }
+}
+```
+
+---
+
+# **4. HASHING (SHA-256, MD5, SHA-512)**
+- **Hash fonksiyonları tek yönlüdür ve geri çevrilemez.**
+- **Parola saklama ve veri bütünlüğü sağlama işlemlerinde kullanılır.**
+- **MD5, SHA-1 artık güvenli değildir. SHA-256 veya SHA-512 tercih edilmelidir.**
+
+### **SHA-256 Hashleme**
+```java
+import java.security.MessageDigest;
+import java.util.Base64;
+
+public class HashingExample {
+    public static void main(String[] args) throws Exception {
+        String password = "123456";
+        
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes());
+        
+        String hashedPassword = Base64.getEncoder().encodeToString(hash);
+        System.out.println("SHA-256 Hash: " + hashedPassword);
+    }
+}
+```
+
+---
+
+Bu açıklamalarla birlikte, **AES, DES, RSA ve Hashing algoritmalarının** Java'da nasıl kullanıldığını tam detaylı olarak öğrenmiş oldunuz. 🚀
+
+
+
+## Diğer
+```sh 
+
+```
+---

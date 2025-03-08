@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 // Java Record Kullanımı
+// Extends yapamazsınız. Import
 public record Week5_01_Record(
         Integer id,
         String name,
