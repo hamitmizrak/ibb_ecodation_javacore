@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+// Annotation
+
 
 // Öğrenci Yönetim Sistemi
 public class StudentDao implements IDaoGenerics<StudentDto> {
@@ -149,7 +151,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // C-R-U-D
     // Öğrenci Ekle
     // 📌 Öğrenci Ekleme (Create)
-    @Override
+    @Override // Bun metotu ezmelisin.
+    @Deprecated // Eski bir metot yenisini kullanın
     public StudentDto create(StudentDto studentDto) {
         try {
             // 📌 Verilerin doğrulanmasını sağlıyoruz
@@ -213,6 +216,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Öğrenci Listesi
     @Override
+    @SuppressWarnings("unchecked") // Derleyici uyarılarını bastırmak için kullanılır.
+    //@Cacheable
     public ArrayList<StudentDto> list() {
         // Öğrenci Yoksa
         if (studentDtoList.isEmpty()) {
