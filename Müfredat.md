@@ -156,7 +156,7 @@ Perşembe (6 Şubat) - 3 Saat
 - Eşzamanlılık (Concurrency)
     . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
     . Concurrency API
-
+- Clean Code
 - Genel Örnek: Öğrenci Bilgi Sistem Devam
 
 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀

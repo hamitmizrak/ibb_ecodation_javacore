@@ -12408,8 +12408,32 @@ Bu açıklamalarla birlikte, **AES, DES, RSA ve Hashing algoritmalarının** Jav
 
 
 
+## Clean Code
+```sh 
+
+```
+---
+
+
+## Thread Oluşturma ve Yönetimi
+```sh 
+
+```
+---
+
+
+## Eşzamanlılık (Concurrency)
+```sh 
+
+```
+---
+
+
 ## Diğer
 ```sh 
 
 ```
 ---
+
+
+
