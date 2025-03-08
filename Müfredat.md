@@ -134,6 +134,11 @@ Perşembe (6 Şubat) - 3 Saat
   . Lambda İfadeleri
   . @FunctionalInterface
   . Fonksiyonel Arabirimler (filter, map, reduce gibi fonksiyonlar)
+  . Method ve Constructor Reference
+  . Optional Sınıfı
+  . Yeni Tarih ve Zaman API (java.time)
+  . Stream
+  . interface gövdeli metot için default kullanımı
 - Stream API
   . filter, map, reduce gibi fonksiyonlar
 - Optional
@@ -143,19 +148,19 @@ Perşembe (6 Şubat) - 3 Saat
 🚀  6. Hafta 1-Dersi
  Salı (11 Mart) - 3 Saat
 - Cipher (AES/DES/RSA/HASHING)
-- Method ve Constructor Reference
-    - Optional Sınıfı
-      . Yeni Tarih ve Zaman API (java.time)
 
 - Çoklu İş Parçacığı (Multithreading)
   . Thread Oluşturma ve Yönetimi
   . Senkronizasyon
+
 - Eşzamanlılık (Concurrency)
     . Yardımcı sınıflar (CountDownLatch, CyclicBarrier vb.)
     . Concurrency API
 
 - Genel Örnek: Öğrenci Bilgi Sistem Devam
 
+🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
+🚀 PROJEYE BAŞLA
 🚀  6. Hafta 2-Dersi
  Perşembe (13 Mart) - 3 Saat
 
@@ -167,6 +172,11 @@ Perşembe (6 Şubat) - 3 Saat
 
 #########################################################################################################
 #########################################################################################################
+Language : Java
+UI       : JavaFX
+Database : H2DB
+
+
 Eğer yetişirse; JavaFX kullanılacak
 ATM projesi için yukarıdaki Java SE konu başlıklarını kullanarak iki haftalık bir plan hazırladım.
 Bu plan, proje geliştirme sürecinde temel kavramları uygulamalı olarak içerecek şekilde yapılandırılmıştır.

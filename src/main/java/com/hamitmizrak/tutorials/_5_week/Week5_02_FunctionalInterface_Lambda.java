@@ -14,7 +14,7 @@ interface MathOperation2 {
 
 
 
-public class Week5_02_Lambda {
+public class Week5_02_FunctionalInterface_Lambda {
 
     public static void main(String[] args) {
         // Java 1.7 Öncesinde Lambda Expression
