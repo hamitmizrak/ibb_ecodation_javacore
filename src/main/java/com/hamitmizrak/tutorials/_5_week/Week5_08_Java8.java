@@ -13,7 +13,7 @@ Consumer → void accept(T t)    → Parametre alır, bir işlem yapar ama geriy
 Supplier → T get()             → Parametre almaz, bir değer üretir.
  */
 
-public class Week5_111_Java8 {
+public class Week5_08_Java8 {
 
     // List
     private static List<String> getArrayToDataList() {

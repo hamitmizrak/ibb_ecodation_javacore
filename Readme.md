@@ -12047,6 +12047,168 @@ Test metodu çalıştı.
 ```
 ---
 
+Java'da `Optional<T>` sınıfı, **null referanslarını güvenli bir şekilde ele almak için** kullanılır. `Optional`, **"null safety"** sağlayarak, `NullPointerException` hatalarını minimize etmeye yardımcı olur.
+
+---
+
+## **1. Optional Nedir?**
+`Optional`, `java.util` paketinde bulunan ve **içinde bir değer olup olmadığını temsil eden bir kapsayıcı (container)** sınıftır.
+
+- **Boş olabilir (`Optional.empty()`)**
+- **Bir değer içerebilir (`Optional.of(T value)`)**
+
+Java 8 ile tanıtılmıştır ve özellikle **null kontrollerini daha okunaklı ve güvenli hale getirmek için** kullanılır.
+
+---
+
+## **2. Optional Nasıl Kullanılır?**
+### **2.1. Optional ile Değer Oluşturma**
+```java
+import java.util.Optional;
+
+public class Main {
+    public static void main(String[] args) {
+        // Değer içeren bir Optional nesnesi
+        Optional<String> optionalWithValue = Optional.of("Merhaba, Java!");
+
+        // Boş bir Optional nesnesi
+        Optional<String> emptyOptional = Optional.empty();
+
+        // Nullable bir değer içerebilen Optional
+        Optional<String> nullableOptional = Optional.ofNullable(null); // Boş Optional döner
+
+        System.out.println("Optional Değer: " + optionalWithValue.orElse("Varsayılan Değer"));
+        System.out.println("Boş Optional: " + emptyOptional.orElse("Varsayılan Değer"));
+    }
+}
+```
+---
+## **3. Optional Kullanım Senaryoları**
+### **3.1. Optional ile Null Kontrolü**
+**Klasik Null Kontrolü:**
+```java
+public String getUserName(User user) {
+    if (user != null) {
+        return user.getName();
+    } else {
+        return "Bilinmeyen Kullanıcı";
+    }
+}
+```
+**Optional ile Null Kontrolü:**
+```java
+public String getUserName(User user) {
+    return Optional.ofNullable(user)
+                   .map(User::getName)
+                   .orElse("Bilinmeyen Kullanıcı");
+}
+```
+💡 **Avantaj:** Daha okunaklı ve hatasız bir kod yapısı sağlanır.
+
+---
+
+### **3.2. Optional ile Değer Varlığını Kontrol Etme**
+```java
+Optional<String> optionalValue = Optional.of("Java 8");
+
+// Eğer değer varsa, yazdır
+optionalValue.ifPresent(value -> System.out.println("Değer: " + value));
+```
+💡 **Avantaj:** `null` kontrolü yapmadan doğrudan işlem yapmamızı sağlar.
+
+---
+
+### **3.3. Optional ile Varsayılan Değer Kullanımı**
+```java
+String result = optionalValue.orElse("Varsayılan Değer");
+System.out.println(result);
+```
+💡 **Avantaj:** Eğer `optionalValue` içinde değer varsa onu döndürür, yoksa varsayılan değeri döndürür.
+
+Alternatif olarak:
+```java
+String result = optionalValue.orElseGet(() -> "Varsayılan Değer");
+```
+💡 **Fark:** `orElse()` her zaman çalışır, ancak `orElseGet()` sadece `Optional` boşsa çalışır.
+
+---
+
+### **3.4. Optional ile Exception Fırlatma**
+```java
+String value = optionalValue.orElseThrow(() -> new IllegalArgumentException("Değer bulunamadı!"));
+```
+💡 **Avantaj:** Eğer değer boşsa, belirli bir hata fırlatabiliriz.
+
+---
+
+## **4. Optional ile Fonksiyonel Programlama**
+### **4.1. map() Kullanımı**
+Eğer `Optional` içinde bir değer varsa, `map()` ile bu değeri dönüştürebiliriz.
+```java
+Optional<String> name = Optional.of("Java");
+Optional<Integer> nameLength = name.map(String::length);
+System.out.println(nameLength.orElse(0)); // Çıktı: 4
+```
+💡 **Avantaj:** Null kontrolü yapmadan, doğrudan değer üzerinde işlem yapabiliriz.
+
+---
+
+### **4.2. flatMap() Kullanımı**
+`Optional<Optional<T>>` gibi iç içe `Optional` oluşmasını engellemek için `flatMap()` kullanılır.
+```java
+class User {
+    private Optional<String> email;
+
+    public Optional<String> getEmail() {
+        return email;
+    }
+}
+
+User user = new User();
+Optional<String> email = Optional.of(user).flatMap(User::getEmail);
+```
+💡 **Avantaj:** İç içe Optional kullanımını önler.
+
+---
+
+## **5. Optional Kullanılmaması Gereken Durumlar**
+**1️⃣ DTO veya Entity içinde Optional Kullanımı:**
+- `Optional` bir sınıfın alanı olarak kullanılmamalıdır. Çünkü `Optional` serileştirilmeye uygun değildir.
+
+```java
+// KÖTÜ KULLANIM ❌
+class User {
+    private Optional<String> email; // Kullanılmamalı!
+}
+```
+- Bunun yerine, normal değişken kullanın:
+```java
+// DOĞRU KULLANIM ✅
+class User {
+    private String email;
+}
+```
+
+**2️⃣ Koleksiyonlar İçinde Optional Kullanımı:**
+- Koleksiyon içinde `Optional` kullanmak yerine, boş koleksiyon döndürmek daha iyidir.
+```java
+// KÖTÜ KULLANIM ❌
+List<Optional<String>> emails;
+
+// DOĞRU KULLANIM ✅
+List<String> emails = Collections.emptyList();
+```
+
+---
+
+## **Sonuç**
+✅ `Optional<T>` sınıfı, `null` kontrolünü daha okunaklı ve güvenli hale getirir.  
+✅ `if (obj != null)` gibi geleneksel `null` kontrollerini azaltır.  
+✅ Fonksiyonel programlama prensiplerine uygun olarak çalışır.  
+❌ DTO'lar ve koleksiyonlar içinde kullanılmamalıdır.
+
+💡 **Özetle**, Java'da `Optional`, **null kaynaklı hataları önlemek ve kodun daha temiz olmasını sağlamak** için harika bir araçtır! 🚀
+
 
 ## Javada Cipher (AES/DES/HASHING) Nedir ?
 ```sh 
