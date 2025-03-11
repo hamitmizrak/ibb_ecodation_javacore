@@ -12213,8 +12213,23 @@ List<String> emails = Collections.emptyList();
 ## Javada Cipher (AES/DES/HASHING) Nedir ?
 ```sh 
 
-```
+```                                                                            
 ---
+
+Pom.xml
+<!-- Java Cryptography Extension (JCE) İçin Gerekli -->
+<dependency>
+<groupId>javax.xml.bind</groupId>
+<artifactId>jaxb-api</artifactId>
+<version>2.3.1</version>
+</dependency>
+
+<!-- Java'da Şifreleme (AES) İçin Apache Commons Codec -->
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.15</version>
+</dependency>
 
 Java'da **Cipher** sınıfı, Java Cryptography Extension (JCE) API’si tarafından sağlanan bir şifreleme mekanizmasıdır ve şifreleme (encryption) ve şifre çözme (decryption) işlemleri için kullanılır. **Cipher** sınıfı, **AES, DES, RSA, HASHING (MD5, SHA-256 gibi)** gibi birçok algoritmayı destekler.
 
@@ -12408,11 +12423,187 @@ Bu açıklamalarla birlikte, **AES, DES, RSA ve Hashing algoritmalarının** Jav
 
 
 
-## Clean Code
+## Javada Composition
 ```sh 
 
 ```
 ---
+
+## **Java'da Composition (Bileşim) Nedir?**
+
+### **1. Tanım**
+Composition (Bileşim), bir sınıfın başka bir sınıfı nesne olarak içermesi anlamına gelir. Bu, OOP'nin (Nesne Yönelimli Programlama) en önemli özelliklerinden biridir ve "Has-A (Sahip Olma)" ilişkisini ifade eder. Yani, bir sınıf başka bir sınıfa "sahiptir" ve onun özelliklerini kendi içinde kullanabilir.
+
+Inheritance (Miras) ile karşılaştırıldığında, composition genellikle **daha esnek ve güçlü bir ilişki** sunar. Çünkü miras (inheritance), kalıtım hiyerarşisi oluştururken, composition doğrudan nesneleri kullanarak sınıflar arasında ilişki kurar.
+
+---
+
+### **2. Composition’un Temel Mantığı**
+Composition şu mantık üzerine kuruludur:
+
+- Bir sınıfın, başka bir sınıfın yeteneklerini kullanabilmesi için, o sınıfın bir **örneğini (instance)** içinde bulundurur.
+- Bir nesne, içerdiği nesnenin metodlarını çağırarak, bileşen nesnenin fonksiyonlarını kendi içinde kullanabilir.
+- Kalıtımda olduğu gibi bir is-a (bir şeydir) ilişkisi değil, **has-a (bir şeye sahiptir) ilişkisi** oluşturur.
+
+---
+
+### **3. Composition’un Avantajları**
+1. **Daha Esnek ve Daha Az Bağımlı Kod:**
+    - Kalıtımda, bir sınıf başka bir sınıftan türediğinde tüm özelliklerini alır. Ancak, bu bağımlılığı artırır ve değişiklikleri zorlaştırır.
+    - Composition'da ise, yalnızca ihtiyacımız olan özellikleri nesne olarak dahil ederiz.
+
+2. **Çoklu Kullanım (Reusability):**
+    - Bileşim ile yazılan sınıflar, bağımsız bileşenlerden oluştuğu için birden fazla yerde tekrar kullanılabilir.
+
+3. **Daha Kolay Bakım (Maintainability):**
+    - Değişiklik yapmak daha kolaydır çünkü sınıflar birbirinden bağımsız çalışabilir.
+
+4. **Daha Güçlü Enkapsülasyon (Encapsulation):**
+    - Composition, kapsüllemeyi daha iyi destekler çünkü iç içe geçen nesneler arasında doğrudan bir kalıtım bağı bulunmaz.
+
+---
+
+### **4. Java'da Composition Örneği**
+
+Diyelim ki bir **Araba (Car)** sınıfımız var ve bir **Motor (Engine)** sınıfına ihtiyaç duyuyor. Burada **Araba**, bir **Motor**'a sahip olmalıdır.
+
+```java
+// Motor sınıfı
+class Engine {
+    private String type;
+    
+    public Engine(String type) {
+        this.type = type;
+    }
+    
+    public void start() {
+        System.out.println(type + " motor çalıştırıldı.");
+    }
+}
+
+// Araba sınıfı
+class Car {
+    private Engine engine; // Composition burada gerçekleşiyor
+    
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+    
+    public void startCar() {
+        System.out.println("Araba çalıştırılıyor...");
+        engine.start(); // İçerdiği motorun start() metodunu çağırıyoruz
+    }
+}
+
+// Ana sınıf (Main)
+public class Main {
+    public static void main(String[] args) {
+        Engine myEngine = new Engine("V8"); // Motor nesnesi oluşturduk
+        Car myCar = new Car(myEngine); // Arabayı motor ile ilişkilendirdik
+        myCar.startCar(); // Aracı çalıştır
+    }
+}
+```
+
+### **Çıktı**
+```
+Araba çalıştırılıyor...
+V8 motor çalıştırıldı.
+```
+
+Burada **Car (Araba) sınıfı, Engine (Motor) sınıfını içererek bir has-a ilişkisi oluşturdu**. Arabanın motoru olmadan çalışması mümkün değildir.
+
+---
+
+### **5. Inheritance (Kalıtım) ile Composition Karşılaştırması**
+Composition ve kalıtım farklı konseptlerdir. Peki, ne zaman composition ne zaman kalıtım kullanmalıyız?
+
+| **Özellik**         | **Inheritance (Kalıtım)** | **Composition (Bileşim)** |
+|---------------------|----------------------|----------------------|
+| **İlişki Türü**     | "Is-A" (Bir şeydir)   | "Has-A" (Bir şeye sahiptir) |
+| **Bağımlılık**      | Alt sınıf üst sınıfa bağımlıdır. | Daha bağımsızdır, sınıflar daha esnektir. |
+| **Esneklik**        | Değiştirmek zordur, miras alındığında tüm özellikler gelir. | Bir nesne içindeki bileşenler ayrı ayrı yönetilebilir. |
+| **Kullanım Durumu** | Mevcut bir sınıfın yeteneklerini genişletmek için. | Bir sınıfın başka bir sınıfın özelliklerine sahip olmasını sağlamak için. |
+
+#### **Örnek**
+- **Kalıtım (Inheritance) Kullanımı:**
+  ```java
+  class Animal {
+      void makeSound() {
+          System.out.println("Hayvan ses çıkarıyor.");
+      }
+  }
+  
+  class Dog extends Animal {
+      void bark() {
+          System.out.println("Köpek havlıyor.");
+      }
+  }
+  
+  public class Main {
+      public static void main(String[] args) {
+          Dog dog = new Dog();
+          dog.makeSound(); // Kalıtım yoluyla Animal sınıfının metodunu kullanabilir
+          dog.bark();
+      }
+  }
+  ```
+  **Çıktı:**
+  ```
+  Hayvan ses çıkarıyor.
+  Köpek havlıyor.
+  ```
+
+- **Composition Kullanımı:**
+  ```java
+  class Heart {
+      void pump() {
+          System.out.println("Kalp kan pompalıyor.");
+      }
+  }
+  
+  class Human {
+      private Heart heart;
+      
+      public Human() {
+          heart = new Heart(); // Composition
+      }
+      
+      void live() {
+          System.out.println("İnsan yaşıyor...");
+          heart.pump();
+      }
+  }
+  
+  public class Main {
+      public static void main(String[] args) {
+          Human human = new Human();
+          human.live();
+      }
+  }
+  ```
+  **Çıktı:**
+  ```
+  İnsan yaşıyor...
+  Kalp kan pompalıyor.
+  ```
+
+Burada **İnsan ve Kalp** arasında bir "Has-A" ilişkisi vardır. **İnsan bir kalp değildir, fakat bir kalbe sahiptir**. İşte bu, composition’un en büyük farkıdır.
+
+---
+
+### **6. Composition Kullanım Senaryoları**
+Composition genellikle şu durumlarda kullanılır:
+- **Karmaşık nesneleri modellemek için:** Örneğin, bir **Üniversite** içinde **Bölümler**, **Öğrenciler**, **Öğretmenler** bulunabilir.
+- **Kapsüllemeyi güçlendirmek için:** Sınıflar arasında sıkı bağımlılık olmadan yönetim sağlar.
+- **Kalıtımın gereksiz bağımlılığından kaçınmak için:** Örneğin, bir **Araç** sınıfı hem **Benzinli** hem **Elektrikli** motorları destekleyebilir. Kalıtım yerine motoru ayrı bir bileşen olarak tutmak daha mantıklıdır.
+
+---
+
+### **7. Sonuç**
+Composition, **OOP'de daha esnek ve modüler bir yapı sağlar**. Bir sınıfın başka bir sınıfın özelliklerini **kalıtım yerine bileşim yoluyla** kullanmasını sağlar. Özellikle **bağımlılıkları azaltmak, kod tekrarını önlemek ve daha sürdürülebilir yazılım geliştirmek** için önemlidir.
+
+Eğer bir nesne diğer bir nesneyi **sahipleniyorsa (has-a relationship)** ve o nesnenin fonksiyonlarını kullanıyorsa, Composition kullanmalısınız. Eğer bir nesne başka bir nesnenin özelliklerini tamamen devralıyorsa ve **o nesne onun bir türevidir (is-a relationship)**, o zaman kalıtım kullanabilirsiniz.
 
 
 ## Thread Oluşturma ve Yönetimi
@@ -12421,12 +12612,454 @@ Bu açıklamalarla birlikte, **AES, DES, RSA ve Hashing algoritmalarının** Jav
 ```
 ---
 
+# **Java'da Thread Oluşturma ve Yönetimi**
+
+Java'da **Thread (İş Parçacığı)**, programların paralel çalışmasını sağlamak için kullanılan bir mekanizmadır. Thread'ler, programın farklı bölümlerini aynı anda çalıştırarak performansı artırır ve CPU kullanımını optimize eder. Java'da **çoklu iş parçacığı (multithreading)**, bir uygulamanın birden fazla iş parçacığını aynı anda çalıştırmasını sağlar.
+
+---
+
+## **1. Thread Nedir?**
+Thread, bir programın bağımsız olarak çalıştırılabilen en küçük yürütülebilir birimidir. Java'da her uygulama, varsayılan olarak **main thread** ile başlar. Ekstra iş parçacıkları oluşturarak, işlemler paralel bir şekilde yürütülebilir.
+
+Örneğin, bir web sunucusu aynı anda birden fazla isteği işleyebilmek için birden fazla thread kullanır. Bir grafik arayüz uygulamasında, kullanıcı girişleri ve arka plan işlemleri farklı thread'ler tarafından yönetilir.
+
+---
+
+## **2. Java'da Thread Nasıl Oluşturulur?**
+Java'da thread oluşturmanın iki temel yolu vardır:
+
+1. **Thread sınıfını genişletmek (Extending the Thread Class)**
+2. **Runnable arayüzünü (Interface) uygulamak (Implementing Runnable Interface)**
+
+### **2.1 Thread Sınıfını Genişletmek**
+Java'da `Thread` sınıfını genişleterek (extend ederek) yeni bir thread oluşturabiliriz. `run()` metodu, thread çalıştırıldığında ne yapılacağını belirtir.
+
+**Örnek:**
+```java
+class MyThread extends Thread {
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " - Değer: " + i);
+            try {
+                Thread.sleep(1000); // 1 saniye beklet
+            } catch (InterruptedException e) {
+                System.out.println("Thread kesintiye uğradı!");
+            }
+        }
+    }
+}
+
+public class ThreadExample {
+    public static void main(String[] args) {
+        MyThread thread1 = new MyThread();
+        MyThread thread2 = new MyThread();
+
+        thread1.start(); // Yeni bir iş parçacığı başlatır
+        thread2.start();
+    }
+}
+```
+**Çıktı:**
+```
+Thread-0 - Değer: 1
+Thread-1 - Değer: 1
+Thread-0 - Değer: 2
+Thread-1 - Değer: 2
+...
+```
+> **Not:** `start()` metodu `run()` metodunu çağırır ve thread'i başlatır. Eğer `run()` doğrudan çağrılırsa, thread olarak çalışmaz, normal bir metot çağrısı olur.
+
+---
+
+### **2.2 Runnable Arayüzünü Uygulamak**
+Thread oluşturmanın daha iyi bir yolu, `Runnable` arayüzünü uygulamaktır. Java'da bir sınıfın yalnızca bir üst sınıfı olabileceğinden (`Thread` sınıfını genişletmek kalıtımı sınırlar), `Runnable` arayüzü kullanmak daha esnek bir yaklaşımdır.
+
+**Örnek:**
+```java
+class MyRunnable implements Runnable {
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " - Sayı: " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("Thread kesintiye uğradı!");
+            }
+        }
+    }
+}
+
+public class RunnableExample {
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new MyRunnable());
+        Thread thread2 = new Thread(new MyRunnable());
+
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+**Avantajları:**
+- Java çoklu kalıtımı desteklemediği için `Runnable` kullanarak başka bir sınıfı da genişletebiliriz.
+- Daha temiz bir kod yapısı sağlar.
+
+---
+
+## **3. Thread Yönetimi**
+Birden fazla iş parçacığı kullanırken, thread'leri yönetmek oldukça önemlidir. Java'da thread yönetimi için çeşitli metotlar ve teknikler vardır.
+
+### **3.1 Thread Metotları**
+Aşağıda `Thread` sınıfında bulunan önemli metotlar verilmiştir:
+
+| Metot | Açıklama |
+|--------|---------|
+| `start()` | Thread'i başlatır ve `run()` metodunu çağırır. |
+| `run()` | Thread içinde çalıştırılacak kodu içerir. |
+| `sleep(ms)` | Thread'in belirtilen milisaniye kadar uyumasını sağlar. |
+| `join()` | Çağrılan thread bitene kadar diğerlerini bekletir. |
+| `yield()` | Mevcut thread'in çalışmasını duraklatır ve diğer thread'lere şans verir. |
+| `setPriority(int)` | Thread'in önceliğini belirler (1-10 arası). |
+| `getPriority()` | Thread'in mevcut önceliğini döndürür. |
+| `isAlive()` | Thread çalışıyorsa `true`, değilse `false` döndürür. |
+| `interrupt()` | Thread'i kesmek için kullanılır. |
+
+---
+
+### **3.2 Thread Önceliği (Priority)**
+Her thread'in bir önceliği vardır ve **1 ile 10** arasında bir değer alabilir.
+
+- `Thread.MIN_PRIORITY` (1) → En düşük öncelik
+- `Thread.NORM_PRIORITY` (5) → Varsayılan öncelik
+- `Thread.MAX_PRIORITY` (10) → En yüksek öncelik
+
+**Örnek:**
+```java
+class PriorityThread extends Thread {
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " Öncelik: " + Thread.currentThread().getPriority());
+    }
+}
+
+public class PriorityExample {
+    public static void main(String[] args) {
+        PriorityThread t1 = new PriorityThread();
+        PriorityThread t2 = new PriorityThread();
+        
+        t1.setPriority(Thread.MIN_PRIORITY);
+        t2.setPriority(Thread.MAX_PRIORITY);
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+---
+
+### **3.3 Thread Senkronizasyonu**
+Çoklu thread'ler paylaşılan kaynaklara erişirken **veri tutarsızlığı** oluşabilir. Bunu önlemek için **synchronized** anahtar kelimesi kullanılır.
+
+**Örnek:**
+```java
+class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+
+public class SyncExample {
+    public static void main(String[] args) throws InterruptedException {
+        Counter counter = new Counter();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+
+        System.out.println("Final Count: " + counter.getCount());
+    }
+}
+```
+
+---
+
+## **4. Thread Havuzları (Thread Pools)**
+Çok fazla thread oluşturmak performans sorunlarına neden olabilir. **Executor Framework** kullanarak thread havuzu oluşturulabilir.
+
+**Örnek:**
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ThreadPoolExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        for (int i = 1; i <= 5; i++) {
+            int taskNumber = i;
+            executor.execute(() -> System.out.println("Görev " + taskNumber + " Çalışıyor"));
+        }
+
+        executor.shutdown();
+    }
+}
+```
+
+---
+
+## **Sonuç**
+Java'da thread yönetimi, performansı artırmak ve işlemleri daha verimli hale getirmek için kritik öneme sahiptir. `Thread` ve `Runnable` kullanarak thread'ler oluşturabilir, senkronizasyon sağlayabilir ve thread havuzları ile kaynak yönetimi yapabilirsiniz. Bu teknikler, çok iş parçacıklı uygulamalarda veri bütünlüğünü ve verimliliği artırmak için kullanılır.
+
 
 ## Eşzamanlılık (Concurrency)
 ```sh 
 
 ```
 ---
+
+# **Java'da Eşzamanlılık (Concurrency) - Kapsamlı Rehber**
+
+## **1. Giriş: Java'da Eşzamanlılık (Concurrency) Nedir?**
+Java, çok iş parçacıklı (multithreading) ve çok işlemcili (multiprocessing) programlamayı destekleyen güçlü bir programlama dilidir. Eşzamanlılık (concurrency), bir Java programında birden fazla görevin (task, thread, process) aynı zaman dilimi içinde yürütülebilmesini ifade eder. Java, eşzamanlı programlama için kapsamlı kütüphaneler, API'ler ve veri yapıları sunarak geliştiricilerin yüksek performanslı ve ölçeklenebilir uygulamalar oluşturmasını sağlar.
+
+## **2. Java'da Eşzamanlılık ve Paralellik**
+Java'da eşzamanlılık ve paralellik farklı konseptlerdir:
+
+- **Eşzamanlılık (Concurrency):** Birden fazla görevin (task) zaman paylaşımlı olarak çalıştırılması.
+- **Paralellik (Parallelism):** Birden fazla görevin aynı anda fiziksel olarak çalıştırılması (çok çekirdekli işlemciler ile mümkün).
+
+**Örnek:**
+- **Concurrency:** Tek bir CPU çekirdeği üzerinde, zaman dilimlerine bölerek birden fazla görevin sırayla çalıştırılması.
+- **Parallelism:** Çok çekirdekli bir CPU’da görevlerin gerçekten aynı anda çalıştırılması.
+
+---
+
+## **3. Java'da İş Parçacıkları (Threads)**
+Java'da eşzamanlı işlemler **Thread** sınıfı veya **Runnable** arayüzü ile oluşturulabilir.
+
+### **3.1. Thread Sınıfını Kullanarak Thread Oluşturma**
+Java'da iş parçacığı oluşturmanın en basit yolu, `Thread` sınıfından türetilmiş bir sınıf oluşturmaktır.
+
+```java
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread çalışıyor: " + Thread.currentThread().getName());
+    }
+    
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        t1.start(); // Thread'i başlatır
+    }
+}
+```
+- `run()` metodu, iş parçacığının çalıştırılmasını sağlar.
+- `start()` metodu iş parçacığını başlatır.
+
+### **3.2. Runnable Arayüzünü Kullanarak Thread Oluşturma**
+Daha esnek bir yöntem, `Runnable` arayüzünü kullanmaktır.
+
+```java
+class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable thread çalışıyor: " + Thread.currentThread().getName());
+    }
+    
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new MyRunnable());
+        t1.start();
+    }
+}
+```
+Bu yöntem, `Thread` sınıfını miras almadan iş parçacıkları oluşturmayı sağlar.
+
+### **3.3. Lambda İle Runnable Kullanımı**
+Java 8'den itibaren lambda ifadeleri ile daha kısa ve okunaklı bir şekilde `Runnable` nesnesi oluşturabiliriz:
+
+```java
+public class LambdaThread {
+    public static void main(String[] args) {
+        Thread thread = new Thread(() -> System.out.println("Lambda ile Thread çalışıyor."));
+        thread.start();
+    }
+}
+```
+
+---
+
+## **4. Java'da Thread Yönetimi**
+Java, iş parçacıklarını yönetmek ve kontrol etmek için çeşitli yöntemler sunar.
+
+### **4.1. Thread.sleep() ile İş Parçacığını Uyutma**
+`Thread.sleep(milisaniye)`, iş parçacığını belirtilen süre boyunca askıya alır.
+
+```java
+public class SleepExample {
+    public static void main(String[] args) {
+        Thread t1 = new Thread(() -> {
+            try {
+                System.out.println("Thread uyuyor...");
+                Thread.sleep(3000); // 3 saniye uyut
+                System.out.println("Thread uyandı.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t1.start();
+    }
+}
+```
+
+### **4.2. Thread.join() ile İş Parçacıklarının Senkronizasyonu**
+`join()` metodu, bir iş parçacığının diğer iş parçacığının tamamlanmasını beklemesini sağlar.
+
+```java
+public class JoinExample {
+    public static void main(String[] args) {
+        Thread t1 = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println("Thread 1: " + i);
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            try {
+                t1.join(); // t1'in tamamlanmasını bekle
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Thread 2 başladı.");
+        });
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+---
+
+## **5. Java'da Eşzamanlılık için Yüksek Seviyeli API'ler**
+Java'da **java.util.concurrent** paketi, iş parçacıkları ile çalışmayı kolaylaştıran birçok sınıf içerir.
+
+### **5.1. Executor Framework ile Thread Yönetimi**
+`ExecutorService`, iş parçacıklarını yönetmek için kullanılır.
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ExecutorExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        for (int i = 1; i <= 5; i++) {
+            executor.execute(() -> System.out.println("Çalışan thread: " + Thread.currentThread().getName()));
+        }
+        
+        executor.shutdown(); // Thread havuzunu kapat
+    }
+}
+```
+
+### **5.2. Future ve Callable ile Sonuç Döndüren İş Parçacıkları**
+`Callable`, `Runnable` arayüzünden farklı olarak bir sonuç döndürür.
+
+```java
+import java.util.concurrent.*;
+
+public class CallableExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Callable<Integer> task = () -> {
+            TimeUnit.SECONDS.sleep(2);
+            return 123;
+        };
+
+        Future<Integer> future = executor.submit(task);
+        System.out.println("İşlem sonucu bekleniyor...");
+        Integer result = future.get(); // Bloklayıcı çağrı
+        System.out.println("Sonuç: " + result);
+
+        executor.shutdown();
+    }
+}
+```
+
+---
+
+## **6. Java'da Eşzamanlılık Problemleri ve Çözümleri**
+Eşzamanlı programlama sırasında karşılaşılan bazı problemler şunlardır:
+
+### **6.1. Yarış Koşulları (Race Condition)**
+Birden fazla iş parçacığının aynı değişkeni güncellemesi sonucu veri tutarsızlığı oluşabilir.
+
+```java
+class Counter {
+    private int count = 0;
+
+    public void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```
+**Çözüm:** `synchronized` anahtar kelimesi veya `ReentrantLock` kullanımı.
+
+```java
+class SafeCounter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```
+
+### **6.2. Deadlock (Çıkmaz Durumu)**
+İki iş parçacığı birbirinden kaynak beklerken sonsuz bekleme durumuna girer.
+
+**Çözüm:** Kaynak tahsis sırasını belirlemek.
+
+```java
+// Avoiding deadlock with ordered locking
+```
+
+### **6.3. Starvation ve Livelock**
+Bazı iş parçacıklarının kaynaklara erişememesi.
+
+**Çözüm:** Adil planlama (`Fair locks`), zaman aşımı mekanizmaları.
+
+---
+
+## **7. Sonuç**
+Java'da eşzamanlılık, performansı artırırken yönetilmesi gereken kritik konular içerir. **Thread**, **ExecutorService**, **Callable**, **Locks** gibi araçları doğru kullanarak yüksek performanslı uygulamalar geliştirebilirsiniz.
 
 
 ## Diğer
