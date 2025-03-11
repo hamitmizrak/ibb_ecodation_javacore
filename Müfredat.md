@@ -147,6 +147,12 @@ Perşembe (6 Şubat) - 3 Saat
 ### 6. Hafta
 🚀  6. Hafta 1-Dersi
  Salı (11 Mart) - 3 Saat
+- Composition
+- Clean Code
+- Software Prensible
+- SOLID
+- Design Pattern
+
 - Cipher (AES/DES/RSA/HASHING)
 
 - Çoklu İş Parçacığı (Multithreading)
