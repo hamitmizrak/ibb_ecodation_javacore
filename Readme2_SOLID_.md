@@ -6,6 +6,214 @@
 [Java Tutorials](https://www.w3schools.com/java/default.asp)
 
 
+## Clean Code
+```sh 
+
+```
+---
+
+# **Java'da Clean Code (Temiz Kod) Nedir?**
+
+Clean Code (Temiz Kod), yazılım geliştirme sürecinde kodun anlaşılır, bakımı kolay ve sürdürülebilir olmasını sağlayan bir yazım ve tasarım felsefesidir. İlk olarak **Robert C. Martin (Uncle Bob)** tarafından "Clean Code: A Handbook of Agile Software Craftsmanship" kitabında detaylıca ele alınmıştır. Temiz kod, sadece çalışır durumda olan bir koddan fazlasını ifade eder; **okunabilir, modüler, genişletilebilir ve hataya karşı dayanıklı** bir kod yazmayı amaçlar.
+
+---
+
+## **1. Temiz Kodun Önemi**
+Bir yazılım projesinde kodun **çalışması** yeterli değildir, aynı zamanda **bakımının kolay** ve **geliştirilmeye açık** olması da gereklidir. İşte temiz kodun neden önemli olduğuna dair bazı nedenler:
+
+- **Okunabilirlik**: Kodun daha anlaşılır olması, geliştiricilerin projeyi daha hızlı kavramasına yardımcı olur.
+- **Bakım Kolaylığı**: İlerleyen süreçte hataları gidermek veya yeni özellikler eklemek daha az zaman alır.
+- **İşbirliği**: Takım içinde kodu paylaşmayı ve birlikte çalışmayı kolaylaştırır.
+- **Test Edilebilirlik**: Temiz kod, daha az hata içerir ve test edilmesi daha kolaydır.
+- **Verimlilik**: Kötü kod, zaman içinde teknik borç oluşturur ve projenin gelişimini yavaşlatır.
+
+---
+
+## **2. Clean Code İlkeleri**
+### **2.1 Anlamlı ve Açıklayıcı İsimlendirme**
+Kod yazarken **değişkenler, fonksiyonlar, sınıflar ve metodlar** için açık ve anlamlı isimler kullanmak gerekir. Değişken ismi, yaptığı işi açıklamalıdır.
+
+**❌ Kötü Örnek**
+```java
+int d; // Bu değişkenin ne anlama geldiği belli değil.
+```
+
+**✅ İyi Örnek**
+```java
+int elapsedTimeInDays; // Değişkenin neyi ifade ettiği açıkça belirtiliyor.
+```
+
+**İyi isimlendirme kuralları şunlardır:**
+- **Anlamlı** ve **açıklayıcı** olmalıdır.
+- **Kısaltmalardan kaçınılmalıdır.** (`getUserInfo()` yerine `getUsrInf()` kullanmamalıyız.)
+- **Boolean değişkenler "is" veya "has" ile başlamalıdır.** (Örneğin: `isActive`, `hasPermission`)
+- **Fonksiyon isimleri eylem içermelidir.** (Örneğin: `calculateSalary()`, `fetchData()`)
+
+---
+
+### **2.2 Tek Sorumluluk Prensibi (Single Responsibility Principle - SRP)**
+Bir fonksiyon veya sınıf **yalnızca tek bir işi** yapmalıdır. Çok fazla sorumluluğa sahip bir fonksiyonun anlaşılması ve değiştirilmesi zor olur.
+
+**❌ Kötü Örnek**
+```java
+public class Employee {
+    public void calculateSalary() {
+        // Maaş hesaplama kodu
+    }
+    
+    public void printEmployeeDetails() {
+        // Çalışan bilgilerini yazdırma kodu
+    }
+    
+    public void saveToDatabase() {
+        // Çalışanı veritabanına kaydetme kodu
+    }
+}
+```
+**Bu kod yanlış çünkü tek bir sınıf birden fazla iş yapıyor.**
+
+**✅ İyi Örnek**
+```java
+public class Employee {
+    private String name;
+    private double salary;
+    
+    public double calculateSalary() {
+        return salary * 1.1; // Örnek hesaplama
+    }
+}
+
+public class EmployeePrinter {
+    public void printEmployeeDetails(Employee employee) {
+        System.out.println("Çalışan: " + employee.getName());
+    }
+}
+
+public class EmployeeRepository {
+    public void saveToDatabase(Employee employee) {
+        // Veritabanı işlemleri
+    }
+}
+```
+**Burada her sınıf tek bir sorumluluk üstlenmiş durumda.**
+
+---
+
+### **2.3 Fonksiyonlar Küçük ve Odaklı Olmalıdır**
+Bir fonksiyon **yalnızca tek bir işi yapmalıdır** ve bu işi **en iyi şekilde yapmalıdır**. Fonksiyonlar mümkün olduğunca kısa olmalıdır.
+
+**❌ Kötü Örnek**
+```java
+public void processEmployeeData() {
+    // Çalışan verilerini oku
+    // Verileri doğrula
+    // Maaş hesapla
+    // Sonuçları yazdır
+    // Veritabanına kaydet
+}
+```
+
+**✅ İyi Örnek**
+```java
+public void processEmployeeData() {
+    Employee employee = readEmployeeData();
+    validateEmployeeData(employee);
+    double salary = calculateSalary(employee);
+    printEmployeeData(employee, salary);
+    saveToDatabase(employee, salary);
+}
+```
+Bu şekilde **her işlev için ayrı bir fonksiyon** yazılmış oldu. Okunabilirlik ve modülerlik arttı.
+
+---
+
+### **2.4 Magic Number Kullanımından Kaçının**
+Sabit sayılar yerine **anlamlı sabitler** veya **enum değerleri** kullanmalıyız.
+
+**❌ Kötü Örnek**
+```java
+if (userType == 1) {
+    // Admin işlemleri
+} else if (userType == 2) {
+    // Kullanıcı işlemleri
+}
+```
+**✅ İyi Örnek**
+```java
+public enum UserType {
+    ADMIN, USER;
+}
+
+if (userType == UserType.ADMIN) {
+    // Admin işlemleri
+} else if (userType == UserType.USER) {
+    // Kullanıcı işlemleri
+}
+```
+Böylece kod daha anlamlı ve hataya karşı daha dayanıklı hale gelir.
+
+---
+
+### **2.5 Kodun Tekrarını Önleyin (DRY - Don’t Repeat Yourself)**
+Aynı işlevi birden fazla yerde tekrar tekrar yazmaktan kaçınmalıyız.
+
+**❌ Kötü Örnek**
+```java
+public double calculateDiscount(double price) {
+    return price * 0.10;
+}
+
+public double calculateTax(double price) {
+    return price * 0.18;
+}
+```
+Burada **hesaplama mantığı** tekrar edilmiştir. Bunun yerine:
+
+**✅ İyi Örnek**
+```java
+public double calculatePercentage(double price, double percentage) {
+    return price * percentage;
+}
+```
+Şimdi hem vergi hem de indirim hesaplamasında bu fonksiyon kullanılabilir.
+
+---
+
+### **2.6 Kodun Kolay Test Edilebilir Olması**
+Kodun **test edilebilir** olması önemlidir. Fonksiyonlar bağımlılıklardan arındırılmalı ve test yazmaya uygun olmalıdır.
+
+**❌ Kötü Örnek**
+```java
+public double calculateTotalPrice(double price) {
+    double tax = price * 0.18;
+    System.out.println("Vergi hesaplandı: " + tax);
+    return price + tax;
+}
+```
+Bu fonksiyon **hem hesaplama yapıyor hem de konsola çıktı veriyor**, test edilmesi zor.
+
+**✅ İyi Örnek**
+```java
+public double calculateTotalPrice(double price, double taxRate) {
+    return price + (price * taxRate);
+}
+```
+Bu şekilde kod **bağımsız hale** geldi ve kolay test edilebilir oldu.
+
+---
+
+## **Sonuç**
+Clean Code, **yalnızca kodun çalışmasını değil**, kodun **bakımını ve geliştirilmesini** de kolaylaştırmayı amaçlayan bir yaklaşımdır. Temiz kod yazmanın bazı temel ilkeleri şunlardır:
+
+1. **Anlamlı ve açıklayıcı isimlendirme**
+2. **Tek sorumluluk prensibi (SRP)**
+3. **Fonksiyonları küçük ve odaklı yazma**
+4. **Magic number kullanmamak**
+5. **Kod tekrarından kaçınmak (DRY prensibi)**
+6. **Kolay test edilebilir kod yazmak**
+
+Java'da Clean Code prensiplerine uyarak, daha **sürdürülebilir**, **modüler**, **anlaşılır** ve **hatasız** kod yazabiliriz. Bu prensiplere sadık kalmak, uzun vadede proje maliyetlerini düşürecek ve yazılım kalitesini artıracaktır. 🚀
+
 ## Yazılım Prensibleri
 ```sh 
 
