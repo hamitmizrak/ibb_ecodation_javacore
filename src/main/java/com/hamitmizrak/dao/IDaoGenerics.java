@@ -22,7 +22,7 @@ public interface IDaoGenerics<T> {
 
     // CRUD
     // CREATE
-    T create(T t);
+    Optional<T> create(T t);
 
     // LIST List için Optional kullanmana gerek yoktur.
     List<T> list();
