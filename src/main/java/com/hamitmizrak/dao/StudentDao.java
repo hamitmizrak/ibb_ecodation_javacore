@@ -2,6 +2,7 @@ package com.hamitmizrak.dao;
 
 import com.hamitmizrak.dto.EStudentType;
 import com.hamitmizrak.dto.StudentDto;
+import com.hamitmizrak.dto.TeacherDto;
 import com.hamitmizrak.exceptions.StudentNotFoundException;
 import com.hamitmizrak.utils.SpecialColor;
 
@@ -19,7 +20,7 @@ import java.util.Scanner;
 public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Field
-    private ArrayList<StudentDto> studentDtoList = new ArrayList<>();
+    private ArrayList<StudentDto> studentDtoList ;
     // ID artık tüm sınıflar tarafından erişilebilir olacak
     int maxId=0;
     private static final String FILE_NAME = "students.txt";
@@ -34,6 +35,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Parametresiz Constructor
     public StudentDao() {
+        studentDtoList = new ArrayList<>();
+
         // Eğer students.txt yoksa otomatik oluştur
         createFileIfNotExists();
 
@@ -148,12 +151,13 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     }
 
     /// /////////////////////////////////////////////////////////////
+
     // C-R-U-D
     // Öğrenci Ekle
     // 📌 Öğrenci Ekleme (Create)
     @Override // Bun metotu ezmelisin.
     @Deprecated // Eski bir metot yenisini kullanın
-    public StudentDto create(StudentDto studentDto) {
+    public Optional<StudentDto> create(StudentDto studentDto) {
         try {
             // 📌 Verilerin doğrulanmasını sağlıyoruz
             validateStudent(studentDto);
@@ -174,7 +178,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             saveToFile();
 
             System.out.println(studentDto+ SpecialColor.GREEN + "✅ Öğrenci başarıyla eklendi!" + SpecialColor.RESET);
-            return studentDto;
+            return Optional.of(studentDto);
 
         } catch (IllegalArgumentException e) {
             System.out.println(SpecialColor.RED + "⛔ Hata: " + e.getMessage() + SpecialColor.RESET);
@@ -488,7 +492,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 // 📌 Öğrenci nesnesini oluştur
                 // Integer id, String name, String surname, LocalDate birthDate,Double midTerm, Double finalTerm,EStudentType eStudentType
                 StudentDto newStudent = new StudentDto(maxId, name, surname,birthDate, midTerm, finalTerm, studentType);
-                StudentDto createdStudent = create(newStudent);
+                Optional<StudentDto> createdStudent = create(newStudent);
 
                 if (createdStudent != null) {
                     break; // 🔹 Başarıyla eklenirse döngüden çık

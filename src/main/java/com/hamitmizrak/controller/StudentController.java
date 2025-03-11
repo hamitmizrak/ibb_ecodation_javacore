@@ -20,10 +20,12 @@ public class StudentController implements IDaoGenerics<StudentDto> {
 
     // CREATE
     @Override
-    public StudentDto create(StudentDto studentDto) {
-        StudentDto createdStudent = studentDao.create(studentDto);
+    public Optional<StudentDto> create(StudentDto studentDto) {
+        Optional<StudentDto> createdStudent = studentDao.create(studentDto);
+
         if (createdStudent == null) {
             System.out.println(SpecialColor.RED + "❌ Öğrenci oluşturulamadı. Geçerli bilgiler giriniz." + SpecialColor.RESET);
+            return Optional.empty(); // Eğer öğrenci oluşturulamazsa boş Optional dön
         }
         return createdStudent;
     }
