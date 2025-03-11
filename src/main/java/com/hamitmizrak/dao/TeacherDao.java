@@ -1,6 +1,5 @@
 package com.hamitmizrak.dao;
 
-import com.hamitmizrak.dto.EStudentType;
 import com.hamitmizrak.dto.ETeacherSubject;
 import com.hamitmizrak.dto.TeacherDto;
 import com.hamitmizrak.exceptions.TeacherNotFoundException;

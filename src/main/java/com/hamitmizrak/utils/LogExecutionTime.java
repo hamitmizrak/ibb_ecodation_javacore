@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
 public @interface LogExecutionTime {
 }
 
-
 // TEST CLASS
 class Test {
 

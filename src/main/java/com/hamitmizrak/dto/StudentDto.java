@@ -1,5 +1,7 @@
 package com.hamitmizrak.dto;
 
+import com.hamitmizrak.utils.ERole;
+import com.hamitmizrak.utils.EStudentType;
 import com.hamitmizrak.utils.SpecialColor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +11,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 // LOMBOK
-@AllArgsConstructor
 @Builder
 @EqualsAndHashCode
 
@@ -21,6 +22,7 @@ public class StudentDto extends PersonDto implements Serializable {
 
     // Field
     private EStudentType eStudentType; // Enum Öğrenci Türü
+    private ERole eRole;         // Kullanıcı Rolü
     private Double midTerm;      // Vize notu
     private Double finalTerm;    // Final notu
     private Double resultTerm;   // Sonuç Notu: (Vize%40 + Final%60)
@@ -33,32 +35,16 @@ public class StudentDto extends PersonDto implements Serializable {
 
     // Parametresiz Constructor
     public StudentDto() {
-        super();
+        super(); // Üst Süper sınıftan gelen
+        this.eStudentType = EStudentType.OTHER;
+        this.eRole = ERole.STUDENT; // Default Rolü
         this.midTerm = 0.0;
         this.finalTerm = 0.0;
-        this.resultTerm = 0.0;
         this.resultTerm = 0.0; // varsayılan olarak
     }
 
-    // toString
-    @Override
-    public String toString() {
-        return super.toString() + "StudentDto{" +
-                "eStudentType=" + eStudentType +
-                ", midTerm=" + midTerm +
-                ", finalTerm=" + finalTerm +
-                ", resultTerm=" + resultTerm +
-                ", status='" + status + '\'' +
-                "} ";
-    }
-
-    @Override
-    public void displayInfo() {
-        System.out.println("Öğrenci " + name + " " + surname + " " + birthDate);
-    }
-
     // Parametreli Constructor
-    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm, EStudentType eStudentType) {
+    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm, EStudentType eStudentType, ERole eRole) {
         // Üst atadan gelen (StudentDto)
         super(id, name, surname, birthDate);
         // this: Local
@@ -67,7 +53,32 @@ public class StudentDto extends PersonDto implements Serializable {
         this.resultTerm = calculateResult();
         this.status = determineStatus();
         this.eStudentType = eStudentType;
+        this.eRole = eRole;
     }
+
+    @Override
+    public void displayInfo() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("Öğrenci ")
+                .append(name)
+                .append("")
+                .append(surname)
+                .append("")
+                .append(eRole)
+                .append("")
+                .append(eStudentType)
+                .append("")
+                .append(midTerm)
+                .append("")
+                .append(finalTerm)
+                .append("")
+                .append(resultTerm)
+                .append("")
+        ;
+        System.out.println(stringBuilder.toString());
+    }
+
 
     // Metotlar
     // Vize ve Final Calculate
@@ -85,6 +96,25 @@ public class StudentDto extends PersonDto implements Serializable {
         return (this.resultTerm >= 50.0) ? "Geçti" : "Kaldı";
     }
 
+    // toString
+
+
+    @Override
+    public String toString() {
+        return "StudentDto{" +
+                "eStudentType=" + eStudentType +
+                ", eRole=" + eRole +
+                ", midTerm=" + midTerm +
+                ", finalTerm=" + finalTerm +
+                ", resultTerm=" + resultTerm +
+                ", status='" + status + '\'' +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", createdDate=" + createdDate +
+                "} " + super.toString();
+    }
 
     /// ///////////////////////////////////////////////////////////////////////////////
     // Getter And Setter
@@ -131,4 +161,11 @@ public class StudentDto extends PersonDto implements Serializable {
         this.status = status;
     }
 
+    public ERole geteRole() {
+        return eRole;
+    }
+
+    public void seteRole(ERole eRole) {
+        this.eRole = eRole;
+    }
 } //end Student

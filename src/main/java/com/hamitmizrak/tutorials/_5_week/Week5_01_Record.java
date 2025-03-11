@@ -1,6 +1,6 @@
 package com.hamitmizrak.tutorials._5_week;
 
-import com.hamitmizrak.dto.EStudentType;
+import com.hamitmizrak.utils.EStudentType;
 
 import java.io.Serializable;
 import java.time.LocalDate;

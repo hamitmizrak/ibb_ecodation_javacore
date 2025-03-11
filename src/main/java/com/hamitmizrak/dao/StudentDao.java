@@ -1,8 +1,8 @@
 package com.hamitmizrak.dao;
 
-import com.hamitmizrak.dto.EStudentType;
+import com.hamitmizrak.utils.ERole;
+import com.hamitmizrak.utils.EStudentType;
 import com.hamitmizrak.dto.StudentDto;
-import com.hamitmizrak.dto.TeacherDto;
 import com.hamitmizrak.exceptions.StudentNotFoundException;
 import com.hamitmizrak.utils.SpecialColor;
 
@@ -136,9 +136,11 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                     LocalDate.parse(parts[3]),    // Doğum tarihini LocalDate formatına çevirir
                     Double.parseDouble(parts[4]), // Vize notunu double olarak dönüştürür
                     Double.parseDouble(parts[5]), // Final notunu double olarak dönüştürür
-                    EStudentType.valueOf(parts[8]) // Öğrencinin eğitim türünü (Enum) çevirir
+                    EStudentType.valueOf(parts[8]),
+                    ERole.valueOf(parts[9]) // Öğrencinin eğitim türünü (Enum) çevirir
             );
-
+//  0           1               2             3                    4                  5                  8                        9
+// Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm, EStudentType eStudentType, ERole eRole
             // **Geçti/Kaldı durumu CSV'den okunduğu gibi öğrenci nesnesine eklenir**
             student.setResultTerm(Double.parseDouble(parts[6])); // **Sonuç notunu ayarla**
             student.setStatus(parts[7]); // **Geçti/Kaldı durumunu CSV'den al**
@@ -491,7 +493,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 
                 // 📌 Öğrenci nesnesini oluştur
                 // Integer id, String name, String surname, LocalDate birthDate,Double midTerm, Double finalTerm,EStudentType eStudentType
-                StudentDto newStudent = new StudentDto(maxId, name, surname,birthDate, midTerm, finalTerm, studentType);
+                StudentDto newStudent = new StudentDto(maxId, name, surname,birthDate, midTerm, finalTerm, studentType,ERole.STUDENT);
                 Optional<StudentDto> createdStudent = create(newStudent);
 
                 if (createdStudent != null) {
@@ -551,7 +553,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         double finalTermUpdate = scanner.nextDouble();
 
         //  // Integer id, String name, String surname, LocalDate birthDate,Double midTerm, Double finalTerm,EStudentType eStudentType
-        StudentDto studentUpdate = new StudentDto(id, nameUpdate, surnameUpdate,birthDateUpdate, midTermUpdate, finalTermUpdate, studentTypeMethod());
+        StudentDto studentUpdate = new StudentDto(id, nameUpdate, surnameUpdate,birthDateUpdate, midTermUpdate, finalTermUpdate, studentTypeMethod(), ERole.STUDENT);
         try {
             update(id, studentUpdate);
             System.out.println("Öğrenci başarıyla güncellendi.");
