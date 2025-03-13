@@ -154,6 +154,7 @@ Perşembe (6 Şubat) - 3 Saat
 - Design Pattern
 
 - Cipher (AES/DES/RSA/HASHING)
+- Reflection Nedir 
 
 - Çoklu İş Parçacığı (Multithreading)
   . Thread Oluşturma ve Yönetimi
@@ -169,6 +170,7 @@ Perşembe (13 Mart) - 3 Saat
 
 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 🚀 PROJEYE BAŞLA
+Technology: Javafx, Javacore, H2DB
 
 🚀  6. Hafta 3-Dersi 
  Cumartesi (15 Mart) - 4 Saat

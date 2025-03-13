@@ -114,8 +114,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                         student.getFinalTerm() + "," +   // Öğrenci final notunu ekler
                         student.getResultTerm() + "," +  // Öğrenci sonuç notunu ekler
                         student.getStatus() + "," +      // Öğrenci geçti/kaldı notunu ekler
-                        student.getBirthDate() + "," +   // Öğrenci doğum tarihini ekler
-                        student.geteStudentType();       // Öğrencinin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
+                        student.getBirthDate() ;   // Öğrenci doğum tarihini ekler
+                        //student.geteStudentType();       // Öğrencinin eğitim türünü (Lisans, Yüksek Lisans vb.) ekler
     }
 
     // 📌 CSV formatındaki satırı StudentDto nesnesine çevirme
@@ -142,8 +142,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
 //  0           1               2             3                    4                  5                  8                        9
 // Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm, EStudentType eStudentType, ERole eRole
             // **Geçti/Kaldı durumu CSV'den okunduğu gibi öğrenci nesnesine eklenir**
-            student.setResultTerm(Double.parseDouble(parts[6])); // **Sonuç notunu ayarla**
-            student.setStatus(parts[7]); // **Geçti/Kaldı durumunu CSV'den al**
+            //student.setResultTerm(Double.parseDouble(parts[6])); // **Sonuç notunu ayarla**
+            //student.setStatus(parts[7]); // **Geçti/Kaldı durumunu CSV'den al**
 
             return student;
         } catch (Exception e) {
@@ -215,9 +215,9 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             throw new IllegalArgumentException("Doğum tarihi bugünden büyük olamaz.");
         }
 
-        if (studentDto.geteStudentType() == null) {
+      /*  if (studentDto.geteStudentType() == null) {
             throw new IllegalArgumentException("Öğrenci türü boş olamaz.");
-        }
+        }*/
     }
 
     // Öğrenci Listesi
@@ -304,8 +304,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 temp.setBirthDate(studentDto.getBirthDate());
                 temp.setMidTerm(studentDto.getMidTerm());
                 temp.setFinalTerm(studentDto.getFinalTerm());
-                temp.setResultTerm(temp.getMidTerm() * 0.4 + temp.getFinalTerm() * 0.6);
-                temp.seteStudentType(studentDto.geteStudentType());
+                //temp.setResultTerm(temp.getMidTerm() * 0.4 + temp.getFinalTerm() * 0.6);
+                //temp.seteStudentType(studentDto.geteStudentType());
                 // Güncellenmiş Öğrenci Bilgileri
                 System.out.println(SpecialColor.BLUE + temp + " Öğrenci Bilgileri Güncellendi" + SpecialColor.RESET);
                 // Dosyaya kaydet

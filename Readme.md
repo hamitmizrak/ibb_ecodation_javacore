@@ -13062,6 +13062,253 @@ Bazı iş parçacıklarının kaynaklara erişememesi.
 Java'da eşzamanlılık, performansı artırırken yönetilmesi gereken kritik konular içerir. **Thread**, **ExecutorService**, **Callable**, **Locks** gibi araçları doğru kullanarak yüksek performanslı uygulamalar geliştirebilirsiniz.
 
 
+## Reflection API
+```sh 
+
+```
+---
+# **Reflection API Nedir? (Çok Detaylı Açıklama)**
+
+## **1. Giriş: Reflection API Nedir?**
+**Reflection API**, **Java sınıflarını, metotlarını, değişkenlerini ve anotasyonlarını çalışma zamanında (runtime) dinamik olarak incelemek ve değiştirmek** için kullanılan güçlü bir mekanizmadır. Normalde, bir Java sınıfı derleme zamanında belirlenen yapıya sahiptir ve çalışma zamanında değiştirilemez. Ancak **Reflection** ile çalışma zamanında **bir sınıfın yapısını öğrenebilir, yeni nesneler oluşturabilir ve metotlarını çağırabiliriz.**
+
+### **Kullanım Alanları**
+- **Framework ve Kütüphanelerde**: Spring, Hibernate gibi framework'ler **Reflection** kullanır.
+- **Dinamik Kod Üretimi**: Runtime'da obje oluşturup metodlarını çağırabiliriz.
+- **Test ve Debugging Araçları**: Unit test framework'leri Reflection ile metotları çağırabilir.
+- **Kod Analizi (Introspection)**: Bir sınıfın içindeki **private metotları ve değişkenleri** analiz etmek için kullanılabilir.
+
+---
+
+## **2. Reflection API’nin Ana Bileşenleri**
+Java Reflection API, `java.lang.reflect` paketinde bulunur ve aşağıdaki temel bileşenleri içerir:
+
+1. **`Class<?>`** → Bir sınıfın yapısını temsil eder.
+2. **`Method`** → Bir sınıfın metotlarını temsil eder.
+3. **`Field`** → Bir sınıfın değişkenlerini temsil eder.
+4. **`Constructor`** → Bir sınıfın constructor metodlarını temsil eder.
+5. **`Modifier`** → Sınıf, metot veya değişkenin erişim belirleyicilerini alır.
+
+---
+
+## **3. Reflection API Kullanımı**
+### **3.1. Bir Sınıfın Yapısını İnceleme**
+Bir sınıfın Reflection API ile analiz edilmesi için **Class** nesnesi kullanılır.
+
+```java
+class Student {
+    private String name;
+    private int age;
+
+    public Student() {}
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public void study() {
+        System.out.println(name + " çalışıyor...");
+    }
+}
+
+public class ReflectionExample {
+    public static void main(String[] args) throws ClassNotFoundException {
+        // 1. Yöntem: Class.forName()
+        Class<?> studentClass = Class.forName("Student");
+
+        // 2. Yöntem: .class kullanımı
+        Class<?> studentClass2 = Student.class;
+
+        // 3. Yöntem: getClass()
+        Student student = new Student();
+        Class<?> studentClass3 = student.getClass();
+
+        // Sınıf adını yazdır
+        System.out.println("Sınıf Adı: " + studentClass.getName());
+    }
+}
+```
+**Çıktı:**
+```
+Sınıf Adı: Student
+```
+
+---
+
+### **3.2. Bir Sınıftaki Tüm Metotları ve Değişkenleri Listeleme**
+Bir sınıfın **tüm metotlarını, değişkenlerini ve constructor'larını** almak için aşağıdaki yöntemler kullanılır.
+
+```java
+import java.lang.reflect.*;
+
+class Teacher {
+    private String name;
+    private double salary;
+
+    public Teacher() {}
+
+    public Teacher(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public void teach() {
+        System.out.println(name + " ders anlatıyor.");
+    }
+}
+
+public class ReflectionDetails {
+    public static void main(String[] args) {
+        Class<?> clazz = Teacher.class;
+
+        // Constructor bilgilerini al
+        Constructor<?>[] constructors = clazz.getConstructors();
+        System.out.println("\n### Constructor Listesi:");
+        for (Constructor<?> constructor : constructors) {
+            System.out.println(constructor);
+        }
+
+        // Metotları listele
+        Method[] methods = clazz.getDeclaredMethods();
+        System.out.println("\n### Metot Listesi:");
+        for (Method method : methods) {
+            System.out.println(method);
+        }
+
+        // Değişkenleri listele
+        Field[] fields = clazz.getDeclaredFields();
+        System.out.println("\n### Değişken Listesi:");
+        for (Field field : fields) {
+            System.out.println(field);
+        }
+    }
+}
+```
+
+**Çıktı:**
+```
+### Constructor Listesi:
+public Teacher()
+public Teacher(java.lang.String,double)
+
+### Metot Listesi:
+public void teach()
+
+### Değişken Listesi:
+private java.lang.String name
+private double salary
+```
+
+---
+
+### **3.3. Reflection ile Özel (private) Değişkenlere ve Metotlara Erişme**
+Normalde bir sınıfın **private değişkenlerine doğrudan erişilemez**, ancak Reflection API ile erişebiliriz.
+
+```java
+import java.lang.reflect.*;
+
+class Secret {
+    private String hiddenMessage = "Bu bir sır!";
+
+    private void secretMethod() {
+        System.out.println("Bu özel bir metottur.");
+    }
+}
+
+public class AccessPrivateFields {
+    public static void main(String[] args) throws Exception {
+        Secret secret = new Secret();
+        Class<?> clazz = secret.getClass();
+
+        // Private değişkene erişim
+        Field field = clazz.getDeclaredField("hiddenMessage");
+        field.setAccessible(true);
+        System.out.println("Gizli Mesaj: " + field.get(secret));
+
+        // Private metodu çağırma
+        Method method = clazz.getDeclaredMethod("secretMethod");
+        method.setAccessible(true);
+        method.invoke(secret);
+    }
+}
+```
+
+**Çıktı:**
+```
+Gizli Mesaj: Bu bir sır!
+Bu özel bir metottur.
+```
+> **Burada `setAccessible(true)` kullandık çünkü normalde private alanlara erişim yasaktır.**
+
+---
+
+### **3.4. Reflection ile Dinamik Nesne Oluşturma ve Metot Çağırma**
+Reflection ile **çalışma zamanında (runtime) nesne oluşturabiliriz.**
+
+```java
+import java.lang.reflect.Constructor;
+
+class Person {
+    private String name;
+
+    public Person() {
+        this.name = "Bilinmeyen";
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public void introduce() {
+        System.out.println("Benim adım " + name);
+    }
+}
+
+public class DynamicObjectCreation {
+    public static void main(String[] args) throws Exception {
+        // Person sınıfının class objesini al
+        Class<?> clazz = Person.class;
+
+        // Parametresiz Constructor ile nesne oluştur
+        Object obj1 = clazz.getDeclaredConstructor().newInstance();
+        Method method1 = clazz.getMethod("introduce");
+        method1.invoke(obj1); // Çıktı: Benim adım Bilinmeyen
+
+        // Parametreli Constructor ile nesne oluştur
+        Constructor<?> constructor = clazz.getConstructor(String.class);
+        Object obj2 = constructor.newInstance("Ahmet");
+        method1.invoke(obj2); // Çıktı: Benim adım Ahmet
+    }
+}
+```
+
+---
+
+## **4. Reflection API’nin Dezavantajları**
+**Her güçlü özellik gibi Reflection API’nin de bazı dezavantajları vardır:**
+1. **Performans Kaybı**: Reflection, normal metot çağrılarına kıyasla **%10-30 daha yavaştır**.
+2. **Güvenlik Riski**: Private metotlara erişebiliriz, ancak bu **güvenlik açığına neden olabilir**.
+3. **Kodun Okunabilirliğini Azaltır**: Normal kodlara kıyasla **daha karmaşık** ve **hata ayıklaması zor** olabilir.
+
+---
+
+## **5. Reflection API Nerelerde Kullanılır?**
+- **Spring Framework**: Dependency Injection için kullanır.
+- **JUnit, Mockito**: Unit test yazarken private metotları test edebiliriz.
+- **ORM Frameworkleri (Hibernate, JPA)**: Veritabanı nesnelerini dinamik olarak yönetir.
+- **Runtime Proxy Oluşturma**: Java Dynamic Proxy Pattern ile interface'lerin implementasyonlarını runtime'da oluşturabiliriz.
+
+---
+
+## **Sonuç**
+**Reflection API**, Java'nın **dinamik ve esnek bir dil olmasını sağlayan** en güçlü özelliklerinden biridir. Ancak, **dikkatli kullanılmalı** ve **performans düşüşü göz önünde bulundurulmalıdır**. Özellikle **Spring, Hibernate gibi framework'lerde** bu yapı yaygın olarak kullanılır.
+
+✔ **Eğer bir framework veya kütüphane geliştiriyorsan**, **Reflection API kesinlikle bilinmesi gereken** bir konudur. 🚀
+
+
+
+
 ## Diğer
 ```sh 
 
