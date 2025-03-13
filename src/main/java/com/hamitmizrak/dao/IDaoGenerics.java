@@ -20,11 +20,11 @@ Supplier → T get()             → Parametre almaz, bir değer üretir.
 
 public interface IDaoGenerics<T> {
 
-    // CRUD
+    // CRUD Metotları
     // CREATE
     Optional<T> create(T t);
 
-    // LIST List için Optional kullanmana gerek yoktur.
+    // LIST (List için Optional kullanmaya gerek yoktur)
     List<T> list();
 
     // FIND BY NAME
@@ -39,10 +39,10 @@ public interface IDaoGenerics<T> {
     // DELETE
     Optional<T> delete(int id);
 
-    // CHOOISE
+    // CHOOISE - Kullanıcı işlemlerini yönlendirme metodu
     void chooise();
 
-    // DATABASE CONNECTION
+    // DATABASE CONNECTION (Varsayılan olarak null dönüyor)
     default Connection getInterfaceConnection() {
         return null;
     }
