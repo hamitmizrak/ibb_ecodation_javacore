@@ -1,5 +1,6 @@
 package com.hamitmizrak.dao;
 
+import com.hamitmizrak.iofiles.FileHandler;
 import com.hamitmizrak.utils.ERole;
 import com.hamitmizrak.utils.EStudentType;
 import com.hamitmizrak.dto.StudentDto;
@@ -13,28 +14,36 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-// Annotation
-
-
 // Öğrenci Yönetim Sistemi
 public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Field
-    private ArrayList<StudentDto> studentDtoList ;
-    // ID artık tüm sınıflar tarafından erişilebilir olacak
+    // Student List
+    private final List<StudentDto> studentDtoList ;
+    // File dosyasına eklenen en büyük ID alıp yeni eklenecek file için 1 artır
     int maxId=0;
+
+    // Eklenen dosya adı
     private static final String FILE_NAME = "students.txt";
 
     // **📌 Scanner Nesnesini En Üste Tanımladık**
     private final Scanner scanner = new Scanner(System.in);
 
+    // FileHandler
+    private FileHandler fileHandler;
+
+    ///////////////////////////////////////////////////////////////////////
     // static
     static {
-
+        System.out.println(SpecialColor.RED+" Static: StudentDao"+ SpecialColor.RESET);
     }
 
     // Parametresiz Constructor
     public StudentDao() {
+        // FileHandler
+        this.fileHandler= new FileHandler();
+
+        // null pointer almamak için
         studentDtoList = new ArrayList<>();
 
         // Eğer students.txt yoksa otomatik oluştur
@@ -44,7 +53,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         loadStudentsListFromFile();
     }
 
-    /// /////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
     // FileIO => Eğer students.txt oluşturulmamışsa oluştur
     // 📌 Eğer dosya yoksa oluşturur
     private void createFileIfNotExists() {
@@ -220,16 +229,17 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         }*/
     }
 
+    ///////// LIST //////////
     // Öğrenci Listesi
     @Override
     @SuppressWarnings("unchecked") // Derleyici uyarılarını bastırmak için kullanılır.
     //@Cacheable
-    public ArrayList<StudentDto> list() {
+    public List<StudentDto> list() {
         // Öğrenci Yoksa
         if (studentDtoList.isEmpty()) {
             throw new StudentNotFoundException("Öğrenci Yoktur");
         } else {
-            System.out.println(SpecialColor.BLUE + " Öğrenci Listesi" + SpecialColor.RESET);
+            System.out.println(SpecialColor.BLUE + "Öğrenci Listesi" + SpecialColor.RESET);
             // Listeyi Göster (1.YOL)
             studentDtoList.forEach(System.out::println);
             // Listeyi Göster (2.YOL)
@@ -246,6 +256,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         return studentDtoList;
     }
 
+    ///////// SEARCH //////////
     // Öğrenci Ara
     @Override
     public Optional<StudentDto> findByName(String name) {
@@ -292,6 +303,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 .findFirst();
     }
 
+    ///////// UPDATE //////////
     // Öğrenci Güncelle
     @Override
     public Optional<StudentDto> update(int id, StudentDto studentDto) {
@@ -319,6 +331,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         return Optional.empty(); // Boş eleman olabilir 😒
     }
 
+    ///////// DELETE //////////
     // Öğrenci Sil
     @Override
     public Optional<StudentDto> delete(int id) {
@@ -351,7 +364,8 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         }
     }
 
-    /// //////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ///////// STUDENT TYPE //////////
     // Enum Öğrenci Türü Method
     public EStudentType studentTypeMethod() {
         System.out.println("\n"+SpecialColor.GREEN+"Öğrenci türünü seçiniz.\n1-)Lisans\n2-)Yüksek Lisans\n3-)Doktora"+SpecialColor.RESET);
@@ -648,6 +662,12 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         System.out.println("Sistemden çıkılıyor...");
         scanner.close();
         return;
+    }
+
+    // TEST
+    public static void main(String[] args) {
+        StudentDao studentDao= new StudentDao();
+        studentDao.chooise();
     }
 
 } // end class
