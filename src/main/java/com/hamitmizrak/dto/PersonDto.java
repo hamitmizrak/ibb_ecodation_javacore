@@ -3,34 +3,37 @@ package com.hamitmizrak.dto;
 import java.time.LocalDate;
 import java.util.Date;
 
-//Dikkat: Record'ta abstract, inheritance kullanamazsınız.
-abstract public class PersonDto {
+// Dikkat: Record'ta abstract, inheritance kullanamazsınız.
+public abstract class PersonDto {
 
     protected Integer id;
     protected String name;
     protected String surname;
-    protected LocalDate birthDate; // Doğum günü
-    protected Date createdDate;    // Sistem otomatik tarihi
+    protected LocalDate birthDate;
+    protected Date createdDate;
 
-    // parametresiz constructor
+    // Parametresiz constructor
     public PersonDto() {
         this.id = 0;
-        this.name = "name unknow";
-        this.surname = "surname unknow";
+        this.name = "name Unknown";
+        this.surname = "surnameUnknown";
         this.birthDate = LocalDate.now();
-        this.createdDate = new Date(System.currentTimeMillis());
+        this.createdDate = new Date();
     }
 
-    // parametreli constructor
+    // Parametreli constructor
     public PersonDto(Integer id, String name, String surname, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
-        this.createdDate = new Date(System.currentTimeMillis());
+        this.createdDate = new Date();
     }
 
-    // toString
+    // Abstract Method
+    public abstract void displayInfo();
+
+    // ToString
     @Override
     public String toString() {
         return "PersonDto{" +
@@ -42,10 +45,7 @@ abstract public class PersonDto {
                 '}';
     }
 
-    // Method
-    abstract public void displayInfo();
-
-    // Getter
+    // Getter & Setter
     public Integer getId() {
         return id;
     }
