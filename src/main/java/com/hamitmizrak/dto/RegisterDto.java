@@ -11,6 +11,7 @@ public class RegisterDto {
     // Register Field
     private String emailAddress;
     private String password;
+    // Composition
 
     // AES ENCRYPTED
     private static final String AES_ALGORITHM="AES";

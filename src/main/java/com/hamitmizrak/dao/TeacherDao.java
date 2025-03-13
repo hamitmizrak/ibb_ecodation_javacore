@@ -190,8 +190,6 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         return teacher;
     }
 
-
-
     /// //////////////////////////////////////////////////////////////////////
     // Enum Öğretmen Türü Method
     public ETeacherSubject teacherTypeMethod() {

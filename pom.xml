@@ -46,6 +46,28 @@
 
     <!-- start dependencies-->
     <dependencies>
+        <!--@LogExecution (Reflection-->
+        <!-- SLF4J API (Logging için) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.16</version>
+        </dependency>
+
+        <!-- Logback (SLF4J için önerilen implementation) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
+        </dependency>
+
+        <!-- Jackson (JSON ile loglama yapmak istersen) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.18.2</version>
+        </dependency>
+
 
         <!-- Java Cryptography Extension (JCE) İçin Gerekli -->
         <dependency>

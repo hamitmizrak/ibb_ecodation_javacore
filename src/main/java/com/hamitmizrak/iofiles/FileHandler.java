@@ -32,6 +32,7 @@ public class FileHandler implements IFileHandlerInterface {
     }
 
     // Dosya Yaz
+    //📌 Öğrencileri dosyaya yazma (BufferedWriter)
     @Override
     public synchronized void writeFile(String data){
         // Java 1.7 try-with-resources
@@ -45,6 +46,7 @@ public class FileHandler implements IFileHandlerInterface {
     }
 
     // Dosya Oku
+    //📌 Öğrencileri dosyadan yükleme (BufferedReader)
     @Override
     public synchronized void readFile(String data){
         // Java 1.7 try-with-resources
@@ -70,8 +72,4 @@ public class FileHandler implements IFileHandlerInterface {
         this.filePath = filePath;
     }
 
-    // PSVM
-    public static void main(String[] args) {
-        // Reflection
-    }
 } // end

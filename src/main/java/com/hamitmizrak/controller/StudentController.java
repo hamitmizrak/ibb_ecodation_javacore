@@ -31,7 +31,7 @@ public class StudentController implements IDaoGenerics<StudentDto> {
         // Create
         Optional<StudentDto> createdStudent = studentDao.create(studentDto);
         createdStudent.ifPresentOrElse(
-                temp -> System.out.println(SpecialColor.GREEN+"Başarılı Öğrenci Başarıyla Eklendi"+SpecialColor.RESET),
+                temp -> System.out.println(SpecialColor.GREEN+"✅Başarılı Öğrenci Başarıyla Eklendi"+SpecialColor.RESET),
                 () -> System.out.println(SpecialColor.RED+"❌Başarısız Öğrenci Eklenmedi"+SpecialColor.RESET)
         );
         return createdStudent;
@@ -89,4 +89,5 @@ public class StudentController implements IDaoGenerics<StudentDto> {
     public void chooise() {
         studentDao.chooise();
     }
+
 }

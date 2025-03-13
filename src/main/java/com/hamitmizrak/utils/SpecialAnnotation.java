@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)                     // Çalışma zamanında erişilebilir
 //@Target({ElementType.METHOD,ElementType.CONSTRUCTOR}) // Metotlarda ve Constructorlarda uygulanabilir
 @Target({ElementType.METHOD})   // Yalnızca metotlara uygulanabilir
-public @interface LogExecutionTime {
+public @interface SpecialAnnotation {
 }
 
 // TEST CLASS
@@ -20,7 +20,7 @@ class Test {
     public Test() {
     }
 
-    @LogExecutionTime
+    @SpecialAnnotation
     public static void process() {
         System.out.println("Bu metot loglanacak.");
     }
