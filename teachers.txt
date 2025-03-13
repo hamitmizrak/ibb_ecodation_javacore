@@ -1,0 +1,1 @@
+1,Hamit,Mızrak,1111-11-11,CHEMISTRY,12,false,2.0
