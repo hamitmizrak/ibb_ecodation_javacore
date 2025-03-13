@@ -1,8 +1,7 @@
 package com.hamitmizrak.dto;
 
 
-// Enum ()
-// Öğretmen Branşı
+// Enum (Öğretmen Branşı)
 public enum ETeacherSubject {
     MATHEMATICS,
     CHEMISTRY,
