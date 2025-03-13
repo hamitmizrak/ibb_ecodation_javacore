@@ -53,7 +53,7 @@ public class FileHandler implements IFileHandlerInterface {
         try(BufferedReader bufferedReader= new BufferedReader(new FileReader(filePath))){
             String line="";
             while((line= bufferedReader.readLine())!=null){
-                System.out.println("Dosyadan Okundu"+line);
+                //System.out.println("Dosyadan Okundu"+line);
             }
         }catch (IOException ioException){
             ioException.printStackTrace();
