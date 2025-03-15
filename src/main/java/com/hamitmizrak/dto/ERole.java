@@ -1,4 +1,4 @@
-package com.hamitmizrak.utils;
+package com.hamitmizrak.dto;
 
 public enum ERole {
     STUDENT,TEACHER,ADMIN

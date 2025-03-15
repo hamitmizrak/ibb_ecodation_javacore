@@ -1,7 +1,5 @@
 package com.hamitmizrak.dto;
 
-import com.hamitmizrak.utils.ERole;
-import com.hamitmizrak.utils.EStudentType;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.io.Serializable;

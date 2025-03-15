@@ -3,8 +3,8 @@ package com.hamitmizrak.dao;
 import com.hamitmizrak.dto.StudentDto;
 import com.hamitmizrak.exceptions.StudentNotFoundException;
 import com.hamitmizrak.iofiles.FileHandler;
-import com.hamitmizrak.utils.ERole;
-import com.hamitmizrak.utils.EStudentType;
+import com.hamitmizrak.dto.ERole;
+import com.hamitmizrak.dto.EStudentType;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.time.LocalDate;
