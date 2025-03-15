@@ -7,7 +7,6 @@ import com.hamitmizrak.dto.RegisterDto;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Scanner;
 
 public class LoginRegisterController {
@@ -21,57 +20,69 @@ public class LoginRegisterController {
 
     // Constructor
     public LoginRegisterController() {
-        registerDao= new RegisterDao();
-        studentDao= new StudentDao();
-        teacherDao= new TeacherDao();
-        studentController= new StudentController();
-        teacherController= new TeacherController();
-        scanner= new Scanner(System.in);
+        registerDao = new RegisterDao();
+        studentDao = new StudentDao();
+        teacherDao = new TeacherDao();
+        studentController = new StudentController();
+        teacherController = new TeacherController();
+        scanner = new Scanner(System.in);
     }
+
     /// ///////////////////////////////////////////////////////////
     // Role Method
-    public void isUserRole(RegisterDto registerDto){
-        if(registerDto.getRole().equalsIgnoreCase("STUDENT")){
+    public void isUserRole(RegisterDto registerDto) {
+        if (registerDto.getRole().equalsIgnoreCase("STUDENT")) {
             studentController.chooise();
-        }else if(registerDto.getRole().equalsIgnoreCase("TEACHER")){
+        } else if (registerDto.getRole().equalsIgnoreCase("TEACHER")) {
             teacherController.chooise();
-        }else if(registerDto.getRole().equalsIgnoreCase("ADMIN")){
+        } else if (registerDto.getRole().equalsIgnoreCase("ADMIN")) {
             System.out.println("ADMIN SAYFASINA HOŞGELDİNİZ");
-        }else{
+        } else {
             System.out.println("Yetkilendirilme yapılmamıştır lütfen admine başvurunuz. tel: 111-11-11-11");
         }
     }
 
     /// Login And Register
-    public void loginOrRegister(){
-        while(true){
+    public void loginOrRegister() {
+        while (true) {
             System.out.println("\n==== GİRİŞ EKRANI ====");
-            String email,password,nickname;
+            String email, password, nickname;
 
             System.out.println("Email adresiniz");
-             email=scanner.nextLine().trim();
+            email = scanner.nextLine().trim();
 
             System.out.println("Nickname adresiniz");
-            email=scanner.nextLine().trim();
+            email = scanner.nextLine().trim();
 
             System.out.println("Şifreniz");
-            password=scanner.nextLine().trim();
+            password = scanner.nextLine().trim();
 
             // Email var mı yok mu ?
-            Optional<RegisterDto> findIsEmail= registerDao.findByEmail(email);
-            if(findIsEmail.isPresent()){
+            Optional<RegisterDto> findIsEmail = registerDao.findByEmail(email);
+            if (findIsEmail.isPresent()) {
+
                 // user bilgileri al
-                RegisterDto user= findIsEmail.get();
+                RegisterDto user = findIsEmail.get();
 
-                //if(user.)
-
-                System.out.println(SpecialColor.GREEN+"Başarıyla giriş yaptınız "+SpecialColor.RESET+ SpecialColor.BLUE+"Hoşgeldiniz"+ email+SpecialColor.RESET);
-                isUserRole(user);
-                break;
+                // Şifre doğrulama
+                if (user.validatePassword(password)) {
+                    System.out.println(SpecialColor.GREEN + "Başarıyla giriş yaptınız " + SpecialColor.RESET + SpecialColor.BLUE + "Hoşgeldiniz" + email + SpecialColor.RESET);
+                    // Kullanıcı rolüne göre ilgili sayfaya yönlendirmek
+                    isUserRole(user);
+                    break;
+                }else{
+                    System.out.println("Hata: Kullanıcı adı veya şifre yanlış");
+                    // 3 kez yanlış girme hakkı olsun
+                }
+            }else {
+                System.out.println("Kullanıcı bulunamadı Önce Kayıt olmalısınız");
+                registerUser();
             }
         }
-
     }
 
+    // REGISTER
+    private void registerUser() {
+    }
 
 }

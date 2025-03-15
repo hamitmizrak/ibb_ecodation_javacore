@@ -97,6 +97,13 @@ public class RegisterDto {
         }
     }
 
+    /// /////////////////////////////////////////////////
+    // Password Validataion
+    public boolean validatePassword(String password) {
+        return this.password.equals(encryptPassword(password));
+    }
+
+    /// /////////////////////////////////////////////////
     // toString
     @Override
     public String toString() {
@@ -174,4 +181,6 @@ public class RegisterDto {
     public void setTeacherDto(TeacherDto teacherDto) {
         this.teacherDto = teacherDto;
     }
+
+
 }
