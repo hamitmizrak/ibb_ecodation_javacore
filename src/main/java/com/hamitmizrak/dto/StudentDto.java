@@ -46,6 +46,14 @@ public class StudentDto extends PersonDto implements Serializable {
         this.eRole = eRole;
     }
 
+    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, EStudentType eStudentType, ERole eRole) {
+        super(id, name, surname, birthDate);
+        this.resultTerm = calculateResult();
+        this.status = determineStatus();
+        this.eStudentType = eStudentType;
+        this.eRole = eRole;
+    }
+
     // Metotlar
     // Vize ve Final Calculate
     // **📌 Sonuç Notu Hesaplama (Vize %40 + Final %60)**

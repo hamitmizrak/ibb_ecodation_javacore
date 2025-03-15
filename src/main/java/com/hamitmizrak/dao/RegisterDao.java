@@ -51,7 +51,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     // generateNewId() bu metot registerList adlı koleksiyonumzda bulunan ID değerinin en büyüğünü bulsun
     // ve buna 1 eklesin ve yeni bir ID döndürsün
     // ID her seferinde 1 artır.
-    private int generateNewId() {
+    public int generateNewId() {
         return registerDtoList
                 .stream() // Java Stream API kullanarak liste üzerindeki işlemleri bir akış(stream) halinde
                 .mapToInt(RegisterDto::getId) //IntStream
@@ -69,6 +69,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
                         registerDto.getNickname() + "," +        // Register adını ekler
                         registerDto.getEmailAddress() + "," +     // Register soyadını ekler
                         registerDto.getPassword() + "," +     // Register vize notunu ekler
+                        registerDto.isLocked() + "," +     // Register Kiliti
                         registerDto.getRole();   // Register doğum tarihini ekler
     }
 
@@ -79,12 +80,12 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     private RegisterDto csvToRegister(String csvLine) {
         try {
             String[] parts = csvLine.split(",");  // Satırı virgülle bölerek bir dizi oluşturur
-            if (parts.length < 5) {
+            if (parts.length < 6) {
                 System.err.println("X Hatalı CSV Formatı" + csvLine);
                 return null;    // **Eksik veri varsa işlemi durdurur ve null döndürür**
             }
             int id = generateNewId(); //ID Atasın
-            return new RegisterDto(id, parts[0], parts[1], parts[2], parts[3], null, null);
+            return new RegisterDto(id, parts[0], parts[1], parts[2], parts[3],Boolean.valueOf(parts[4]) , null, null);
         } catch (Exception e) {
             System.out.println(SpecialColor.RED + "CSV'den Register yükleme hatası!" + SpecialColor.RESET);
             return null; // Hata durumunda null döndürerek programın çökmesini engeller

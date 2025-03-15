@@ -13,6 +13,7 @@ public class RegisterDto {
     private String nickname;
     private String emailAddress;
     private String password;
+    private boolean isLocked;
 
     // Role
     private String role;
@@ -32,17 +33,19 @@ public class RegisterDto {
         this.emailAddress = "your_email_address";
         this.password = "your password";
         this.role = "is not roles";
+        this.isLocked=false; // Kullanıcı başlangıçta kilitli değil
         studentDto = null;
         teacherDto = null;
     }
 
     // Parametreli Constructor
-    public RegisterDto(int id, String _nickname, String emailAddress, String password, String role, StudentDto studentDto, TeacherDto teacherDto) {
+    public RegisterDto(int id, String _nickname, String emailAddress, String password, String role,  boolean isLocked, StudentDto studentDto, TeacherDto teacherDto) {
         this.id = id;
         nickname = _nickname;
         this.emailAddress = emailAddress;
         this.password = password;
         this.role = role;
+        this.isLocked = isLocked;
         this.studentDto = studentDto;
         this.teacherDto = teacherDto;
     }
@@ -182,5 +185,11 @@ public class RegisterDto {
         this.teacherDto = teacherDto;
     }
 
+    public boolean isLocked() {
+        return isLocked;
+    }
 
+    public void setLocked(boolean locked) {
+        isLocked = locked;
+    }
 }
