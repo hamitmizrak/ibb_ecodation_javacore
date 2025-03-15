@@ -42,8 +42,8 @@ public class LoginRegisterController {
         }
     }
 
-    /// Login And Register
-    public void loginOrRegister() {
+    /// LOGIN
+    public void login() {
         while (true) {
             System.out.println("\n==== GİRİŞ EKRANI ====");
             String email, password, nickname;
@@ -76,13 +76,13 @@ public class LoginRegisterController {
                 }
             }else {
                 System.out.println("Kullanıcı bulunamadı Önce Kayıt olmalısınız");
-                registerUser();
+                register();
             }
         }
     }
 
-    // REGISTER
-    private void registerUser() {
+    /// REGISTER
+    private void register() {
     }
 
 }
