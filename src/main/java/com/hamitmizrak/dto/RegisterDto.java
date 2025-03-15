@@ -144,7 +144,7 @@ public class RegisterDto {
 
     public void setEmailAddress(String emailAddress) {
         // mailin sonuna
-        this.emailAddress = emailAddress.concat("@gmail.com");
+        this.emailAddress = emailAddress;
     }
 
     public String getPassword() {

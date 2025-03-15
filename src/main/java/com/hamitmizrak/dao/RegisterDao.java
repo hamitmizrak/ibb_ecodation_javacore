@@ -98,7 +98,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     @Override
     public Optional<RegisterDto> create(RegisterDto registerDto) {
         registerDtoList.add(registerDto);
-        this.fileHandler.writeFile(this.fileHandler.getFilePath());
+        this.fileHandler.writeFile(registerToCsv(registerDto));
         return Optional.of(registerDto);
     }
 
@@ -125,7 +125,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     public Optional<RegisterDto> findByEmail(String email) {
         return registerDtoList
                 .stream()
-                .filter(s -> s.getEmailAddress().equalsIgnoreCase(email))
+                .filter(s -> s.getEmailAddress().equals(email))
                 .findFirst();
     }
 

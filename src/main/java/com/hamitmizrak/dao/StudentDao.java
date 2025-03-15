@@ -130,7 +130,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             // ID'yi artırıp nesneye atıyoruz
             // 📌 **ID artık public static olduğu için her sınıftan erişilebilir!**
             studentDtoList.add(studentDto);
-            this.fileHandler.writeFile(this.fileHandler.getFilePath());
+            this.fileHandler.writeFile(studentToCsv(studentDto));
 
             System.out.println(studentDto+ SpecialColor.GREEN + "✅ Öğrenci başarıyla eklendi!" + SpecialColor.RESET);
             return Optional.of(studentDto);
@@ -265,7 +265,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
                 // Güncellenmiş Öğrenci Bilgileri
                 System.out.println(SpecialColor.BLUE + temp + " Öğrenci Bilgileri Güncellendi" + SpecialColor.RESET);
                 // Dosyaya kaydet
-                this.fileHandler.writeFile(this.fileHandler.getFilePath());
+                this.fileHandler.writeFile(studentToCsv(studentDto));
                 return Optional.of(temp); // Bir veri olabilir 😊
             }
         }} catch (Exception e){

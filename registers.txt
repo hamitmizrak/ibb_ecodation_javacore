@@ -1,0 +1,1 @@
+1,nickname,hamitmizrak@gmail.com,sifre,false,TEACHER
