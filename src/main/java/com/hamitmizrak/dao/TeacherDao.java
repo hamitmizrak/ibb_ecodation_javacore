@@ -6,7 +6,6 @@ import com.hamitmizrak.exceptions.TeacherNotFoundException;
 import com.hamitmizrak.iofiles.FileHandler;
 import com.hamitmizrak.utils.SpecialColor;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -190,9 +189,8 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         return teacher;
     }
 
-    /// //////////////////////////////////////////////////////////////////////
-
-    /// //////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // Enum Öğretmen Türü Method
     public ETeacherSubject teacherTypeMethod() {
         System.out.println("\n" + SpecialColor.GREEN + "Öğretmen türünü seçiniz.\n1-)Tarih\n2-)Bioloji\n3-)Kimya\n4-)Bilgisayar Bilimleri\n5-)Diğer" + SpecialColor.RESET);

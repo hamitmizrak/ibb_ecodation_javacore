@@ -1,2 +1,0 @@
-1,hamit,mızrak,1111-11-11,BIOLOGY,12,true,1.0
-
