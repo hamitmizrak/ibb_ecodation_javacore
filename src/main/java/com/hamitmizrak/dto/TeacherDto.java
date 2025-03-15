@@ -43,6 +43,7 @@ public record TeacherDto(
         if (salary < 0) throw new IllegalArgumentException("Maaş negatif olamaz");
     }
 
+
     // Method
     public String fullName() {
         return id + " " + name + " " + surname + " " + salary + " " + yearsOfExperience;
