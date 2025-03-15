@@ -159,6 +159,8 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
         return Optional.empty();
     }
 
+    /// //////////////////////////////////////////////////////////////
+
     /// CHOOISE (REGISTER)
     @Override
     public void chooise() {
