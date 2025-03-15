@@ -4,6 +4,7 @@ import com.hamitmizrak.dto.ERole;
 import com.hamitmizrak.dto.EStudentType;
 import com.hamitmizrak.dto.RegisterDto;
 import com.hamitmizrak.dto.StudentDto;
+import com.hamitmizrak.exceptions.RegisterNotFoundException;
 import com.hamitmizrak.iofiles.FileHandler;
 import com.hamitmizrak.utils.SpecialColor;
 
@@ -25,13 +26,13 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     ///////////////////////////////////////////////////////////////////////
     // static
     static {
-        System.out.println(SpecialColor.RED+" Static: RegisterDao"+ SpecialColor.RESET);
+        System.out.println(SpecialColor.RED + " Static: RegisterDao" + SpecialColor.RESET);
     }
 
     // Parametresiz Constructor
     public RegisterDao() {
         // FileHandler
-        this.fileHandler= new FileHandler();
+        this.fileHandler = new FileHandler();
         this.fileHandler.setFilePath("registers.txt");
 
         // null pointer almamak için
@@ -44,6 +45,19 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
         this.fileHandler.readFile(this.fileHandler.getFilePath());
     }
 
+
+    /// ///////////////////////////////////////////////////////////////////////////////////////////
+    // Random Generate New Id
+    // generateNewId() bu metot registerList adlı koleksiyonumzda bulunan ID değerinin en büyüğünü bulsun
+    // ve buna 1 eklesin ve yeni bir ID döndürsün
+    // ID her seferinde 1 artır.
+    private int generateNewId() {
+        return registerDtoList
+                .stream() // Java Stream API kullanarak liste üzerindeki işlemleri bir akış(stream) halinde
+                .mapToInt(RegisterDto::getId) //IntStream
+                .max()
+                .orElse(0) + 1; // Liste boşsa 0 göndür ve yeni ID olarak en büyük değere 1 eklesin
+    }
 
     /// ///////////////////////////////////////////////////////////////////////////////////////////
     // 📌 Register nesnesini CSV formatına çevirme
@@ -65,57 +79,89 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
     private RegisterDto csvToRegister(String csvLine) {
         try {
             String[] parts = csvLine.split(",");  // Satırı virgülle bölerek bir dizi oluşturur
-            if (parts.length < 5)
-            {
-                System.err.println("X Hatalı CSV Formatı"+csvLine);
+            if (parts.length < 5) {
+                System.err.println("X Hatalı CSV Formatı" + csvLine);
                 return null;    // **Eksik veri varsa işlemi durdurur ve null döndürür**
             }
-            int id= generateNewId(); //ID Atasın
-            return new RegisterDto(id, parts[0],parts[1],parts[2],parts[3],null,null );
+            int id = generateNewId(); //ID Atasın
+            return new RegisterDto(id, parts[0], parts[1], parts[2], parts[3], null, null);
         } catch (Exception e) {
             System.out.println(SpecialColor.RED + "CSV'den Register yükleme hatası!" + SpecialColor.RESET);
             return null; // Hata durumunda null döndürerek programın çökmesini engeller
         }
     }
 
-    // Random Generate New Id
-    private int generateNewId() {
-        return 0;
-    }
 
     /// ///////////////////////////////////////////////////////////////
+    /// CREATE (REGISTER)
     @Override
     public Optional<RegisterDto> create(RegisterDto registerDto) {
-        return Optional.empty();
+        registerDtoList.add(registerDto);
+        this.fileHandler.writeFile(this.fileHandler.getFilePath());
+        return Optional.of(registerDto);
     }
 
+    /// LIST (REGISTER)
     @Override
     public List<RegisterDto> list() {
-        return List.of();
+        if (registerDtoList.isEmpty()) {
+            throw new RegisterNotFoundException(SpecialColor.BLUE + "Kayıtlı kullanıcı bulunamadı" + SpecialColor.RESET);
+        }
+        return new ArrayList<>(registerDtoList);
     }
 
+
+    /// FIND BY NICKNAME (REGISTER)
     @Override
-    public Optional<RegisterDto> findByName(String name) {
-        return Optional.empty();
+    public Optional<RegisterDto> findByName(String nickName) {
+        return registerDtoList
+                .stream()
+                .filter(s -> s.getNickname().equalsIgnoreCase(nickName))
+                .findFirst();
     }
 
+    /// FIND BY EMAIL (REGISTER)
+    public Optional<RegisterDto> findByEmail(String email) {
+        return registerDtoList
+                .stream()
+                .filter(s -> s.getEmailAddress().equalsIgnoreCase(email))
+                .findFirst();
+    }
+
+    /// FIND BY ID (REGISTER)
     @Override
     public Optional<RegisterDto> findById(int id) {
-        return Optional.empty();
+        return registerDtoList
+                .stream()
+                .filter(s -> s.getId() == id)
+                .findFirst();
     }
 
+    /// UPDATE (REGISTER)
     @Override
     public Optional<RegisterDto> update(int id, RegisterDto registerDto) {
-        return Optional.empty();
+        if (registerDto != null) {
+            for (int i = 0; i < registerDtoList.size(); i++) {
+                if (registerDtoList.get(i).getId() == id) {
+                    registerDtoList.set(i, registerDto);
+                    this.fileHandler.writeFile(this.fileHandler.getFilePath());
+
+                }
+            }
+        }
+        throw new RegisterNotFoundException("Güncellenecek Kayıt bulunamadı");
+        //return Optional.of(registerDto);
     }
 
+    /// DELETE (REGISTER)
     @Override
     public Optional<RegisterDto> delete(int id) {
         return Optional.empty();
     }
 
+    /// CHOOISE (REGISTER)
     @Override
     public void chooise() {
 
     }
-}
+} //end class
