@@ -1,4 +1,4 @@
-package com.hamitmizrak.utils;
+package com.hamitmizrak.log;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
