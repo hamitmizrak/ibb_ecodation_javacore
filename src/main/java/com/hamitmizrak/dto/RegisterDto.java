@@ -23,7 +23,7 @@ public class RegisterDto {
     private TeacherDto teacherDto;
 
     private static final String AES_ALGORITHM = "AES";
-    private static final String SECRET_KEY = "MY_SECRET_AES_KEY";
+    private static final String SECRET_KEY = "MY_SECRET_AES_KEY12"; // 16 karakter olmalı
 
     public RegisterDto() {
         this.id = 0;
@@ -50,8 +50,9 @@ public class RegisterDto {
 
     private static SecretKey generateKey() {
         byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
-        return new SecretKeySpec(keyBytes, 0, 16, AES_ALGORITHM);
+        return new SecretKeySpec(keyBytes, 0, 16, AES_ALGORITHM); // İlk 16 baytı kullan
     }
+
 
     public static String encryptPassword(String password) {
         try {
@@ -81,10 +82,10 @@ public class RegisterDto {
     }
 
     public boolean validatePassword(String inputPassword) {
-        return inputPassword.equals(decryptPassword(this.password));
+        String decryptedPassword = decryptPassword(this.password);
+        return decryptedPassword != null && decryptedPassword.equals(inputPassword);
     }
 
-    // 📌 Yeni eklenen metot: Şifreyi çözerek düz haliyle döndürme
     public String getDecryptedPassword() {
         return decryptPassword(this.password);
     }

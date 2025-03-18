@@ -71,11 +71,16 @@ public class LoginRegisterController {
                 String plainPassword = user.getDecryptedPassword();
                 RegisterDto registerDto= new RegisterDto();
                 System.out.println("Email: "+user.getEmailAddress().equals(email));
-                System.out.println("şifre: "+plainPassword.equals(password));
+                System.out.println("Kullanıcı şifre: "+registerDto.encryptPassword(password));
+                System.out.println("veritabanı şifre: "+plainPassword);
+                //System.out.println("Veritabanı şifre: "+ user.getPassword());
+                //System.out.println("şifre düz: "+plainPassword.equals(password));
+                //System.out.println("şifre: "+user.validatePassword(password));
                 //System.out.println("şifre doğrulama: "+plainPassword.equals( registerDto.encryptPassword(password) ));
 
                 // Email ve Şifre doğrulama
-                if (user.getEmailAddress().equals(email) && plainPassword.equals( registerDto.encryptPassword(password) )) {
+                if (user.getEmailAddress().equals(email) && plainPassword.equals(registerDto.encryptPassword(password))) {
+                //if (user.getEmailAddress().equals(email) && user.validatePassword(password)){
                     System.out.println(SpecialColor.GREEN + "Başarıyla giriş yaptınız " + SpecialColor.RESET +
                             SpecialColor.BLUE + "Hoşgeldiniz " + email + SpecialColor.RESET);
                     isUserRole(user);
