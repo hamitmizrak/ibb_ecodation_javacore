@@ -7,104 +7,104 @@ import com.hamitmizrak.dto.*;
 import com.hamitmizrak.utils.SpecialColor;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class LoginRegisterController {
+
+    // Loglama
+    private static final Logger logger = Logger.getLogger(LoginRegisterController.class.getName());
+
     // Field
     private final RegisterDao registerDao;
     private final StudentDao studentDao;
     private final TeacherDao teacherDao;
     private final StudentController studentController;
     private final TeacherController teacherController;
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
 
-    // Constructor
     public LoginRegisterController() {
         registerDao = new RegisterDao();
         studentDao = new StudentDao();
         teacherDao = new TeacherDao();
         studentController = new StudentController();
         teacherController = new TeacherController();
-        scanner = new Scanner(System.in);
     }
 
-    /// ///////////////////////////////////////////////////////////
-    // Role Method
     public void isUserRole(RegisterDto registerDto) {
-        if (registerDto.getRole().equalsIgnoreCase("STUDENT")) {
-            studentController.chooise();
-        } else if (registerDto.getRole().equalsIgnoreCase("TEACHER")) {
-            teacherController.chooise();
-        } else if (registerDto.getRole().equalsIgnoreCase("ADMIN")) {
-            System.out.println("ADMIN SAYFASINA HOŞGELDİNİZ");
-        } else {
-            System.out.println("Yetkilendirilme yapılmamıştır lütfen admine başvurunuz. tel: 111-11-11-11");
+        switch (registerDto.getRole()) {
+            case "STUDENT" -> studentController.choose();
+            case "TEACHER" -> teacherController.choose();
+            default -> System.out.println("Yetkilendirilme yapılmamıştır. Yönetici ile iletişime geçin.");
         }
     }
 
-    /// LOGIN
     public void login() {
-        // Kalan Hak sayısı
         int maxAttempts = 3;
-        Map<String, Integer> loginAttemps = new HashMap<>();
+        Map<String, Integer> loginAttempts = new HashMap<>();
 
         while (true) {
             System.out.println("\n==== GİRİŞ EKRANI ====");
-            String email, password, nickname;
-
-            System.out.print("Email adresiniz: ");
-            email = scanner.nextLine().trim();
-
-
-            System.out.print("Nickname adresiniz: ");
-            nickname = scanner.nextLine().trim();
-
-            System.out.print("Şifreniz: ");
-            password = scanner.nextLine().trim();
+            System.out.print("Email: ");
+            String email = scanner.nextLine().trim();
+            System.out.print("Şifre: ");
+            String password = scanner.nextLine().trim();
 
             // Email var mı yok mu ?
             Optional<RegisterDto> findIsEmail = registerDao.findByEmail(email);
             if (findIsEmail.isPresent()) {
-                // user bilgileri al
+                // Kullanıcı bilgilerini al
                 RegisterDto user = findIsEmail.get();
+                System.out.println("Locked: "+user.isLocked());
 
                 // Kullanıcı kilitli mi ?
                 if (user.isLocked()) {
-                    System.out.println("Hata Hesabınız kilitlenmiştir. Lütfen yöneticinizle irtibata geçiniz");
+                    System.out.println("Hesabınız kilitli.");
                     return;
                 }
 
+                // 📌 Şifreyi düz metin olarak almak için yeni metod kullanıldı
+                String plainPassword = user.getDecryptedPassword();
+                RegisterDto registerDto= new RegisterDto();
+                System.out.println("Email: "+user.getEmailAddress().equals(email));
+                System.out.println("şifre: "+plainPassword.equals(password));
+                //System.out.println("şifre doğrulama: "+plainPassword.equals( registerDto.encryptPassword(password) ));
+
                 // Email ve Şifre doğrulama
-                if (("hamitmizrak@gmail.com".equals(email)) && user.validatePassword(password)) {
-                    System.out.println(SpecialColor.GREEN + "Başarıyla giriş yaptınız " + SpecialColor.RESET + SpecialColor.BLUE + "Hoşgeldiniz" + email + SpecialColor.RESET);
-                    // Kullanıcı rolüne göre ilgili sayfaya yönlendirmek
+                if (user.getEmailAddress().equals(email) && plainPassword.equals( registerDto.encryptPassword(password) )) {
+                    System.out.println(SpecialColor.GREEN + "Başarıyla giriş yaptınız " + SpecialColor.RESET +
+                            SpecialColor.BLUE + "Hoşgeldiniz " + email + SpecialColor.RESET);
                     isUserRole(user);
                     break;
                 } else {
-                    // Yanlış giriş saysıını artır
-                    loginAttemps.put(email, loginAttemps.getOrDefault(email, 0) + 1);
-                    int attempts = loginAttemps.get(email);
+                    // Yanlış giriş sayısını artır
+                    loginAttempts.put(email, loginAttempts.getOrDefault(email, 0) + 1);
+                    int attempts = loginAttempts.get(email);
 
                     // Kalan Hak
                     int remaining = maxAttempts - attempts;
-                    System.out.println("Hata: Kullanıcı adınız veya şifreniz yanlıştır" + SpecialColor.BLUE + "Kalan hakkınız: " + remaining + SpecialColor.RESET);
+                    System.out.println("Hata: Kullanıcı adınız veya şifreniz yanlıştır" +
+                            SpecialColor.BLUE + " Kalan hakkınız: " + remaining + SpecialColor.RESET);
 
-                    // 3 kez yanlış girme hakkınu doldurduktan sonra kullanıcıyı sistemde kilitlensin
+                    // 3 kez yanlış girerse kullanıcı kilitlensin
                     if (attempts >= maxAttempts) {
                         user.setLocked(true);
-                        System.out.println("Hata: Kullanıcı 3 kez hata girişi yaptğından sistem tarafından kilitlenmiştir");
+                        registerDao.update(user.getId(), user); // Güncellenmiş kullanıcıyı kaydet
+                        System.out.println("Hata: Kullanıcı 3 kez hatalı giriş yaptığı için sistem tarafından kilitlenmiştir.");
                         return;
                     }
                 }
             } else {
-                System.out.println("Kullanıcı bulunamadı Önce Kayıt olmalısınız");
+                System.out.println("Kullanıcı bulunamadı! Önce kayıt olmalısınız.");
                 register();
             }
         }
     }
+
 
     /// REGISTER
     private void register() {
@@ -138,7 +138,7 @@ public class LoginRegisterController {
         role = ERole.valueOf(scanner.nextLine().trim().toUpperCase());
 
         // Birthday
-        System.out.print("Doğum Tarihi: ");
+        System.out.print("Doğum Tarihi (YYYY-MM-DD) : ");
         birthDate = LocalDate.parse(scanner.nextLine().trim());
 
         // Auto Increment ID
@@ -192,4 +192,3 @@ public class LoginRegisterController {
     }
 
 }
-

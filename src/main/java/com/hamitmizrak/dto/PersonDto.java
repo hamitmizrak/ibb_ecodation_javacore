@@ -3,37 +3,45 @@ package com.hamitmizrak.dto;
 import java.time.LocalDate;
 import java.util.Date;
 
-// Dikkat: Record'ta abstract, inheritance kullanamazsınız.
+/**
+ * 📌 Temel Kişi (Person) DTO Sınıfı
+ * Öğrenci ve öğretmen gibi varlıklar için ortak alanları içerir.
+ */
 public abstract class PersonDto {
 
     protected Integer id;
     protected String name;
     protected String surname;
     protected LocalDate birthDate;
-    protected Date createdDate;
+    protected final Date createdDate;
 
-    // Parametresiz constructor
+    /**
+     * 📌 Varsayılan Constructor (Boş nesne oluşturur)
+     */
     public PersonDto() {
         this.id = 0;
-        this.name = "name Unknown";
-        this.surname = "surnameUnknown";
+        this.name = "Bilinmeyen";
+        this.surname = "Bilinmeyen";
         this.birthDate = LocalDate.now();
-        this.createdDate = new Date();
+        this.createdDate = new Date();  // Değiştirilemez alan
     }
 
-    // Parametreli constructor
+    /**
+     * 📌 Parametreli Constructor
+     */
     public PersonDto(Integer id, String name, String surname, LocalDate birthDate) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = birthDate;
-        this.createdDate = new Date();
+        this.id = (id != null) ? id : 0;
+        this.name = (name != null && !name.isBlank()) ? name : "Bilinmeyen";
+        this.surname = (surname != null && !surname.isBlank()) ? surname : "Bilinmeyen";
+        this.birthDate = (birthDate != null) ? birthDate : LocalDate.now();
+        this.createdDate = new Date();  // Değiştirilemez alan
     }
 
-    // Abstract Method
+    /**
+     * 📌 Soyut Metot - Alt sınıflar tarafından uygulanmalıdır.
+     */
     public abstract void displayInfo();
 
-    // ToString
     @Override
     public String toString() {
         return "PersonDto{" +
@@ -45,13 +53,13 @@ public abstract class PersonDto {
                 '}';
     }
 
-    // Getter & Setter
+    // Getter & Setter Metotları
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.id = (id != null) ? id : 0;
     }
 
     public String getName() {
@@ -59,7 +67,7 @@ public abstract class PersonDto {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = (name != null && !name.isBlank()) ? name : "Bilinmeyen";
     }
 
     public String getSurname() {
@@ -67,7 +75,7 @@ public abstract class PersonDto {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = (surname != null && !surname.isBlank()) ? surname : "Bilinmeyen";
     }
 
     public LocalDate getBirthDate() {
@@ -75,15 +83,10 @@ public abstract class PersonDto {
     }
 
     public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = (birthDate != null) ? birthDate : LocalDate.now();
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+        return createdDate; // Değiştirilemez
     }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
 }

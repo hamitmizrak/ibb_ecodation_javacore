@@ -1,12 +1,23 @@
 package com.hamitmizrak.dto;
 
-
-// Enum (Öğretmen Branşı)
+/**
+ * 📌 Öğretmen Branşları Enum
+ */
 public enum ETeacherSubject {
-    MATHEMATICS,
-    CHEMISTRY,
-    BIOLOGY,
-    HISTORY,
-    COMPUTER_SCIENCE,
-    OTHER
+    MATHEMATICS("Matematik"),
+    CHEMISTRY("Kimya"),
+    BIOLOGY("Biyoloji"),
+    HISTORY("Tarih"),
+    COMPUTER_SCIENCE("Bilgisayar Bilimi"),
+    OTHER("Diğer");
+
+    private final String description;
+
+    ETeacherSubject(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

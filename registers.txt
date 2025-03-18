@@ -1,1 +1,1 @@
-1,nickname,hamitmizrak@gmail.com,sifre,false,TEACHER
+1,hamit44,hamitmizrak@gmail.com,52Uh2RvPD8ZiFaNAL1IXcFzOPlpW2GPsaClUHygCbDE=,true,STUDENT

@@ -4,13 +4,17 @@ import com.hamitmizrak.utils.SpecialColor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 public class StudentDto extends PersonDto implements Serializable {
 
     // Serileştirme
     private static final long serialVersionUID = 556364655645656546L;
 
-    // Field
+    // Logger
+    private static final Logger logger = Logger.getLogger(StudentDto.class.getName());
+
+
     private EStudentType eStudentType;
     private ERole eRole;
     private Double midTerm;
@@ -20,7 +24,7 @@ public class StudentDto extends PersonDto implements Serializable {
 
     // static (Nesne boyunca 1 kere oluşturulur)
     static {
-        System.out.println(SpecialColor.BLUE + "static StudentDto Yüklendi" + SpecialColor.RESET);
+        System.out.println(SpecialColor.BLUE + "✅ static StudentDto Yüklendi" + SpecialColor.RESET);
     }
 
     // Parametresiz Constructor
@@ -34,35 +38,33 @@ public class StudentDto extends PersonDto implements Serializable {
         this.status = determineStatus();
     }
 
-    // Parametreli Constructor
     public StudentDto(Integer id, String name, String surname, LocalDate birthDate,
                       Double midTerm, Double finalTerm, EStudentType eStudentType, ERole eRole) {
         super(id, name, surname, birthDate);
+        this.eStudentType = (eStudentType != null) ? eStudentType : EStudentType.OTHER;
+        this.eRole = (eRole != null) ? eRole : ERole.STUDENT;
         this.midTerm = (midTerm != null) ? midTerm : 0.0;
         this.finalTerm = (finalTerm != null) ? finalTerm : 0.0;
         this.resultTerm = calculateResult();
         this.status = determineStatus();
-        this.eStudentType = eStudentType;
-        this.eRole = eRole;
     }
 
+    // Parametreli Constructor
     public StudentDto(Integer id, String name, String surname, LocalDate birthDate, EStudentType eStudentType, ERole eRole) {
-        super(id, name, surname, birthDate);
-        this.resultTerm = calculateResult();
-        this.status = determineStatus();
-        this.eStudentType = eStudentType;
-        this.eRole = eRole;
+        this(id, name, surname, birthDate, 0.0, 0.0, eStudentType, eRole);
     }
 
-    // Metotlar
-    // Vize ve Final Calculate
-    // **📌 Sonuç Notu Hesaplama (Vize %40 + Final %60)**
     private Double calculateResult() {
-        return ((midTerm != null ? midTerm : 0.0) * 0.4 + (finalTerm != null ? finalTerm : 0.6));
+        if (midTerm == null || finalTerm == null) {
+            logger.warning("⚠️ Not hesaplama hatası: Vize veya Final null değer içeriyor!");
+            return 0.0;
+        }
+        return (midTerm * 0.4) + (finalTerm * 0.6);
     }
 
     // **📌 Status: Geçme / Kalma**
     private String determineStatus() {
+        //return (this.resultTerm >= 50.0) ? "Geçti ✅" : "Kaldı ❌";
         return (this.resultTerm >= 50.0) ? "Geçti" : "Kaldı";
     }
 
@@ -79,22 +81,21 @@ public class StudentDto extends PersonDto implements Serializable {
                 ", finalTerm=" + finalTerm +
                 ", resultTerm=" + resultTerm +
                 ", status='" + status + '\'' +
-                "} " + super.toString();
+                '}';
     }
 
     @Override
     public void displayInfo() {
-        System.out.println(this.toString());
+        logger.info(this.toString());
     }
 
-    /// ///////////////////////////////////////////////////////////////////////////////
-    // Getter And Setter
+    // Getter ve Setter Metotları
     public EStudentType getEStudentType() {
         return eStudentType;
     }
 
     public void setEStudentType(EStudentType eStudentType) {
-        this.eStudentType = eStudentType;
+        this.eStudentType = (eStudentType != null) ? eStudentType : EStudentType.OTHER;
     }
 
     public ERole getERole() {
@@ -102,7 +103,7 @@ public class StudentDto extends PersonDto implements Serializable {
     }
 
     public void setERole(ERole eRole) {
-        this.eRole = eRole;
+        this.eRole = (eRole != null) ? eRole : ERole.STUDENT;
     }
 
     public Double getMidTerm() {
@@ -110,7 +111,7 @@ public class StudentDto extends PersonDto implements Serializable {
     }
 
     public void setMidTerm(Double midTerm) {
-        this.midTerm = midTerm;
+        this.midTerm = (midTerm != null) ? midTerm : 0.0;
         this.resultTerm = calculateResult();
         this.status = determineStatus();
     }
@@ -119,8 +120,11 @@ public class StudentDto extends PersonDto implements Serializable {
         return finalTerm;
     }
 
+    // Metotlar
+    // Vize ve Final Calculate
+    // **📌 Sonuç Notu Hesaplama (Vize %40 + Final %60)**
     public void setFinalTerm(Double finalTerm) {
-        this.finalTerm = finalTerm;
+        this.finalTerm = (finalTerm != null) ? finalTerm : 0.0;
         this.resultTerm = calculateResult();
         this.status = determineStatus();
     }

@@ -9,34 +9,31 @@ import com.hamitmizrak.utils.SpecialColor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class StudentController implements IDaoGenerics<StudentDto> {
 
-    // INJECTION (DI)
+    private static final Logger logger = Logger.getLogger(StudentController.class.getName());
     private final StudentDao studentDao;
 
-    // Parametresiz Constructor
     public StudentController() {
         this.studentDao = new StudentDao();
     }
 
-    // CREATE
     @Override
     @LogExecutionTime
     public Optional<StudentDto> create(StudentDto studentDto) {
-        if (studentDto == null || studentDao.findById(studentDto.getId()).isPresent()) {
-            System.out.println(SpecialColor.RED + "❌ Geçersiz veya mevcut olan öğrenciden dolayı eklenemez " + SpecialColor.RESET);
+        if (studentDto == null || findByName(studentDto.getName()).isPresent()) {
+            logger.warning("❌ Geçersiz veya mevcut olan öğrenci eklenemez");
             return Optional.empty();
         }
         Optional<StudentDto> createdStudent = studentDao.create(studentDto);
         createdStudent.ifPresentOrElse(
-                temp -> System.out.println(SpecialColor.GREEN + "✅Başarılı Öğrenci Başarıyla Eklendi" + SpecialColor.RESET),
-                () -> System.out.println(SpecialColor.RED + "❌Başarısız Öğrenci Eklenmedi" + SpecialColor.RESET)
-        );
+                temp -> logger.info("✅ Başarılı: Öğrenci eklendi"),
+                () -> logger.warning("❌ Başarısız: Öğrenci eklenemedi"));
         return createdStudent;
     }
 
-    // FIND BY NAME
     @Override
     @LogExecutionTime
     public Optional<StudentDto> findByName(String name) {
@@ -46,28 +43,28 @@ public class StudentController implements IDaoGenerics<StudentDto> {
         return studentDao.findByName(name.trim());
     }
 
-    // FIND BY ID
     @Override
     @LogExecutionTime
     public Optional<StudentDto> findById(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("❌ Geçersiz ID girdiniz");
         }
-        return studentDao.findById(id);
+        return studentDao.findById(id).or(() -> {
+            logger.warning("❌ Öğrenci bulunamadı");
+            return Optional.empty();
+        });
     }
 
-    // LIST
     @Override
     @LogExecutionTime
     public List<StudentDto> list() {
-        List<StudentDto> studentDtoList = Optional.of(studentDao.list()).orElse(Collections.emptyList());
+        List<StudentDto> studentDtoList = Optional.ofNullable(studentDao.list()).orElse(Collections.emptyList());
         if (studentDtoList.isEmpty()) {
-            System.out.println(SpecialColor.YELLOW + " Henüz Kayıtlı bir öğrenci bulunmamaktadır" + SpecialColor.RESET);
+            logger.info("Henüz kayıtlı bir öğrenci bulunmamaktadır.");
         }
         return studentDtoList;
     }
 
-    // UPDATE
     @Override
     @LogExecutionTime
     public Optional<StudentDto> update(int id, StudentDto studentDto) {
@@ -77,20 +74,21 @@ public class StudentController implements IDaoGenerics<StudentDto> {
         return studentDao.update(id, studentDto);
     }
 
-    // DELETE
     @Override
     @LogExecutionTime
     public Optional<StudentDto> delete(int id) {
         if (id <= 0) {
-            throw new IllegalArgumentException("❌ Silmek için geçerli bir öğrencisi ID giriniz");
+            throw new IllegalArgumentException("❌ Silmek için geçerli bir öğrenci ID giriniz");
         }
-        return studentDao.delete(id);
+        return studentDao.delete(id).or(() -> {
+            logger.warning("❌ Silme işlemi başarısız: Öğrenci bulunamadı");
+            return Optional.empty();
+        });
     }
 
-    // CHOOISE(Switch-case)
-    @Override
-    @LogExecutionTime
-    public void chooise() {
-        studentDao.chooise();
+
+    //@LogExecutionTime
+    public void choose() {
+        studentDao.choose();
     }
 }

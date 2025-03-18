@@ -5,8 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// 📌 Özel anotasyon oluşturuyoruz
-@Retention(RetentionPolicy.RUNTIME) // Çalışma zamanında erişilebilir
-@Target(ElementType.METHOD) // Sadece metotlara uygulanabilir
+/**
+ * 📌 Metotların çalışma süresini ölçmek için özel anotasyon.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface LogExecutionTime {
 }
