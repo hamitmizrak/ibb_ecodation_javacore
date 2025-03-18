@@ -11,25 +11,23 @@ import java.util.logging.Logger;
 public class RegisterDto {
 
     private static final Logger logger = Logger.getLogger(RegisterDto.class.getName());
-
     private int id;
     private String nickname;
     private String emailAddress;
     private String password;
     private boolean isLocked;
     private String role;
-
     private StudentDto studentDto;
     private TeacherDto teacherDto;
 
     private static final String AES_ALGORITHM = "AES";
-    private static final String SECRET_KEY = "MY_SECRET_AES_KEY12"; // 16 karakter olmalı
+    private static final String SECRET_KEY = "MY_16_BYTE_KEY_!";
 
     public RegisterDto() {
         this.id = 0;
         this.nickname = "your_nickname";
         this.emailAddress = "your_email@example.com";
-        this.password = encryptPassword("default_password");
+        this.password = "default_password";
         this.role = "UNKNOWN";
         this.isLocked = false;
         this.studentDto = null;
@@ -49,34 +47,31 @@ public class RegisterDto {
     }
 
     private static SecretKey generateKey() {
-        byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
-        return new SecretKeySpec(keyBytes, 0, 16, AES_ALGORITHM); // İlk 16 baytı kullan
+        return new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), AES_ALGORITHM);
     }
 
-
     public static String encryptPassword(String password) {
+        if (password == null || password.isBlank()) return null;
         try {
-            SecretKey key = generateKey();
             Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, generateKey());
             byte[] encryptedBytes = cipher.doFinal(password.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encryptedBytes);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "❌ Şifreleme başarısız!", e);
+            logger.log(Level.SEVERE, "Şifreleme başarısız!", e);
             return null;
         }
     }
 
     public static String decryptPassword(String encryptedPassword) {
+        if (encryptedPassword == null || encryptedPassword.isBlank()) return null;
         try {
-            SecretKey key = generateKey();
             Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decodedBytes = Base64.getDecoder().decode(encryptedPassword);
-            byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+            cipher.init(Cipher.DECRYPT_MODE, generateKey());
+            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedPassword));
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "❌ Şifre çözme başarısız!", e);
+            logger.log(Level.SEVERE, "Şifre çözme başarısız!", e);
             return null;
         }
     }
