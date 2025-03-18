@@ -64,7 +64,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
                     Integer.parseInt(parts[0]),
                     parts[1],
                     parts[2],
-                    parts[3],
+                    parts[3], // 📌 Şifrelenmiş olarak saklandığı için tekrar şifreleme yapmıyoruz!
                     parts[5],
                     Boolean.parseBoolean(parts[4]),
                     null,
@@ -75,6 +75,7 @@ public class RegisterDao implements IDaoGenerics<RegisterDto> {
             return null;
         }
     }
+
 
     @Override
     public Optional<RegisterDto> create(RegisterDto registerDto) {

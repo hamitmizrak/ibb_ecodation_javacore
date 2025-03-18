@@ -78,8 +78,13 @@ public class RegisterDto {
 
     public boolean validatePassword(String inputPassword) {
         String decryptedPassword = decryptPassword(this.password);
-        return decryptedPassword != null && decryptedPassword.equals(inputPassword);
+        if (decryptedPassword == null) {
+            logger.severe("Şifre çözme başarısız! Kullanıcı girişi doğrulanamadı.");
+            return false;
+        }
+        return decryptedPassword.equals(inputPassword);
     }
+
 
     public String getDecryptedPassword() {
         return decryptPassword(this.password);
