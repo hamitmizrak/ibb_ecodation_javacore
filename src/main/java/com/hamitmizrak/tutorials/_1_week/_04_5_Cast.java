@@ -35,6 +35,8 @@ public class _04_5_Cast {
         int cast5Int=55;
         String cast5String1=String.valueOf(cast5Int);
         System.out.println(cast5String1);
+        String cast3=Integer.toString(cast5Int);
+        System.out.println(cast3);
 
     }
 }

@@ -4,6 +4,7 @@ public class _07_EscapeCharacter {
 
     /*
     Kaçış Dizisi	Anlamı	Örnek Kullanımı
+    \s  Boş satır
     \n	Yeni satır (Newline)	"Satır 1\nSatır 2"
     \t	Sekme (Tab)	"İsim:\tMehmet"
     \'	Tek tırnak (Single quote)	char c = '\'';

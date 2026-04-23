@@ -7,6 +7,7 @@ import java.util.Locale;
 public class _15_1_Date {
 
     // Date (GET)
+    // 1900
     public static void dateGetMethod() {
         //java.util.Date date= new Date();
         Date now = new Date();
